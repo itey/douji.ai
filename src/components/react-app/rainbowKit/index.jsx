@@ -1,4 +1,5 @@
-import { ConnectButton, connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import store from '@/store/index';
+import { ConnectButton, connectorsForWallets, darkTheme, lightTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import {
 	argentWallet,
 	coinbaseWallet,
@@ -8,8 +9,9 @@ import {
 	metaMaskWallet,
 	omniWallet,
 	rainbowWallet,
+	tokenPocketWallet,
 	trustWallet,
-	walletConnectWallet,
+	walletConnectWallet
 } from '@rainbow-me/rainbowkit/wallets';
 
 import { ParticleNetwork } from '@particle-network/auth';
@@ -19,14 +21,25 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { arbitrum, mainnet, optimism, polygon } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import './index.css';
-console.log(React)
+console.log(React.version)
 
-const projectId = 'bd469840-56b1-46f9-b437-2f152c3dc068'
-const clientKey = 'cKHkawSV31mlo9cW3zFSN8oVW5V7LgK5V5OeyMNM'
-const appId = '07828220-7549-4a3a-9691-81c81cc258ee'
-const walletId = '0d986b46cfcc79be948326fa4942500d'
+const projectId = store.state.chain.projectId
+const clientKey = store.state.chain.clientKey
+const appId = store.state.chain.appId
+const walletId = store.state.chain.walletProjectId
 
 function ParticleButton() {
+
+	/** 主题切换 */
+	const rainTheme = useMemo(() => {
+		switch(store.state.common.theme) {
+			case 'dark':
+				return darkTheme();
+			default:
+				return lightTheme();
+		}
+	}, [store.state.common.theme])
+
 	const particle = useMemo(() => {
 		return new ParticleNetwork({
 				projectId: projectId,
@@ -49,15 +62,17 @@ function ParticleButton() {
 			return {
 					groupName: 'Popular',
 					wallets: [
+							particleWallet({ chains, authType: 'email' }),
+							particleWallet({ chains, authType: 'phone' }),
 							particleWallet({ chains, authType: 'google' }),
 							particleWallet({ chains, authType: 'facebook' }),
-							particleWallet({ chains, authType: 'apple' }),
-							particleWallet({ chains }),
-							injectedWallet({ chains }),
-							rainbowWallet({ chains, projectId: walletId }),
-							coinbaseWallet({ appName: 'RainbowKit demo', chains }),
+							
 							metaMaskWallet({ chains, projectId: walletId }),
 							walletConnectWallet({ chains, projectId: walletId }),
+							imTokenWallet({ chains, projectId: walletId }),
+							tokenPocketWallet({ chains, projectId: walletId }),
+							
+							
 					],
 			};
 	}, [particle]);
@@ -67,10 +82,13 @@ function ParticleButton() {
 			{
 					groupName: 'Other',
 					wallets: [
+							particleWallet({ chains }),
+							injectedWallet({ chains }),
+							coinbaseWallet({ appName: 'DOUJI.AI', chains }),
+							rainbowWallet({ chains, projectId: walletId }),
 							argentWallet({ chains, projectId: walletId }),
 							trustWallet({ chains, projectId: walletId }),
 							omniWallet({ chains, projectId: walletId }),
-							imTokenWallet({ chains, projectId: walletId }),
 							ledgerWallet({ chains, projectId: walletId }),
 					],
 			},
@@ -86,7 +104,7 @@ function ParticleButton() {
   return (
   <div>
 		<WagmiConfig config={wagmiClient}>
-				<RainbowKitProvider chains={chains}>
+				<RainbowKitProvider chains={chains} theme={rainTheme}>
 					<ConnectButton />
 				</RainbowKitProvider>
 			</WagmiConfig>

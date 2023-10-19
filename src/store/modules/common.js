@@ -2,7 +2,7 @@
 const common = {
   state: {
     language: 'en',
-    theme: 'auto'
+    theme: 'light'
   },
 
   mutations: {
