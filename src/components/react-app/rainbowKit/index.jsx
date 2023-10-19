@@ -1,10 +1,23 @@
 import store from '@/store/index';
+import { ParticleNetwork } from '@particle-network/auth';
 import { ConnectButton, ModalProvider } from '@particle-network/connect-react-ui';
 import '@particle-network/connect-react-ui/dist/index.css';
-import React from 'react';
+import React, { useMemo } from 'react';
 console.log(React)
 
 function ParticleButton() {
+	const particle = useMemo(() => {
+		return new ParticleNetwork({
+				projectId: '',
+				clientKey: '',
+				appId: '',
+				chainName: 'Ethereum',
+				chainId: 1,
+				wallet: {
+						displayWalletEntry: true,
+				},
+		});
+	}, []);
   return (
   <div>
 	<ModalProvider
