@@ -1,7 +1,7 @@
 
 const common = {
   state: {
-    language: undefined,
+    language: 'en',
     theme: 'auto'
   },
 

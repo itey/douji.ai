@@ -71,7 +71,7 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
     res => {
-        const code = res.data.code || 200
+        const code = res.data.code || 1
         const msg = res.data.msg
         // 二进制数据则直接返回
         if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
@@ -81,10 +81,8 @@ service.interceptors.response.use(
             store.dispatch('LogOut').then(() => {
                 location.href = process.env.VUE_APP_CONTEXT_PATH + "login";
             })
-        } else if (code === 500) {
+        } else if (code !== 1) {
             return Promise.reject(msg)
-        } else if (code !== 200) {
-            return Promise.reject('error')
         } else {
             return res.data
         }
