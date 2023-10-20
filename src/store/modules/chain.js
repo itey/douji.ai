@@ -9,15 +9,14 @@ const chain = {
     projectId: projectId,
     clientKey: clientKey,
     appId: appId,
-    walletProjectId: walletProjectId
+    walletProjectId: walletProjectId,
+    account: undefined
   },
 
   mutations: {
-
-  },
-
-  actions: {
-
+    setChainAccount(state, account) {
+      state.account = account
+    }
   }
 }
 

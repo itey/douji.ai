@@ -1,10 +1,10 @@
 import request from './request'
 
 // 获取授权
-export function login({ address, signed }) {
+export function login({ address, signed, uuid }) {
     return request({
-        url: '/sendPhoneCode',
-        data: { address, signed },
+        url: '/login',
+        params: { address, signed, uuid },
         method: 'post'
     })
 }

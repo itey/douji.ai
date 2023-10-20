@@ -71,8 +71,8 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
     res => {
-        const code = res.data.code || 1
-        const msg = res.data.msg
+        const code = res.data.code
+        const msg = res.data.message
         // 二进制数据则直接返回
         if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
             return res.data
