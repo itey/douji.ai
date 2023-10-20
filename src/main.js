@@ -8,6 +8,8 @@ Vue.use(VuePlugin)
 
 Vue.config.productionTip = false
 
+Vue.prototype.$store = store
+
 new Vue({
   router,
   store,

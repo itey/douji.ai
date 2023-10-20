@@ -1,15 +1,23 @@
 <template>
   <div class>
-    <ParticleButton />
+    <Wagmi :theme="$store.state.common.theme" />
+    <button @click="handleClickTheme()">切换主题</button>
   </div>
 </template>
 
 <script>
-import ParticleButton from '@/components/react-app/rainbowKit'
+import Wagmi from '@/components/react-app/wagmi'
 export default {
-  name: 'Header',
+  name: 'header-view',
   components: {
-    ParticleButton,
+    Wagmi,
+  },
+  methods: {
+    /** 切换主题 */
+    handleClickTheme() {
+      const theme = this.$store.state.common.theme
+      this.$store.commit('SET_THEME', theme === 'dark' ? 'light' : 'dark')
+    },
   },
 }
 </script>
