@@ -15,10 +15,11 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 
 import { ParticleNetwork } from '@particle-network/auth';
+import { BNBChain, BNBChainTestnet } from '@particle-network/chains';
 import { particleWallet } from '@particle-network/rainbowkit-ext';
 import React, { useMemo } from 'react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { arbitrum, mainnet, optimism, polygon } from 'wagmi/chains';
+import { bsc } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import './index.css';
 console.log(React.version)
@@ -50,11 +51,27 @@ function ParticleButton() {
 				wallet: {
 						displayWalletEntry: true,
 				},
+				chains: [
+					BNBChain,
+					BNBChainTestnet
+				],
+				particleWalletEntry: {
+					displayWalletEntry: true,
+					supportChains: [
+						BNBChain,
+						BNBChainTestnet
+					],
+					customStyle: {},
+				},
+				securityAccount: {
+					promptSettingWhenSign: 2,
+					promptMasterPasswordSettingWhenLogin: 2
+				},
 		});
 	}, []);
 
 	const { chains, publicClient, webSocketPublicClient } = configureChains(
-		[mainnet, polygon, optimism, arbitrum],
+		[bsc],
 		[publicProvider()]
 	);
 
@@ -66,13 +83,10 @@ function ParticleButton() {
 							particleWallet({ chains, authType: 'phone' }),
 							particleWallet({ chains, authType: 'google' }),
 							particleWallet({ chains, authType: 'facebook' }),
-							
 							metaMaskWallet({ chains, projectId: walletId }),
 							walletConnectWallet({ chains, projectId: walletId }),
 							imTokenWallet({ chains, projectId: walletId }),
 							tokenPocketWallet({ chains, projectId: walletId }),
-							
-							
 					],
 			};
 	}, [particle]);
