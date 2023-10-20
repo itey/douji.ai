@@ -8,7 +8,12 @@ import { publicProvider } from 'wagmi/providers/public';
 import './index.css';
 console.log(React.version)
 
-function ParticleButton({theme}) {
+const { chains } = configureChains(
+	[bsc],
+	[publicProvider()]
+);
+
+function RainbowKit({theme}) {
 
 	/** 主题切换 */
 	const rainTheme = useMemo(() => {
@@ -19,12 +24,6 @@ function ParticleButton({theme}) {
 				return lightTheme();
 		}
 	}, [theme])
-
-
-	const { chains } = configureChains(
-		[bsc],
-		[publicProvider()]
-	);
 	
   return (
   <div>
@@ -35,4 +34,4 @@ function ParticleButton({theme}) {
   )
 }
 
-export default ParticleButton
+export default RainbowKit

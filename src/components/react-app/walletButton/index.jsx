@@ -1,15 +1,24 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import React from 'react';
-import './index.css';
-console.log('button:', React.version)
+import { useAccount } from 'wagmi';
+
+import React, { useEffect } from 'react';
+console.log(React.version)
 
 function WalletButton() {
 
+  const { address } = useAccount()
+
+  /** 切换钱包 */
+  useEffect(() => {
+    console.log(address)
+  }, [address])
+
   return (
-  <div>
-		<ConnectButton accountStatus="avatar"/>
-	</div>
-  )
+    <div>
+      <ConnectButton />
+    </div>
+    )
+  
 }
 
 export default WalletButton
