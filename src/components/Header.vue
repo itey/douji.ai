@@ -17,11 +17,13 @@ export default {
   components: {
     Particle,
   },
+
   methods: {
     /** 切换主题 */
     handleClickTheme() {
       const theme = this.$store.state.common.theme
       this.$store.commit('SET_THEME', theme === 'dark' ? 'light' : 'dark')
+      this.$message('切换主题了')
     },
 
     /** 退出登录 */
@@ -57,3 +59,4 @@ export default {
 
 <style>
 </style>
+@/components/react-app/particle/css
