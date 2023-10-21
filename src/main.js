@@ -4,8 +4,8 @@ import store from '@/store';
 import Vue from 'vue';
 import { VuePlugin } from 'vuera';
 
+import '@/assets/theme/index.css';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(VuePlugin)
 Vue.use(ElementUI);

@@ -1,8 +1,8 @@
-import store from '@/store'
 import { getToken } from '@/utils/auth'
 import cache from '@/utils/cache'
 import { tansParams } from "@/utils/common"
 import axios from 'axios'
+import { Notification } from 'element-ui'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 对应国际化资源文件后缀
@@ -78,10 +78,18 @@ service.interceptors.response.use(
             return res.data
         }
         if (code === 401) {
-            store.dispatch('LogOut').then(() => {
-                location.href = process.env.VUE_APP_CONTEXT_PATH + "login";
+            Notification({
+                title: msg,
+                type: 'warning',
+                position: 'bottom-right'
             })
+            return Promise.reject(msg)
         } else if (code !== 1) {
+            Notification({
+                title: msg,
+                type: 'warning',
+                position: 'bottom-right'
+            })
             return Promise.reject(msg)
         } else {
             return res.data
