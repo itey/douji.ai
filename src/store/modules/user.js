@@ -1,7 +1,7 @@
 
 import store from '@/store'
-import { loginWalletSign } from '@/utils/chain'
 import { login } from '@/utils/http'
+import { loginWalletSign } from '@/utils/web3/chain'
 import { Message } from 'element-ui'
 
 const user = {
@@ -43,6 +43,8 @@ const user = {
             commit('setUserId', userId)
             commit('setUserAccount', payload.address)
             commit('setChainAccount', payload.address)
+            store.dispatch('getBalanceOfBnb')
+            store.dispatch('getBalanceOfMbd')
             resolve()
           }).catch(error => {
             console.log(error)
@@ -62,6 +64,8 @@ const user = {
       commit('setUserId', '')
       commit('setUserAccount', '')
       commit('setChainAccount', '')
+      commit('setBalanceMbd', '')
+      commit('setBalanceBnb', '')
       commit('setLogout', true)
     }
   }

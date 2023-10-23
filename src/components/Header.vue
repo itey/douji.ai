@@ -10,13 +10,15 @@
     <div>token:{{$store.state.user.token}}</div>
     <div>account:{{$store.state.user.account}}</div>
     <div>userId:{{$store.state.user.userId}}</div>
+    <div>bnb:{{$store.state.chain.balanceBnb}}</div>
+    <div>mbd:{{$store.state.chain.balanceMbd}}</div>
   </div>
 </template>
 
 <script>
 import Particle from '@/components/react-app/particle'
-import { nftMint } from '@/utils/contract'
 import { uploadJson } from '@/utils/http'
+import { nftMint } from '@/utils/web3/nft'
 import { Notification } from 'element-ui'
 export default {
   name: 'header-view',
@@ -122,3 +124,5 @@ export default {
 <style>
 </style>
 @/components/react-app/particle/css
+@/utils/web3/contract
+@/utils/web3/nft

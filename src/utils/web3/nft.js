@@ -4,7 +4,7 @@ import store from '@/store'
 import { Notification } from 'element-ui'
 import { checkAccount } from './chain'
 
-/** 获取合约 */
+/** 获取NFT合约 */
 function getNFTContract() {
   const web3 = window.web3
   if (!web3) {

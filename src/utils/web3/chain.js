@@ -45,5 +45,16 @@ export function loginWalletSign(chainAccount) {
         reject(error)
       })
   })
+}
 
+/** BNB余额查询 */
+export function balanceOfBnb(account) {
+  return new Promise((resolve, reject) => {
+    const web3 = window.web3
+    if (!web3) {
+      reject('web3 is not ready')
+    }
+    web3.eth.getBalance(account).then((balance) =>
+      resolve(web3.utils.fromWei(balance, 'ether')))
+  })
 }
