@@ -4,6 +4,9 @@
     <button @click="handleClickTheme()">切换主题</button>
     <button @click="personalSign()">签名</button>
     <button @click="logout()">退出</button>
+    <div>{{$store.state.chain.account}}</div>
+    <el-button type="primary" @click="metaData()">Metadata</el-button>
+    <el-button type="info" @click="mint()">Mint</el-button>
     <div>token:{{$store.state.user.token}}</div>
     <div>account:{{$store.state.user.account}}</div>
     <div>userId:{{$store.state.user.userId}}</div>
@@ -12,6 +15,8 @@
 
 <script>
 import Particle from '@/components/react-app/particle'
+import { nftMint } from '@/utils/contract'
+import { uploadJson } from '@/utils/http'
 export default {
   name: 'header-view',
   components: {
@@ -29,6 +34,39 @@ export default {
     /** 退出登录 */
     logout() {
       this.$store.dispatch('Logout')
+    },
+
+    metaData() {
+      const param = {
+        name: 'DOUJI.AI',
+        description: 'The metaverse is here. Where is it all being stored?',
+        image:
+          'https://ipfs.io/ipfs/bafkreigcbadsldmearemyz2x4v5yvzt7l3f2ccqvsifxtup47flvixhreu',
+        properties: {
+          type: 'blog-post',
+          origins: {
+            http: 'https://ipfs.io/ipfs/bafkreigcbadsldmearemyz2x4v5yvzt7l3f2ccqvsifxtup47flvixhreu',
+            ipfs: 'ipfs://bafkreigcbadsldmearemyz2x4v5yvzt7l3f2ccqvsifxtup47flvixhreu',
+          },
+          authors: [
+            {
+              name: 'Tan7u',
+            },
+          ],
+          content: {
+            'text/markdown':
+              'The last year has witnessed the explosion of NFTs onto the world’s mainstage. From fine art to collectibles to music and media, NFTs are quickly demonstrating just how quickly grassroots Web3 communities can grow, and perhaps how much closer we are to mass adoption than we may have previously thought. <... remaining content omitted ...>',
+          },
+        },
+      }
+      uploadJson(JSON.stringify(param)).then((res) => {
+        console.log(res)
+      })
+    },
+
+    mint() {
+      const tokenId = 1
+      nftMint(tokenId, 10000)
     },
 
     async personalSign() {
