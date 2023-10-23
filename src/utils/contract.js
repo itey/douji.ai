@@ -1,4 +1,4 @@
-import NFTABI from '@/assets/abi/nft.json'
+import nft from '@/assets/abi/nft.json'
 import i18n from '@/i18n'
 import store from '@/store'
 import { Notification } from 'element-ui'
@@ -15,9 +15,10 @@ function getNFTContract() {
     })
     return
   }
-  return new web3.eth.Contract(NFTABI.abi, process.env.VUE_APP_NFT)
+  return new web3.eth.Contract(nft.abi, process.env.VUE_APP_NFT)
 }
 
+/** 创作者铸造NFT */
 export function nftMint(tokenURI, initAmount, priceTokenType, priceAsset, priceTokenIdOrAmount, maxSupply) {
   if (!checkAccount()) {
     return

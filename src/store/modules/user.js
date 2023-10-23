@@ -1,13 +1,12 @@
 
 import store from '@/store'
-import { getToken, removeToken, setToken } from '@/utils/auth'
 import { loginWalletSign } from '@/utils/chain'
 import { login } from '@/utils/http'
 import { Message } from 'element-ui'
 
 const user = {
   state: {
-    token: getToken(),
+    token: undefined,
     userId: undefined,
     account: undefined,
     logout: false
@@ -40,7 +39,6 @@ const user = {
           login({ address: payload.address, signed: signed }).then(res => {
             const userId = res.data.id
             const token = res.data.token
-            setToken(token)
             commit('setToken', token)
             commit('setUserId', userId)
             commit('setUserAccount', payload.address)
@@ -64,7 +62,6 @@ const user = {
       commit('setUserId', '')
       commit('setUserAccount', '')
       commit('setChainAccount', '')
-      removeToken()
       commit('setLogout', true)
     }
   }
