@@ -1,3 +1,4 @@
+import i18n from '@/i18n'
 import store from '@/store'
 import { tansParams } from "@/utils/common"
 import axios from 'axios'
@@ -14,6 +15,11 @@ service.interceptors.request.use(
         const token = store.state.user.token
         if (token) {
             config.headers['token'] = token
+        }
+
+        const lang = i18n.locale
+        if (lang) {
+            config.headers['lang'] = lang
         }
 
         if (config.method === 'get' && config.params) {

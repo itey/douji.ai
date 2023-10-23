@@ -21,7 +21,7 @@ import { uploadJson } from '@/utils/http'
 import { nftMint } from '@/utils/web3/nft'
 import { Notification } from 'element-ui'
 export default {
-  name: 'header-view',
+  name: 'header-component',
   components: {
     Particle,
   },

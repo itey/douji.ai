@@ -10,7 +10,7 @@ const messages = {
   zh_Hant: require('@/i18n/langs/zh_Hant.json'),
 }
 const i18n = new VueI18n({
-  locale: localStorage.getItem('locale') || 'en',
+  locale: 'en',
   messages,
   silentTranslationWarn: true
 })
