@@ -18,30 +18,24 @@ function getNFTContract() {
   return new web3.eth.Contract(NFTABI.abi, process.env.VUE_APP_NFT)
 }
 
-export function nftMint(tokenId, amount) {
+export function nftMint(tokenURI, initAmount, priceTokenType, priceAsset, priceTokenIdOrAmount, maxSupply) {
   if (!checkAccount()) {
     return
   }
-  const web3 = window.web3
   const nftContract = getNFTContract()
   const toAddress = store.state.chain.account
-  nftContract.methods.mint(toAddress, web3.utils.toHex(tokenId), web3.utils.toHex(amount), web3.utils.toHex(''))
-    .send({ from: toAddress })
-    .on('transactionHash', (hash) => {
-      console.log('transactionHash', hash)
-    })
-    .on('receipt', (receipt) => {
-      console.log('receipt', receipt)
-    })
-    .on('confirmation', (confirmationNumber, receipt) => {
-      console.log('confirmation', confirmationNumber, receipt)
-    })
-    .on('error', (error) => {
-      Notification({
-        title: i18n.t('common.warning'),
-        message: error.message,
-        type: 'warning'
+  return new Promise((resolve, reject) => {
+    nftContract.methods.authorise(tokenURI, initAmount, priceTokenType, priceAsset, priceTokenIdOrAmount, maxSupply)
+      .send({ from: toAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
       })
-      console.log('error', error)
-    })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+
 }

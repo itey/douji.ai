@@ -17,6 +17,7 @@
 import Particle from '@/components/react-app/particle'
 import { nftMint } from '@/utils/contract'
 import { uploadJson } from '@/utils/http'
+import { Notification } from 'element-ui'
 export default {
   name: 'header-view',
   components: {
@@ -65,8 +66,31 @@ export default {
     },
 
     mint() {
-      const tokenId = 1
-      nftMint(tokenId, 10000)
+      const tokenURI =
+        'https://ipfs.io/ipfs/bafkreiaqehuockm5mx7du5ii655paflfav3tntg5fob2aozwhgldosjacm'
+      const initAmount = 100
+      const priceTokenType = 0
+      const priceAsset = '0x07d4436423146969249Ca428279fc991F74CA7e8'
+      const priceTokenIdOrAmount = 10
+      const maxSupply = 10000
+      nftMint(
+        tokenURI,
+        initAmount,
+        priceTokenType,
+        priceAsset,
+        priceTokenIdOrAmount,
+        maxSupply
+      )
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((e) => {
+          Notification({
+            title: this.$t('common.warning'),
+            message: e,
+            type: 'warning',
+          })
+        })
     },
 
     async personalSign() {

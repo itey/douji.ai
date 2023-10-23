@@ -25,7 +25,6 @@ function WalletButton() {
       connectKit.on('accountsChanged', (accounts) => {
         store.commit('setChainAccount', accounts[0])
         store.dispatch('Login', {address: accounts[0]}).then(() => {
-          console.log('地址切换到:', accounts[0])
           setLoginProcess(false)
         })
       });
