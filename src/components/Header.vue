@@ -1,6 +1,6 @@
 <template>
   <div class>
-    <Particle :theme="$store.state.common.theme" :isLogout="$store.state.user.logout" />
+    <Particle :theme="$store.state.common.theme" :isLogout="$store.state.user.logout" :lang="$i18n.local" />
     <button @click="handleClickTheme()">切换主题</button>
     <button @click="personalSign()">签名</button>
     <button @click="logout()">退出</button>

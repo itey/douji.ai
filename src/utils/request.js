@@ -43,16 +43,20 @@ service.interceptors.response.use(
         if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
             return res.data
         }
-        if (code === 401) {
+        if (code === 2) {
+            // token过期
             Notification({
-                title: msg,
+                title: i18n.t('common.warning'),
+                message: msg,
                 type: 'warning',
                 position: 'bottom-right'
             })
+            store.dispatch('Logout')
             return Promise.reject(msg)
         } else if (code !== 1) {
             Notification({
-                title: msg,
+                title: i18n.t('common.warning'),
+                message: msg,
                 type: 'warning',
                 position: 'bottom-right'
             })

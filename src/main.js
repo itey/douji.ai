@@ -1,4 +1,5 @@
 import App from '@/App.vue';
+import i18n from '@/i18n';
 import router from '@/router';
 import store from '@/store';
 import Vue from 'vue';
@@ -18,5 +19,6 @@ Vue.prototype.$store = store
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

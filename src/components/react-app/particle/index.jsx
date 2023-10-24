@@ -40,13 +40,14 @@ const config = {
   })
 }
 
-function ParticleButton({theme}) {
+function ParticleButton({theme, lang}) {
+
   return (
     <div>
       <ModalProvider
         options={config}
         theme={theme}
-        language={'en'}   //optional：localize, default en
+        language={lang}   //optional：localize, default en
         walletSort={['Particle Auth', 'Wallet']} //optional：walelt order
         particleAuthSort={undefined}
       >
