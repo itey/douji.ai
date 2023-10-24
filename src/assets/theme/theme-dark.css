@@ -1,0 +1,67 @@
+.theme-container {
+	background: linear-gradient(-25deg, #090D0D, #0D1212);
+}
+
+.el-menu {
+	border-right: none;
+	background-color: transparent;
+}
+
+.el-menu.el-menu--horizontal {
+	border-bottom: none;
+}
+
+.el-menu-item {
+	padding: 0 21px;
+}
+
+.el-menu--horizontal>.el-menu-item {
+	height: 36px;
+	line-height: 36px;
+	border-bottom: none;
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.el-menu--horizontal>.el-menu-item.is-active {
+	border-bottom: none;
+	color: #FFFFFF;
+}
+
+.el-menu--horizontal>.el-menu-item:not(.is-disabled):focus,
+.el-menu--horizontal>.el-menu-item:not(.is-disabled):hover {
+	background-color: transparent;
+}
+
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+	outline: 0;
+	color: #FFFFFF;
+}
+
+.el-button {
+	border: none;
+}
+
+.el-button--primary,
+.el-button--primary:focus,
+.el-button--primary:hover {
+	height: 42px;
+	background: linear-gradient(-16deg, #4195F6, #17E7D6);
+	border-radius: 8px;
+	font-size: 16px;
+	font-family: Source Han Sans CN;
+	font-weight: bold;
+	color: #131B1F;
+}
+
+.el-popover {
+	background: #2A3543;
+	box-shadow: 0px 11px 16px 0px #0D1115;
+	border-radius: 10px;
+	border: none;
+	min-width: 110px;
+	padding: 0;
+}

@@ -6,6 +6,7 @@ import Vue from 'vue';
 import { VuePlugin } from 'vuera';
 
 import '@/assets/theme/index.css';
+import '@/assets/theme/theme-dark.css';
 import ElementUI from 'element-ui';
 
 Vue.use(VuePlugin)
@@ -18,5 +19,8 @@ new Vue({
   router,
   store,
   i18n,
-  render: h => h(App)
+  render: h => {
+	  i18n.locale = store.state.common.language
+	  return h(App)
+  }
 }).$mount('#app')
