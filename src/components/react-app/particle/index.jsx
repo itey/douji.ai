@@ -41,7 +41,6 @@ const config = {
 }
 
 function ParticleButton({theme, lang}) {
-
   return (
     <div>
       <ModalProvider

@@ -1,4 +1,4 @@
-{
+export default {
   "common": {
     "warning": "警告",
     "need_reconnect_wallet": "請重新連結您的錢包。",
