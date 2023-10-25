@@ -57,6 +57,23 @@
 	color: #131B1F;
 }
 
+.el-button--primary.is-disabled,
+.el-button--primary.is-disabled:active,
+.el-button--primary.is-disabled:focus,
+.el-button--primary.is-disabled:hover {
+	color: #4B5760;
+}
+
+.el-button--primary:disabled {
+	height: 42px;
+	background: linear-gradient(-16deg, #848D98, #97A8A7);
+	border-radius: 8px;
+	font-size: 16px;
+	font-family: Source Han Sans CN;
+	font-weight: bold;
+	color: #4B5760;
+}
+
 .el-popover {
 	background: #2A3543;
 	box-shadow: 0px 11px 16px 0px #0D1115;
@@ -64,4 +81,26 @@
 	border: none;
 	min-width: 110px;
 	padding: 0;
+}
+
+.text-color {
+	color: #FFFFFF;
+}
+
+.text-sub-color {
+	color: #A9B7C3;
+}
+
+/* 用户中心 */
+.user-container-left {
+	width: 246px;
+	background: #1A2027;
+	border-radius: 8px;
+}
+
+.user-container-right {
+	flex: 1;
+	margin-left: 30px;
+	background: #1A2027;
+	border-radius: 8px;
 }

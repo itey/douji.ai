@@ -22,7 +22,7 @@
 				<div>68.8457 BNB</div>
 			</div>
 			<div @click="userMenuVisible = true">
-				<el-popover placement="bottom-end" :visible-arrow="false" v-model="userMenuVisible">
+				<el-popover :visible-arrow="false" v-model="userMenuVisible">
 					<div class="menu-container">
 						<img @click="userMenuVisible = false" class="close" src="@/assets/images/menu-close.png"></img>
 						<div class="item">
@@ -31,13 +31,12 @@
 							</div>
 							<span>0xD98...72872</span>
 						</div>
-						<div class="item item-light" @click="menuClick('/usercenter')">
+						<div class="item item-light" @click="menuClick('/user')">
 							<div class="icon">
 								<img style="width: 17px; height: 16px;" src="@/assets/images/menu-user.png"></img>
 							</div>
 							<span>User Center</span>
 						</div>
-						<router-link to="/usercenter">About</router-link>
 						<div class="item">
 							<div class="icon">
 								<img style="width: 17px; height: 13px;" src="@/assets/images/menu-wallet.png"></img>
@@ -129,6 +128,7 @@
 				}
 			},
 			signOutClick() {
+				this.userMenuVisible = false
 				this.$store.commit('setLogout', false)
 			},
 		},

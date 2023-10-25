@@ -1,11 +1,11 @@
 <template>
   <div>
-	  
+	  profile
   </div>
 </template>
 
 <script>
 export default {
-  name: 'user-center-view',
+  name: 'profile-view',
 }
 </script>
