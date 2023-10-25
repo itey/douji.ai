@@ -3,6 +3,6 @@ export default {
     "warning": "警告",
     "need_reconnect_wallet": "請重新連結您的錢包。",
     "web3_not_available": "Web3 is not available. Please check your connection.",
-	"home":"首页",
+    "home": "首页",
   }
 }

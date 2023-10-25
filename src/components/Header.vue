@@ -3,9 +3,12 @@
     <Particle :theme="$store.state.common.theme" :isLogout="$store.state.user.logout" :lang="$i18n.locale" />
     <button @click="handleClickTheme()">切换主题</button>
     <button @click="personalSign()">签名</button>
-    <button @click="logout()">退出</button>
+    <button class="meta" @click="logout()">退出</button>
     <div>{{$store.state.chain.account}}</div>
     <el-button type="primary" @click="metaData()">Metadata</el-button>
+    <div class="meta">
+      <p class="text">Connect Wallet</p>
+    </div>
     <el-button type="info" @click="mint()">Mint</el-button>
     <div>token:{{$store.state.user.token}}</div>
     <div>account:{{$store.state.user.account}}</div>
@@ -120,5 +123,18 @@ export default {
 }
 </script>
 
-<style>
+<style setup>
+.meta {
+  width: 182px;
+  height: 42px;
+  background: linear-gradient(-16deg, #4195f6, #17e7d6);
+  border-radius: 8px;
+}
+.text {
+  font-size: 16px;
+  font-family: Arial;
+  font-weight: bold;
+  color: #1a2027;
+  line-height: 339px;
+}
 </style>
