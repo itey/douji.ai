@@ -43,6 +43,9 @@ function WalletButton() {
         setLoginProcess(false)
       })
     }
+    if (account && !store.state.user.account) {
+      store.dispatch('Logout')
+    }
   }, [account]);
   
   /** 切换主题 */
