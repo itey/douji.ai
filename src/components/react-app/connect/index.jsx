@@ -3,6 +3,7 @@ import { isEVMProvider } from '@particle-network/connect';
 import { ConnectButton, useAccount, useConnectKit, useParticleTheme } from '@particle-network/connect-react-ui';
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
+import './index.css';
 console.log(React.version)
 
 function WalletButton() {
@@ -63,31 +64,17 @@ function WalletButton() {
   return (
     <div>
       <ConnectButton.Custom>
-            {({ openAccountModal, openConnectModal, openChainModal, closeAccountModal }) => {
+            {({ openConnectModal }) => {
 
                 const handleOpenConnectModal = () => {
+                  console.log(store.state.user.account)
                   openConnectModal();
                   setLoginProcess(true);
                 }
 
                 return (
                     <div>
-                        <button onClick={handleOpenConnectModal} disabled={!!account}>
-                            Open Connect
-                        </button>
-                        <br />
-                        <br />
-                        <button onClick={openAccountModal} disabled={!account}>
-                            Open Account
-                        </button>
-                        <button onClick={closeAccountModal} disabled={!account}>
-                            Close Account
-                        </button>
-                        <br />
-                        <br />
-                        <button onClick={openChainModal} disabled={!account}>
-                            Open Switch Network
-                        </button>
+                        <button className={'open-connect'} onClick={handleOpenConnectModal} disabled={!!account}>Connect Wallet</button>
                     </div>
                 );
             }}
