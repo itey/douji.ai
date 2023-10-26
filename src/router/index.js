@@ -9,6 +9,21 @@ const routes = [{
 		component: () => import("@/page/Home")
 	},
 	{
+		path:'/news',
+		name:'news',
+		component: () => import("@/views/News"),
+	},
+	{
+		path:'/navigation',
+		name:'navigation',
+		component: () => import("@/views/Navigation"),
+	},
+	{
+		path:'/market',
+		name:'marketplace',
+		component: () => import("@/views/Market"),
+	},
+	{
 		path: '/user',
 		name: 'user',
 		component: () => import("@/page/User"),

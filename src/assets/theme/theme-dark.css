@@ -91,16 +91,80 @@
 	color: #A9B7C3;
 }
 
-/* 用户中心 */
-.user-container-left {
-	width: 246px;
+/* product-item */
+.product-container {
 	background: #1A2027;
+	box-shadow: 0px 8px 18px 0px rgba(9, 11, 12, 0.85);
 	border-radius: 8px;
 }
 
-.user-container-right {
-	flex: 1;
-	margin-left: 30px;
-	background: #1A2027;
+/* el-breadcrumb */
+.el-breadcrumb {
+	font-size: 12px;
+}
+
+.el-breadcrumb__inner a,
+.el-breadcrumb__inner.is-link {
+	color: #848F8F;
+}
+
+.el-breadcrumb__item:last-child .el-breadcrumb__inner,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner a,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
+	color: #FFFFFF;
+}
+
+.el-input__inner {
+	background-color: #0E161D;
+	border: 1px solid #313838;
 	border-radius: 8px;
+	color: #FFFFFF;
+}
+.el-tag.el-tag--info {
+	border: none;
+    background-color: #273037;
+    border-color: #e9e9eb;
+	height: 28px;
+	border-radius: 5px;
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: #FFFFFF;
+	line-height: 28px;
+}
+.el-select-dropdown {
+	border: none;
+    background-color: #1A2027;
+	box-shadow: 0px 8px 18px 0px rgba(9,11,12,0.85);
+	border-radius: 8px;
+}
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+    background-color: transparent;
+	margin: 0 7px;
+}
+.el-scrollbar__bar.is-horizontal {
+    height: 0px;
+}
+.el-select-dropdown__item{
+	color: #FFFFFF;
+}
+.el-select-dropdown__item.selected {
+    font-size: 12px;
+    font-family: Arial;
+    font-weight: bold;
+    color: #00F9E5;
+}
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
+    background-color: #273037;
+	border-radius: 8px;
+	font-size: 12px;
+	font-family: Arial;
+	font-weight: bold;
+	color: #00F9E5;
+	margin: 0 7px;
+}
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+    background-color: transparent;
+    margin: 0 0px;
 }

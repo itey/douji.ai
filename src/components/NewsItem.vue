@@ -1,18 +1,16 @@
 <template>
-	<div class="product-container">
+	<div class="news-container">
 		<img style="width: 100%;height:193px;" />
-		<span class="type">Midjourney</span>
 		<div class="label text-color">
-			dgsdgshgdgjsg'sgdsadgshgdsddfddhsjhjsh
+			dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj
+			sg'sgdsadgshg dsddfddhsjhjsh
 		</div>
 		<div class="bottom">
-			<div>
-				<span class="value text-color">2500 MBD </span>
-				<span class="transform text-sub-color">≈$0.57</span>
+			<div class="transform text-sub-color">
+				by Victor Deaw
 			</div>
-			<div>
-				<img style="width: 16px;height: 14px;" />
-				<span class="star text-sub-color">12345</span>
+			<div class="star text-sub-color">
+				September 21,2023
 			</div>
 		</div>
 	</div>
@@ -21,7 +19,7 @@
 
 <script>
 	export default {
-		name: 'ProductItem',
+		name: 'NewsItem',
 		props: {
 			item: {
 				type: Object,
@@ -31,30 +29,23 @@
 </script>
 
 <style lang="scss" scoped>
-	.product-container {
-		position: relative;
+	.news-container {
 		cursor: pointer;
-		.type{
-			position: absolute;
-			top: 12px;
-			left: 15px;
-			padding: 6px 12px;
-			background: rgba(13,18,18,0.66);
-			border-radius: 4px;
-			font-size: 14px;
-			font-family: Source Han Sans CN;
-			font-weight: 400;
-			color: #FFFFFF;
-			line-height: 26px;
-		}
+
 		.label {
+			height: 66px;
 			font-size: 14px;
-			line-height: 14px;
+			line-height: 22px;
 			font-family: Source Han Sans CN;
 			font-weight: bold;
 			text-align: left;
 			margin: 20px 15px 0 15px;
 			word-wrap: break-word;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			-webkit-line-clamp: 3;
 		}
 
 		.bottom {

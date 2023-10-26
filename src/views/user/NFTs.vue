@@ -18,21 +18,21 @@
 		<div class="content">
 			<div class="list">
 				<div v-for="(item,index) in list" :key="index" class="item">
-					<product-item></product-item>
+					<nft-item></nft-item>
 				</div>
 			</div>
-			<el-pagination background layout="prev, pager, next" :total="1000">
+			<el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页" :pager-count="4" :total="1000">
 			</el-pagination>
 		</div>
 	</div>
 </template>
 
 <script>
-	import ProductItem from '@/components/ProductItem'
+	import NftItem from '@/components/NftItem'
 	export default {
 		name: 'nfts-view',
 		components: {
-			ProductItem
+			NftItem
 		},
 		data() {
 			return {
@@ -50,10 +50,8 @@
 <style lang="scss" scoped>
 	.container {
 		padding: 0 50px;
-		height: 100vh;
 		display: flex;
 		flex-direction: column;
-		overflow-y: scroll;
 
 		.top {
 			display: flex;
@@ -87,10 +85,11 @@
 				justify-content: space-between;
 
 				.item {
-					width: 342px;
+					width: calc((100% - 172px) / 4);
+					min-width: 240px;
 					margin: 0 24px 27px 0;
 
-					&:last-child {
+					&:nth-child(4n) {
 						margin-right: 0;
 					}
 				}

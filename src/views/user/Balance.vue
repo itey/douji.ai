@@ -38,7 +38,7 @@
 			<div class="sub-value text-sub-color">≈$27.57</div>
 		</div>
 		<div class="settle-button">
-			<el-button class="btn" type="primary">Settlement</el-button>
+			<el-button class="common-btn1" type="primary">Settlement</el-button>
 		</div>
 		<div class="divider"></div>
 		<div class="text-middle text-color">NFT Stake Income settlement</div>
@@ -48,8 +48,8 @@
 			<div class="sub-value text-sub-color">≈$27.57</div>
 		</div>
 		<div class="settle-button">
-			<el-button class="btn" type="primary">Settlement</el-button>
-			<el-button class="btn" style="margin-left: 22px;" type="primary" :disabled="true">Settlement</el-button>
+			<el-button class="common-btn1" type="primary">Settlement</el-button>
+			<el-button class="common-btn1" style="margin-left: 22px;" type="primary" :disabled="true">Settlement</el-button>
 		</div>
 		<div class="divider"></div>
 		<div class="text-middle text-color">Distributes Income to be settled</div>
@@ -66,7 +66,7 @@
 			</div>
 		</div>
 		<div class="settle-button">
-			<el-button class="btn" type="primary">Settlement</el-button>
+			<el-button class="common-btn1" type="primary">Settlement</el-button>
 		</div>
 		<div class="text-color settle-label">
 			Settlement Fee: 5000 MBD Number of fee-free times: <span style="color: #47D1AF;">3</span>
@@ -82,12 +82,11 @@
 
 <style lang="scss" scoped>
 	.container {
+		width: 100%;
 		padding: 0 50px;
-		height: 100vh;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		overflow-y: scroll;
 
 		.text-big {
 			font-size: 32px;
@@ -228,15 +227,6 @@
 			align-items: left;
 			margin-top: 24px;
 
-			.btn {
-				width: 188px;
-				background: linear-gradient(-21deg, #50CED5 0%, #46D1AF 100%);
-				border-radius: 10px;
-
-				&:disabled {
-					background: linear-gradient(-16deg, #848D98, #97A8A7);
-				}
-			}
 		}
 
 		.settle-label {

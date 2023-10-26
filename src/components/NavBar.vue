@@ -5,9 +5,9 @@
     <div class="navbar-menu">
       <el-menu mode="horizontal" :router="true">
         <el-menu-item index="/">{{$t('common.home')}}</el-menu-item>
-        <el-menu-item>{{$t('common.news')}}</el-menu-item>
-        <el-menu-item>{{$t('common.navigation')}}</el-menu-item>
-        <el-menu-item>{{$t('common.marketplace')}}</el-menu-item>
+        <el-menu-item index="/news">{{$t('common.news')}}</el-menu-item>
+        <el-menu-item index="/navigation">{{$t('common.navigation')}}</el-menu-item>
+        <el-menu-item index="/market">{{$t('common.marketplace')}}</el-menu-item>
         <el-menu-item>{{$t('common.create')}}</el-menu-item>
       </el-menu>
     </div>

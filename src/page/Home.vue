@@ -1,5 +1,5 @@
 <template>
-  <div>首页</div>
+  <div @click="$router.push('/user')">首页</div>
 </template>
 
 <script>

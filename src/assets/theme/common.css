@@ -1,0 +1,76 @@
+.common-btn1 {
+	width: 188px;
+	background: linear-gradient(-21deg, #50CED5 0%, #46D1AF 100%) !important;
+	border-radius: 10px;
+}
+
+.common-btn1:disabled {
+	background: linear-gradient(-16deg, #848D98, #97A8A7) !important;
+}
+
+.common-btn2 {
+	width: 188px;
+	background: linear-gradient(-16deg, #4195F6, #17E7D6) !important;
+	border-radius: 10px;
+}
+
+.common-btn2:disabled {
+	background: linear-gradient(-16deg, #848D98, #97A8A7) !important;
+}
+
+/* el-pagination */
+.el-pagination {
+	position: relative;
+	display: flex;
+	align-items: center;
+    padding: 0 0;
+}
+.el-pager li{
+	padding: 0 0;
+}
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li {
+	margin-left:0;
+	margin-right:12px;
+	background-color: transparent;
+	width: 42px;
+	height: 42px;
+	border: 1px solid #12C7B8;
+	border-radius: 8px;
+	font-size: 16px;
+	line-height: 42px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: #12C7B8;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+	width: 42px;
+	height: 42px;
+	line-height: 42px;
+	color: #fff;
+	background: #12C7B8;
+	border-radius: 8px;
+}
+
+.el-pagination.is-background .btn-next {
+	width: auto;
+	height: 42px;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	line-height: 42px;
+	background: #12C7B8;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFFFFF;
+	min-width: 88px;
+	padding: 0 8px;
+	position: absolute;
+	right: 0;
+}
+
+.el-pagination.is-background .btn-next span {
+	line-height: 42px;
+}
