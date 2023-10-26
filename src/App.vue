@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="theme-container">
     <div class="app-header">
-      <Header v-if="false" />
       <NavBar />
     </div>
     <div class="app-bottom">
@@ -15,12 +14,10 @@
   </div>
 </template>
 <script>
-import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
 import NavFooter from '@/components/NavFooter'
 export default {
   components: {
-    Header,
     NavBar,
     NavFooter,
   },

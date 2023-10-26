@@ -1,9 +1,9 @@
 // Wallet address thumbnail display
 export const omitAddress = (val) => {
-  if (val.length <= 5) {
+  if (val.length <= 7) {
     return val
   }
-  const prefix = val.substring(0, 5)
+  const prefix = val.substring(0, 7)
   const suffix = val.substring(val.length - 5)
   return prefix + '...' + suffix
 }

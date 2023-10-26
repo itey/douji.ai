@@ -8,6 +8,8 @@ console.log(React.version)
 
 function WalletButton() {
 
+  const [loginProcess, setLoginProcess] = useState(false);
+
   /** 事件监听 */
   const connectKit = useConnectKit();
   useEffect(() => {
@@ -33,7 +35,6 @@ function WalletButton() {
     
   }, []);
 
-  const [loginProcess, setLoginProcess] = useState(false);
 
   /** 地址切换 */
   const account = useAccount();
