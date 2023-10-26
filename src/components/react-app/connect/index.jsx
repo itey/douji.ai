@@ -70,14 +70,13 @@ function WalletButton() {
             {({ openConnectModal }) => {
 
                 const handleOpenConnectModal = () => {
-                  console.log(store.state.user.account)
                   openConnectModal();
                   setLoginProcess(true);
                 }
 
                 return (
                     <div>
-                        <button className={'open-connect'} onClick={handleOpenConnectModal} disabled={!!account}>Connect Wallet</button>
+                        <button className={'connect-button'} onClick={handleOpenConnectModal} disabled={!!account}>Connect Wallet</button>
                     </div>
                 );
             }}
