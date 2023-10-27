@@ -2,15 +2,27 @@
 const common = {
   state: {
     language: 'en',
-    theme: 'dark'
+    theme: 'dark',
+    openAccount: false,
+    openBuy: false,
+    isParticleProvider: false,
   },
 
   mutations: {
-    SET_LANGUAGE: (state, language) => {
+    setLanguage: (state, language) => {
       state.language = language
     },
-    SET_THEME: (state, theme) => {
+    setTheme: (state, theme) => {
       state.theme = theme
+    },
+    setOpenAccount: (state, openAccount) => {
+      state.openAccount = openAccount
+    },
+    setOpenBuy: (state, openBuy) => {
+      state.openBuy = openBuy
+    },
+    setIsParticleProvider: (state, isParticleProvider) => {
+      state.isParticleProvider = isParticleProvider
     }
   },
 

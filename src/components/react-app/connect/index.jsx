@@ -1,6 +1,6 @@
 import store from '@/store';
 import { isEVMProvider } from '@particle-network/connect';
-import { ConnectButton, useAccount, useConnectKit, useLanguage, useParticleTheme } from '@particle-network/connect-react-ui';
+import { ConnectButton, useAccount, useConnectId, useConnectKit, useLanguage, useParticleTheme } from '@particle-network/connect-react-ui';
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import './index.css';
@@ -8,13 +8,22 @@ console.log(React.version)
 
 function WalletButton() {
 
+  const connectId = useConnectId();
+  const account = useAccount();
+  const connectKit = useConnectKit();
   const [loginProcess, setLoginProcess] = useState(false);
-
   const { changLanguage } = useLanguage();
 
+  /** 区分是否为particle链接方式 */
+  useEffect(() => {
+    if(connectId === 'particle') {
+      store.commit('setIsParticleProvider', true)
+    } else {
+      store.commit('setIsParticleProvider', false)
+    }
+  }, [connectId])
 
   /** 事件监听 */
-  const connectKit = useConnectKit();
   useEffect(() => {
     if(connectKit) {
       connectKit.on('connect', (provider) => {
@@ -35,35 +44,34 @@ function WalletButton() {
         })
       });
     }
-    
   }, []);
 
 
   /** 地址切换 */
-  const account = useAccount();
   useEffect(() => {
     if(account && loginProcess) {
       store.dispatch('Login', {address: account}).then(() => {
         setLoginProcess(false)
       })
     }
+    if(account && !store.state.user.account && !store.state.common.isParticleProvider) {
+      connectKit.disconnect({ hideLoading: true });
+    }
   }, [account]);
   
   /** 切换主题 */
-  const theme = store.state.common.theme;
   const { setTheme } = useParticleTheme();
   useEffect(() => {
-    setTheme(theme);
-  }, [theme]);
+    setTheme(store.state.common.theme);
+  }, [store.state.common.theme]);
 
   /** 外部组件按键退出 */
-  const isLogout = store.state.user.logout;
   useEffect(() => {
-    if(isLogout) {
+    if(store.state.user.logout) {
       store.commit('setLogout', false)
       connectKit.disconnect({ hideLoading: true });
     }
-  }, [isLogout]);
+  }, [store.state.user.logout]);
 
   /** 语言切换 */
   useEffect(() => {
@@ -72,7 +80,23 @@ function WalletButton() {
     } else {
       changLanguage('zh_TW')
     }
-  }, [store.state.common.language])
+  }, [store.state.common.language]);
+
+  /** 打开Particle钱包 */
+  useEffect(() => {
+    if(store.state.common.isParticleProvider && store.state.common.openAccount) {
+      connectKit.particle.openWallet();
+      store.commit('setOpenAccount', false)
+    }
+  }, [store.state.common.openAccount]);
+
+  /** 打开Particle Buy页面 */
+  useEffect(() => {
+    if(store.state.common.isParticleProvider && store.state.common.openBuy) {
+      connectKit.particle.openBuy();
+      store.commit('setOpenBuy', false)
+    }
+  },[store.state.common.openBuy]);
 
   return (
     <div>
