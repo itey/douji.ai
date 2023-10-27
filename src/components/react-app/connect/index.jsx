@@ -1,6 +1,6 @@
 import store from '@/store';
 import { isEVMProvider } from '@particle-network/connect';
-import { ConnectButton, useAccount, useConnectKit, useParticleTheme } from '@particle-network/connect-react-ui';
+import { ConnectButton, useAccount, useConnectKit, useLanguage, useParticleTheme } from '@particle-network/connect-react-ui';
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import './index.css';
@@ -9,6 +9,9 @@ console.log(React.version)
 function WalletButton() {
 
   const [loginProcess, setLoginProcess] = useState(false);
+
+  const { changLanguage } = useLanguage();
+
 
   /** 事件监听 */
   const connectKit = useConnectKit();
@@ -44,9 +47,6 @@ function WalletButton() {
         setLoginProcess(false)
       })
     }
-    if (account && !store.state.user.account) {
-      store.dispatch('Logout')
-    }
   }, [account]);
   
   /** 切换主题 */
@@ -63,7 +63,16 @@ function WalletButton() {
       store.commit('setLogout', false)
       connectKit.disconnect({ hideLoading: true });
     }
-  }, [isLogout])
+  }, [isLogout]);
+
+  /** 语言切换 */
+  useEffect(() => {
+    if(store.state.common.language == 'en') {
+      changLanguage('en')
+    } else {
+      changLanguage('zh_TW')
+    }
+  }, [store.state.common.language])
 
   return (
     <div>
