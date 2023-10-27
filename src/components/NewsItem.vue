@@ -1,21 +1,20 @@
 <template>
-	<div class="news-container">
-		<img style="width: 100%;height:193px;" />
+	<div class="news-container" @click="itemClick">
+		<img style="width: 100%;height:105px;" />
 		<div class="label text-color">
 			dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj
 			sg'sgdsadgshg dsddfddhsjhjsh
 		</div>
 		<div class="bottom">
-			<div class="transform text-sub-color">
+			<div class="sub text-sub-color">
 				by Victor Deaw
 			</div>
-			<div class="star text-sub-color">
+			<div class="sub text-sub-color">
 				September 21,2023
 			</div>
 		</div>
 	</div>
 </template>
-
 
 <script>
 	export default {
@@ -23,6 +22,11 @@
 		props: {
 			item: {
 				type: Object,
+			}
+		},
+		methods: {
+			itemClick() {
+				this.$router.push('/news/detail')
 			}
 		}
 	}
@@ -33,13 +37,13 @@
 		cursor: pointer;
 
 		.label {
-			height: 66px;
-			font-size: 14px;
-			line-height: 22px;
+			height: 42px;
+			font-size: 10px;
+			line-height: 14px;
 			font-family: Source Han Sans CN;
 			font-weight: bold;
 			text-align: left;
-			margin: 20px 15px 0 15px;
+			margin-top: 14px;
 			word-wrap: break-word;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
@@ -49,31 +53,18 @@
 		}
 
 		.bottom {
-			padding: 15px 15px 17px 15px;
+			padding: 11px 0;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
 
-			.value {
-				font-size: 14px;
-				line-height: 14px;
-				font-family: Source Han Sans CN;
-				font-weight: bold;
-			}
-
-			.transform {
-				font-size: 14px;
-				line-height: 14px;
+			.sub {
+				font-size: 9px;
+				line-height: 9px;
 				font-family: Source Han Sans CN;
 				font-weight: 400;
-			}
-
-			.star {
-				font-size: 14px;
-				line-height: 14px;
-				font-family: Source Han Sans CN;
-				font-weight: 400;
+				color: #B2B9B9;
 			}
 		}
 	}

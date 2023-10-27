@@ -1,12 +1,12 @@
 <template>
 	<div class="nft-container">
-		<img style="width: 100%;height:193px;" />
+		<img style="width: 100%;height:105px;" />
 		<div class="label text-color">
-			dgsdgshgdgjsg'sgdsadgshgdsddfddhsjhjsh
+			dgsdgshgdgjsg
 		</div>
 		<div class="bottom">
 			<div>
-				<span class="value text-color">2500 MBD </span>
+				<span class="value text-color">2500</span>
 				<span class="transform text-sub-color">≈$0.57</span>
 			</div>
 			<div>
@@ -33,39 +33,44 @@
 	.nft-container {
 		cursor: pointer;
 		.label {
-			font-size: 14px;
-			line-height: 14px;
+			font-size: 10px;
+			line-height: 10px;
 			font-family: Source Han Sans CN;
 			font-weight: bold;
 			text-align: left;
-			margin: 20px 15px 0 15px;
+			margin: 11px 8px 0 8px;
 			word-wrap: break-word;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			-webkit-line-clamp: 1;
 		}
-
+		
 		.bottom {
-			padding: 15px 15px 17px 15px;
+			padding: 14px 10px 10px 10px;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
-
+		
 			.value {
-				font-size: 14px;
-				line-height: 14px;
+				font-size: 10px;
+				line-height: 10px;
 				font-family: Source Han Sans CN;
 				font-weight: bold;
 			}
-
+		
 			.transform {
-				font-size: 14px;
-				line-height: 14px;
+				font-size: 10px;
+				line-height: 10px;
 				font-family: Source Han Sans CN;
 				font-weight: 400;
 			}
-
+		
 			.star {
-				font-size: 14px;
-				line-height: 14px;
+				font-size: 10px;
+				line-height: 10px;
 				font-family: Source Han Sans CN;
 				font-weight: 400;
 			}

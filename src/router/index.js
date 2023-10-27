@@ -7,11 +7,15 @@ const routes = [{
 		path: '/',
 		name: 'home',
 		component: () => import("@/page/Home")
-	},
-	{
+	},{
 		path:'/news',
 		name:'news',
-		component: () => import("@/views/News"),
+		component: () => import("@/views/news/News"),
+	},
+	{
+		path:'/news/detail',
+		name:'news-detail',
+		component: () => import("@/views/news/NewsDetail"),
 	},
 	{
 		path:'/navigation',
@@ -24,13 +28,20 @@ const routes = [{
 		component: () => import("@/views/Market"),
 	},
 	{
+		path:'/creator',
+		name:'creator',
+		component: () => import("@/views/Creator"),
+	},
+	{
+		path:'/create',
+		name:'create',
+		component: () => import("@/views/Create"),
+	},
+	{
 		path: '/user',
 		name: 'user',
 		component: () => import("@/page/User"),
-		children: [{
-				path: '',
-				redirect: '/balance'
-			},
+		children: [
 			{
 				path: '/balance',
 				name: 'balance',
@@ -42,7 +53,7 @@ const routes = [{
 				component: () => import("@/views/user/NFTs"),
 			},
 			{
-				path: '/rofile',
+				path: '/profile',
 				name: 'profile',
 				component: () => import("@/views/user/Profile"),
 			}
@@ -53,5 +64,6 @@ const routes = [{
 const router = new VueRouter({
 	mode: 'history',
 	routes
+	
 });
 export default router;

@@ -1,6 +1,6 @@
 <template>
 	<div class="product-container">
-		<img style="width: 100%;height:193px;" />
+		<img style="width: 100%;height:140px;" />
 		<span class="type">Midjourney</span>
 		<div class="label text-color">
 			dgsdgshgdgjsg'sgdsadgshgdsddfddhsjhjsh
@@ -36,51 +36,56 @@
 		cursor: pointer;
 		.type{
 			position: absolute;
-			top: 12px;
-			left: 15px;
-			padding: 6px 12px;
+			top: 9px;
+			left: 11px;
+			padding: 4px 9px;
 			background: rgba(13,18,18,0.66);
-			border-radius: 4px;
-			font-size: 14px;
+			border-radius: 3px;
+			font-size: 10px;
 			font-family: Source Han Sans CN;
 			font-weight: 400;
 			color: #FFFFFF;
-			line-height: 26px;
+			line-height: 22px;
 		}
 		.label {
-			font-size: 14px;
-			line-height: 14px;
+			font-size: 10px;
+			line-height: 10px;
 			font-family: Source Han Sans CN;
 			font-weight: bold;
 			text-align: left;
-			margin: 20px 15px 0 15px;
+			margin: 11px 8px 0 8px;
 			word-wrap: break-word;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			-webkit-line-clamp: 1;
 		}
 
 		.bottom {
-			padding: 15px 15px 17px 15px;
+			padding: 14px 10px 10px 10px;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
 
 			.value {
-				font-size: 14px;
-				line-height: 14px;
+				font-size: 10px;
+				line-height: 10px;
 				font-family: Source Han Sans CN;
 				font-weight: bold;
 			}
 
 			.transform {
-				font-size: 14px;
-				line-height: 14px;
+				font-size: 10px;
+				line-height: 10px;
 				font-family: Source Han Sans CN;
 				font-weight: 400;
 			}
 
 			.star {
-				font-size: 14px;
-				line-height: 14px;
+				font-size: 10px;
+				line-height: 10px;
 				font-family: Source Han Sans CN;
 				font-weight: 400;
 			}

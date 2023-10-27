@@ -30,7 +30,7 @@
 <script>
 	import NftItem from '@/components/NftItem'
 	export default {
-		name: 'nfts-view',
+		name: 'nft-view',
 		components: {
 			NftItem
 		},
@@ -85,9 +85,8 @@
 				justify-content: space-between;
 
 				.item {
-					width: calc((100% - 172px) / 4);
-					min-width: 240px;
-					margin: 0 24px 27px 0;
+					width: calc((100% - 39px) / 4);
+					margin: 0 13px 13px 0;
 
 					&:nth-child(4n) {
 						margin-right: 0;

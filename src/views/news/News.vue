@@ -1,16 +1,16 @@
 <template>
-	<div class="navigation-container">
-		<el-breadcrumb style="margin-top: 21px;" separator-class="el-icon-arrow-right">
+	<div class="news-container">
+		<el-breadcrumb style="margin-top: 27px;" separator-class="el-icon-arrow-right">
 			<el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-			<el-breadcrumb-item>Navigation</el-breadcrumb-item>
+			<el-breadcrumb-item>News</el-breadcrumb-item>
 		</el-breadcrumb>
 		<div class="text-color title">
-			AIGC Navigation
+			News
 		</div>
 		<div class="content">
 			<div class="list">
 				<div v-for="(item,index) in list" :key="index" class="item">
-					<navigation-item></navigation-item>
+					<news-item></news-item>
 				</div>
 			</div>
 			<el-pagination style="width:100%;margin: 28px 0;" background layout="pager,next" next-text="下一页"
@@ -21,11 +21,11 @@
 </template>
 
 <script>
-	import NavigationItem from '@/components/NavigationItem'
+	import NewsItem from '@/components/NewsItem'
 	export default {
-		name: 'navigation-view',
+		name: 'news-view',
 		components: {
-			NavigationItem
+			NewsItem
 		},
 		data() {
 			return {
@@ -40,15 +40,14 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.navigation-container {
-
+	.news-container {
 		.title {
 			font-size: 26px;
 			font-family: Source Han Sans CN;
 			font-weight: bold;
 			line-height: 26px;
 			text-align: left;
-			margin: 24px 0;
+			margin: 27px 0 40px 0;
 		}
 
 		.content {
@@ -60,8 +59,9 @@
 				justify-content: space-between;
 
 				.item {
-					width: 246px;
-					margin: 0 17px 17px 0;
+					width: calc((100% - 39px) / 4);
+					min-width: 185px;
+					margin: 0 13px 13px 0;
 				
 					&:nth-child(4n) {
 						margin-right: 0;

@@ -1,10 +1,13 @@
 <template>
 	<el-container id="app" class="theme-container">
-		<el-header style="height: 77px;">
+		<el-header style="height: auto;">
 			<div class="app-content">
 				<NavBar />
 			</div>
 		</el-header>
+			<div class="banner">
+				<img style="width: 653px;height: 71px;" />
+			</div>
 		<el-container>
 			<el-main>
 				<div class="app-content">
@@ -46,6 +49,11 @@
 			border-bottom: 1px solid #29383f;
 		}
 
+	.banner {
+		margin-top: 16px;
+		display: flex;
+		justify-content: center;
+	}
 		// height: 100vh;
 		.el-main {
 			padding: 0 0;
@@ -63,7 +71,7 @@
 
 		.app-content {
 			width: 100%;
-			max-width: 1440px;
+			max-width: 1037px;
 		}
 
 	}
