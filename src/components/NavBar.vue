@@ -12,7 +12,8 @@
 			</el-menu>
 		</div>
 		<div v-show="!$store.state.user.token">
-			<Particle :theme="$store.state.common.theme" :isLogout="$store.state.user.logout" :lang="$i18n.locale" />
+			<Particle :theme="$store.state.common.theme" :isLogout="$store.state.user.logout" :lang="$i18n.locale"
+				:openAccount="$store.state.common.openAccount" :openBuy="$store.state.common.openBuy" />
 		</div>
 		<div v-if="$store.state.user.token" class="user-container">
 			<div class="wallet">
@@ -39,21 +40,21 @@
 							</div>
 							<span>User Center</span>
 						</div>
-						<div class="item">
+						<div class="item" v-if="$store.state.common.isParticleProvider" @click="openWalletModal()">
 							<div class="icon">
-								<img style="width: 12px; height: 9px;" src="@/assets/images/menu-wallet.png" />
+								<img style="width: 17px; height: 13px;" src="@/assets/images/menu-wallet.png" />
 							</div>
 							<span>Wallet</span>
 						</div>
-						<div class="item">
+						<div class="item" v-if="$store.state.common.isParticleProvider" @click="openBuyModal()">
 							<div class="icon">
-								<img style="width: 13px; height: 10px;" src="@/assets/images/menu-currency.png" />
+								<img style="width: 18px; height: 14px;" src="@/assets/images/menu-currency.png" />
 							</div>
 							<span>Buy Crypto Currency</span>
 						</div>
-						<div class="item">
+						<div class="item" @click="handleCopyAddress()">
 							<div class="icon">
-								<img style="width: 12px; height: 12px;" src="@/assets/images/menu-copy.png" />
+								<img style="width: 17px; height: 17px;" src="@/assets/images/menu-copy.png" />
 							</div>
 							<span>Copy Address</span>
 						</div>
@@ -111,18 +112,36 @@
 		},
 		methods: {
 			themeClick(theme) {
-				this.$store.commit('SET_THEME', theme)
+				this.$store.commit('setTheme', theme)
 			},
 			languageClick(locale) {
 				this.languageVisible = false
 				this.$i18n.locale = locale
-				this.$store.commit('SET_LANGUAGE', locale)
+				this.$store.commit('setLanguage', locale)
 			},
 			menuClick(path) {
 				this.userMenuVisible = false
 				if (!this.$route.path.includes(path)) {
 					this.$router.push(path)
 				}
+			},
+			openWalletModal() {
+				this.$store.commit('setOpenAccount', true)
+				this.userMenuVisible = false
+			},
+			openBuyModal() {
+				this.$store.commit('setOpenBuy', true)
+				this.userMenuVisible = false
+			},
+			handleCopyAddress() {
+				this.$copyText(this.$store.state.user.account).then(
+					() => {
+						this.$toast.success(this.$t('common.copied_success'))
+					},
+					() => {
+						this.$toast.error(this.$t('copied_failed'))
+					}
+				)
 			},
 			signOutClick() {
 				this.userMenuVisible = false

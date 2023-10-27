@@ -4,13 +4,13 @@
 			<div class="text-big text-color">Balances</div>
 			<div class="balance-address-container">
 				<img style="width: 16px; height: 16px;" src="@/assets/images/user/user.png"></img>
-				<div class="balance-address">OxD98232ed4...5334347287</div>
+				<div class="balance-address">{{ $store.state.user.account | omitAddress }}</div>
 				<img style="width: 14px; height: 14px;" src="@/assets/images/user/copy.png"></img>
 			</div>
 		</div>
 		<div class="balance-value">
 			<div class="item">
-				<div class="value text-color">68415.5684</div>
+				<div class="value text-color">{{ $store.state.chain.balanceMbd | decimalPlace4 }}</div>
 				<div class="sub-value text-sub-color">≈$27.57</div>
 				<div class="unit text-color">MBD</div>
 			</div>
@@ -25,7 +25,7 @@
 				<div class="unit text-color">BJX NFT</div>
 			</div>
 			<div class="item">
-				<div class="value text-color">78</div>
+				<div class="value text-color">0</div>
 				<div class="sub-value text-color">&nbsp;</div>
 				<div class="unit text-color">DJPlanate</div>
 			</div>
