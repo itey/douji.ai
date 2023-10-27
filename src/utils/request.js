@@ -2,7 +2,7 @@ import i18n from '@/i18n'
 import store from '@/store'
 import { tansParams } from "@/utils/common"
 import axios from 'axios'
-import { Notification } from 'element-ui'
+import Vue from 'vue'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
@@ -45,21 +45,11 @@ service.interceptors.response.use(
         }
         if (code === 2) {
             // token过期
-            Notification({
-                title: i18n.t('common.warning'),
-                message: msg,
-                type: 'warning',
-                position: 'bottom-right'
-            })
+            Vue.$toast.error(msg)
             store.dispatch('Logout')
             return Promise.reject(msg)
         } else if (code !== 1) {
-            Notification({
-                title: i18n.t('common.warning'),
-                message: msg,
-                type: 'warning',
-                position: 'bottom-right'
-            })
+            Vue.$toast.error(msg)
             return Promise.reject(msg)
         } else {
             return res.data

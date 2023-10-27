@@ -2,7 +2,7 @@
 import store from '@/store'
 import { login } from '@/utils/http'
 import { loginWalletSign } from '@/utils/web3/chain'
-import { Message } from 'element-ui'
+import Vue from 'vue'
 
 const user = {
   state: {
@@ -49,12 +49,12 @@ const user = {
           }).catch(error => {
             console.log(error)
             commit('setLogout', true)
-            Message.warning(error)
+            Vue.$toast.warning(error)
           })
         }).catch(error => {
           console.log(error)
           commit('setLogout', true)
-          Message.warning(error)
+          Vue.$toast.warning(error)
         })
       })
     },

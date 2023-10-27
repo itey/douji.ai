@@ -55,7 +55,7 @@
               </div>
               <span>Buy Crypto Currency</span>
             </div>
-            <div class="item">
+            <div class="item" @click="handleCopyAddress()">
               <div class="icon">
                 <img style="width: 17px; height: 17px;" src="@/assets/images/menu-copy.png" />
               </div>
@@ -132,6 +132,16 @@ export default {
     openBuyModal() {
       this.$store.commit('setOpenBuy', true)
       this.userMenuVisible = false
+    },
+    handleCopyAddress() {
+      this.$copyText(this.$store.state.user.account).then(
+        () => {
+          this.$toast.success(this.$t('common.copied_success'))
+        },
+        () => {
+          this.$toast.error(this.$t('copied_failed'))
+        }
+      )
     },
     signOutClick() {
       this.userMenuVisible = false
