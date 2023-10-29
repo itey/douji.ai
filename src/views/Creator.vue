@@ -1,19 +1,16 @@
 <template>
-	<div class="navigation-container">
-		<el-breadcrumb style="margin-top: 21px;" separator-class="el-icon-arrow-right">
-			<el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-			<el-breadcrumb-item>Navigation</el-breadcrumb-item>
-		</el-breadcrumb>
-		<div class="text-color title">
-			AIGC Navigation
+	<div class="creator-container">
+		<div class="title-container">
+			<span class="text-color title">Collected</span>
+			<span class="text-sub-color sub">28</span>
 		</div>
 		<div class="content">
 			<div class="list">
-				<div v-for="(item,index) in list" :key="index" class="item">
-					<navigation-item></navigation-item>
+				<div v-for="(item,index) in 20" :key="index" class="item">
+					<product-item></product-item>
 				</div>
 			</div>
-			<el-pagination style="width:100%;margin: 28px 0;" background layout="pager,next" next-text="��һҳ"
+			<el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页"
 				:pager-count="4" :total="1000">
 			</el-pagination>
 		</div>
@@ -21,34 +18,45 @@
 </template>
 
 <script>
-	import NavigationItem from '@/components/NavigationItem'
+	import ProductItem from '@/components/ProductItem'
 	export default {
-		name: 'navigation-view',
+		name: 'creator-view',
 		components: {
-			NavigationItem
+			ProductItem
 		},
 		data() {
 			return {
-				list: []
-			}
-		},
-		created() {
-			for (let i = 0; i < 20; i++) {
-				this.list.push({})
+				subscription: false
 			}
 		}
 	}
 </script>
 <style lang="scss" scoped>
-	.navigation-container {
-
-		.title {
-			font-size: 26px;
-			font-family: Source Han Sans CN;
-			font-weight: bold;
-			line-height: 26px;
+	.creator-container {
+		position: relative;
+		.title-container {
 			text-align: left;
-			margin: 24px 0;
+			margin: 43px 0 33px 0;
+			display: flex;
+			align-items: baseline;
+
+			.title {
+				font-size: 26px;
+				font-family: Source Han Sans CN;
+				font-weight: bold;
+				line-height: 26px;
+				text-align: left;
+			}
+
+			.sub {
+				font-size: 10px;
+				font-family: Source Han Sans CN;
+				line-height: 13px;
+				margin-left: 6px;
+				background: #262F39;
+				border-radius: 4px;
+				font-weight: bold;
+			}
 		}
 
 		.content {
@@ -62,7 +70,7 @@
 				.item {
 					width: 246px;
 					margin: 0 17px 17px 0;
-				
+
 					&:nth-child(4n) {
 						margin-right: 0;
 					}

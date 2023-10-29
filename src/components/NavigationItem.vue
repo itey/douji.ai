@@ -61,7 +61,5 @@
 				-webkit-line-clamp: 3;
 			}
 		}
-
-
 	}
 </style>

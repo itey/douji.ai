@@ -1,16 +1,19 @@
 <template>
 	<div class="nft-container">
-		<img style="width: 100%;height:105px;" />
+		<img :style="{
+			width: '100%',
+			height: height,
+		}" />
 		<div class="label text-color">
 			dgsdgshgdgjsg
 		</div>
-		<div class="bottom">
-			<div>
+		<div class="nft-bottom">
+			<div class="bottom-left">
 				<span class="value text-color">2500</span>
 				<span class="transform text-sub-color">≈$0.57</span>
 			</div>
-			<div>
-				<img style="width: 16px;height: 14px;" />
+			<div class="bottom-right">
+				<img style="width: 16px;height: 14px;" src="@/assets/images/star.png" />
 				<span class="star text-sub-color">12345</span>
 			</div>
 		</div>
@@ -24,6 +27,10 @@
 		props: {
 			item: {
 				type: Object,
+			},
+			height: {
+				type: String,
+				default: '105px'
 			}
 		}
 	}
@@ -32,6 +39,7 @@
 <style lang="scss" scoped>
 	.nft-container {
 		cursor: pointer;
+
 		.label {
 			font-size: 10px;
 			line-height: 10px;
@@ -46,33 +54,46 @@
 			text-overflow: ellipsis;
 			-webkit-line-clamp: 1;
 		}
-		
-		.bottom {
+
+		.nft-bottom {
 			padding: 14px 10px 10px 10px;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
-		
-			.value {
-				font-size: 10px;
-				line-height: 10px;
-				font-family: Source Han Sans CN;
-				font-weight: bold;
+
+			.bottom-left {
+
+				.value {
+					font-size: 10px;
+					line-height: 10px;
+					font-family: Source Han Sans CN;
+					font-weight: bold;
+				}
+
+				.transform {
+					font-size: 10px;
+					line-height: 10px;
+					font-family: Source Han Sans CN;
+					font-weight: 400;
+				}
 			}
-		
-			.transform {
-				font-size: 10px;
-				line-height: 10px;
-				font-family: Source Han Sans CN;
-				font-weight: 400;
-			}
-		
-			.star {
-				font-size: 10px;
-				line-height: 10px;
-				font-family: Source Han Sans CN;
-				font-weight: 400;
+
+			.bottom-right {
+				display: flex;
+				align-items: center;
+
+				img {
+					margin-right: 4px;
+				}
+
+				.star {
+					font-size: 10px;
+					line-height: 10px;
+					font-family: Source Han Sans CN;
+					font-weight: 400;
+
+				}
 			}
 		}
 	}

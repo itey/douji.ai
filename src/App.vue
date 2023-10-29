@@ -5,11 +5,12 @@
 				<NavBar />
 			</div>
 		</el-header>
-			<div class="banner">
-				<img style="width: 653px;height: 71px;" />
-			</div>
+		<creator v-if="$route.path == '/creator'"></creator>
 		<el-container>
 			<el-main>
+				<div class="banner">
+					<img style="width: 653px;height: 71px;" />
+				</div>
 				<div class="app-content">
 					<router-view />
 				</div>
@@ -25,10 +26,12 @@
 <script>
 	import NavBar from '@/components/NavBar'
 	import NavFooter from '@/components/NavFooter'
+	import Creator from '@/components/Creator'
 	export default {
 		components: {
 			NavBar,
 			NavFooter,
+			Creator,
 		},
 	}
 </script>
@@ -49,11 +52,12 @@
 			border-bottom: 1px solid #29383f;
 		}
 
-	.banner {
-		margin-top: 16px;
-		display: flex;
-		justify-content: center;
-	}
+		.banner {
+			margin-top: 16px;
+			display: flex;
+			justify-content: center;
+		}
+
 		// height: 100vh;
 		.el-main {
 			padding: 0 0;
