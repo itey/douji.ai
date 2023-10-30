@@ -1,8 +1,5 @@
 <template>
 	<div class="news-container">
-		<div class="banner">
-			<img style="width: 653px;height: 71px;" />
-		</div>
 		<el-breadcrumb style="margin-top: 27px;" separator-class="el-icon-arrow-right">
 			<el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
 			<el-breadcrumb-item>News</el-breadcrumb-item>

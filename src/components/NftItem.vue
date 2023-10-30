@@ -1,5 +1,5 @@
 <template>
-	<div class="nft-container">
+	<div class="nft-item">
 		<img :style="{
 			width: '100%',
 			height: height,
@@ -37,9 +37,12 @@
 </script>
 
 <style lang="scss" scoped>
-	.nft-container {
+	.nft-item {
 		cursor: pointer;
 
+		&:hover .label {
+			color: #00F9E5;
+		}
 		.label {
 			font-size: 10px;
 			line-height: 10px;
@@ -54,7 +57,7 @@
 			text-overflow: ellipsis;
 			-webkit-line-clamp: 1;
 		}
-
+		
 		.nft-bottom {
 			padding: 14px 10px 10px 10px;
 			display: flex;

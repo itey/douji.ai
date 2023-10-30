@@ -1,5 +1,5 @@
 <template>
-	<div class="navigation-container">
+	<div class="navigation-item">
 		<img style="width: 40px;height:40px;" />
 		<div class="content">
 			<div class="label text-color">Goodbite</div>
@@ -23,16 +23,20 @@
 </script>
 
 <style lang="scss" scoped>
-	.navigation-container {
+	.navigation-item {
 		height: 101px;
 		background: #1A2027;
-		box-shadow: 0px 6px 13px 0px rgba(9,11,12,0.85);
+		box-shadow: 0px 6px 13px 0px rgba(9, 11, 12, 0.85);
 		border-radius: 6px;
 		padding: 16px 13px;
 		display: flex;
 		flex-direction: row;
 		cursor: pointer;
-		
+
+		&:hover .content .label {
+			color: #00F9E5;
+		}
+
 		.content {
 			flex: 1;
 			margin-left: 12px;

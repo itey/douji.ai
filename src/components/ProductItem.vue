@@ -1,5 +1,5 @@
 <template>
-	<div class="product-container">
+	<div class="product-item">
 		<img style="width: 100%;height:140px;" />
 		<span class="type">Midjourney</span>
 		<div class="label text-color">
@@ -31,9 +31,13 @@
 </script>
 
 <style lang="scss" scoped>
-	.product-container {
+	.product-item {
 		position: relative;
 		cursor: pointer;
+
+		&:hover .label {
+			color: #00F9E5;
+		}
 
 		.type {
 			position: absolute;
