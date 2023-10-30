@@ -57,7 +57,14 @@
 	line-height: 30px;
 	color: #fff;
 	background: #12C7B8;
+	background-color: #12C7B8;
 	border-radius: 6px;
+}
+
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li {
+	background-color: transparent;
 }
 
 .el-pagination.is-background .btn-next {

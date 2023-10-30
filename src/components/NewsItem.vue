@@ -1,5 +1,5 @@
 <template>
-	<div class="news-container" @click="itemClick">
+	<div class="news-item" @click="itemClick">
 		<img style="width: 100%;height:105px;" />
 		<div class="label text-color">
 			dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj
@@ -33,13 +33,11 @@
 </script>
 
 <style lang="scss" scoped>
-	.news-container {
+	.news-item {
 		cursor: pointer;
 
-		&:hover {
-			.label {
-				color: #00F9E5;
-			}
+		&:hover .label {
+			color: #00F9E5;
 		}
 
 		.label {

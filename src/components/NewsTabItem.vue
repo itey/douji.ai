@@ -1,5 +1,5 @@
 <template>
-	<div class="news-container" @click="itemClick">
+	<div class="news-tab-item" @click="itemClick">
 		<div class="title text-color">
 			dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj
 			sg'sgdsadgshg dsddfddhsjhjsh
@@ -32,10 +32,13 @@
 </script>
 
 <style lang="scss" scoped>
-	.news-container {
+	.news-tab-item {
 		cursor: pointer;
 		text-align: left;
 		margin: 14px 0 12px 0;
+		&:hover .title {
+			color: #00F9E5;
+		}
 		.title {
 			font-size: 10px;
 			font-family: Source Han Sans CN;
@@ -43,10 +46,7 @@
 			color: #FFFFFF;
 			line-height: 16px;
 		}
-
-		.title:hover {
-			color: #00F9E5;
-		}
+		
 
 		.bottom {
 			margin-top: 16px;

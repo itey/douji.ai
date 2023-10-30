@@ -378,6 +378,10 @@
 					height: 344px;
 					overflow: auto;
 				}
+				.news-list::-webkit-scrollbar {
+				  width: 0;
+				  background-color: transparent;
+				}
 			}
 		}
 

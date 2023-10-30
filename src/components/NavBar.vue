@@ -8,7 +8,7 @@
 				<el-menu-item index="/news">{{$t('common.news')}}</el-menu-item>
 				<el-menu-item index="/navigation">{{$t('common.navigation')}}</el-menu-item>
 				<el-menu-item index="/market">{{$t('common.marketplace')}}</el-menu-item>
-				<el-menu-item index="/creator">{{$t('common.create')}}</el-menu-item>
+				<el-menu-item index="/create">{{$t('common.create')}}</el-menu-item>
 			</el-menu>
 		</div>
 		<div v-show="!$store.state.user.token">

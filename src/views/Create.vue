@@ -1,41 +1,63 @@
 <template>
 	<div class="create-container">
-		<div class="create-label">Create</div>
-		<div class="create-title">Create Your Conent DOUJI NFT Collection</div>
-		<div class="type-container">
-			<div class="type-item">
-				<img style="width: 72px;height: 67px;" src="@/assets/images/create/article.png" />
-				<div class="article">Article</div>
+		<div class="step-container" v-if="step>0">
+			<div class="step" :class="{
+				'step':step<1,
+				'step-light':step>=1
+			}">
+				<div class="step-title">Step1</div>
+				<div class="step-sub">Set NFT Mint infomation</div>
 			</div>
-			<div class="type-item">
-				<img style="width: 77px;height: 68px;" src="@/assets/images/create/prompt.png" />
-				<div class="prompt">Prompt</div>
+			<div>¡ú</div>
+			<div class="step" :class="{
+				light:step>=2
+			}">
+				<div class="step-title">Step2</div>
+				<div class="step-sub">Write Content</div>
 			</div>
-			<div class="type-item">
-				<img style="width: 67px;height: 72px;" src="@/assets/images/create/art.png" />
-				<div class="art">Digital Art</div>
+			<div>¡ú</div>
+			<div class="step" :class="{
+				light:step>=3
+			}">
+				<div class="step-title">Step3</div>
+				<div class="step-sub">Mint NFT</div>
 			</div>
 		</div>
-		<div class="tip">
-			The rest will be available soon
-		</div>
-		<div class="question">
-			How to Createï¼Ÿ
-		</div>
+		<create-step0 v-if="step==0" @itemClick="itemClick"></create-step0>
+		<create-step1 v-if="step==1"></create-step1>
+		<create-step2 v-if="step==2"></create-step2>
+		<create-step3 v-if="step==3"></create-step3>
 	</div>
 </template>
 
 <script>
+	import CreateStep0 from '@/components/create/CreateStep0'
+	import CreateStep1 from '@/components/create/CreateStep1'
+	import CreateStep2 from '@/components/create/CreateStep2'
+	import CreateStep3 from '@/components/create/CreateStep3'
 	export default {
 		name: 'create-view',
+		components: {
+			CreateStep0,
+			CreateStep1,
+			CreateStep2,
+			CreateStep3,
+		},
 		data() {
 			return {
-				list: []
+				list: [],
+				step: 0
 			}
 		},
 		created() {
 			for (let i = 0; i < 20; i++) {
 				this.list.push({})
+			}
+		},
+		methods: {
+			itemClick(type) {
+				console.log(type)
+				this.step = 1
 			}
 		}
 	}
@@ -45,88 +67,50 @@
 		display: flex;
 		flex-direction: column;
 
-		.create-label {
-			font-size: 14px;
-			font-family: Arial;
-			font-weight: bold;
-			color: #00F9E5;
-			margin-top: 47px;
-		}
-
-		.create-title {
-			margin-top: 19px;
-			font-size: 26px;
-			font-family: Source Han Sans CN;
-			font-weight: bold;
-			color: #FFFFFF;
-		}
-
-		.type-container {
+		.step-container {
 			display: flex;
+			flex-direction: row;
 			align-items: center;
-			justify-content: space-between;
-			margin-top: 68px;
+			justify-content: center;
+			margin-top: 62px;
 
-			.type-item {
-				width: 245px;
-				height: 179px;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				background: #1A2027;
-				border: 1px solid #2C3638;
-				border-radius: 4px;
+			.step {
+				text-align: left;
+
+				.step-title {
+					font-size: 19px;
+					font-family: Source Han Sans CN;
+					font-weight: bold;
+					color: #747C7C;
+				}
+
+				.step-sub {
+					font-size: 12px;
+					font-family: Source Han Sans CN;
+					font-weight: 400;
+					color: #747C7C;
+					margin-top: 10px;
+				}
 			}
 
-			.article {
-				margin-top: 25px;
-				font-size: 16px;
-				font-family: Source Han Sans CN;
-				font-weight: bold;
-				color: #FFFFFF;
-				background: linear-gradient(-73deg, #00ABF1 0%, #01EEFF 100%);
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
+			.step-light {
+				.step-title {
+					font-size: 19px;
+					font-family: Source Han Sans CN;
+					font-weight: bold;
+					color: #4CC9CE;
+					background: linear-gradient(-16deg, #4195F6 0%, #00F9E5 100%);
+					-webkit-background-clip: text;
+					-webkit-text-fill-color: transparent;
+				}
+
+				.step-sub {
+					font-size: 12px;
+					font-family: Source Han Sans CN;
+					font-weight: 400;
+					color: #50CED5;
+				}
 			}
-
-			.prompt {
-				margin-top: 24px;
-				font-size: 16px;
-				font-family: Source Han Sans CN;
-				font-weight: bold;
-				color: #FFFFFF;
-				background: linear-gradient(-73deg, #3874FC 0%, #8A8DFF 100%);
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-			}
-
-			.art {
-				margin-top: 22px;
-				font-size: 16px;
-				font-family: Source Han Sans CN;
-				font-weight: bold;
-				color: #FFFFFF;
-				background: linear-gradient(-73deg, #00D487 0%, #00DAFD 100%);
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-			}
-		}
-
-		.tip {
-			font-size: 8px;
-			font-family: Source Han Sans CN;
-			font-weight: 400;
-			color: #99B5C4;
-			margin-top: 40px;
-		}
-
-		.question {
-			font-size: 9px;
-			font-family: Source Han Sans CN;
-			font-weight: bold;
-			color: #FFFFFF;
-			margin: 15px;
 		}
 	}
 </style>
