@@ -114,9 +114,10 @@
 }
 
 .el-input__inner {
-	background-color: #0E161D;
-	border: 1px solid #313838;
-	border-radius: 4px;
+	color: #FFFFFF;
+}
+
+.el-textarea__inner {
 	color: #FFFFFF;
 }
 
@@ -199,32 +200,37 @@
 }
 
 /* el-tabs */
-.el-tabs__header{
+.el-tabs__header {
 	margin: 0 0;
 }
+
 .el-tabs__item {
 	padding: 0 0;
 	height: 33px;
-    font-size: 12px;
-    font-family: Source Han Sans CN;
-    font-weight: bold;
-    color: #FFFFFF;
+	font-size: 12px;
+	font-family: Source Han Sans CN;
+	font-weight: bold;
+	color: #FFFFFF;
 }
+
 .el-tabs__nav-wrap::after {
-    background-color: transparent;
+	background-color: transparent;
 }
+
 .el-tabs__item:hover {
-    font-size: 12px;
-    font-family: Source Han Sans CN;
-    font-weight: bold;
+	font-size: 12px;
+	font-family: Source Han Sans CN;
+	font-weight: bold;
 	color: #00F9E5;
 }
+
 .el-tabs__item.is-active {
 	font-size: 12px;
 	font-family: Source Han Sans CN;
 	font-weight: bold;
 	color: #00F9E5;
 }
+
 .el-tabs__active-bar {
-    background: linear-gradient(-90deg, #4195F6, #00F9E5);
+	background: linear-gradient(-90deg, #4195F6, #00F9E5);
 }

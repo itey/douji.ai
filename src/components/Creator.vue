@@ -20,11 +20,11 @@
 					value to the fheld.
 				</div>
 				<div class="subscription light" v-if="subscription" @click="subscription = false">
-					<img style="width: 9px;height: 9px;" src="@/assets/images/creator/add.png" />
+					<img style="width: 9px;height: 9px;" src="@/assets/images/add.png" />
 					<span>Subscription</span>
 				</div>
 				<div class="subscription" v-else @click="subscription = true">
-					<img style="width: 13px;height: 9px;" src="@/assets/images/creator/add.png" />
+					<img style="width: 13px;height: 9px;" src="@/assets/images/add.png" />
 					<span>Subscription</span>
 				</div>
 				<div class="tag-container">

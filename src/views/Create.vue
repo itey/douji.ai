@@ -8,24 +8,30 @@
 				<div class="step-title">Step1</div>
 				<div class="step-sub">Set NFT Mint infomation</div>
 			</div>
-			<div>¡ú</div>
+			<div style="margin: 0 31px 0 36px;">
+				<img style="width: 39px;height: 6px" :src="require(`@/assets/images/create/arrow${step>=1?'-light':''}.png`)"/>
+			</div>
 			<div class="step" :class="{
-				light:step>=2
+				'step':step<2,
+				'step-light':step>=2
 			}">
 				<div class="step-title">Step2</div>
 				<div class="step-sub">Write Content</div>
 			</div>
-			<div>¡ú</div>
+			<div style="margin: 0 31px 0 36px;">
+				<img style="width: 39px;height: 6px" :src="require(`@/assets/images/create/arrow${step>=2?'-light':''}.png`)"/>
+			</div>
 			<div class="step" :class="{
-				light:step>=3
+				'step':step<3,
+				'step-light':step>=3
 			}">
 				<div class="step-title">Step3</div>
 				<div class="step-sub">Mint NFT</div>
 			</div>
 		</div>
 		<create-step0 v-if="step==0" @itemClick="itemClick"></create-step0>
-		<create-step1 v-if="step==1"></create-step1>
-		<create-step2 v-if="step==2"></create-step2>
+		<create-step1 v-if="step==1" @backClick="backClick1" @nextClick="nextClick1"></create-step1>
+		<create-step2 v-if="step==2" @backClick="backClick2" @nextClick="nextClick2"></create-step2>
 		<create-step3 v-if="step==3"></create-step3>
 	</div>
 </template>
@@ -58,6 +64,18 @@
 			itemClick(type) {
 				console.log(type)
 				this.step = 1
+			},
+			backClick1(){
+				this.step = 0
+			},
+			nextClick1(){
+				this.step = 2
+			},
+			backClick2(){
+				this.step = 1
+			},
+			nextClick2(){
+				this.step = 3
 			}
 		}
 	}

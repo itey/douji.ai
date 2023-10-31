@@ -259,10 +259,11 @@
 				cursor: pointer;
 				text-align: left;
 			}
+
 			.select {
 				color: #FFFFFF;
 				border-left: 2px solid;
-				  border-image: linear-gradient(0deg, #4195F6, #17E7D6) 1;
+				border-image: linear-gradient(0deg, #4195F6, #17E7D6) 1;
 			}
 		}
 

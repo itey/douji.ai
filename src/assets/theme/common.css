@@ -16,6 +16,9 @@
 	width: 188px;
 	background: linear-gradient(-16deg, #4195F6, #17E7D6) !important;
 	border-radius: 10px;
+	color: #1A2127;
+	font-weight: bold;
+	font-size: 12px;
 }
 
 .common-btn2:disabled {
@@ -85,4 +88,29 @@
 
 .el-pagination.is-background .btn-next span {
 	line-height: 30px;
+}
+
+.el-input__inner{
+	height: 35px;
+	line-height: 35px;
+	background-color: transparent;
+	border: 1px solid #313838;
+	border-radius: 6px;
+}
+.el-input__inner:focus {
+    outline: 0;
+    border-color: #0E161D;
+	border: 1px solid #00F9E5;
+	border-radius: 6px;
+}
+.el-textarea__inner{
+	background-color: transparent;
+	border: 1px solid #313838;
+	border-radius: 4px;
+}
+.el-textarea__inner:focus {
+    outline: 0;
+    border-color: #0E161D;
+	border: 1px solid #00F9E5;
+	border-radius: 6px;
 }

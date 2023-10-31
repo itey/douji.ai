@@ -72,9 +72,9 @@
 				Allowed to chage after mint.Price set to 0,anyone can mint for free,access protected content.
 			</div>
 			<div class="btn-container">
-				<el-button class="common-btn1">Save</el-button>
-				<el-button class="common-btn1">Save</el-button>
-				<el-button class="common-btn1">Save</el-button>
+				<el-button class="common-btn2" @click="backClick">Back</el-button>
+				<el-button class="common-btn2" @click="saveClick">Save</el-button>
+				<el-button class="common-btn2" @click="nextClick">Next</el-button>
 			</div>
 		</div>
 	</div>
@@ -95,7 +95,15 @@
 			}
 		},
 		methods: {
-
+			backClick() {
+				this.$emit('backClick')
+			},
+			saveClick() {
+				this.$emit('saveClick')
+			},
+			nextClick() {
+				this.$emit('nextClick')
+			}
 		}
 	}
 </script>
@@ -231,6 +239,15 @@
 				display: flex;
 				flex-direction: row;
 				align-items: center;
+				justify-content: center;
+				margin-top: 73px;
+				padding-right: 98px;
+				.common-btn2{
+					margin-right: 59px;
+					&:last-child{
+						margin-right: 0;
+					}
+				}
 			}
 		}
 	}
