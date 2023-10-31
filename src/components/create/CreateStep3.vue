@@ -1,7 +1,7 @@
 <template>
 	<div class="create-step3">
 		<div class="title">
-			Step 3 Mint NFT
+			{{edit?'Step 3     Preview NFT':'Step 3 Mint NFT'}}
 		</div>
 		<div class="form-container">
 			<div class="form-top">
@@ -81,7 +81,7 @@
 								<div class="mbd-value text-color">2590.0 MBD</div>
 								<div class="mbd-transform">≈$26.57</div>
 							</div>
-							<div class="form-attr-mint">Mint</div>
+							<el-button class="common-btn2 form-attr-mint">Mint</el-button>
 							<div class="form-attr-tip">
 								Owning <span class="text-color">1 BJxStar</span> To Get <span
 									class="text-color">20%</span>
@@ -89,37 +89,168 @@
 							</div>
 						</div>
 					</div>
+					<div v-if="edit" class="form-attr-container">
+						<div class="form-attr-title">
+							<div class="text-color">Secondary Market</div>
+							<div class="form-attr-action">+ List Your item</div>
+						</div>
+						<div class="form-second-market">
+							<div class="second-market-column" style="width: 77px;padding-left: 10px;">
+								<div class="second-market-header">
+									From
+								</div>
+								<div class="second-market-td" v-for="(item,index) in 3">
+									0x7Fa...4745d
+								</div>
+							</div>
+							<div class="second-market-column" style="text-align: right;width: 75px;">
+								<div class="second-market-header">
+									Price(MBD)
+								</div>
+								<div class="second-market-td" v-for="(item,index) in 3">
+									2790.0
+								</div>
+							</div>
+							<div class="second-market-column"
+								style="text-align: right;width: 75px;padding-right: 12px;">
+								<div class="second-market-header">
+									Available
+								</div>
+								<div class="second-market-td" v-for="(item,index) in 3">
+									12
+								</div>
+							</div>
+						</div>
+					</div>
+					<div v-if="edit" class="form-attr-container">
+						<div class="form-attr-title text-color">
+							DOUJI NFT DAO Governance
+						</div>
+						<div class="form-dao">
+							<div class="dao-title text-color">
+								NFT DAO Eamings
+							</div>
+							<div class="dao-sub">
+								The NFT DAO members of this item will receive <span class="text-color">10%</span>
+								forevery sale
+							</div>
+							<div class="dao-title text-color" style="margin-top: 26px;margin-bottom:3px">
+								NFT DAO Income Distribution
+							</div>
+							<div class="dao-income-item">
+								<div class="dao-income-label">Creators Earngings</div>
+								<div class="dao-income-value text-color">80%</div>
+							</div>
+							<div class="dao-income-item">
+								<div class="dao-income-label">NFT Stakers</div>
+								<div class="dao-income-value text-color">80%</div>
+							</div>
+							<div class="dao-member dao-member-header">
+								<div class="dao-member-left">Mermber</div>
+								<div class="dao-member-right">Proportion of Revenue</div>
+							</div>
+							<div v-for="(item,index) in 2" class="dao-member dao-member-td">
+								<div class="dao-member-left text-color">0x7Fa...4745d</div>
+								<div class="dao-member-right">70%</div>
+							</div>
+							<div class="dao-title text-color" style="margin-top: 16px;">
+								NFT DAO Govemance
+							</div>
+							<div class="dao-income-item" style="margin-top: 16px;">
+								<div class="dao-income-label">Execution Threshold</div>
+								<div class="dao-income-value text-color">80</div>
+							</div>
+							<div class="dao-title text-color" style="margin-top: 28px;">
+								NFT Staker Bonus Dividend Pool
+							</div>
+							<div class="dividend-pool">
+								<div class="dividend-pool-item">
+									<div class="dividend-pool-label">Balance</div>
+									<div class="dividend-pool-value text-color">2080.0808 MBD</div>
+								</div>
+								<div class="dividend-pool-item">
+									<div class="dividend-pool-label">All members NFT Staked</div>
+									<div class="dividend-pool-value text-color">168</div>
+								</div>
+								<div class="dividend-pool-item">
+									<div class="dividend-pool-label">You NFT Staked</div>
+									<div class="dividend-pool-value text-color">3 (17.86%)</div>
+								</div>
+								<div class="dividend-pool-item">
+									<div class="dividend-pool-label">You NFT Staked Time</div>
+									<div class="dividend-pool-value text-color">4 Days</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
 					<div class="form-attr-container">
 						<div class="form-attr-title text-color">
 							Optional Setting
 						</div>
 						<div class="form-attr-setting">
-							<div class="form-attr-sale">
+							<div class="form-attr-set" @click="showSetDialog">
 								Set NFT Sales Promotion
 							</div>
-							<div class="form-attr-dao">
+							<div class="form-attr-set">
 								Set NFT DAO Governace
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="form-fee-count">
-				Total Mint Service Fee (Fee radio 10%): <span class="text-color">2500 MBD</span>
+			<div class="form-add" v-if="!edit">
+				<div class="form-fee-count">
+					Total Mint Service Fee (Fee radio 10%): <span class="text-color">2500 MBD</span>
+				</div>
+				<div class="btn-container">
+					<el-button class="common-btn2" @click="backClick">Back</el-button>
+					<el-button class="common-btn2" @click="mintClick">Mint</el-button>
+				</div>
 			</div>
-			<div class="btn-container">
-				<el-button class="common-btn2" @click="backClick">Back</el-button>
-				<el-button class="common-btn2" @click="nextClick">Next</el-button>
+			<div class="form-edit" v-else>
+				<div class="btn-container">
+					<el-button class="common-btn2" @click="backClick">Back</el-button>
+					<el-button class="common-btn2" @click="updateClick">Update</el-button>
+				</div>
 			</div>
 		</div>
+		<set-sale-dialog ref="setSaleDialog"></set-sale-dialog>
 	</div>
 </template>
 
 <script>
+	import SetSaleDialog from '@/components/create/SetSaleDialog'
 	export default {
 		name: 'create-step3',
+		components: {
+			SetSaleDialog,
+		},
+		props: {
+			edit: {
+				type: Boolean,
+				default: false
+			},
+		},
+		data(){
+			return {
+				setSaleShow:false
+			}
+		},
 		methods: {
-
+			backClick() {
+				this.$emit('backClick')
+			},
+			mintClick() {
+				this.$emit('mintClick')
+			},
+			updateClick() {
+				this.$emit('updateClick')
+			},
+			showSetDialog(){
+				console.log('showSetDialog')
+				this.$refs['setSaleDialog'].showDialog()
+			}
 		}
 	}
 </script>
@@ -226,6 +357,7 @@
 						border: 1px solid #363E3E;
 						border-radius: 6px;
 						margin-bottom: 22px;
+						height: auto;
 
 						.form-attr-title {
 							height: 48px;
@@ -236,6 +368,19 @@
 							font-family: Arial;
 							font-weight: bold;
 							color: #FFFFFF;
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							justify-content: space-between;
+
+							.form-attr-action {
+								font-size: 10px;
+								font-family: Arial;
+								font-weight: bold;
+								color: #ACBCC9;
+								line-height: 48px;
+								cursor: pointer;
+							}
 						}
 
 						.form-attr-list {
@@ -277,6 +422,7 @@
 							align-items: center;
 							padding: 17px 17px 22px 17px;
 							text-align: center;
+
 							.form-attr-available {
 								background: #1E252D;
 								border-radius: 6px;
@@ -314,9 +460,6 @@
 
 							.form-attr-mint {
 								margin: 17px 0 9px 0;
-								height: 36px;
-								line-height: 36px;
-								background: linear-gradient(-16deg, #848D98, #97A8A7);
 								border-radius: 18px;
 								font-size: 13px;
 								font-family: Arial;
@@ -332,36 +475,215 @@
 								color: #88A2B8;
 							}
 						}
-						.form-attr-setting{
+
+						.form-second-market {
+							display: flex;
+							flex-direction: row;
+							padding: 17px 12px;
+
+							.second-market-column {
+								line-height: 24px;
+								background: #252D36;
+								font-size: 9px;
+								font-family: Source Han Sans CN;
+								font-weight: 400;
+								color: #ACBCC9;
+							}
+
+							.second-market-header {
+								height: 24px;
+							}
+
+							.second-market-td {
+								font-size: 10px;
+								font-family: Arial;
+								font-weight: 400;
+								color: #FFFFFF;
+								line-height: 37px;
+								border-bottom: 1px solid #252D36;
+							}
+						}
+
+						.form-dao {
+							padding: 17px 12px;
+
+							.dao-title {
+								padding: 0 6px;
+								font-size: 12px;
+								font-family: Arial;
+								font-weight: bold;
+								color: #FFFFFF;
+							}
+
+							.dao-sub {
+								padding: 0 6px;
+								font-size: 10px;
+								font-family: Arial;
+								font-weight: 400;
+								color: #ACBCC9;
+								line-height: 14px;
+								margin-top: 9px;
+							}
+
+							.dao-income-item {
+								padding: 0 6px;
+								margin-top: 12px;
+								display: flex;
+								flex-direction: row;
+								align-items: center;
+								justify-content: space-between;
+
+								.dao-income-label {
+									font-size: 10px;
+									font-family: Arial;
+									font-weight: bold;
+									color: #9AB8DB;
+								}
+
+								.dao-income-value {
+									font-size: 10px;
+									font-family: Arial;
+									font-weight: bold;
+									color: #FFFFFF;
+								}
+							}
+
+							.dao-member {
+								padding: 0 10px;
+								display: flex;
+								flex-direction: row;
+								align-items: center;
+								justify-content: space-between;
+
+								&.dao-member-header {
+									margin-top: 14px;
+									height: 24px;
+									background: #1E252D;
+
+									.dao-member-left {
+										font-size: 9px;
+										font-family: Source Han Sans CN;
+										font-weight: 400;
+										color: #ACBCC9;
+										line-height: 24px;
+									}
+
+									.dao-member-right {
+										font-size: 9px;
+										font-family: Source Han Sans CN;
+										font-weight: 400;
+										color: #ACBCC9;
+										line-height: 24px;
+									}
+								}
+
+								&.dao-member-td {
+									height: 33px;
+
+									.dao-member-left {
+										font-size: 10px;
+										font-family: Arial;
+										font-weight: 400;
+										line-height: 33px;
+									}
+
+									.dao-member-right {
+										font-size: 10px;
+										font-family: Arial;
+										font-weight: 400;
+										color: #ACBCC9;
+										line-height: 33px;
+									}
+								}
+							}
+
+							.dividend-pool {
+								.dividend-pool-item {
+									padding: 14px 6px;
+									display: flex;
+									flex-direction: row;
+									align-items: center;
+									justify-content: space-between;
+									border-bottom: 1px solid #1F262E;
+
+									&:last-child {
+										border: none;
+									}
+
+									.dividend-pool-label {
+										font-size: 10px;
+										font-family: Arial;
+										font-weight: bold;
+										color: #9AB8DB;
+									}
+
+									.dividend-pool-value {
+										font-size: 10px;
+										font-family: Arial;
+										font-weight: bold;
+										color: #FFFFFF;
+									}
+								}
+							}
+
+						}
+
+						.form-attr-setting {
 							padding: 16px 13px;
-							
+
+							.form-attr-set {
+								cursor: pointer;
+								height: 26px;
+								line-height: 26px;
+								background: linear-gradient(-16deg, #848D98, #97A8A7);
+								border-radius: 4px;
+								font-size: 12px;
+								font-family: Source Han Sans CN;
+								font-weight: bold;
+								color: #ACBCC9;
+								padding: 0 17px;
+
+								&:first-child {
+									margin-bottom: 10px;
+								}
+
+								&:hover {
+									color: #00F9E5;
+								}
+							}
 						}
 					}
 				}
 			}
 
-			.form-fee-count {
-				font-size: 13px;
-				font-family: Source Han Sans CN;
-				font-weight: bold;
-				color: #ACBCC9;
-				margin-top: 48px;
-			}
+			.form-add {
+				.form-fee-count {
+					font-size: 13px;
+					font-family: Source Han Sans CN;
+					font-weight: bold;
+					color: #ACBCC9;
+					margin-top: 48px;
+					margin-bottom: 22px;
+				}
 
-			.btn-container {
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				justify-content: center;
-				margin-top: 22px;
+				.btn-container {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: center;
 
-				.common-btn2 {
-					margin-right: 59px;
+					.common-btn2 {
+						margin-right: 59px;
 
-					&:last-child {
-						margin-right: 0;
+						&:last-child {
+							margin-right: 0;
+						}
 					}
 				}
+			}
+
+			.form-edit {
+				margin-top: 178px;
 			}
 		}
 

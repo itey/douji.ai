@@ -1,7 +1,7 @@
 <template>
 	<div class="create-step2">
 		<div class="title">
-			Step 2     Wrete Content
+			{{edit?'Step 2     Update Content':'Step 2     Wrete Content'}}
 		</div>
 		<div class="form-container">
 			<div class="form-item">
@@ -36,7 +36,7 @@
 				</div>
 				<div class="form-value">
 					<div>
-						<el-upload class="form-upload">
+						<el-upload class="form-upload" action="">
 							<div class="form-upload-icon">+</div>
 							<div class="form-upload-tip">
 								Upload image,support png,gif,jpg,jpeg,webp files
@@ -104,6 +104,12 @@
 <script>
 	export default {
 		name: 'create-step2',
+		props:{
+			edit:{
+				type:Boolean,
+				default:false
+			}
+		},
 		methods: {
 			backClick() {
 				this.$emit('backClick')

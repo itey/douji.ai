@@ -1,7 +1,7 @@
 <template>
 	<div class="create-step1">
 		<div class="title">
-			Step 1 Set NFT Mint Infomation
+			{{edit?'Step 1     Update NFT Infomation':'Step 1 Set NFT Mint Infomation'}}
 		</div>
 		<div class="form-container">
 			<div class="label">
@@ -83,6 +83,12 @@
 <script>
 	export default {
 		name: 'create-step1',
+		props:{
+			edit:{
+				type:Boolean,
+				default:false
+			}
+		},
 		data() {
 			return {
 				categoryList: ['AI', 'AIGC', 'ChatGPT', 'Metaverse', 'NFT', 'Web3', 'Fashion', 'Digital Art', 'BlockChain',
