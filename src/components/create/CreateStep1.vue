@@ -5,7 +5,7 @@
       <div class="label">Type</div>
       <div class="type-container" v-for="(arr, index) in typeList" :key="index">
         <div v-for="(item, i) in arr" :key="i" class="item" :class="{
-					light:form.type == item.e_name
+					light:form.contentType == item.e_name
 				}" @click="choseType(item.e_name)">
           <div>{{ $i18n.locale == 'en' ? item.e_name : item.c_name }}</div>
         </div>
@@ -32,7 +32,7 @@
           <div
             class="item"
             :class="{
-					light:form.platform.includes(item.e_name)
+					light:form.prompt.includes(item.e_name)
 				}"
             v-for="(item, index) in platformList"
             :key="index"
@@ -112,9 +112,9 @@ export default {
       platformList: [],
       languageList: [],
       form: {
-        type: undefined,
+        contentType: undefined,
         category: [],
-        platform: [],
+        prompt: [],
         language: [],
         maxSupply: undefined,
         initialQuantity: undefined,
@@ -125,7 +125,7 @@ export default {
   methods: {
     /** 选择大类 */
     choseType(e_name) {
-      this.form.type = e_name
+      this.form.contentType = e_name
       this.loadCategoryList()
       this.loadPlatformList()
     },
@@ -142,11 +142,11 @@ export default {
     },
     /** 选择平台 */
     chosePlatform(val) {
-      const ifExist = this.form.platform.includes(val.e_name)
+      const ifExist = this.form.prompt.includes(val.e_name)
       if (!ifExist) {
-        this.form.platform.push(val.e_name)
+        this.form.prompt.push(val.e_name)
       } else {
-        this.form.platform = this.form.platform.filter(
+        this.form.prompt = this.form.prompt.filter(
           (item) => item !== val.e_name
         )
       }
@@ -167,19 +167,14 @@ export default {
       getNftTypes().then((r) => {
         const arr = r.data.list
         if (arr) {
-          let result = []
-          const num = 3
-          for (let i = 0, len = arr.length; i < len; i += num) {
-            result.push(arr.slice(i, i + num))
-          }
-          this.typeList = result
+          this.typeList = this._.chunk(arr, 3)
         }
       })
     },
     /** 获取分类 */
     loadCategoryList() {
-      if (this.form.type) {
-        getNftCategoriesByType(this.form.type).then((r) => {
+      if (this.form.contentType) {
+        getNftCategoriesByType(this.form.contentType).then((r) => {
           this.categoryList = r.data.list
         })
       }
@@ -192,7 +187,7 @@ export default {
     },
     /** 获取平台 */
     loadPlatformList() {
-      getNftPlatformsByType(this.form.type).then((r) => {
+      getNftPlatformsByType(this.form.contentType).then((r) => {
         this.platformList = r.data.list
       })
     },
@@ -216,7 +211,7 @@ export default {
     if (this.metadata) {
       this.form = this.metadata
     }
-    this.choseType(this.metadata.type)
+    this.choseType(this.metadata.contentType)
     this.loadLanguageList()
   },
 }

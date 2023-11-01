@@ -56,7 +56,7 @@ export default {
         initialPrice: undefined,
       },
       metadata: {
-        type: undefined,
+        contentType: undefined,
       },
       step: 0,
     }
@@ -79,8 +79,8 @@ export default {
       cache.local.setJSON('NFT_MINT_CACHE', this.metadata)
     },
 
-    itemClick(type) {
-      this.metadata.type = type
+    itemClick(contentType) {
+      this.metadata.contentType = contentType
       this.step = 1
     },
     backClick1() {

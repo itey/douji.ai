@@ -28,12 +28,7 @@ export default {
       getNftTypes().then((r) => {
         const arr = r.data.list
         if (arr) {
-          let result = []
-          const num = 3
-          for (let i = 0, len = arr.length; i < len; i += num) {
-            result.push(arr.slice(i, i + num))
-          }
-          this.typeList = result
+          this.typeList = this._.chunk(arr, 3)
         }
       })
     },
