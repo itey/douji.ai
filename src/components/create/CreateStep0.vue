@@ -20,16 +20,22 @@
 			The rest will be available soon
 		</div>
 		<div class="question">
-			How to Createï¼Ÿ
+			How to Createï¼
 		</div>
+		<set-sale-dialog ref="setSaleDialog"></set-sale-dialog>
 	</div>
 </template>
 
 <script>
+	import SetSaleDialog from '@/components/create/SetSaleDialog'
 	export default {
 		name: 'create-step0',
+		components:{
+			SetSaleDialog
+		},
 		methods: {
 			itemClick(type) {
+				this.$refs['setSaleDialog'].showDialog()
 				this.$emit('itemClick', type)
 			}
 		}

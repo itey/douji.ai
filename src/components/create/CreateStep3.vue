@@ -248,7 +248,6 @@
 				this.$emit('updateClick')
 			},
 			showSetDialog(){
-				console.log('showSetDialog')
 				this.$refs['setSaleDialog'].showDialog()
 			}
 		}

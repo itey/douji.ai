@@ -5,7 +5,7 @@
 .common-btn1 {
 	width: 188px;
 	background: linear-gradient(-21deg, #50CED5 0%, #46D1AF 100%) !important;
-	border-radius: 10px;
+	border-radius: 7px;
 }
 
 .common-btn1:disabled {
@@ -15,7 +15,7 @@
 .common-btn2 {
 	width: 188px;
 	background: linear-gradient(-16deg, #4195F6, #17E7D6) !important;
-	border-radius: 10px;
+	border-radius: 7px;
 	color: #1A2127;
 	font-weight: bold;
 	font-size: 12px;
@@ -23,6 +23,17 @@
 
 .common-btn2:disabled {
 	background: linear-gradient(-16deg, #848D98, #97A8A7) !important;
+}
+
+.common-border {
+	width: 188px;
+	background: transparent !important;
+	border: 1px solid #26BEEF;
+	border-radius: 7px;
+}
+
+.common-border:disabled {
+	background: transparent !important;
 }
 
 /* el-pagination */

@@ -52,7 +52,8 @@
 		data() {
 			return {
 				list: [],
-				step: 0
+				step: 0,
+				show:false
 			}
 		},
 		created() {
