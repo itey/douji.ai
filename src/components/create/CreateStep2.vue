@@ -50,7 +50,8 @@
         </div>
         <div class="form-value">
           <div>
-            <el-input class="input" type="textarea" rows="10"></el-input>
+            <el-input class="input" type="textarea" v-model="markContent" @input="updateMark" rows="10"></el-input>
+            <div v-html="compiledMarkdown"></div>
           </div>
           <div class="tip">Write some details about your content</div>
         </div>
@@ -80,6 +81,7 @@
 </template>
 
 <script>
+import marked from 'marked'
 export default {
   name: 'create-step2',
   props: {
@@ -92,8 +94,17 @@ export default {
       default: () => {},
     },
   },
+  computed: {
+    compiledMarkdown() {
+      if (this.markContent) {
+        return marked(this.markContent, { sanitize: true })
+      }
+      return null
+    },
+  },
   data() {
     return {
+      markContent: undefined,
       imageUrl: undefined,
       upload: {
         action: process.env.VUE_APP_BASE_URL + '/uploadFile',
@@ -112,6 +123,11 @@ export default {
     }
   },
   methods: {
+    updateMark() {
+      this._.debounce(function (e) {
+        this.input = e.target.value
+      }, 300)
+    },
     fileChange(file) {
       console.log(file)
     },
