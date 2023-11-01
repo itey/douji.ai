@@ -29,7 +29,7 @@ export default {
         const arr = r.data.list
         if (arr) {
           let result = []
-          const num = 6
+          const num = 3
           for (let i = 0, len = arr.length; i < len; i += num) {
             result.push(arr.slice(i, i + num))
           }
@@ -85,15 +85,16 @@ export default {
     margin-top: 68px;
 
     .type-item {
-      width: 245px;
-      height: 179px;
+      width: 320px;
+      height: 140px;
+      background: #1a2027;
+      border-radius: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       background: #1a2027;
       border: 1px solid #2c3638;
-      border-radius: 4px;
     }
 
     .article {
