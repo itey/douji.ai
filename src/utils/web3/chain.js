@@ -1,6 +1,6 @@
 import i18n from '@/i18n'
 import store from '@/store'
-import { Notification } from 'element-ui'
+import Vue from 'vue'
 
 const SIGN_STR = 'Wellcome to DOUJI!'
 
@@ -9,19 +9,11 @@ export function checkAccount() {
   const chainAccount = store.state.chain.account
   const userAccount = store.state.user.account
   if (!chainAccount || !userAccount) {
-    Notification({
-      title: i18n.t('common.warning'),
-      message: i18n.t('common.need_reconnect_wallet'),
-      type: 'warning'
-    })
+    Vue.$toast.warning(i18n.t('common.need_reconnect_wallet'))
     return false
   }
   if (chainAccount.toUpperCase() !== userAccount.toUpperCase()) {
-    Notification({
-      title: i18n.t('common.warning'),
-      message: i18n.t('common.need_reconnect_wallet'),
-      type: 'warning'
-    })
+    Vue.$toast.warning(i18n.t('common.need_reconnect_wallet'))
     return false
   }
   return true

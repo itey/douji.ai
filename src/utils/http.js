@@ -19,3 +19,37 @@ export function uploadJson(jsonData) {
         method: 'post'
     })
 }
+
+// NFT Types
+export function getNftTypes() {
+    return request({
+        url: '/getNftTypes',
+        method: 'get'
+    })
+}
+
+// NFT 分类
+export function getNftCategoriesByType(type) {
+    return request({
+        url: '/getNftCategoriesByType',
+        params: { type },
+        method: 'get'
+    })
+}
+
+// NFT-language
+export function getNftLanguage() {
+    return request({
+        url: '/getNftLanguages',
+        method: 'get'
+    })
+}
+
+// getNftPlatformsByType
+export function getNftPlatformsByType(type) {
+    return request({
+        url: '/getNftPlatformsByType',
+        params: { type },
+        method: 'get'
+    })
+}
