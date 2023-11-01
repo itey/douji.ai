@@ -9,6 +9,7 @@ export default {
     "news": "News",
     "navigation": "Navigation",
     "marketplace": "Marketplace",
-    "create": "Create"
+    "create": "Create",
+    "save_success": "Successfully saved",
   }
 }

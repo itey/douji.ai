@@ -20,4 +20,7 @@ module.exports = defineConfig({
 			}),
 		]
 	},
+	devServer: {
+		historyApiFallback: true
+	}
 })
