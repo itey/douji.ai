@@ -3,18 +3,16 @@
 		<img style="width: 75px;height: 75px;margin-top: 61px;" src="@/assets/images/create/mint-success.png" />
 		<div class="mint-success-title">Congratulations</div>
 		<div class="mint-success-label text-color">Your content NFT has been minted successfully!</div>
-		<div class="mint-success-content">
-			<div class="mint-success-info">
-				<div class="label">Transcantion ID</div>
-				<div class="value">0x87Fa515e6EFFOF296914D444E5512c3F70c47A3</div>
+		<div class="mint-success-info">
+			<div class="info-label">
+				<div class="info-label-item">Transcantion ID</div>
+				<div class="info-label-item">Token Address</div>
+				<div class="info-label-item">Token ID</div>
 			</div>
-			<div class="mint-success-info">
-				<div class="label">Token Address</div>
-				<div class="value">0x87Fa515e6EFFOF296914D444E5512c3F70c47A3</div>
-			</div>
-			<div class="mint-success-info">
-				<div class="label">Token ID</div>
-				<div class="value">4820</div>
+			<div class="info-value">
+				<div class="info-value-item">0x87Fa515e6EFFOF296914D444E5512c3F70c47A3</div>
+				<div class="info-value-item">0x87Fa515e6EFFOF296914D444E5512c3F70c47A3</div>
+				<div class="info-value-item">4820</div>
 			</div>
 		</div>
 		<div class="btn-container">
@@ -63,47 +61,52 @@
 			margin-top: 17px;
 		}
 
-		.mint-success-content {
+		.mint-success-info {
 			background: #212831;
 			border-radius: 11px;
 			padding: 35px 0 37px 0;
 			margin-top: 40px;
 			width: 611px;
 			display: flex;
-			flex-direction: column;
+			flex-direction: row;
 			justify-content: center;
-			align-items: center;
-			
 
-			.mint-success-info {
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				margin-bottom: 16px;
+			.info-label {
+				text-align: left;
 
-				&:last-child {
-					margin-bottom: 0;
-				}
-
-				.label {
+				.info-label-item {
 					font-size: 10px;
 					font-family: Arial;
 					font-weight: 400;
 					color: #87A2B7;
-					width: 101px;
-				text-align: left;
-				}
+					margin-bottom: 16px;
 
-				.value {
+					&:last-child {
+						margin-bottom: 0;
+					}
+				}
+			}
+
+			.info-value {
+				text-align: left;
+				margin-left: 30px;
+
+				.info-value-item {
 					font-size: 10px;
 					font-family: Arial;
 					font-weight: bold;
 					color: #FFFFFF;
-				text-align: left;
+					margin-bottom: 16px;
+
+					&:last-child {
+						margin-bottom: 0;
+					}
 				}
 			}
+
 		}
-		.btn-container{
+
+		.btn-container {
 			margin: 35px 0 50px;
 		}
 	}

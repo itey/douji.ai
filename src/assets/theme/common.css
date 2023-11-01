@@ -107,12 +107,15 @@
 	border: 1px solid #313838;
 	border-radius: 6px;
 }
+.el-input__inner:hover {
+    border-color: #00F9E5;
+}
 .el-input__inner:focus {
-    outline: 0;
-    border-color: #0E161D;
+    border-color: #00F9E5;
 	border: 1px solid #00F9E5;
 	border-radius: 6px;
 }
+
 .el-textarea__inner{
 	background-color: transparent;
 	border: 1px solid #313838;

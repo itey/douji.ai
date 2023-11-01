@@ -260,4 +260,8 @@
 		border-color: #00F9E5;
 		background-color: #00F9E5;
 	}
+	.el-input__inner {
+	    height: 35px;
+		line-height: 35px;
+	}
 </style>
