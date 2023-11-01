@@ -32,7 +32,7 @@
     <create-step0 v-if="step==0" @itemClick="itemClick"></create-step0>
     <create-step1 v-if="step==1" :metadata="metadata" @saveClick="saveData" @backClick="backClick1" @nextClick="nextClick1"></create-step1>
     <create-step2 v-if="step==2" :metadata="metadata" @saveClick="saveData" @backClick="backClick2" @nextClick="nextClick2"></create-step2>
-    <create-step3></create-step3>
+    <create-step3 v-if="step==3"></create-step3>
   </div>
 </template>
 
@@ -58,7 +58,7 @@ export default {
       metadata: {
         type: undefined,
       },
-      step: 3,
+      step: 0,
     }
   },
   created() {
