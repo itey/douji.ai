@@ -115,10 +115,12 @@
 
 .el-input__inner {
 	color: #FFFFFF;
+	background: #0E161D;
 }
 
 .el-textarea__inner {
 	color: #FFFFFF;
+	background: #0E161D;
 }
 
 .el-tag.el-tag--info {

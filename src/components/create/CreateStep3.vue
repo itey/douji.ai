@@ -192,7 +192,7 @@
 							<div class="form-attr-set" @click="showSetDialog">
 								Set NFT Sales Promotion
 							</div>
-							<div class="form-attr-set">
+							<div class="form-attr-set" @click="showDaoDialog">
 								Set NFT DAO Governace
 							</div>
 						</div>
@@ -216,15 +216,21 @@
 			</div>
 		</div>
 		<set-sale-dialog ref="setSaleDialog"></set-sale-dialog>
+		<set-dao-dialog ref="setDaoDialog"></set-dao-dialog>
+		<mint-success-dialog ref="successDialog"></mint-success-dialog>
 	</div>
 </template>
 
 <script>
 	import SetSaleDialog from '@/components/create/SetSaleDialog'
+	import SetDaoDialog from '@/components/create/SetDaoDialog'
+	import MintSuccessDialog from '@/components/create/MintSuccessDialog'
 	export default {
 		name: 'create-step3',
 		components: {
 			SetSaleDialog,
+			SetDaoDialog,
+			MintSuccessDialog,
 		},
 		props: {
 			edit: {
@@ -243,12 +249,16 @@
 			},
 			mintClick() {
 				this.$emit('mintClick')
+				this.$refs['successDialog'].showDialog()
 			},
 			updateClick() {
 				this.$emit('updateClick')
 			},
 			showSetDialog(){
 				this.$refs['setSaleDialog'].showDialog()
+			},
+			showDaoDialog(){
+				this.$refs['setDaoDialog'].showDialog()
 			}
 		}
 	}

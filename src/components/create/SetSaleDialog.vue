@@ -27,10 +27,9 @@
 				</div>
 				<div class="set-sale-value">
 					<el-input class="input" placeholder="" style="width: 461px;"></el-input>
-					<div>
-						<i class="el-icon-circle-check-outline" style="color: #00F9E5;"></i>
-						<i class="el-icon-delete" style="color: #87A2B7;"></i>
-					</div>
+					<i class="el-icon-circle-check" style="color: #00F9E5;margin-left: 4px;"></i>
+					<i class="el-icon-delete" style="color: #87A2B7;margin-left: 12px;"></i>
+					<div class="verify">Verify</div>
 				</div>
 				<div class="set-sale-tip">
 					Alows oken smart contraces that support <span class="text-color">BEP-20, BEP-721, and BEP-1155
@@ -99,8 +98,7 @@
 
 		.set-sale-top {
 			border: 1px solid #1F272F;
-			padding-top: 24px;
-			padding-left: 34px;
+			padding:24px 34px 0 34px;
 			text-align: left;
 
 			.label {
@@ -116,27 +114,28 @@
 			background: #212831;
 			border-radius: 11px;
 			margin: 22px 0 60px 0;
-			padding: 27px 25px 32px 25px;
+			padding: 27px 0 32px 0;
 
 			.set-sale-title {
 				font-size: 14px;
 				font-family: Arial;
 				font-weight: bold;
 				color: #9FAEC0;
+				margin: 0 25px;
 			}
 
 			.set-sale-label {
-				margin-top: 30px;
 				font-size: 13px;
 				font-family: Arial;
 				font-weight: bold;
+				margin:30px 25px 0 25px;
 			}
 
 			.set-sale-value {
 				display: flex;
 				flex-direction: row;
 				align-items: center;
-				margin-top: 14px;
+				margin:14px 25px 0 25px;
 
 				.type-item {
 					min-width: 115px;
@@ -171,14 +170,29 @@
 					font-weight: bold;
 					color: #00F9E5;
 				}
+
+				.verify {
+					width: 72px;
+					height: 35px;
+					line-height: 35px;
+					background: #31CAD7;
+					border: 1px solid #313838;
+					border-radius: 6px;
+					font-size: 10px;
+					font-family: Arial;
+					font-weight: bold;
+					color: #212831;
+					text-align: center;
+					margin-left: 4px;
+				}
 			}
 
 			.set-sale-tip {
-				margin-top: 9px;
 				font-size: 9px;
 				font-family: Arial;
 				font-weight: 400;
 				color: #747C7C;
+				margin:9px 25px 0 25px;
 			}
 		}
 
@@ -194,7 +208,8 @@
 			.common-btn2 {
 				width: 135px;
 			}
-			.common-border-btn{
+
+			.common-border-btn {
 				border: 1px solid #26BEEF;
 				border-radius: 7px;
 				font-size: 12px;
