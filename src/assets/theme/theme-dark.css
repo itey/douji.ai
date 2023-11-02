@@ -237,3 +237,7 @@
 .el-tabs__active-bar {
 	background: linear-gradient(-90deg, #4195F6, #00F9E5);
 }
+
+.vditor-reset {
+	color: #FFFFFF;
+}
