@@ -55,7 +55,7 @@
         </div>
         <div class="form-value">
           <div style="width: 544px;">
-            <MarkdownVditor ref="contentPub" :pdata="form.openContent" />
+            <PubVditor :id="'1'" ref="contentPub" :pdata="form.openContent" />
           </div>
           <div class="tip">Write some details about your content</div>
         </div>
@@ -70,7 +70,7 @@
         </div>
         <div class="form-value">
           <div style="width: 544px;">
-            <MarkdownVditor ref="contentPrivate" :pdata="form.protectedContent" />
+            <PrivateVditor :id="'2'" ref="contentPrivate" :pdata="form.protectedContent" />
           </div>
           <div class="tip">Write some details about your content</div>
         </div>
@@ -85,8 +85,10 @@
 </template>
 
 <script>
-import MarkdownVditor from '../MarkdownVditor.vue'
-
+import {
+  default as PrivateVditor,
+  default as PubVditor,
+} from '../MarkdownVditor.vue'
 export default {
   name: 'create-step2',
   props: {
@@ -100,7 +102,8 @@ export default {
     },
   },
   components: {
-    MarkdownVditor,
+    PubVditor,
+    PrivateVditor,
   },
   data() {
     return {

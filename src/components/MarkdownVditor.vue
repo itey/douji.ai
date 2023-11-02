@@ -1,5 +1,5 @@
 <template>
-  <div id="vditor" />
+  <div :id="id" />
 </template>
 
 <script>
@@ -16,6 +16,10 @@ export default {
   },
 
   props: {
+    id: {
+      type: String,
+      required: true,
+    },
     pdata: {
       type: String,
       required: true,
@@ -27,7 +31,7 @@ export default {
   },
   methods: {
     initVditor() {
-      this.contentEditor = new Vditor('vditor', {
+      this.contentEditor = new Vditor(this.id, {
         height: 360,
         toolbarConfig: {
           pin: true,
