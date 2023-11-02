@@ -15,24 +15,13 @@ import VueClipBoard from 'vue-clipboard2'
 import Toast from "vue-toastification"
 import "vue-toastification/dist/index.css"
 
-import VMdEditor from '@kangc/v-md-editor'
-import '@kangc/v-md-editor/lib/style/base-editor.css'
-import githubTheme from '@kangc/v-md-editor/lib/theme/github.js'
-import '@kangc/v-md-editor/lib/theme/style/github.css'
 
-// highlightjs
-import hljs from 'highlight.js'
-
-VMdEditor.use(githubTheme, {
-  Hljs: hljs,
-})
 
 Vue.prototype._ = _
 
 
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
-Vue.use(VMdEditor)
 Vue.use(VuePlugin)
 Vue.use(ElementUI)
 Vue.use(VueClipBoard)

@@ -55,7 +55,7 @@
         </div>
         <div class="form-value">
           <div style="width: 544px;">
-            <v-md-editor v-model="markContentPub"></v-md-editor>
+            <MarkdownVditor ref="contentPub" :pdata="form.openContent" />
           </div>
           <div class="tip">Write some details about your content</div>
         </div>
@@ -70,7 +70,7 @@
         </div>
         <div class="form-value">
           <div style="width: 544px;">
-            <v-md-editor v-model="markContentPrivate"></v-md-editor>
+            <MarkdownVditor ref="contentPrivate" :pdata="form.protectedContent" />
           </div>
           <div class="tip">Write some details about your content</div>
         </div>
@@ -85,6 +85,8 @@
 </template>
 
 <script>
+import MarkdownVditor from '../MarkdownVditor.vue'
+
 export default {
   name: 'create-step2',
   props: {
@@ -96,6 +98,9 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+  components: {
+    MarkdownVditor,
   },
   data() {
     return {
@@ -119,6 +124,11 @@ export default {
     }
   },
   methods: {
+    /** 获取markdown内容 */
+    markdowGetValue() {
+      this.$refs.contentPub.getValue()
+      this.$refs.contentPrivate.getValue()
+    },
     fileChange(file) {
       console.log(file)
     },
@@ -126,6 +136,7 @@ export default {
       this.$emit('backClick')
     },
     saveClick() {
+      this.markdowGetValue()
       this.$emit('saveClick')
     },
     nextClick() {
