@@ -11,5 +11,14 @@ export default {
     "marketplace": "Marketplace",
     "create": "Create",
     "save_success": "Successfully saved",
+    "img_format_error": "Image format is invalid",
+    "img_large_error": "The image cannot be larger than {0}MB"
+  },
+  "create": {
+    "title_required": "Title is required",
+    "description_required": "Description is required",
+    "image_required": "Cover image is required",
+    "keyword_required": "At least one keyword is required.",
+    "content_pub_required": "Open article content is required",
   }
 }
