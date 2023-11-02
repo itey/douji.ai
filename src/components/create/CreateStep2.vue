@@ -29,9 +29,7 @@
                 <div class="form-upload-icon">+</div>
                 <div class="form-upload-tip">Upload image,support png,gif,jpg,jpeg,webp files</div>
               </div>
-              <div slot="file" slot-scope="{file}">
-                <img class="file-img" :src="file.url" />
-              </div>
+              <img v-if="imageUrl" class="file-img" :src="imageUrl" />
             </el-upload>
           </div>
         </div>
@@ -109,6 +107,7 @@ export default {
     return {
       markContentPub: undefined,
       markContentPrivate: undefined,
+      imageFile: undefined,
       imageUrl: undefined,
       upload: {
         action: process.env.VUE_APP_BASE_URL + '/uploadFile',
@@ -133,7 +132,12 @@ export default {
       this.$refs.contentPrivate.getValue()
     },
     fileChange(file) {
-      console.log(file)
+      this.dialogImageUrl = window.URL
+        ? window.URL.createObjectURL(file.raw)
+        : window.webkitURL.createObjectURL(file.raw)
+      this.imageUrl = this.dialogImageUrl
+      this.imageFile = file
+      console.log(this.imageUrl)
     },
     backClick() {
       this.$emit('backClick')
