@@ -16,7 +16,7 @@
           <div
             class="item"
             :class="{
-					light:form.category.includes(item.e_name)
+					light:form.category && form.category.includes(item.e_name)
 				}"
             v-for="item in categoryList"
             :key="item.id"
@@ -32,7 +32,7 @@
           <div
             class="item"
             :class="{
-					light:form.prompt.includes(item.e_name)
+					light:form.prompt && form.prompt.includes(item.e_name)
 				}"
             v-for="(item, index) in platformList"
             :key="index"
@@ -47,7 +47,7 @@
         <div
           class="item"
           :class="{
-					light:form.language.includes(item.english)
+					light:form.language && form.language.includes(item.english)
 				}"
           v-for="(item, index) in languageList"
           :key="index"
