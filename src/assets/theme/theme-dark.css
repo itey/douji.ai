@@ -241,3 +241,11 @@
 .vditor-reset {
 	color: #FFFFFF;
 }
+
+.el-menu-item {
+	color: #FFFFFF;
+}
+
+.el-menu-item:hover {
+	color: #00FBE6;
+}
