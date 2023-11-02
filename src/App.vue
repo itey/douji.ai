@@ -15,7 +15,7 @@
 					<router-view />
 				</div>
 			</el-main>
-			<el-footer style="height: auto;">
+			<el-footer style="height: auto;background: #1A2027;margin-top: 16px;">
 				<div class="app-content">
 					<NavFooter />
 				</div>

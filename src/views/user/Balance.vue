@@ -4,7 +4,7 @@
 			<div class="text-big text-color">Balances</div>
 			<div class="balance-address-container">
 				<img style="width: 16px; height: 16px;" src="@/assets/images/user/user.png"></img>
-				<div class="balance-address">{{ $store.state.user.account | omitAddress }}</div>
+				<div class="balance-address">{{'1'| $store.state.user.account | omitAddress }}</div>
 				<img style="width: 14px; height: 14px;" src="@/assets/images/user/copy.png"></img>
 			</div>
 		</div>
@@ -66,17 +66,22 @@
 			</div>
 		</div>
 		<div class="settle-button">
-			<el-button class="common-btn1" type="primary">Settlement</el-button>
+			<el-button @click="$refs['incomeDialog'].showDialog()" class="common-btn1" type="primary">Settlement</el-button>
 		</div>
 		<div class="text-color settle-label">
 			Settlement Fee: 5000 MBD Number of fee-free times: <span style="color: #47D1AF;">3</span>
 		</div>
+		<income-dialog ref="incomeDialog"></income-dialog>
 	</div>
 </template>
 
 <script>
+	import IncomeDialog from '@/components/user/IncomeDialog'
 	export default {
 		name: 'balance-view',
+		components:{
+			IncomeDialog
+		}
 	}
 </script>
 
@@ -236,6 +241,9 @@
 			font-weight: 400;
 			color: #FFFFFF;
 			margin: 12px 0 44px 0;
+		}
+		.common-btn1{
+			height: auto;
 		}
 	}
 </style>
