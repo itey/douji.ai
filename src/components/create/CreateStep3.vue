@@ -4,12 +4,9 @@
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
-          <div class="form-title text-color">Enterprise Metaverse Users Prefer Simplifed Digital Avatars Over Hyper-Realistic Alternatives</div>
-          <img style="width: 676px;height: 383px;margin-top:36px;" />
-          <div class="form-desc">
-            The easy-to-use prompt to generate the portrait photography with sea activity scene. You can
-            modify the characteractivity and location of the sea as per your preference.
-          </div>
+          <div class="form-title text-color">{{ form.title }}</div>
+          <img style="width: 676px;height: 383px;margin-top:36px;" :src="form.image" />
+          <div class="form-desc">{{ form.description }}</div>
           <div class="form-label-sub" style="margin-top: 16px;">
             <img style="width: 14px;height: 14px;" src="@/assets/images/create/website.png" />
             <div class="form-label-sub-text">Open to Access</div>
@@ -26,7 +23,7 @@
           </div>
           <div class="form-tag">
             <div class="form-tag-label text-color">Tags:</div>
-            <div class="form-tag-item text-color" v-for="(item,index) in 4">NFT</div>
+            <div class="form-tag-item text-color" v-for="(item,index) in form.keyword" :key="index">{{ item }}</div>
           </div>
         </div>
         <div class="form-right">
@@ -35,31 +32,31 @@
             <div class="form-attr-list">
               <div class="form-attr-item">
                 <div class="form-attr-label">Content Type</div>
-                <div class="form-attr-value">Airticle</div>
+                <div class="form-attr-value">{{ form.contentType }}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Category</div>
-                <div class="form-attr-value">AIGC</div>
+                <div class="form-attr-value">{{ form.category | arrayMax1 }}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Platform</div>
-                <div class="form-attr-value">GPT</div>
+                <div class="form-attr-value">{{ form.prompt | arrayMax1 }}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Language</div>
-                <div class="form-attr-value">English</div>
+                <div class="form-attr-value">{{ form.language | arrayMax1 }}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Max Supply</div>
-                <div class="form-attr-value">50,000</div>
+                <div class="form-attr-value">{{ form.maxSupply }}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Available Supply</div>
-                <div class="form-attr-value">50,000</div>
+                <div class="form-attr-value">{{ form.maxSupply }}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Initial Mint Quantity</div>
-                <div class="form-attr-value">50,000</div>
+                <div class="form-attr-value">{{ form.initialQuantity }}</div>
               </div>
             </div>
           </div>
@@ -204,13 +201,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    metadata: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
       setSaleShow: false,
-      markdownPub: '# Hello, Vue Markdown!',
-      markdownPrivate: '# Hello, React Markdown!',
+      markdownPub: '',
+      markdownPrivate: '',
       md: new MarkdownIt(),
+      form: {},
     }
   },
   computed: {
@@ -229,9 +231,16 @@ export default {
       }
     },
   },
+  mounted() {
+    if (this.metadata) {
+      this.form = this.metadata
+      this.markdownPub = this.form.openContent
+      this.markdownPrivate = this.form.protectedContent
+    }
+  },
   methods: {
     backClick() {
-      this.$emit('backClick')
+      this.$emit('backClick', 2)
     },
     mintClick() {
       this.$emit('mintClick')

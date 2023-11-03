@@ -18,3 +18,27 @@ export const decimalPlace3 = (val) => {
 export const decimalPlace4 = (val) => {
   return (Math.floor(val * 10000) / 10000).toFixed(4)
 }
+
+export const array2String = (arr) => {
+  if (arr && arr.length) {
+    return arr.join(',')
+  } else {
+    return arr
+  }
+}
+
+export const arrayOne = (arr) => {
+  if (arr && arr.length) {
+    return arr[0]
+  } else {
+    return arr
+  }
+}
+
+export const arrayMax1 = (arr) => {
+  if (arr && arr.length) {
+    return arr.length > 1 ? arr[0] + '/...' : arr[0]
+  } else {
+    return arr
+  }
+}

@@ -23,8 +23,9 @@
             @click="choseCategory(item)"
           >{{$i18n.locale == 'en' ? item.e_name : item.c_name}}</div>
         </div>
-        <div class="tip">Not allowed to chage after mint.</div>
       </template>
+      <div v-if="error.category" class="tip-error">{{ error.category }}</div>
+      <div v-else class="tip">Not allowed to chage after mint.</div>
 
       <template v-if="platformList.length">
         <div class="label">Platform</div>
@@ -57,26 +58,31 @@
       <div class="tip">Not allowed to chage after mint.</div>
       <div class="label">NFT Max Supply</div>
       <div class="input-container">
-        <el-input v-model="form.maxSupply" class="input"></el-input>
+        <el-input @change="checkItem('maxSupply')" v-model="form.maxSupply" class="input"></el-input>
       </div>
-      <div class="tip" v-if="form.maxSupply">
-        NFT Maximum Available Supply Quantity
-        <span class="text-color">{{ form.maxSupply }}</span>
-      </div>
+      <div v-if="error.maxSupply" class="tip-error">{{ error.maxSupply }}</div>
+      <template v-else>
+        <div class="tip" v-if="form.maxSupply">
+          NFT Maximum Available Supply Quantity
+          <span class="text-color">{{ form.maxSupply }}</span>
+        </div>
+      </template>
       <div class="label">NFT Initial Mint Quantity</div>
       <div class="input-container">
-        <el-input v-model="form.initialQuantity" class="input"></el-input>
+        <el-input @change="checkItem('initialQuantity')" v-model="form.initialQuantity" class="input"></el-input>
       </div>
-      <div class="tip">
-        Not allowed to chage after mint.NFT Maximum Initial Mint Quantity
+      <div v-if="error.initialQuantity" class="tip-error">{{ error.initialQuantity }}</div>
+      <div v-else class="tip">
+        Not allowed to change after mint.NFT Maximum Initial Mint Quantity
         <span class="text-color">250</span>
       </div>
       <div class="label">NFT Initial Mint Price</div>
       <div class="input-container">
-        <el-input v-model="form.initialPrice" class="input"></el-input>
+        <el-input @change="checkItem('initialPrice')" v-model="form.initialPrice" class="input"></el-input>
         <div class="unit">MBD</div>
       </div>
-      <div class="tip">Allowed to chage after mint.Price set to 0,anyone can mint for free,access protected content.</div>
+      <div v-if="error.initialPrice" class="tip-error">{{ error.initialPrice }}</div>
+      <div v-else class="tip">Allowed to change after mint.Price set to 0,anyone can mint for free,access protected content.</div>
       <div class="btn-container">
         <el-button class="common-btn2" @click="backClick()">Back</el-button>
         <el-button class="common-btn2" @click="saveClick()">Save</el-button>
@@ -120,6 +126,7 @@ export default {
         initialQuantity: undefined,
         initialPrice: undefined,
       },
+      error: {},
     }
   },
   methods: {
@@ -142,7 +149,10 @@ export default {
     },
     /** 选择平台 */
     chosePlatform(val) {
-      const ifExist = this.form.prompt.includes(val.e_name)
+      if (!this.form.prompt) {
+        this.form.prompt = []
+      }
+      const ifExist = this.form.prompt && this.form.prompt.includes(val.e_name)
       if (!ifExist) {
         this.form.prompt.push(val.e_name)
       } else {
@@ -191,8 +201,115 @@ export default {
         this.platformList = r.data.list
       })
     },
+    clearError(val) {
+      this.$set(this.error, val, '')
+    },
+    setError(key, val) {
+      this.$set(this.error, key, val)
+    },
+    /** 单项检查 */
+    checkItem(key) {
+      var reg = /^[0-9]+.?[0-9]*$/
+      switch (key) {
+        case 'category':
+          if (!this.form.category) {
+            this.setError(key, this.$t('create.category_required'))
+          } else {
+            this.clearError(key)
+          }
+          break
+        case 'maxSupply':
+          if (!this.form.maxSupply) {
+            this.setError(key, this.$t('create.maxSupply_required'))
+          } else {
+            if (!reg.test(this.form.maxSupply)) {
+              this.setError(key, this.$t('create.maxSupply_invalid'))
+            } else {
+              this.clearError(key)
+            }
+          }
+          break
+        case 'initialQuantity':
+          if (!this.form.initialQuantity) {
+            this.setError(key, this.$t('create.initialQuantity_required'))
+          } else {
+            if (!reg.test(this.form.initialQuantity)) {
+              this.setError(key, this.$t('create.initialQuantity_invalid'))
+            } else {
+              this.clearError(key)
+            }
+          }
+          break
+        case 'initialPrice':
+          if (!this.form.initialPrice) {
+            this.setError(key, this.$t('create.initialPrice_required'))
+          } else {
+            if (
+              isNaN(Number(this.form.initialPrice)) ||
+              Number(this.form.initialPrice) <= 0
+            ) {
+              this.setError(key, this.$t('create.initialPrice_invalid'))
+            } else {
+              this.clearError(key)
+            }
+          }
+          break
+        default:
+          break
+      }
+    },
+    /** 表单检查 */
+    formCheck() {
+      this.error = {}
+      var reg = /^[0-9]+.?[0-9]*$/
+      var ifPass = true
+      if (!this.form.category.length) {
+        this.setError('category', this.$t('create.category_required'))
+        ifPass = false
+      }
+
+      if (!this.form.maxSupply) {
+        this.setError('maxSupply', this.$t('create.maxSupply_required'))
+        ifPass = false
+      } else {
+        if (!reg.test(this.form.maxSupply)) {
+          this.setError('maxSupply', this.$t('create.maxSupply_invalid'))
+          ifPass = false
+        }
+      }
+
+      if (!this.form.initialQuantity) {
+        this.setError(
+          'initialQuantity',
+          this.$t('create.initialQuantity_required')
+        )
+        ifPass = false
+      } else {
+        if (!reg.test(this.form.initialQuantity)) {
+          this.setError(
+            'initialQuantity',
+            this.$t('create.initialQuantity_invalid')
+          )
+          ifPass = false
+        }
+      }
+
+      if (!this.form.initialPrice) {
+        this.setError('initialPrice', this.$t('create.initialPrice_required'))
+        ifPass = false
+      } else {
+        if (
+          isNaN(Number(this.form.initialPrice)) ||
+          Number(this.form.initialPrice) <= 0
+        ) {
+          this.setError('initialPrice', this.$t('create.initialPrice_invalid'))
+          ifPass = false
+        }
+      }
+      return ifPass
+    },
     backClick() {
-      this.$emit('backClick')
+      this.$emit('backClick', 0)
     },
     saveClick() {
       if (!this.form.step) {
@@ -203,7 +320,9 @@ export default {
     },
     nextClick() {
       this.$emit('saveClick', this.form)
-      this.$emit('nextClick')
+      if (this.formCheck()) {
+        this.$emit('nextClick', 2)
+      }
     },
   },
   mounted() {
@@ -314,6 +433,15 @@ export default {
       font-family: Arial;
       font-weight: 400;
       color: #707d8c;
+      text-align: left;
+    }
+
+    .tip-error {
+      margin-top: 13px;
+      font-size: 9px;
+      font-family: Arial;
+      font-weight: 400;
+      color: #a50507;
       text-align: left;
     }
 

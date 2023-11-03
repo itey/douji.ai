@@ -15,6 +15,13 @@ export default {
     "img_large_error": "The image cannot be larger than {0}MB"
   },
   "create": {
+    "category_required": "Category is required",
+    "maxSupply_required": "Nft max supply is required",
+    "maxSupply_invalid": "Nft max supply must be a number",
+    "initialQuantity_required": "Initial quantity is required",
+    "initialQuantity_invalid": "Initial quantity must be a number",
+    "initialPrice_required": "Initial price is required",
+    "initialPrice_invalid": "Initial price must be a number",
     "title_required": "Title is required",
     "description_required": "Description is required",
     "image_required": "Cover image is required",

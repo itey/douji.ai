@@ -30,9 +30,9 @@
       </div>
     </div>
     <create-step0 v-if="step==0" @itemClick="itemClick"></create-step0>
-    <create-step1 v-if="step==1" :metadata="metadata" @saveClick="saveData" @backClick="backClick1" @nextClick="nextClick1"></create-step1>
-    <create-step2 v-if="step==2" :metadata="metadata" @saveClick="saveData" @backClick="backClick2" @nextClick="nextClick2"></create-step2>
-    <create-step3 v-if="step==3"></create-step3>
+    <create-step1 v-if="step==1" :metadata="metadata" @saveClick="saveData" @backClick="backClick" @nextClick="nextClick"></create-step1>
+    <create-step2 v-if="step==2" :metadata="metadata" @saveClick="saveData" @backClick="backClick" @nextClick="nextClick"></create-step2>
+    <create-step3 v-if="step==3" :metadata="metadata" @saveClick="saveData" @backClick="backClick"></create-step3>
   </div>
 </template>
 
@@ -70,30 +70,21 @@ export default {
       if (cacheData) {
         this.metadata = cacheData
         this.step = cacheData.step
-        console.log(cacheData)
       }
     },
-
     saveData(form) {
       this.metadata = form
       cache.local.setJSON('NFT_MINT_CACHE', this.metadata)
     },
-
     itemClick(contentType) {
       this.metadata.contentType = contentType
       this.step = 1
     },
-    backClick1() {
-      this.step = 0
+    backClick(val) {
+      this.step = val
     },
-    nextClick1() {
-      this.step = 2
-    },
-    backClick2() {
-      this.step = 1
-    },
-    nextClick2() {
-      this.step = 3
+    nextClick(val) {
+      this.step = val
     },
   },
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="create-step2">
     <div class="title">{{edit?'Step 2 Update Content':'Step 2 Wrete Content'}}</div>
-    <div class="form-container">
+    <div class="form-container" v-loading="loading">
       <div class="form-item">
         <div class="form-label">Title*</div>
         <div class="form-value">
@@ -70,7 +70,7 @@
           <div style="width: 544px;">
             <PubVditor :id="'1'" ref="contentPub" :pdata="form.openContent" />
           </div>
-          <div v-if="error.openContent" class="tip-error">{{ error.openContent }}</div>
+          <div v-if="error.contentUrl" class="tip-error">{{ error.contentUrl }}</div>
           <div v-else class="tip">Write some details about your content</div>
         </div>
       </div>
@@ -99,6 +99,8 @@
 </template>
 
 <script>
+import { encryptContent, uploadContent, uploadFile } from '@/utils/http'
+
 import {
   default as PrivateVditor,
   default as PubVditor,
@@ -121,6 +123,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       markContentPub: undefined,
       markContentPrivate: undefined,
       imageFile: undefined,
@@ -131,17 +134,20 @@ export default {
           token: this.$store.state.user.token,
         },
         fileType: ['png', 'jpg', 'jpeg', 'gif'],
-        fileSize: 0.1,
+        fileSize: 1,
       },
       form: {
         title: undefined,
         name: undefined,
         image: undefined,
+        imageFile: undefined,
         description: undefined,
         keyword: undefined,
-        openContent: undefined,
         contentUrl: undefined,
+        openContent: undefined,
+        protected: undefined,
         protectedContent: undefined,
+        hashCode: undefined,
       },
       error: {},
       inputVisible: false,
@@ -151,13 +157,44 @@ export default {
   mounted() {
     if (this.metadata) {
       this.form = this.metadata
+      if (this.form.image) {
+        this.imageUrl = this.form.image
+      }
     }
   },
   methods: {
     /** 获取markdown内容 */
-    markdownGetValue() {
-      this.markContentPub = this.$refs.contentPub.getValue()
-      this.markContentPrivate = this.$refs.contentPrivate.getValue()
+    async markdownGetValue() {
+      const pubContent = this.$refs.contentPub.getValue()
+      const privateContent = this.$refs.contentPrivate.getValue()
+      if (pubContent != null && pubContent != 'Cg==') {
+        if (pubContent != this.metadata.openContent) {
+          const r = await uploadContent(pubContent)
+          if (r.code == 1) {
+            this.form.contentUrl = r.data.url
+            this.form.openContent = pubContent
+          }
+        }
+      } else {
+        this.form.contentUrl = undefined
+        this.form.openContent = undefined
+      }
+      if (privateContent != null && pubContent != 'Cg==') {
+        if (privateContent != this.metadata.protectedContent) {
+          const r = await uploadContent(privateContent)
+          if (r.code == 1) {
+            const protectedUrl = r.data.url
+            const res = await encryptContent(protectedUrl)
+            if (res.code == 1) {
+              this.form.protected = res.data.encrypted
+              this.form.protectedContent = privateContent
+            }
+          }
+        }
+      } else {
+        this.form.protected = undefined
+        this.form.protectedContent = undefined
+      }
     },
     /** 图片选择 */
     fileChange(file) {
@@ -183,6 +220,18 @@ export default {
       this.imageFile = file
       console.log(this.imageUrl)
     },
+    /** 处理图片上传 */
+    async uploadFileProcess() {
+      if (this.imageFile && this.imageFile != this.metadata.imageFile) {
+        const formData = new FormData()
+        formData.append('file', this.imageFile.raw)
+        const r = await uploadFile(formData)
+        if (r.code == 1) {
+          this.form.image = r.data.url
+          this.form.imageFile = this.imageFile
+        }
+      }
+    },
     handleClose(tag) {
       this.form.keyword.splice(this.form.keyword.indexOf(tag), 1)
     },
@@ -205,14 +254,6 @@ export default {
     },
     setError(key, val) {
       this.$set(this.error, key, val)
-    },
-    backClick() {
-      this.$emit('backClick')
-    },
-    saveClick() {
-      this.markdownGetValue()
-      this.$emit('saveClick', this.form)
-      this.$toast.success(this.$t('common.save_success'))
     },
     /** 单项检查 */
     checkItem(key) {
@@ -245,8 +286,8 @@ export default {
             this.clearError(key)
           }
           break
-        case 'openContent':
-          if (!this.form.openContent) {
+        case 'contentUrl':
+          if (!this.form.contentUrl) {
             this.setError(key, this.$t('create.content_pub_required'))
           } else {
             this.clearError(key)
@@ -280,16 +321,31 @@ export default {
         ifPass = false
       }
 
-      if (!this.form.openContent) {
-        this.setError('openContent', this.$t('create.content_pub_required'))
+      if (!this.form.contentUrl) {
+        this.setError('contentUrl', this.$t('create.content_pub_required'))
         ifPass = false
       }
-
       return ifPass
     },
-    nextClick() {
+    backClick() {
+      this.$emit('backClick', 1)
+    },
+    async saveClick() {
+      this.loading = true
+      await this.markdownGetValue()
+      await this.uploadFileProcess()
+      this.loading = false
+      this.$emit('saveClick', this.form)
+      this.$toast.success(this.$t('common.save_success'))
+    },
+    async nextClick() {
+      this.loading = true
+      await this.markdownGetValue()
+      await this.uploadFileProcess()
+      this.$emit('saveClick', this.form)
+      this.loading = false
       if (this.formCheck()) {
-        this.$emit('nextClick')
+        this.$emit('nextClick', 3)
       }
     },
   },
