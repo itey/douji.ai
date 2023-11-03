@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">Keyword*</div>
+        <div class="form-label">Tags*</div>
         <div class="form-value">
           <div>
             <!-- <el-input v-model="form.keyword" class="input"></el-input> -->

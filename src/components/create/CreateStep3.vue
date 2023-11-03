@@ -65,13 +65,13 @@
             <div class="form-attr-market">
               <div class="form-attr-available">
                 Available :
-                <span class="text-color">46528</span>
+                <span class="text-color">{{ form.maxSupply }}</span>
               </div>
               <div class="form-attr-mbd">
                 <div class="mbd-value text-color">2590.0 MBD</div>
                 <div class="mbd-transform">≈$26.57</div>
               </div>
-              <el-button class="common-btn2 form-attr-mint">Mint</el-button>
+              <el-button disabled class="common-btn2 form-attr-mint">Mint</el-button>
               <div class="form-attr-tip">
                 Owning
                 <span class="text-color">1 BJxStar</span> To Get
