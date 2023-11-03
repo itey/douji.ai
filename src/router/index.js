@@ -43,6 +43,10 @@ const routes = [{
 		component: () => import("@/page/User"),
 		children: [
 			{
+				path:'',
+				redirect:'/balance'
+			},
+			{
 				path: '/balance',
 				name: 'balance',
 				component: () => import("@/views/user/Balance"),
