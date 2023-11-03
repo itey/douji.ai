@@ -1,17 +1,13 @@
 import mbd from '@/assets/abi/mbd.json'
 import i18n from '@/i18n'
-import { Notification } from 'element-ui'
+import Vue from 'vue'
 
 
 /** 获取MBD合约 */
 function getMBDContract() {
   const web3 = window.web3
   if (!web3) {
-    Notification({
-      title: i18n.t('common.warning'),
-      message: i18n.t('common.need_reconnect_wallet'),
-      type: 'warning'
-    })
+    Vue.$toast.warning(i18n.t('common.need_reconnect_wallet'))
     return
   }
   return new web3.eth.Contract(mbd.abi, process.env.VUE_APP_MBD)

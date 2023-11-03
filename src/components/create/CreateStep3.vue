@@ -71,8 +71,8 @@
                 <div class="mbd-value text-color">2590.0 MBD</div>
                 <div class="mbd-transform">≈$26.57</div>
               </div>
-              <el-button disabled class="common-btn2 form-attr-mint">Mint</el-button>
-              <div class="form-attr-tip">
+              <el-button v-if="edit" disabled class="common-btn2 form-attr-mint">Mint</el-button>
+              <div class="form-attr-tip" v-if="edit">
                 Owning
                 <span class="text-color">1 BJxStar</span> To Get
                 <span class="text-color">20%</span>
@@ -152,7 +152,7 @@
               </div>
             </div>
           </div>
-          <div class="form-attr-container">
+          <div class="form-attr-container" v-if="edit">
             <div class="form-attr-title text-color">Optional Setting</div>
             <div class="form-attr-setting">
               <div class="form-attr-set" @click="showSetDialog">Set NFT Sales Promotion</div>
@@ -162,16 +162,16 @@
         </div>
       </div>
       <div class="form-add" v-if="!edit">
-        <div class="form-fee-count">
-          Total Mint Service Fee (Fee radio 10%):
-          <span class="text-color">2500 MBD</span>
-        </div>
         <div class="btn-container">
           <el-button class="common-btn2" @click="backClick">Back</el-button>
           <el-button class="common-btn2" @click="mintClick">Mint</el-button>
         </div>
       </div>
       <div class="form-edit" v-else>
+        <div class="form-fee-count">
+          Total Mint Service Fee (Fee radio 10%):
+          <span class="text-color">2500 MBD</span>
+        </div>
         <div class="btn-container">
           <el-button class="common-btn2" @click="backClick">Back</el-button>
           <el-button class="common-btn2" @click="updateClick">Update</el-button>
@@ -660,6 +660,7 @@ export default {
     }
 
     .form-add {
+      margin-top: 40px;
       .form-fee-count {
         font-size: 13px;
         font-family: Source Han Sans CN;

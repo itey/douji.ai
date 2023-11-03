@@ -26,9 +26,9 @@ export function loginWalletSign(chainAccount) {
     if (!web3) {
       reject('web3 is not ready')
     }
-    const text = web3.utils.utf8ToHex(SIGN_STR)
+    // const text = web3.utils.utf8ToHex(SIGN_STR)
     web3.eth.personal
-      .sign(text, chainAccount, '')
+      .sign(SIGN_STR, chainAccount, '')
       .then((signed) => {
         resolve(signed)
       })
@@ -48,5 +48,8 @@ export function balanceOfBnb(account) {
     }
     web3.eth.getBalance(account).then((balance) =>
       resolve(web3.utils.fromWei(balance, 'ether')))
+      .catch(e => {
+        reject(e)
+      })
   })
 }

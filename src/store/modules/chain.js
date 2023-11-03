@@ -2,6 +2,7 @@
 import store from '@/store';
 import { balanceOfBnb } from '@/utils/web3/chain';
 import { balanceOfMbd } from '@/utils/web3/mbd';
+import Vue from 'vue';
 
 const projectId = process.env.VUE_APP_PROJECT_ID;
 const clientKey = process.env.VUE_APP_CLIENT_KEY;
@@ -33,16 +34,24 @@ const chain = {
 
   actions: {
     // 获取BNB余额
-    async getBalanceOfBnb({ commit }) {
+    getBalanceOfBnb({ commit }) {
       const account = store.state.chain.account
-      const balance = await balanceOfBnb(account)
-      commit('setBalanceBnb', balance)
+      balanceOfBnb(account).then(balance => {
+        commit('setBalanceBnb', balance)
+      }).catch(e => {
+        Vue.$toast.warning(e.message ? e.message : e)
+      })
+
     },
     // 获取MBD余额
-    async getBalanceOfMbd({ commit }) {
+    getBalanceOfMbd({ commit }) {
       const account = store.state.chain.account
-      const balance = await balanceOfMbd(account)
-      commit('setBalanceMbd', balance)
+      balanceOfMbd(account).then(balance => {
+        commit('setBalanceMbd', balance)
+      }).catch(e => {
+        Vue.$toast.warning(e.message ? e.message : e)
+      })
+
     },
   }
 }
