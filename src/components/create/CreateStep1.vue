@@ -16,7 +16,7 @@
           <div
             class="item"
             :class="{
-					light:form.category && form.category.includes(item.e_name)
+					light:form.category == item.e_name
 				}"
             v-for="item in categoryList"
             :key="item.id"
@@ -119,7 +119,7 @@ export default {
       languageList: [],
       form: {
         contentType: undefined,
-        category: [],
+        category: undefined,
         prompt: [],
         language: [],
         keyword: [],
@@ -139,14 +139,15 @@ export default {
     },
     /** 选择分类 */
     choseCategory(val) {
-      const ifExist = this.form.category.includes(val.e_name)
-      if (!ifExist) {
-        this.form.category.push(val.e_name)
-      } else {
-        this.form.category = this.form.category.filter(
-          (item) => item !== val.e_name
-        )
-      }
+      this.form.category = val.e_name
+      // const ifExist = this.form.category.includes(val.e_name)
+      // if (!ifExist) {
+      //   this.form.category.push(val.e_name)
+      // } else {
+      //   this.form.category = this.form.category.filter(
+      //     (item) => item !== val.e_name
+      //   )
+      // }
     },
     /** 选择平台 */
     chosePlatform(val) {
@@ -264,7 +265,7 @@ export default {
       this.error = {}
       var reg = /^[0-9]+.?[0-9]*$/
       var ifPass = true
-      if (!this.form.category.length) {
+      if (!this.form.category) {
         this.setError('category', this.$t('create.category_required'))
         ifPass = false
       }

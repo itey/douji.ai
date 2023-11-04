@@ -36,7 +36,7 @@
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Category</div>
-                <div class="form-attr-value">{{ form.category | arrayMax1 }}</div>
+                <div class="form-attr-value">{{ form.category }}</div>
               </div>
               <div class="form-attr-item" v-if="form.prompt && form.prompt.length">
                 <div class="form-attr-label">Platform</div>
