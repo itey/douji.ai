@@ -34,7 +34,7 @@ const chain = {
 
   actions: {
     // 获取BNB余额
-    getBalanceOfBnb({ commit }) {
+    GetBalanceOfBnb({ commit }) {
       const account = store.state.chain.account
       balanceOfBnb(account).then(balance => {
         commit('setBalanceBnb', balance)
@@ -44,7 +44,7 @@ const chain = {
 
     },
     // 获取MBD余额
-    getBalanceOfMbd({ commit }) {
+    GetBalanceOfMbd({ commit }) {
       const account = store.state.chain.account
       balanceOfMbd(account).then(balance => {
         commit('setBalanceMbd', balance)

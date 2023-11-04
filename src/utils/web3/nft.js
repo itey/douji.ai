@@ -13,8 +13,6 @@ function getNFTContract() {
     Vue.$toast(i18n.t('common.need_reconnect_wallet'))
     return null
   }
-  console.log(web3)
-  console.log('ethereum', window.ethereum)
   if (nftContract) {
     return nftContract
   } else {

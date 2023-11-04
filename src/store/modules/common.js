@@ -1,3 +1,4 @@
+import { getMbdPrice } from '@/utils/web3/dex'
 
 const common = {
   state: {
@@ -7,6 +8,7 @@ const common = {
     openBuy: false,
     openConnect: false,
     isParticleProvider: false,
+    mbdPrice: undefined
   },
 
   mutations: {
@@ -27,11 +29,20 @@ const common = {
     },
     setIsParticleProvider: (state, isParticleProvider) => {
       state.isParticleProvider = isParticleProvider
+    },
+    setMbdPrice: (state, mbdPrice) => {
+      state.mbdPrice = mbdPrice
     }
   },
 
   actions: {
-
+    // 获取Mbd价格
+    LoadMbdPrice({ commit }) {
+      getMbdPrice().then(res => {
+        const price = res[0] / res[1]
+        commit('setMbdPrice', price.toFixed(8))
+      })
+    }
   }
 }
 

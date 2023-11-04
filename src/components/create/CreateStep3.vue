@@ -48,15 +48,15 @@
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Max Supply</div>
-                <div class="form-attr-value">{{ form.maxSupply }}</div>
+                <div class="form-attr-value">{{ form.maxSupply | toLocalString}}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Available Supply</div>
-                <div class="form-attr-value">{{ form.maxSupply }}</div>
+                <div class="form-attr-value">{{ form.maxSupply | toLocalString }}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Initial Mint Quantity</div>
-                <div class="form-attr-value">{{ form.initialQuantity }}</div>
+                <div class="form-attr-value">{{ form.initialQuantity | toLocalString }}</div>
               </div>
             </div>
           </div>
@@ -65,13 +65,13 @@
             <div class="form-attr-market">
               <div class="form-attr-available">
                 Available :
-                <span class="text-color">{{ form.maxSupply }}</span>
+                <span class="text-color">{{ form.maxSupply | toLocalString }}</span>
               </div>
               <div class="form-attr-mbd">
-                <div class="mbd-value text-color">2590.0 MBD</div>
-                <div class="mbd-transform">≈$26.57</div>
+                <div class="mbd-value text-color">{{ form.initialPrice }} MBD</div>
+                <div class="mbd-transform">≈${{ form.initialPrice * $store.state.common.mbdPrice }}</div>
               </div>
-              <el-button v-if="edit" disabled class="common-btn2 form-attr-mint">Mint</el-button>
+              <el-button :disabled="!edit" class="common-btn2 form-attr-mint">Mint</el-button>
               <div class="form-attr-tip" v-if="edit">
                 Owning
                 <span class="text-color">1 BJxStar</span> To Get
@@ -162,7 +162,7 @@
         </div>
       </div>
       <div class="form-add" v-if="!edit">
-        <div class="btn-container">
+        <div class="btn-container" v-if="!txObject || !txObject.status">
           <el-button class="common-btn2" @click="backClick">Back</el-button>
           <el-button class="common-btn2" @click="mintClick">Mint</el-button>
         </div>
@@ -277,7 +277,6 @@ export default {
               )
                 .then((r) => {
                   loadingInstance.close()
-                  console.log(r)
                   this.txObject = r
                   this.$refs['successDialog'].showDialog()
                   this.afterMinted()
@@ -339,7 +338,6 @@ export default {
       return new Promise((resolve, reject) => {
         uploadJson(metaJson)
           .then((r) => {
-            console.log(r)
             if (r.code == 1) {
               resolve(r.data.url)
             } else {

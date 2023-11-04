@@ -147,7 +147,6 @@ export default {
     },
     signOutClick() {
       this.userMenuVisible = false
-      console.log('signOutClick')
       this.$store.dispatch('Logout')
     },
   },

@@ -11,12 +11,10 @@ export function checkAccount() {
   const userAccount = store.state.user.account
   if (!chainAccount || !userAccount) {
     Vue.$toast.warning(i18n.t('common.need_reconnect_wallet'))
-    console.log(chainAccount, userAccount)
     return false
   }
   if (chainAccount.toUpperCase() !== userAccount.toUpperCase()) {
     Vue.$toast.warning(i18n.t('common.need_reconnect_wallet'))
-    console.log(chainAccount, userAccount)
     return false
   }
   return true

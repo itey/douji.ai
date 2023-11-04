@@ -42,3 +42,13 @@ export const arrayMax1 = (arr) => {
     return arr
   }
 }
+
+
+export const toLocalString = (num) => {
+  if (!num) {
+    return num
+  }
+  return num.toString().replace(/\d+/, function (n) {
+    return n.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+  })
+}

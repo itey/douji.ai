@@ -43,8 +43,9 @@ const user = {
             commit('setUserId', userId)
             commit('setUserAccount', payload.address)
             commit('setChainAccount', payload.address)
-            store.dispatch('getBalanceOfBnb')
-            store.dispatch('getBalanceOfMbd')
+            store.dispatch('GetBalanceOfBnb')
+            store.dispatch('GetBalanceOfMbd')
+            store.dispatch('LoadMbdPrice')
             resolve()
           }).catch(error => {
             console.log(error)
@@ -60,7 +61,6 @@ const user = {
     },
     // 退出登录
     Logout({ commit }) {
-      console.log('退出登录')
       commit('setToken', '')
       commit('setUserId', '')
       commit('setUserAccount', '')
