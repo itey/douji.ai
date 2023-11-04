@@ -5,8 +5,8 @@ import store from '@/store'
 import Vue from 'vue'
 import { VuePlugin } from 'vuera'
 
-import '@/assets/theme/index.css'
 import '@/assets/theme/common.css'
+import '@/assets/theme/index.css'
 import '@/assets/theme/theme-dark.css'
 import * as filters from '@/filters'
 import ElementUI from 'element-ui'
@@ -18,7 +18,6 @@ import "vue-toastification/dist/index.css"
 
 
 Vue.prototype._ = _
-
 
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 

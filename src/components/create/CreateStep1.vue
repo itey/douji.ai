@@ -2,7 +2,7 @@
   <div class="create-step1">
     <div class="title">{{edit?'Step 1 Update NFT Infomation':'Step 1 Set NFT Mint Infomation'}}</div>
     <div class="form-container">
-      <div class="label">Type</div>
+      <div class="label">Type*</div>
       <div class="type-container" v-for="(arr, index) in typeList" :key="index">
         <div v-for="(item, i) in arr" :key="i" class="item" :class="{
 					light:form.contentType == item.e_name
@@ -11,7 +11,7 @@
         </div>
       </div>
       <template v-if="categoryList.length">
-        <div class="label">Category</div>
+        <div class="label">Category*</div>
         <div class="category-container">
           <div
             class="item"
@@ -56,7 +56,7 @@
         >{{$i18n.locale == 'en' ? item.english : item.chinese}}</div>
       </div>
       <div class="tip">Not allowed to chage after mint.</div>
-      <div class="label">NFT Max Supply</div>
+      <div class="label">NFT Max Supply*</div>
       <div class="input-container">
         <el-input @change="checkItem('maxSupply')" v-model="form.maxSupply" class="input"></el-input>
       </div>
@@ -67,7 +67,7 @@
           <span class="text-color">{{ form.maxSupply }}</span>
         </div>
       </template>
-      <div class="label">NFT Initial Mint Quantity</div>
+      <div class="label">NFT Initial Mint Quantity*</div>
       <div class="input-container">
         <el-input @change="checkItem('initialQuantity')" v-model="form.initialQuantity" class="input"></el-input>
       </div>
@@ -76,7 +76,7 @@
         Not allowed to change after mint.NFT Maximum Initial Mint Quantity
         <span class="text-color">250</span>
       </div>
-      <div class="label">NFT Initial Mint Price</div>
+      <div class="label">NFT Initial Mint Price*</div>
       <div class="input-container">
         <el-input @change="checkItem('initialPrice')" v-model="form.initialPrice" class="input"></el-input>
         <div class="unit">MBD</div>
@@ -122,6 +122,7 @@ export default {
         category: [],
         prompt: [],
         language: [],
+        keyword: [],
         maxSupply: undefined,
         initialQuantity: undefined,
         initialPrice: undefined,

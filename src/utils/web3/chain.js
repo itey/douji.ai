@@ -1,8 +1,9 @@
-import i18n from '@/i18n'
-import store from '@/store'
-import Vue from 'vue'
+import i18n from '@/i18n';
+import store from '@/store';
+import Vue from 'vue';
 
 const SIGN_STR = 'Wellcome to DOUJI!'
+
 
 /** 检查登录账户*/
 export function checkAccount() {
@@ -10,10 +11,12 @@ export function checkAccount() {
   const userAccount = store.state.user.account
   if (!chainAccount || !userAccount) {
     Vue.$toast.warning(i18n.t('common.need_reconnect_wallet'))
+    console.log(chainAccount, userAccount)
     return false
   }
   if (chainAccount.toUpperCase() !== userAccount.toUpperCase()) {
     Vue.$toast.warning(i18n.t('common.need_reconnect_wallet'))
+    console.log(chainAccount, userAccount)
     return false
   }
   return true
@@ -22,7 +25,7 @@ export function checkAccount() {
 /** 登录签名 */
 export function loginWalletSign(chainAccount) {
   return new Promise((resolve, reject) => {
-    const web3 = window.web3
+    const web3 = window.ethereum
     if (!web3) {
       reject('web3 is not ready')
     }
@@ -42,7 +45,7 @@ export function loginWalletSign(chainAccount) {
 /** BNB余额查询 */
 export function balanceOfBnb(account) {
   return new Promise((resolve, reject) => {
-    const web3 = window.web3
+    const web3 = window.ethereum
     if (!web3) {
       reject('web3 is not ready')
     }

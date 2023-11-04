@@ -5,7 +5,7 @@ import Vue from 'vue'
 
 /** 获取MBD合约 */
 function getMBDContract() {
-  const web3 = window.web3
+  const web3 = window.ethereum
   if (!web3) {
     Vue.$toast.warning(i18n.t('common.need_reconnect_wallet'))
     return

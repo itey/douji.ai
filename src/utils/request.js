@@ -46,6 +46,7 @@ service.interceptors.response.use(
         if (code === 2) {
             // token过期
             Vue.$toast.error(msg)
+            console.log('request')
             store.dispatch('Logout')
             return Promise.reject(msg)
         } else if (code !== 1) {

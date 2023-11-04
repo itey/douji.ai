@@ -57,6 +57,13 @@ export default {
       },
       metadata: {
         contentType: undefined,
+        category: [],
+        prompt: [],
+        language: [],
+        keyword: [],
+        maxSupply: undefined,
+        initialQuantity: undefined,
+        initialPrice: undefined,
       },
       step: 0,
     }
@@ -69,7 +76,7 @@ export default {
       const cacheData = cache.local.getJSON('NFT_MINT_CACHE')
       if (cacheData) {
         this.metadata = cacheData
-        this.step = cacheData.step
+        this.step = cacheData.step ? cacheData.step : 1
       }
     },
     saveData(form) {

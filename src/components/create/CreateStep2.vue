@@ -1,7 +1,7 @@
 <template>
   <div class="create-step2">
     <div class="title">{{edit?'Step 2 Update Content':'Step 2 Wrete Content'}}</div>
-    <div class="form-container" v-loading="loading">
+    <div class="form-container">
       <div class="form-item">
         <div class="form-label">Title*</div>
         <div class="form-value">
@@ -41,8 +41,7 @@
         <div class="form-label">Tags*</div>
         <div class="form-value">
           <div>
-            <!-- <el-input v-model="form.keyword" class="input"></el-input> -->
-            <el-tag class="tag" :key="tag" v-for="tag in form.keyword" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
+            <el-tag class="tag" :key="tag" v-for="tag in tags" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
             <el-input
               class="input-new-tag"
               v-if="inputVisible"
@@ -100,7 +99,6 @@
 
 <script>
 import { encryptContent, uploadContent, uploadFile } from '@/utils/http'
-
 import {
   default as PrivateVditor,
   default as PubVditor,
@@ -123,11 +121,11 @@ export default {
   },
   data() {
     return {
-      loading: false,
       markContentPub: undefined,
       markContentPrivate: undefined,
       imageFile: undefined,
       imageUrl: undefined,
+      tags: [],
       upload: {
         action: process.env.VUE_APP_BASE_URL + '/uploadFile',
         headers: {
@@ -218,7 +216,6 @@ export default {
         : window.webkitURL.createObjectURL(file.raw)
       this.imageUrl = this.dialogImageUrl
       this.imageFile = file
-      console.log(this.imageUrl)
     },
     /** 处理图片上传 */
     async uploadFileProcess() {
@@ -233,7 +230,8 @@ export default {
       }
     },
     handleClose(tag) {
-      this.form.keyword.splice(this.form.keyword.indexOf(tag), 1)
+      this.tags.splice(this.tags.indexOf(tag), 1)
+      this.form.keyword = this.tags
     },
     showInput() {
       this.inputVisible = true
@@ -242,9 +240,13 @@ export default {
       })
     },
     handleInputConfirm() {
+      if (!this.form.keyword) {
+        this.form.keyword = []
+      }
       let inputValue = this.inputValue
-      if (inputValue && this.form.keyword.indexOf(inputValue) < 0) {
-        this.form.keyword.push(inputValue)
+      if (inputValue && this.tags.indexOf(inputValue) < 0) {
+        this.tags.push(inputValue)
+        this.form.keyword = this.tags
       }
       this.inputVisible = false
       this.inputValue = ''
@@ -331,19 +333,37 @@ export default {
       this.$emit('backClick', 1)
     },
     async saveClick() {
-      this.loading = true
-      await this.markdownGetValue()
-      await this.uploadFileProcess()
-      this.loading = false
+      const c = await this.$store.dispatch('CheckLogin', true)
+      if (!c) {
+        return
+      }
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
+      try {
+        await this.markdownGetValue()
+        await this.uploadFileProcess()
+      } finally {
+        loadingInstance.close()
+      }
       this.$emit('saveClick', this.form)
       this.$toast.success(this.$t('common.save_success'))
     },
     async nextClick() {
-      this.loading = true
-      await this.markdownGetValue()
-      await this.uploadFileProcess()
+      const c = await this.$store.dispatch('CheckLogin', true)
+      if (!c) {
+        return
+      }
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
+      try {
+        await this.markdownGetValue()
+        await this.uploadFileProcess()
+      } finally {
+        loadingInstance.close()
+      }
       this.$emit('saveClick', this.form)
-      this.loading = false
       if (this.formCheck()) {
         this.$emit('nextClick', 3)
       }

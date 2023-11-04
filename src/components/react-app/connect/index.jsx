@@ -1,6 +1,6 @@
 import store from '@/store';
 import { isEVMProvider } from '@particle-network/connect';
-import { ConnectButton, useAccount, useConnectId, useConnectKit, useLanguage, useParticleTheme } from '@particle-network/connect-react-ui';
+import { ConnectButton, useAccountInfo, useConnectKit, useLanguage, useParticleTheme } from '@particle-network/connect-react-ui';
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import './index.css';
@@ -8,31 +8,36 @@ console.log(React.version)
 
 function WalletButton() {
 
-  const connectId = useConnectId();
-  const account = useAccount();
   const connectKit = useConnectKit();
   const [loginProcess, setLoginProcess] = useState(false);
   const { changLanguage } = useLanguage();
+  const accountInfo = useAccountInfo();
 
-  /** 区分是否为particle链接方式 */
+
+  /** 监听地址信息 */
   useEffect(() => {
+    const { account, connectId, accountLoading } = accountInfo
+    if (account && loginProcess && !accountLoading) {
+      setLoginProcess(false)
+      store.dispatch('Login', {address: account})
+    }
     if(connectId === 'particle') {
       store.commit('setIsParticleProvider', true)
     } else {
       store.commit('setIsParticleProvider', false)
     }
-  }, [connectId])
+  }, [accountInfo])
 
   /** 事件监听 */
   useEffect(() => {
     if(connectKit) {
       connectKit.on('connect', (provider) => {
         if (provider && isEVMProvider(provider)) {
-          window.web3 = new Web3(provider);
+          window.ethereum = new Web3(provider);
         }
       });
       connectKit.on('disconnect', () => {
-        store.dispatch('Logout')
+        console.log('disconnect')
       });
       connectKit.on('chainChanged', (chain) => {
         console.log('chainChanged:', chain)
@@ -45,19 +50,6 @@ function WalletButton() {
       });
     }
   }, []);
-
-
-  /** 地址切换 */
-  useEffect(() => {
-    if(account && loginProcess) {
-      store.dispatch('Login', {address: account}).then(() => {
-        setLoginProcess(false)
-      })
-    }
-    if(account && !store.state.user.account && !store.state.common.isParticleProvider) {
-      connectKit.disconnect({ hideLoading: true });
-    }
-  }, [account]);
   
   /** 切换主题 */
   const { setTheme } = useParticleTheme();
@@ -108,9 +100,16 @@ function WalletButton() {
                   setLoginProcess(true);
                 }
 
+                useEffect(() => {
+                  if(store.state.common.openConnect) {
+                    handleOpenConnectModal();
+                    store.commit('setOpenConnect', false)
+                  }
+                }, [store.state.common.openConnect])
+
                 return (
                     <div>
-                        <button className={'connect-button'} onClick={handleOpenConnectModal} disabled={!!account}>Connect Wallet</button>
+                        <button className={'connect-button'} onClick={handleOpenConnectModal} disabled={!!accountInfo.account}>Connect Wallet</button>
                     </div>
                 );
             }}

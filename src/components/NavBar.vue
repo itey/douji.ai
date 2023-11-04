@@ -18,6 +18,7 @@
         :lang="$i18n.locale"
         :openAccount="$store.state.common.openAccount"
         :openBuy="$store.state.common.openBuy"
+        :openConnect="$store.state.common.openConnect"
       />
     </div>
     <div v-if="$store.state.user.token" class="user-container">
@@ -146,6 +147,7 @@ export default {
     },
     signOutClick() {
       this.userMenuVisible = false
+      console.log('signOutClick')
       this.$store.dispatch('Logout')
     },
   },

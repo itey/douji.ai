@@ -5,6 +5,7 @@ const common = {
     theme: 'dark',
     openAccount: false,
     openBuy: false,
+    openConnect: false,
     isParticleProvider: false,
   },
 
@@ -20,6 +21,9 @@ const common = {
     },
     setOpenBuy: (state, openBuy) => {
       state.openBuy = openBuy
+    },
+    setOpenConnect: (state, openConnect) => {
+      state.openConnect = openConnect
     },
     setIsParticleProvider: (state, isParticleProvider) => {
       state.isParticleProvider = isParticleProvider

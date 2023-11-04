@@ -60,6 +60,7 @@ const user = {
     },
     // 退出登录
     Logout({ commit }) {
+      console.log('退出登录')
       commit('setToken', '')
       commit('setUserId', '')
       commit('setUserAccount', '')
@@ -67,6 +68,19 @@ const user = {
       commit('setBalanceMbd', '')
       commit('setBalanceBnb', '')
       commit('setLogout', true)
+    },
+    // 检查登录状态，未登录则弹窗登录
+    CheckLogin({ commit }, ifOpenConnect) {
+      return new Promise((resolve) => {
+        if (store.state.user.token) {
+          resolve(true)
+        } else {
+          if (ifOpenConnect) {
+            commit('setOpenConnect', true)
+          }
+          resolve(false)
+        }
+      })
     }
   }
 }

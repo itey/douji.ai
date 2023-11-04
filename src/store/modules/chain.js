@@ -17,7 +17,7 @@ const chain = {
     walletProjectId: walletProjectId,
     account: undefined,
     balanceBnb: undefined,
-    balanceMbd: undefined
+    balanceMbd: undefined,
   },
 
   mutations: {
@@ -29,7 +29,7 @@ const chain = {
     },
     setBalanceMbd(state, balance) {
       state.balanceMbd = balance
-    }
+    },
   },
 
   actions: {

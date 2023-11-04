@@ -29,7 +29,7 @@ export function uploadFile(file) {
 
 // 上传JSON
 export function uploadJson(jsonData) {
-    var result = Base64.encode(jsonData);
+    var result = Base64.encode(JSON.stringify(jsonData))
     return request({
         url: '/uploadJson',
         params: { jsonData: result },
@@ -39,7 +39,7 @@ export function uploadJson(jsonData) {
 
 // 上传文本
 export function uploadContent(textData) {
-    var result = Base64.encode(textData);
+    var result = Base64.encode(textData)
     return request({
         url: '/uploadContent',
         params: { contentData: result },

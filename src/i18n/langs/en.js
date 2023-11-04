@@ -11,6 +11,7 @@ export default {
     "marketplace": "Marketplace",
     "create": "Create",
     "save_success": "Successfully saved",
+    "date_saving": "Saving date",
     "img_format_error": "Image format is invalid",
     "img_large_error": "The image cannot be larger than {0}MB"
   },
@@ -27,5 +28,8 @@ export default {
     "image_required": "Cover image is required",
     "keyword_required": "At least one keyword is required.",
     "content_pub_required": "Open article content is required",
+    "save_uri_failed":
+      "An error occurred saving the URI. Please check your connection.",
+    "nft_mint_failed": "An error occurred minting the NFT. Please check your connection."
   }
 }

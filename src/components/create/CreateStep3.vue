@@ -38,11 +38,11 @@
                 <div class="form-attr-label">Category</div>
                 <div class="form-attr-value">{{ form.category | arrayMax1 }}</div>
               </div>
-              <div class="form-attr-item">
+              <div class="form-attr-item" v-if="form.prompt && form.prompt.length">
                 <div class="form-attr-label">Platform</div>
                 <div class="form-attr-value">{{ form.prompt | arrayMax1 }}</div>
               </div>
-              <div class="form-attr-item">
+              <div class="form-attr-item" v-if="form.language && form.language.length">
                 <div class="form-attr-label">Language</div>
                 <div class="form-attr-value">{{ form.language | arrayMax1 }}</div>
               </div>
@@ -172,7 +172,7 @@
           Total Mint Service Fee (Fee radio 10%):
           <span class="text-color">2500 MBD</span>
         </div>
-        <div class="btn-container">
+        <div class="btn-container" v-if="!txObject || !txObject.status">
           <el-button class="common-btn2" @click="backClick">Back</el-button>
           <el-button class="common-btn2" @click="updateClick">Update</el-button>
         </div>
@@ -180,7 +180,7 @@
     </div>
     <set-sale-dialog ref="setSaleDialog"></set-sale-dialog>
     <set-dao-dialog ref="setDaoDialog"></set-dao-dialog>
-    <mint-success-dialog ref="successDialog"></mint-success-dialog>
+    <mint-success-dialog ref="successDialog" :tx="txObject"></mint-success-dialog>
   </div>
 </template>
 
@@ -188,7 +188,26 @@
 import MintSuccessDialog from '@/components/create/MintSuccessDialog'
 import SetDaoDialog from '@/components/create/SetDaoDialog'
 import SetSaleDialog from '@/components/create/SetSaleDialog'
-import MarkdownIt from 'markdown-it'
+import cache from '@/utils/cache'
+import { uploadJson } from '@/utils/http'
+import { possessorMint } from '@/utils/web3/nft'
+// var hljs = require('highlight.js')
+var md = require('markdown-it')({
+  html: true,
+  linkify: true,
+  typographer: true,
+  breaks: true,
+  // highlight: function (str, lang) {
+  //   if (lang && hljs.getLanguage(lang)) {
+  //     try {
+  //       return hljs.highlight(lang, str).value
+  //     } catch (e) {
+  //       console.log(e)
+  //     }
+  //   }
+  //   return '' // 使用额外的默认转义
+  // },
+})
 export default {
   name: 'create-step3',
   components: {
@@ -211,21 +230,21 @@ export default {
       setSaleShow: false,
       markdownPub: '',
       markdownPrivate: '',
-      md: new MarkdownIt(),
       form: {},
+      txObject: {},
     }
   },
   computed: {
     pubContent() {
       if (this.markdownPub) {
-        return this.md.render(this.markdownPub)
+        return md.render(this.markdownPub)
       } else {
         return null
       }
     },
     privateContent() {
       if (this.markdownPrivate) {
-        return this.md.render(this.markdownPrivate)
+        return md.render(this.markdownPrivate)
       } else {
         return null
       }
@@ -243,11 +262,99 @@ export default {
       this.$emit('backClick', 2)
     },
     mintClick() {
-      this.$emit('mintClick')
-      this.$refs['successDialog'].showDialog()
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (c) {
+          var loadingInstance = this.$loading({
+            background: 'rgba(0, 0, 0, 0.8)',
+          })
+          this.makeURI()
+            .then((uri) => {
+              possessorMint(
+                uri,
+                this.form.initialQuantity,
+                this.form.initialPrice,
+                this.form.maxSupply
+              )
+                .then((r) => {
+                  loadingInstance.close()
+                  console.log(r)
+                  this.txObject = r
+                  this.$refs['successDialog'].showDialog()
+                  this.afterMinted()
+                })
+                .catch((e) => {
+                  loadingInstance.close()
+                  console.log(e)
+                  this.$toast.error(this.$t('create.nft_mint_failed'))
+                })
+            })
+            .catch((e) => {
+              console.log(e)
+              loadingInstance.close()
+              this.$toast.error(this.$t('create.save_uri_failed'))
+            })
+        }
+      })
     },
     updateClick() {
       this.$emit('updateClick')
+    },
+    /** 生成URI */
+    makeURI() {
+      const metaJson = {
+        title: this.form.title,
+        name: this.form.title,
+        image: this.form.image,
+        maxSupply: this.form.maxSupply,
+        description: this.form.description,
+        contentType: this.form.contentType,
+        category: this.form.category,
+        attributes: [
+          {
+            trait_type: 'title',
+            value: this.form.title,
+          },
+          {
+            trait_type: 'category',
+            value: this.form.category,
+          },
+          {
+            trait_type: 'contentType',
+            value: this.form.contentType,
+          },
+          {
+            trait_type: 'contentUrl',
+            value: this.form.contentUrl,
+          },
+        ],
+        contentUrl: this.form.contentUrl,
+        protected: this.form.protected,
+      }
+      if (this.form.language) {
+        metaJson.language = this.form.language
+      }
+      if (this.form.prompt) {
+        metaJson.prompt = this.form.prompt
+      }
+      return new Promise((resolve, reject) => {
+        uploadJson(metaJson)
+          .then((r) => {
+            console.log(r)
+            if (r.code == 1) {
+              resolve(r.data.url)
+            } else {
+              reject(r.message)
+            }
+          })
+          .catch((e) => {
+            console.log(e)
+            reject(e.message ? e.message : e)
+          })
+      })
+    },
+    /** 完成铸造后处理 */
+    afterMinted() {
+      cache.local.remove('NFT_MINT_CACHE')
     },
     showSetDialog() {
       this.$refs['setSaleDialog'].showDialog()
