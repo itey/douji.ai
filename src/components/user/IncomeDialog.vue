@@ -1,23 +1,27 @@
 <template>
-	<el-dialog custom-class="income-dialog" :visible.sync="show" width="792px">
+	<el-dialog custom-class="income-dialog" :visible.sync="show" width="1100px">
 		<div class="income-header text-color" slot="title">
 			Set NFT DAO Governance
 		</div>
 		<div class="income-content">
-			<el-table ref="multipleTable" :data="tableData" style="width: 100%"
+			<el-table ref="multipleTable" :data="tableData" style="width: 1000px"
 				@selection-change="handleSelectionChange">
-				<el-table-column type="selection" width="34px">
+				<el-table-column type="selection" width="47px">
 				</el-table-column>
-				<el-table-column label="Token ID" width="60px">
-					<template slot-scope="scope">Token ID</template>
+				<el-table-column label="Token ID" width="119px">
+					<template slot-scope="scope">ID</template>
 				</el-table-column>
-				<el-table-column prop="name" label="NFT name" width="150px">
+				<el-table-column prop="name" label="NFT name" width="211px">
+					<template slot-scope="scope">name</template>
 				</el-table-column>
-				<el-table-column prop="address" label="Bonus Dividend Pool BalancelMBD)" width="180px">
+				<el-table-column prop="address" label="Bonus Dividend Pool BalancelMBD)" width="249px">
+					<template slot-scope="scope">BalancelMBD</template>
 				</el-table-column>
-				<el-table-column prop="address" label="Your NFTs / Members NFTs" width="150px">
+				<el-table-column prop="address" label="Your NFTs / Members NFTs" width="209px">
+					<template slot-scope="scope">NFTs</template>
 				</el-table-column>
-				<el-table-column prop="address" label="Stake NFT Income(MBD)" width="108px">
+				<el-table-column prop="address" label="Stake NFT Income(MBD)" width="165px">
+					<template slot-scope="scope">Income(MBD)</template>
 				</el-table-column>
 			</el-table>
 			<el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页"
@@ -26,7 +30,7 @@
 		</div>
 		</div>
 		<div class="income-btn">
-			<el-button class="common-btn2"></el-button>
+			<el-button class="common-btn2">Settlement</el-button>
 		</div>
 	</el-dialog>
 </template>
@@ -63,7 +67,7 @@
 
 		.income-content {
 			border: 1px solid #1F272F;
-			padding: 24px 34px 0 34px;
+			padding: 30px 52px 0 52px;
 			text-align: left;
 
 			.label {
@@ -178,13 +182,14 @@
 		}
 
 		.income-btn {
-			margin: 43px 0 68px 0;
+			margin: 43px 52px 68px 0;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
 			justify-content: end;
 
 			.common-btn2 {
+				height: 50px;
 				width: 135px;
 			}
 		}
@@ -243,12 +248,33 @@
 		border-color: transparent;
 	}
 
-	.el-table th.el-table__cell>.cell {
-		padding-left: 0;
-		padding-right: 0;
+	.el-table th.el-table__cell,
+	.el-table td.el-table__cell {
+		&:first-child {
+			text-align: center;
+		}
+
+		&:last-child {
+			padding-right: 14px;
+			text-align: right;
+		}
+		&:nth-child(4),&:nth-child(5){
+			text-align: center;
+		}
+
 	}
 
 	.el-table--fit {
 		border-bottom: 1px solid #1F262E;
+	}
+
+	.el-table--scrollable-x .el-table__body-wrapper {
+		overflow-x: hidden;
+	}
+
+	.el-table--border::after,
+	.el-table--group::after,
+	.el-table::before {
+		background-color: transparent;
 	}
 </style>

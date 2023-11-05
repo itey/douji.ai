@@ -10,7 +10,7 @@
 				</span>
 			</div>
 			<div>
-				<el-input placeholder="Search by name or Token ID">
+				<el-input placeholder="Search by name or Token ID" style="width:284px">
 					<i slot="prefix" class="el-input__icon el-icon-search"></i>
 				</el-input>
 			</div>
