@@ -28,7 +28,6 @@
 				:pager-count="4" :total="1000">
 			</el-pagination>
 		</div>
-		</div>
 		<div class="income-btn">
 			<el-button class="common-btn2">Settlement</el-button>
 		</div>
@@ -258,7 +257,9 @@
 			padding-right: 14px;
 			text-align: right;
 		}
-		&:nth-child(4),&:nth-child(5){
+
+		&:nth-child(4),
+		&:nth-child(5) {
 			text-align: center;
 		}
 

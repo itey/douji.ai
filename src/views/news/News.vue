@@ -59,9 +59,9 @@
 				justify-content: space-between;
 
 				.item {
-					width: calc((100% - 39px) / 4);
+					width: calc((100% - 72px) / 4);
 					min-width: 185px;
-					margin: 0 13px 13px 0;
+					margin: 0 24px 31px 0;
 				
 					&:nth-child(4n) {
 						margin-right: 0;

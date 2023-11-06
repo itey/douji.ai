@@ -1,6 +1,6 @@
 <template>
 	<div class="news-item" @click="itemClick">
-		<img style="width: 100%;height:105px;" />
+		<img style="width: 100%;height:154px;" />
 		<div class="label text-color">
 			dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj
 			sg'sgdsadgshg dsddfddhsjhjsh
@@ -41,13 +41,13 @@
 		}
 
 		.label {
-			height: 42px;
-			font-size: 10px;
-			line-height: 14px;
+			height: 60px;
+			font-size: 14px;
+			line-height: 20px;
 			font-family: Source Han Sans CN;
 			font-weight: bold;
 			text-align: left;
-			margin-top: 14px;
+			margin-top: 20px;
 			word-wrap: break-word;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
@@ -57,15 +57,15 @@
 		}
 
 		.bottom {
-			padding: 11px 0;
+			padding: 15px 0;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
 
 			.sub {
-				font-size: 9px;
-				line-height: 9px;
+				font-size: 12px;
+				line-height: 12px;
 				font-family: Source Han Sans CN;
 				font-weight: 400;
 				color: #B2B9B9;
