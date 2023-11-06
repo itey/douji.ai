@@ -98,3 +98,13 @@ export function getNftPlatformsByType(type) {
         method: 'get'
     })
 }
+
+
+// 更新用户资料
+export function updateUserInfo(data) {
+    return request({
+        url: '/updateUserInfo',
+        data: data,
+        method: 'post'
+    })
+}

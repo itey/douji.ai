@@ -1,8 +1,9 @@
 
-import store from '@/store';
-import { balanceOfBnb } from '@/utils/web3/chain';
-import { balanceOfMbd } from '@/utils/web3/mbd';
-import Vue from 'vue';
+import store from '@/store'
+import { balanceOfBnb } from '@/utils/web3/chain'
+import { getMbdPrice } from '@/utils/web3/dex'
+import { balanceOfMbd } from '@/utils/web3/mbd'
+import Vue from 'vue'
 
 const projectId = process.env.VUE_APP_PROJECT_ID;
 const clientKey = process.env.VUE_APP_CLIENT_KEY;
@@ -18,6 +19,7 @@ const chain = {
     account: undefined,
     balanceBnb: undefined,
     balanceMbd: undefined,
+    mbdPrice: undefined
   },
 
   mutations: {
@@ -30,6 +32,9 @@ const chain = {
     setBalanceMbd(state, balance) {
       state.balanceMbd = balance
     },
+    setMbdPrice: (state, mbdPrice) => {
+      state.mbdPrice = mbdPrice
+    }
   },
 
   actions: {
@@ -53,6 +58,13 @@ const chain = {
       })
 
     },
+    // 获取Mbd价格
+    LoadMbdPrice({ commit }) {
+      getMbdPrice().then(res => {
+        const price = res[0] / res[1]
+        commit('setMbdPrice', price.toFixed(8))
+      })
+    }
   }
 }
 

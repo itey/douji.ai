@@ -69,7 +69,7 @@
               </div>
               <div class="form-attr-mbd">
                 <div class="mbd-value text-color">{{ form.initialPrice }} MBD</div>
-                <div class="mbd-transform">≈${{ form.initialPrice * $store.state.common.mbdPrice }}</div>
+                <div class="mbd-transform">≈${{ form.initialPrice * $store.state.chain.mbdPrice }}</div>
               </div>
               <el-button :disabled="!edit" class="common-btn2 form-attr-mint">Mint</el-button>
               <div class="form-attr-tip" v-if="edit">
