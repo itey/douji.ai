@@ -33,8 +33,55 @@
 		<div class="form-container">
 			<div class="form-top">
 				<div class="form-left">
-					<div class="form-title text-color">Enterprise Metaverse Users Prefer Simplifed Digital Avatars Over
-						Hyper-Realistic Alternatives</div>
+					<div class="form-title text-color">
+						Enterprise Metaverse Users Prefer Simplifed Digital Avatars Over
+						Hyper-Realistic Alternatives
+					</div>
+					<div class="info-container">
+						<div class="author-container">
+							<img style="width: 52px;height: 52px;border-radius: 26px;" />
+							<div class="author-info">
+								<div class="author-name">
+									by <span style="color: #00F9E5;">Victor Deaw</span>
+								</div>
+								<div class="author-desc">
+									This paragraph is the author'spersonal description
+								</div>
+							</div>
+						</div>
+						<div class="news-info">
+							<div class="news-info-item">
+								<div class="news-info-item-label">
+									<img src="@/assets/images/news/date.png" />
+									<span>6528 Min</span>
+								</div>
+								<div class="news-info-item-value">
+									<img src="@/assets/images/up.png" />
+									<span>6528 Min</span>
+								</div>
+							</div>
+							<div class="news-info-item">
+								<div class="news-info-item-label">
+									<img src="@/assets/images/news/like.png" />
+									<span>6528</span>
+								</div>
+								<div class="news-info-item-value">
+									<img src="@/assets/images/up.png" />
+									<span>6528</span>
+								</div>
+							</div>
+							<div class="news-info-item">
+								<div class="news-info-item-label">
+									<img src="@/assets/images/news/star.png" />
+									<span>6528</span>
+								</div>
+								<div class="news-info-item-value">
+									<img src="@/assets/images/up.png" />
+									<span>6528</span>
+								</div>
+							</div>
+						</div>
+					</div>
 					<img style="width: 940px;height: 532px;margin-top:36px;" />
 					<div class="form-desc">The easy-to-use prompt to generate the portrait photography with sea activity
 						scene. You can modify the characteractivity and location of the sea as per your preference.
@@ -64,25 +111,26 @@
 							NFT DAO Governance
 						</div>
 						<div class="dao-set">
-							<div class="dao-set-item">
+							<div class="dao-set-item" style="width: 158px;">
 								<div class="dao-set-item-label">Update NFT Attributes</div>
 								<i class="el-icon-arrow-right"></i>
 							</div>
-							<div class="dao-set-item">
+							<div class="dao-set-item" style="width: 158px;">
 								<div class="dao-set-item-label">Update Content</div>
 								<i class="el-icon-arrow-right"></i>
 							</div>
-							<div class="dao-set-item">
+							<div class="dao-set-item" style="width: 178px;">
 								<div class="dao-set-item-label">Set NFT Sales Promotion</div>
 								<i class="el-icon-arrow-right"></i>
 							</div>
-							<div class="dao-set-item">
+							<div class="dao-set-item" style="width: 190px;">
 								<div class="dao-set-item-label">Set NFT DAO Govemnance</div>
 								<i class="el-icon-arrow-right"></i>
 							</div>
 						</div>
 						<div class="dao-set-tip">
-							Last Edited : September 21, 2023, 22:18:07 <span class="text-color">View History</span>
+							Last Edited : September 21, 2023, 22:18:07 <span class="text-color" style="cursor: pointer;"
+								@click="$refs['revisionHistoryDialog'].showDialog()">View History</span>
 						</div>
 					</div>
 					<div class="transactions-container">
@@ -173,7 +221,8 @@
 					<div class="form-attr-container">
 						<div class="form-attr-title">
 							<div class="text-color">Secondary Market</div>
-							<div class="form-attr-action">+ List Your item</div>
+							<div class="form-attr-action" @click="$refs['listYourItemDialog'].showDialog()">+ List Your
+								item</div>
 						</div>
 						<div class="form-second-market">
 							<div class="second-market-column" style="width: 130px;">
@@ -254,8 +303,8 @@
 								</div>
 							</div>
 							<div class="dao-btn-container">
-								<div class="dao-btn">Stake</div>
-								<div class="dao-btn-border">Retrieve</div>
+								<div class="dao-btn" @click="$refs['stakeDialog'].showDialog()">Stake</div>
+								<div class="dao-btn-border" @click="$refs['retrieveDialog'].showDialog()">Retrieve</div>
 							</div>
 						</div>
 					</div>
@@ -306,15 +355,27 @@
 				</div>
 			</div>
 		</div>
+		<list-your-item-dialog ref="listYourItemDialog"></list-your-item-dialog>
+		<revision-history-dialog ref="revisionHistoryDialog"></revision-history-dialog>
+		<stake-dialog ref="stakeDialog"></stake-dialog>
+		<retrieve-dialog ref="retrieveDialog"></retrieve-dialog>
 	</div>
 </template>
 
 <script>
 	import NewsItem from '@/components/NewsItem'
+	import ListYourItemDialog from '@/components/news/ListYourItemDialog'
+	import RevisionHistoryDialog from '@/components/news/RevisionHistoryDialog'
+	import StakeDialog from '@/components/news/StakeDialog'
+	import RetrieveDialog from '@/components/news/RetrieveDialog'
 	export default {
 		name: 'news-detail-view',
 		components: {
-			NewsItem
+			NewsItem,
+			ListYourItemDialog,
+			RevisionHistoryDialog,
+			StakeDialog,
+			RetrieveDialog,
 		},
 		data() {
 			return {
@@ -446,6 +507,39 @@
 						line-height: 35px;
 					}
 
+					.info-container {
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+						justify-content: space-between;
+
+						.author-container {
+							display: flex;
+							flex-direction: row;
+
+							.author-info {
+								margin-left: 13px;
+								text-align: left;
+
+								.author-name {
+									font-size: 16px;
+									font-family: Source Han Sans CN;
+									font-weight: 400;
+									color: #ACBCC9;
+								}
+
+								.author-value {
+									font-size: 12px;
+									font-family: Source Han Sans CN;
+									font-weight: 400;
+									color: #ACBCC9;
+									line-height: 16px;
+									margin-top: 7px;
+								}
+							}
+						}
+					}
+
 					.form-desc {
 						padding-left: 12px;
 						font-size: 12px;
@@ -530,7 +624,7 @@
 							padding: 22px 34px 16px 18px;
 
 							.dao-set-item {
-								width: 158px;
+								cursor: pointer;
 								height: 42px;
 								padding: 0 20px 0 22px;
 								background: #1D242B;
