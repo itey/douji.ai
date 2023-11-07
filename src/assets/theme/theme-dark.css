@@ -245,3 +245,13 @@
 .el-menu-item:hover {
 	color: #00FBE6;
 }
+.el-table__header{
+	font-size: 12px;
+	font-family: Arial;
+	font-weight: 400;
+	color: #ACBCC9;
+}
+.el-table__row {
+	color: #FFFFFF;
+	font-size: 14px;
+}
