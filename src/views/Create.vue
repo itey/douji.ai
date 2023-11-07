@@ -57,7 +57,7 @@ export default {
       },
       metadata: {
         contentType: undefined,
-        category: [],
+        category: undefined,
         prompt: [],
         language: [],
         keyword: [],

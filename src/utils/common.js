@@ -261,3 +261,8 @@ export function getUuid() {
     return v.toString(16);
   });
 }
+
+// wei->eth
+export function weiToEth(wei) {
+  return wei / 100000000;
+}
