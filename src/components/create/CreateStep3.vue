@@ -308,6 +308,7 @@ export default {
         description: this.form.description,
         contentType: this.form.contentType,
         category: this.form.category,
+        keyword: this.form.keyword,
         attributes: [
           {
             trait_type: 'title',

@@ -88,7 +88,11 @@
           <div class="tip">Write some details about your content</div>
         </div>
       </div>
-      <div class="btn-container">
+      <div class="btn-container" v-if="edit">
+        <el-button class="common-btn2" @click="backClick">Back</el-button>
+        <el-button class="common-btn2" :disabled="!ifUpdate" @click="updateClick">Update</el-button>
+      </div>
+      <div class="btn-container" v-else>
         <el-button class="common-btn2" @click="backClick">Back</el-button>
         <el-button class="common-btn2" @click="saveClick">Save</el-button>
         <el-button class="common-btn2" @click="nextClick">Next</el-button>
@@ -121,8 +125,6 @@ export default {
   },
   data() {
     return {
-      markContentPub: undefined,
-      markContentPrivate: undefined,
       imageFile: undefined,
       imageUrl: undefined,
       tags: [],
@@ -158,11 +160,36 @@ export default {
       inputValue: '',
     }
   },
+  computed: {
+    ifUpdate() {
+      if (
+        this.metadata.title == this.form.title &&
+        this.metadata.description == this.form.description &&
+        this.metadata.image == this.imageUrl &&
+        this.metadata.openContent == this.form.openContent &&
+        this.metadata.protectedContent == this.form.protectedContent
+      ) {
+        if (this.metadata.keyword && this.form.keyword) {
+          if (this.metadata.keyword.join(',') == this.form.keyword.join(',')) {
+            return false
+          } else {
+            return true
+          }
+        }
+        return false
+      } else {
+        return true
+      }
+    },
+  },
   mounted() {
     if (this.metadata) {
-      this.form = this.metadata
+      this.form = JSON.parse(JSON.stringify(this.metadata))
       if (this.form.image) {
         this.imageUrl = this.form.image
+      }
+      if (this.form.keyword) {
+        this.tags = this.form.keyword
       }
     }
   },
@@ -374,6 +401,31 @@ export default {
         this.$emit('nextClick', 3)
       }
     },
+    async updateClick() {
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
+      try {
+        await this.markdownGetValue()
+        await this.uploadFileProcess()
+      } finally {
+        loadingInstance.close()
+      }
+      if (
+        this.metadata.title == this.form.title &&
+        this.metadata.description == this.form.description &&
+        this.metadata.image == this.form.image &&
+        this.metadata.keyword == this.form.keyword &&
+        this.metadata.openContent == this.form.openContent &&
+        this.metadata.protectedContent == this.form.protectedContent
+      ) {
+        this.$toast(this.$t('create.data_not_modified'))
+        return
+      }
+      if (this.formCheck()) {
+        this.$emit('handleUpdate', this.form)
+      }
+    },
   },
 }
 </script>
@@ -478,6 +530,22 @@ export default {
 
         .input {
           width: 544px;
+        }
+
+        .el-tag + .el-tag {
+          margin-left: 10px;
+        }
+        .button-new-tag {
+          margin-left: 10px;
+          height: 32px;
+          line-height: 30px;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+        .input-new-tag {
+          width: 90px;
+          margin-left: 10px;
+          vertical-align: bottom;
         }
       }
     }
