@@ -1,8 +1,10 @@
 <template>
   <div class="create-container">
-    <create-step1 v-if="step==1" :edit="true" :metadata="metadata" @handleUpdate="handleUpdate1" @backClick="backClick"></create-step1>
-    <create-step2 v-if="step==2" :edit="true" :metadata="metadata" @handleUpdate="handleUpdate2" @backClick="backClick"></create-step2>
-    <UpdateSuccess :show="txSuccess" :tx="updateTxJson" />
+    <template v-if="loadComplete">
+      <create-step1 v-if="step==1" :edit="true" :metadata="metadata" @handleUpdate="handleUpdate1" @backClick="backClick"></create-step1>
+      <create-step2 v-if="step==2" :edit="true" :metadata="metadata" @handleUpdate="handleUpdate2" @backClick="backClick"></create-step2>
+      <UpdateSuccess ref="successDialog" :tx="updateTxJson" />
+    </template>
   </div>
 </template>
 
@@ -11,9 +13,10 @@ import CreateStep1 from '@/components/create/CreateStep1'
 import CreateStep2 from '@/components/create/CreateStep2'
 import UpdateSuccess from '@/components/create/UpdateSuccessDialo'
 import { weiToEth } from '@/utils/common'
-import { loadFromUrl } from '@/utils/http'
+import { loadFromUrl, unlockContent, uploadJson } from '@/utils/http'
 import {
   startSetTokenPrice,
+  startSetTokenURI,
   tokenOwner,
   tokenURI,
   tokensData,
@@ -27,7 +30,7 @@ export default {
   },
   data() {
     return {
-      txSuccess: false,
+      loadComplete: false,
       metadata: {},
       ipfsData: {},
       step: 0,
@@ -40,6 +43,7 @@ export default {
   },
   mounted() {
     this.tokenId = this.$route.query.tokenId
+    this.step = this.$route.query.step
     var loadingInstance = this.$loading({
       background: 'rgba(0, 0, 0, 0.8)',
     })
@@ -65,7 +69,7 @@ export default {
           this.metadata.initialPrice = weiToEth(
             this.tokenSupplyInfo.price.tokenIdOrAmount
           )
-          this.step = this.$route.query.step
+          this.loadComplete = true
         })
         .catch((e) => {
           console.log(e)
@@ -136,12 +140,55 @@ export default {
               this.metadata.protected = meta.protected
               this.metadata.language = meta.language ? meta.language : []
               this.metadata.prompt = meta.prompt ? meta.prompt : []
+              this.metadata.keyword = meta.keyword ? meta.keyword : []
+              if (this.metadata.contentUrl && this.step == 2) {
+                return Promise.all([
+                  this.loadOpenContent(this.metadata.contentUrl),
+                  this.loadProtectedContent(this.metadata.protected),
+                ])
+                  .then(([openContent, protectedContent]) => {
+                    this.metadata.openContent = openContent
+                    this.metadata.protectedContent = protectedContent
+                    resolve()
+                  })
+                  .catch((e) => {
+                    reject(e)
+                  })
+              }
               resolve()
             })
           })
           .catch(() => {
             reject()
           })
+      })
+    },
+    /** 加载公开数据 */
+    loadOpenContent(url) {
+      return new Promise((resolve, reject) => {
+        loadFromUrl(url).then((res) => {
+          if (res.status !== 200) {
+            reject(res.statusText)
+          }
+          resolve(res.data)
+        })
+      })
+    },
+    /** 加载私有数据 */
+    loadProtectedContent(data) {
+      return new Promise((resolve, reject) => {
+        unlockContent(data, this.tokenId).then((res) => {
+          if (res.code != 1) {
+            reject(res.message)
+          }
+          const ipfsUrl = res.data.url
+          loadFromUrl(ipfsUrl).then((r) => {
+            if (r.status !== 200) {
+              reject(r.statusText)
+            }
+            resolve(r.data)
+          })
+        })
       })
     },
     /** 更新1 */
@@ -159,7 +206,7 @@ export default {
         .then((tx) => {
           console.log(tx)
           this.updateTxJson = tx
-          this.txSuccess = true
+          this.$refs['successDialog'].showDialog()
         })
         .catch((e) => {
           this.$toast.warning(e)
@@ -170,7 +217,88 @@ export default {
     },
     /** 更新2 */
     handleUpdate2(form) {
-      console.log(form)
+      const metaJson = this.makeURI(form)
+      console.log(metaJson)
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
+      uploadJson(metaJson)
+        .then((r) => {
+          if (r.code == 1) {
+            const metaUrl = r.data.url
+            startSetTokenURI(this.tokenId, metaUrl)
+              .then((tx) => {
+                console.log(tx)
+                this.updateTxJson = tx
+                this.$refs['successDialog'].showDialog()
+              })
+              .catch((e) => {
+                this.$toast.warning(e)
+              })
+              .finally(() => {
+                loadingInstance.close()
+              })
+          } else {
+            this.$toast.warning(r.message)
+          }
+        })
+        .catch((e) => {
+          this.$toast.warning(e)
+        })
+    },
+    /** 生成URI */
+    makeURI(form) {
+      const metaJson = {
+        title: form.title,
+        name: form.title,
+        image: form.image,
+        maxSupply: form.maxSupply,
+        description: form.description,
+        contentType: form.contentType,
+        category: form.category,
+        keyword: form.keyword,
+        attributes: [
+          {
+            trait_type: 'title',
+            value: form.title,
+          },
+          {
+            trait_type: 'category',
+            value: form.category,
+          },
+          {
+            trait_type: 'contentType',
+            value: form.contentType,
+          },
+          {
+            trait_type: 'contentUrl',
+            value: form.contentUrl,
+          },
+        ],
+        contentUrl: form.contentUrl,
+        protected: form.protected,
+      }
+      if (form.language) {
+        metaJson.language = form.language
+      }
+      if (form.prompt) {
+        metaJson.prompt = form.prompt
+      }
+      return metaJson
+      // return new Promise((resolve, reject) => {
+      //   uploadJson(metaJson)
+      //     .then((r) => {
+      //       if (r.code == 1) {
+      //         resolve(r.data.url)
+      //       } else {
+      //         reject(r.message)
+      //       }
+      //     })
+      //     .catch((e) => {
+      //       console.log(e)
+      //       reject(e.message ? e.message : e)
+      //     })
+      // })
     },
   },
 }

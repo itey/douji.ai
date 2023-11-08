@@ -419,13 +419,15 @@ export default {
         this.$toast(this.$t('create.data_not_modified'))
         return
       }
-      this.$emit('handleUpdate', this.form)
+      if (this.formCheck()) {
+        this.$emit('handleUpdate', this.form)
+      }
     },
   },
   mounted() {
     this.loadTypeList()
     if (this.metadata) {
-      this.form = Object.assign({}, this.metadata)
+      this.form = JSON.parse(JSON.stringify(this.metadata))
     }
     this.choseType(this.metadata.contentType)
     this.loadLanguageList()

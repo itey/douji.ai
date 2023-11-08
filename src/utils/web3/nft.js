@@ -139,3 +139,28 @@ export function startSetTokenPrice(tokenId, price, availableSupply) {
       })
   })
 }
+
+/** update-step2 */
+export function startSetTokenURI(tokenId, url) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.startSetTokenURI(tokenId, url)
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
