@@ -98,9 +98,7 @@
 }
 
 /* el-breadcrumb */
-.el-breadcrumb {
-	font-size: 9px;
-}
+
 
 .el-breadcrumb__inner a,
 .el-breadcrumb__inner.is-link {

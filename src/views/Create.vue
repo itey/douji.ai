@@ -106,30 +106,30 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-top: 62px;
+    margin-top: 86px;
 
     .step {
       text-align: left;
 
       .step-title {
-        font-size: 19px;
+        font-size: 26px;
         font-family: Source Han Sans CN;
         font-weight: bold;
         color: #747c7c;
       }
 
       .step-sub {
-        font-size: 12px;
+        font-size: 16px;
         font-family: Source Han Sans CN;
         font-weight: 400;
         color: #747c7c;
-        margin-top: 10px;
+        margin-top: 15px;
       }
     }
 
     .step-light {
       .step-title {
-        font-size: 19px;
+        font-size: 26px;
         font-family: Source Han Sans CN;
         font-weight: bold;
         color: #4cc9ce;
@@ -139,10 +139,11 @@ export default {
       }
 
       .step-sub {
-        font-size: 12px;
+        font-size: 16px;
         font-family: Source Han Sans CN;
         font-weight: 400;
         color: #50ced5;
+        margin-top: 15px;
       }
     }
   }

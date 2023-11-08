@@ -23,7 +23,7 @@
 		<div style="flex:1;">
 			<div v-if="currentIndex==0" class="tab-item tab1">
 				<div class="tab-row">
-					<img style="width: 192px;height:119px;" src="@/assets/images/home/ai.png" />
+					<img style="width: 266px;height:165px;" src="@/assets/images/home/ai.png" />
 					<div class="tab-row-text">
 						<div class="title">Al-assisted Production Tools</div>
 						<div class="desc">
@@ -44,12 +44,12 @@
 							thresholfor content production and production
 						</div>
 					</div>
-					<img style="width: 112px;height:122px;" src="@/assets/images/home/resource.png" />
+					<img style="width: 156px;height:170px;" src="@/assets/images/home/resource.png" />
 				</div>
 			</div>
 			<div v-if="currentIndex==1" class="tab-item tab2">
 				<div class="item">
-					<img style="width: 102px;height:103px;" src="@/assets/images/home/ownership.png" />
+					<img style="width: 141px;height:143px;" src="@/assets/images/home/ownership.png" />
 					<div class="title">Content Data Ownership</div>
 					<div class="desc">
 						The content exists independently of the platform and is not subject to strong
@@ -58,7 +58,7 @@
 					</div>
 				</div>
 				<div class="item">
-					<img style="width: 94px;height:93px;" src="@/assets/images/home/ownershi.png" />
+					<img style="width: 131px;height:129px;" src="@/assets/images/home/ownershi.png" />
 					<div class="title">User data ownershi</div>
 					<div class="desc">
 						TThe result data of the interaction between creators and fans will become an integral
@@ -67,7 +67,7 @@
 					</div>
 				</div>
 				<div class="item">
-					<img style="width: 102px;height:103px;" src="@/assets/images/home/ownershir.png" />
+					<img style="width: 129px;height:128px;" src="@/assets/images/home/ownershir.png" />
 					<div class="title">Income Distribution Ownershir</div>
 					<div class="desc">
 						The creator income model inot determined by the platform, nor does it depeno on
@@ -82,7 +82,7 @@
 				</div>
 				<div class="tab-bottom">
 					<div class="tab-row">
-						<img style="width: 126px;height:109px;" src="@/assets/images/home/creation.png" />
+						<img style="width: 175px;height:152px;" src="@/assets/images/home/creation.png" />
 						<div class="tab-row-text">
 							<div class="title">Co-creation</div>
 							<div class="desc">
@@ -101,7 +101,7 @@
 								creators of the work and co.benefciaries of future value.
 							</div>
 						</div>
-						<img style="width: 109px;height:110px;" src="@/assets/images/home/governance.png" />
+						<img style="width: 152px;height:153px;" src="@/assets/images/home/governance.png" />
 					</div>
 				</div>
 			</div>
@@ -111,7 +111,7 @@
 				</div>
 				<div class="tab-bottom">
 					<div class="item">
-						<img style="width: 26px;height:25px;" src="@/assets/images/home/num1.png" />
+						<img style="width: 46px;height:35px;" src="@/assets/images/home/num1.png" />
 						<div class="tab-item-text">
 							<div class="title">Income from reading content</div>
 							<div class="desc">
@@ -121,7 +121,7 @@
 						</div>
 					</div>
 					<div class="item">
-						<img style="width: 26px;height:25px;" src="@/assets/images/home/num2.png" />
+						<img style="width: 46px;height:35px;" src="@/assets/images/home/num2.png" />
 						<div class="tab-item-text">
 							<div class="title">Content value-added income</div>
 							<div class="desc">
@@ -132,7 +132,7 @@
 						</div>
 					</div>
 					<div class="item">
-						<img style="width: 26px;height:25px;" src="@/assets/images/home/num3.png" />
+						<img style="width: 46px;height:35px;" src="@/assets/images/home/num3.png" />
 						<div class="tab-item-text">
 							<div class="title">Content copyright distribution income</div>
 							<div class="desc">
@@ -143,7 +143,7 @@
 						</div>
 					</div>
 					<div class="item">
-						<img style="width: 26px;height:25px;" src="@/assets/images/home/num4.png" />
+						<img style="width: 46px;height:35px;" src="@/assets/images/home/num4.png" />
 						<div class="tab-item-text">
 							<div class="title">Content copyright transaction income</div>
 							<div class="desc">
@@ -163,7 +163,7 @@
 				</div>
 				<div class="tab-bottom">
 					<div class="tab-row">
-						<img style="width: 144px;height:107px;" src="@/assets/images/home/amount.png" />
+						<img style="width: 200px;height:149px;" src="@/assets/images/home/amount.png" />
 						<div class="tab-row-text">
 							<div class="title">The amount of income is controllable</div>
 							<div class="desc">
@@ -184,7 +184,7 @@
 								without the need for approval fromothers or transfer.
 							</div>
 						</div>
-						<img style="width: 109px;height:110px;" src="@/assets/images/home/revenue.png" />
+						<img style="width: 185px;height:149px;" src="@/assets/images/home/revenue.png" />
 					</div>
 				</div>
 			</div>
@@ -196,7 +196,7 @@
 				</div>
 				<div class="tab-bottom">
 					<div class="tab-row">
-						<img style="width: 108px;height:107px;" src="@/assets/images/home/dao.png" />
+						<img style="width: 150px;height:149px;" src="@/assets/images/home/dao.png" />
 						<div class="tab-row-text">
 							<div class="title">Platform DAO governance rights</div>
 							<div class="desc">
@@ -214,7 +214,7 @@
 								income of theplatform will be closely related to the income of eachDAO member.
 							</div>
 						</div>
-						<img style="width: 112px;height:93px;" src="@/assets/images/home/dividend.png" />
+						<img style="width: 156px;height:129px;" src="@/assets/images/home/dividend.png" />
 					</div>
 				</div>
 			</div>
@@ -235,25 +235,25 @@
 
 <style lang="scss">
 	.comparison-tab {
-		height: 418px;
-		margin-top: 60px;
+		height: 580px;
+		margin-top: 84px;
 		display: flex;
 		flex-direction: row;
 		align-content: space-between;
 
 		.tab-header {
-			width: 290px;
+			width:404px;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
 
 			.tab-header-item {
-				font-size: 22px;
+				font-size: 30px;
 				font-family: Source Han Sans CN;
 				font-weight: 800;
-				line-height: 30px;
-				padding-left: 9px;
-				border-left: 2px solid #527293;
+				line-height: 42px;
+				padding-left: 13px;
+				border-left: 3px solid #527293;
 				font-weight: bold;
 				color: #527293;
 				cursor: pointer;
@@ -262,7 +262,7 @@
 
 			.select {
 				color: #FFFFFF;
-				border-left: 2px solid;
+				border-left: 3px solid;
 				border-image: linear-gradient(0deg, #4195F6, #17E7D6) 1;
 			}
 		}
@@ -272,11 +272,11 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: space-around;
-			height: 418px;
+			height: 580px;
 			background: #1A2027;
 			border: 1px solid #2C3638;
-			border-radius: 6px;
-			margin-left: 50px;
+			border-radius: 8px;
+			margin-left: 76px;
 		}
 
 		.tab1 {
@@ -284,26 +284,26 @@
 				display: flex;
 				flex-direction: row;
 				justify-content: space-around;
-				padding: 46px 64px;
+				padding: 64px 89px;
 
 				.tab-row-text {
 					flex: 1;
 					text-align: left;
 
 					.title {
-						font-size: 13px;
+						font-size: 20px;
 						font-family: Source Han Sans CN;
 						font-weight: bold;
 						color: #FFFFFF;
 					}
 
 					.desc {
-						margin-top: 16px;
-						font-size: 10px;
+						margin-top: 20px;
+						font-size: 14px;
 						font-family: Source Han Sans CN;
 						font-weight: bold;
 						color: #A1B5C6;
-						line-height: 16px;
+						line-height: 20px;
 					}
 				}
 			}
@@ -317,10 +317,10 @@
 
 			.item {
 				flex: 1;
-				height: 353px;
+				height: 490px;
 				border: 1px solid #2C3638;
-				border-radius: 11px;
-				margin: 0 16px;
+				border-radius: 15px;
+				margin: 0 22px;
 
 				&:last-child {
 					margin-left: 0;
@@ -331,7 +331,7 @@
 				}
 
 				img {
-					margin-top: 40px;
+					margin-top: 44px;
 				}
 
 				.title {

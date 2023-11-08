@@ -26,9 +26,8 @@
 	.navigation-item {
 		height: 101px;
 		background: #1A2027;
-		box-shadow: 0px 6px 13px 0px rgba(9, 11, 12, 0.85);
-		border-radius: 6px;
-		padding: 16px 13px;
+		border-radius: 8px;
+		padding: 22px 18px;
 		display: flex;
 		flex-direction: row;
 		cursor: pointer;
@@ -39,23 +38,23 @@
 
 		.content {
 			flex: 1;
-			margin-left: 12px;
+			margin-left: 16px;
 
 			.label {
-				font-size: 13px;
+				font-size: 18px;
 				font-family: Source Han Sans CN;
 				font-weight: bold;
-				line-height: 13px;
+				line-height: 26px;
 				text-align: left;
 			}
 
 			.sub {
-				line-height: 16px;
-				font-size: 10px;
+				font-size: 14px;
 				font-family: Arial;
 				font-weight: 400;
 				color: #B2B9B9;
-				margin-top: 14px;
+				line-height: 22px;
+				margin-top: 19px;
 				text-align: left;
 				word-wrap: break-word;
 				display: -webkit-box;

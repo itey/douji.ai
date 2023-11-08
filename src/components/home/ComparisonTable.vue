@@ -67,11 +67,10 @@
 
 <style lang="scss">
 	.comparison-content {
-		margin-top: 42px;
-		padding: 17px;
+		padding: 24px 23px 21px 21px;
 		background: #1A2027;
 		border: 1px solid #2C3638;
-		border-radius: 6px;
+		border-radius: 8px;
 	}
 
 	.el-table {
@@ -87,8 +86,8 @@
 	}
 
 	.el-table .el-table__cell {
-		height: 33px;
-		font-size: 10px;
+		height: 62px;
+		font-size: 16px;
 		font-family: Arial;
 		font-weight: bold;
 		color: #FFFFFF;
@@ -127,7 +126,7 @@
 
 	.el-table th.el-table__cell:first-child {
 		background: #5ba0fb;
-		border-top-left-radius: 6px;
+		border-top-left-radius: 8px;
 	}
 
 	.el-table th.el-table__cell:nth-child(2n) {
@@ -140,7 +139,7 @@
 
 	.el-table th.el-table__cell:last-child {
 		background: #1DDBDB;
-		border-top-right-radius: 6px;
+		border-top-right-radius: 8px;
 	}
 
 	.el-table td.el-table__cell:nth-child(2n) {

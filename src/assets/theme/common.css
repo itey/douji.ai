@@ -141,3 +141,6 @@
 .el-menu-item:hover {
 	background-color: transparent;
 }
+.el-breadcrumb {
+	font-size: 12px;
+}

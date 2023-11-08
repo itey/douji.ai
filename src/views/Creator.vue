@@ -36,12 +36,12 @@
 		position: relative;
 		.title-container {
 			text-align: left;
-			margin: 43px 0 33px 0;
+			margin: 60px 0 46px 0;
 			display: flex;
 			align-items: baseline;
 
 			.title {
-				font-size: 26px;
+				font-size: 36px;
 				font-family: Source Han Sans CN;
 				font-weight: bold;
 				line-height: 26px;
@@ -49,13 +49,13 @@
 			}
 
 			.sub {
-				font-size: 10px;
+				font-size: 14px;
 				font-family: Source Han Sans CN;
-				line-height: 13px;
-				margin-left: 6px;
-				background: #262F39;
-				border-radius: 4px;
+				margin-left: 9px;
+				padding: 4px 8px 3px 8px;
 				font-weight: bold;
+				background: #1A2027;
+				border-radius: 8px;
 			}
 		}
 
@@ -68,8 +68,8 @@
 				justify-content: space-between;
 
 				.item {
-					width: 246px;
-					margin: 0 17px 17px 0;
+					width: 342px;
+					margin: 0 24px 24px 0;
 
 					&:nth-child(4n) {
 						margin-right: 0;

@@ -2,7 +2,7 @@
 	<div class="home-container">
 		<div class="top-container">
 			<div class="news-img-container">
-				<img style="width: 673px;height: 379px;" />
+				<img style="width: 934px;height: 526px;" />
 				<div class="news-text">
 					<div class="title">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -11,7 +11,7 @@
 					</div>
 					<div class="bottom">
 						<div class="text-sub-color">
-							by <span class="text-primary-color">Victor Deaw</span>
+							by <span class="text-primary-color text-color">Victor Deaw</span>
 						</div>
 						<div class="text-sub-color">
 							September 21,2023
@@ -19,7 +19,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="news-tab-container" style="flex:1;height: 379px;margin-left: 8px;">
+			<div class="news-tab-container">
 				<el-tabs v-model="activeName" :stretch="true">
 					<el-tab-pane label="Hot News" name="news">
 						<div class="news-list">
@@ -246,9 +246,9 @@
 				What is the value of BJXStar NFT?
 			</div>
 			<div class="activity-info">
-				<img style="width: 161px;height:161px;margin-top: 25px;" src="@/assets/images/home/activity-info.png" />
+				<img style="width: 224px;height:224px;margin-top: 35px;" src="@/assets/images/home/activity-info.png" />
 				<div class="info">
-					<div style="margin-left: 127px;">
+					<div style="margin-left: 177px;">
 						<div class="title">
 							BJXStar NFT
 						</div>
@@ -302,14 +302,14 @@
 		</div>
 		<div class="video-container">
 			<div class="top">Video</div>
-			<div class="title">How to Use？</div>
-			<video style="width: 1037px;height: 485px;"></video>
+			<div class="title text-color">How to Use？</div>
+			<video style="width: 1440px;height: 674px;"></video>
 		</div>
 	</div>
 </template>
 
 <script>
-	import NewsTabItem from '@/components/NewsTabItem'
+	import NewsTabItem from '@/components/home/NewsTabItem'
 	import ProductItem from '@/components/ProductItem'
 	import NewsItem from '@/components/NewsItem'
 	import NftItem from '@/components/NftItem'
@@ -328,7 +328,7 @@
 		data() {
 			return {
 				activeName: 'news',
-				
+
 			}
 		},
 	}
@@ -347,40 +347,51 @@
 
 				.news-text {
 					position: absolute;
-					bottom: 22px;
-					left: 24px;
-					right: 24px;
+					bottom: 30px;
+					left: 34px;
+					right: 38px;
 
 					.title {
-						font-size: 20px;
+						font-size: 28px;
 						font-family: Microsoft YaHei;
 						font-weight: bold;
 						color: #FFFFFF;
-						line-height: 26px;
+						line-height: 36px;
 						text-align: left;
 					}
 
 					.bottom {
-						margin-top: 8px;
+						margin-top: 11px;
 						display: flex;
 						align-items: center;
 						justify-content: space-between;
+
+						.text-sub-color {
+							font-size: 12px;
+							font-family: Source Han Sans CN;
+							font-weight: 400;
+							color: #B2B9B9;
+							line-height: 12px;
+						}
 					}
 				}
 			}
-
 			.news-tab-container {
-				padding: 0 25px;
+				padding: 0 35px;
 				background: #212932;
-				border-radius: 6px;
+				border-radius: 8px;
+				flex: 1;
+				height: 526px;
+				margin-left: 11px;
 
 				.news-list {
-					height: 344px;
+					height: 478px;
 					overflow: auto;
 				}
+
 				.news-list::-webkit-scrollbar {
-				  width: 0;
-				  background-color: transparent;
+					width: 0;
+					background-color: transparent;
 				}
 			}
 		}
@@ -390,64 +401,64 @@
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
-			margin-top: 50px;
+			margin-top: 70px;
 
 			.left {
-				height: 292px;
+				height: 408px;
 				display: flex;
 				flex-direction: column;
 				justify-content: space-between;
 
 				.item {
-					width: 346px;
-					padding: 17px 24px 14px 24px;
+					width: 380px;
+					padding: 23px 33px 19px 33px;
 					text-align: left;
 					background: #1A2027;
 					border: 1px solid #2C3638;
-					border-radius: 6px;
+					border-radius: 8px;
 					display: flex;
 					flex-direction: column;
 					justify-content: space-between;
 
 					.label {
-						font-size: 12px;
-						line-height: 9px;
+						font-size: 16px;
+						line-height: 13px;
 						font-family: Arial;
 						font-weight: bold;
 						color: #BAD2D0;
 					}
 
 					.value {
-						font-size: 24px;
-						line-height: 24px;
+						font-size: 34px;
+						line-height: 34px;
 						font-family: Source Han Sans CN;
 						font-weight: 800;
 						color: #FFFFFF;
-						margin-top: 22px;
+						margin-top: 30px;
 					}
 				}
 			}
 
 			.nft-info-container {
-				height: 292px;
-				margin-left: 20px;
+				height: 408px;
+				margin-left: 28px;
 				flex: 1;
 				text-align: left;
 				display: flex;
 				flex-direction: row;
 				background: #1A2027;
 				border: 1px solid #2C3638;
-				border-radius: 6px;
+				border-radius: 8px;
 
 				.nft-column {
 					display: flex;
 					flex-direction: column;
 					width: 50%;
-					padding: 25px 23px;
+					padding: 35px 32px;
 
 					.title {
-						font-size: 12px;
-						line-height: 9px;
+						font-size: 16px;
+						line-height: 12px;
 						font-family: Arial;
 						font-weight: bold;
 						color: #BAD2D0;
@@ -457,21 +468,21 @@
 						display: flex;
 						flex-direction: row;
 						align-items: baseline;
-						margin-top: 22px;
+						margin-top: 30px;
 						margin-bottom: 8px;
 
 						.value {
-							font-size: 24px;
-							line-height: 24px;
+							font-size: 34px;
+							line-height: 34px;
 							font-family: Source Han Sans CN;
 							font-weight: 800;
 							color: #FFFFFF;
-							margin-right: 11px;
+							margin-right: 15px;
 						}
 
 						.rate {
-							font-size: 9px;
-							line-height: 9px;
+							font-size: 12px;
+							line-height: 12px;
 							font-family: Source Han Sans CN;
 							font-weight: 400;
 							color: #B2B9B9;
@@ -492,14 +503,14 @@
 							justify-content: space-between;
 
 							.label {
-								font-size: 12px;
+								font-size: 16px;
 								font-family: Arial;
 								font-weight: bold;
 								color: #BAD2D0;
 							}
 
 							.value {
-								font-size: 12px;
+								font-size: 16px;
 								font-family: Arial;
 								font-weight: bold;
 								color: #FFFFFF;
@@ -522,12 +533,12 @@
 
 		.latest-news-container {
 			.title {
-				font-size: 19px;
+				font-size: 26px;
 				font-family: Source Han Sans CN;
 				font-weight: 800;
 				color: #FFFFFF;
 				text-align: left;
-				margin: 27px 0 22px 0;
+				margin: 90px 0 30px 0;
 			}
 
 			.list-container {
@@ -536,8 +547,8 @@
 				justify-content: space-between;
 
 				.item {
-					width: 246px;
-					margin: 0 17px 17px 0;
+					width: 342px;
+					margin: 0 24px 24px 0;
 
 					&:nth-child(4n) {
 						margin-right: 0;
@@ -552,44 +563,45 @@
 			flex-wrap: wrap;
 			justify-content: space-between;
 			margin-top: 29px;
+			margin-bottom: 39px;
 
 			.news-item-container {
-				width: 508px;
+				width: 705px;
 				background: #1A2027;
 				border: 1px solid #2C3638;
-				border-radius: 6px;
-				margin-bottom: 20px;
+				border-radius: 8px;
+				margin-bottom: 28px;
 
 				&:nth-child(2n) {
 					margin-right: 0;
 				}
 
 				.top {
-					margin: 24px 20px 0 20px;
+					margin: 33px 27px 23px 33px;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
 					align-items: center;
 
 					.title {
-						font-size: 16px;
-						line-height: 16px;
+						font-size: 22px;
+						line-height: 22px;
 						font-family: Source Han Sans CN;
 						font-weight: 800;
 					}
 
 					.more {
-						font-size: 10px;
+						font-size: 14px;
 						font-family: Arial;
 						font-weight: bold;
 						color: #00F9E5;
-						line-height: 10px;
+						line-height: 14px;
 						display: flex;
 						flex-direction: row;
 						align-items: center;
 
 						img {
-							margin-left: 4px;
+							margin-left: 11px;
 						}
 					}
 				}
@@ -598,10 +610,10 @@
 					display: flex;
 					flex-wrap: wrap;
 					justify-content: space-between;
-					padding: 20px;
+					padding: 26px;
 
 					.item {
-						width: 225px;
+						width: 312px;
 
 						&:nth-child(2n) {
 							margin-right: 0;
@@ -620,26 +632,26 @@
 				align-items: center;
 
 				.title {
-					font-size: 19px;
+					font-size: 26px;
 					font-family: Source Han Sans CN;
 					font-weight: 800;
 					color: #FFFFFF;
 					text-align: left;
-					margin: 27px 0 22px 0;
+					margin: 31px 0 40px 0;
 				}
 
 				.more {
-					font-size: 10px;
+					font-size: 16px;
 					font-family: Arial;
 					font-weight: bold;
 					color: #00F9E5;
-					line-height: 10px;
+					line-height: 16px;
 					display: flex;
 					flex-direction: row;
 					align-items: center;
 
 					img {
-						margin-left: 4px;
+						margin-left: 11px;
 					}
 				}
 			}
@@ -650,8 +662,8 @@
 				justify-content: space-between;
 
 				.item {
-					width: 244px;
-					margin: 0 17px 17px 0;
+					width: 342px;
+					margin: 0 24px 24px 0;
 
 					&:nth-child(4n) {
 						margin-right: 0;
@@ -661,39 +673,38 @@
 		}
 
 		.activity-container {
-			margin-top: 71px;
+			margin-top: 98px;
 
 			.top {
-				font-size: 19px;
-				line-height: 19px;
+				font-size: 26px;
+				line-height: 26px;
 				font-family: Source Han Sans CN;
 				font-weight: 800;
 				color: #00F9E5;
 			}
 
 			.title {
-				font-size: 35px;
-				line-height: 35px;
+				font-size: 48px;
+				line-height: 48px;
 				font-family: Source Han Sans CN;
 				font-weight: 800;
-				margin-top: 17px;
-				margin-bottom: 19px;
+				margin-top: 23px;
+				margin-bottom: 27px;
 			}
 
 			.tip {
-				font-size: 14px;
+				font-size: 20px;
 				font-family: Source Han Sans CN;
 				font-weight: bold;
-				line-height: 14px;
-				margin-top: 19px;
+				line-height: 17px;
 			}
 
 			.activity-info {
 				background: #1A2027;
 				border: 1px solid #2C3638;
 				border-radius: 6px;
-				padding: 42px 0 50px 197px;
-				margin-top: 43px;
+				padding: 58px 0 69px 274px;
+				margin-top: 60px;
 				display: flex;
 				flex-direction: row;
 				justify-content: left;
@@ -702,85 +713,83 @@
 					text-align: left;
 
 					.title {
-						font-size: 17px;
-						line-height: 17px;
+						font-size: 24px;
+						line-height: 24px;
 						font-family: Arial;
 						font-weight: bold;
 						color: #8DAED5;
 					}
 
 					.label {
-						font-size: 10px;
-						line-height: 10px;
+						font-size: 14px;
+						line-height: 14px;
 						font-family: Arial;
 						font-weight: bold;
 						color: #809DBE;
-						margin-top: 19px;
+						margin-top: 27px;
 
 						&:first {
-							margin-top: 36px;
+							margin-top: 60px;
 						}
 					}
 
 					.value {
-						font-size: 22px;
-						line-height: 22px;
+						font-size: 30px;
+						line-height: 30px;
 						font-family: Arial;
 						font-weight: bold;
 						color: #FFFFFF;
-						margin-top: 11px;
+						margin-top: 15px;
 					}
 
 					.input {
-						width: 216px;
-						height: 36px;
-						font-size: 13px;
-						line-height: 36px;
+						width: 300px;
+						height: 50px;
+						font-size: 18px;
+						line-height: 50px;
 						font-family: Arial;
 						font-weight: bold;
 						color: #FFFFFF;
 						background: #0E161D;
 						border: 1px solid #313838;
-						border-radius: 6px;
-						margin-top: 12px;
+						border-radius: 8px;
+						margin-top: 16px;
 					}
 
 					.tip {
-						margin-left: 9px;
-						font-size: 9px;
-						margin-top: 45px;
+						margin-left: 13px;
+						font-size: 12px;
+						margin-top: 63px;
 					}
 				}
 			}
 		}
 
 		.comparison-container {
-			margin-top: 129px;
 
 			.comparison-top {
 				.top {
-					margin-top: 129px;
-					font-size: 19px;
+					margin-top: 179px;
+					font-size: 26px;
 					font-family: Source Han Sans CN;
 					font-weight: 800;
 					color: #00F9E5;
 				}
 
 				.title {
-					margin-top: 21px;
-					font-size: 35px;
+					margin-top: 29px;
+					font-size: 48px;
 					font-family: Source Han Sans CN;
 					font-weight: 800;
 				}
 
 				.tip {
-					margin: 21px 76px 0 76px;
-					margin-top: 21px;
-					font-size: 14px;
+					margin: 21px 106px 58px 128px;
+					font-size: 20px;
 					font-family: Source Han Sans CN;
 					font-weight: bold;
 					color: #A1B5C6;
-					line-height: 23px;
+					line-height: 29px;
 				}
 			}
 
@@ -789,19 +798,18 @@
 		.video-container {
 
 			.top {
-				margin-top: 118px;
-				font-size: 19px;
+				margin-top: 164px;
+				font-size: 26px;
 				font-family: Source Han Sans CN;
 				font-weight: 800;
 				color: #00F9E5;
 			}
 
 			.title {
-				margin-top: 27px;
-				font-size: 35px;
+				margin-top: 37px;
+				font-size: 48px;
 				font-family: Source Han Sans CN;
 				font-weight: 800;
-				color: #FFFFFF;
 			}
 		}
 	}

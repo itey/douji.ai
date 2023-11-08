@@ -1,6 +1,6 @@
 <template>
 	<div class="news-item" @click="itemClick">
-		<img style="width: 100%;height:154px;" />
+		<img style="width: 100%;height:194px;" />
 		<div class="label text-color">
 			dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj
 			sg'sgdsadgshg dsddfddhsjhjsh

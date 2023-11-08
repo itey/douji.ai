@@ -4,8 +4,7 @@
 			Revision history
 		</div>
 		<div class="history-content">
-			<el-table ref="multipleTable" :data="tableData" style="width: 850px"
-				@selection-change="handleSelectionChange">
+			<el-table ref="multipleTable" :data="tableData" style="width: 850px">
 				<el-table-column label="Timestamp" width="390px">
 					<template slot-scope="scope">2023/2/2 09:42:45</template>
 				</el-table-column>

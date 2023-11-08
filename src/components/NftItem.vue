@@ -40,6 +40,10 @@
 	.nft-item {
 		cursor: pointer;
 
+		img {
+			border-top-left-radius: 8px;
+			border-top-right-radius: 8px;
+		}
 		&:hover .label {
 			color: #00F9E5;
 		}

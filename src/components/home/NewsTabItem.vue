@@ -35,26 +35,26 @@
 	.news-tab-item {
 		cursor: pointer;
 		text-align: left;
-		margin: 14px 0 12px 0;
+		margin: 20px 0 14px 0;
 		&:hover .title {
 			color: #00F9E5;
 		}
 		.title {
-			font-size: 10px;
+			font-size: 14px;
 			font-family: Source Han Sans CN;
 			font-weight: 800;
 			color: #FFFFFF;
-			line-height: 16px;
+			line-height: 22px;
 		}
 		
 
 		.bottom {
-			margin-top: 16px;
+			margin-top: 22px;
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
 			.sub {
-				font-size: 9px;
+				font-size: 12px;
 				font-family: Source Han Sans CN;
 				font-weight: 400;
 			}

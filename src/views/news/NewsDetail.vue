@@ -15,7 +15,7 @@
 					before <span class="text-color">2023/03/22 17:20:18</span>. It expires. After that, the proposal
 					will be invalidated.
 				</div>
-				<div class="proposal-left-link">View the latest NFT infomation >></div>
+				<div class="proposal-left-link" @click="$refs['nftStakeDialog'].showDialog()">View the latest NFT infomation >></div>
 			</div>
 			<div class="proposal-right">
 				<div class="proposal-right-title">15680/50000</div>
@@ -47,6 +47,14 @@
 								<div class="author-desc">
 									This paragraph is the author'spersonal description
 								</div>
+							</div>
+							<div class="subscription light" v-if="subscription" @click="subscription = false">
+								<img style="width: 9px;height: 9px;" src="@/assets/images/news/add.png" />
+								<span>Subscription</span>
+							</div>
+							<div class="subscription" v-else @click="subscription = true">
+								<img style="width: 13px;height: 9px;" src="@/assets/images/news/true.png" />
+								<span>Subscription</span>
 							</div>
 						</div>
 						<div class="news-info">
@@ -359,6 +367,7 @@
 		<revision-history-dialog ref="revisionHistoryDialog"></revision-history-dialog>
 		<stake-dialog ref="stakeDialog"></stake-dialog>
 		<retrieve-dialog ref="retrieveDialog"></retrieve-dialog>
+		<nft-stake-dialog ref="nftStakeDialog"></nft-stake-dialog>
 	</div>
 </template>
 
@@ -368,6 +377,7 @@
 	import RevisionHistoryDialog from '@/components/news/RevisionHistoryDialog'
 	import StakeDialog from '@/components/news/StakeDialog'
 	import RetrieveDialog from '@/components/news/RetrieveDialog'
+	import NftStakeDialog from '@/components/news/NftStakeDialog'
 	export default {
 		name: 'news-detail-view',
 		components: {
@@ -376,10 +386,12 @@
 			RevisionHistoryDialog,
 			StakeDialog,
 			RetrieveDialog,
+			NftStakeDialog,
 		},
 		data() {
 			return {
 				pubContent: '',
+				subscription: false
 			}
 		}
 	}
@@ -441,6 +453,7 @@
 					font-family: Arial;
 					font-weight: bold;
 					color: #4097F5;
+					cursor: pointer;
 				}
 			}
 
@@ -512,6 +525,7 @@
 						flex-direction: row;
 						align-items: center;
 						justify-content: space-between;
+						margin-top: 55px;
 
 						.author-container {
 							display: flex;
@@ -522,19 +536,108 @@
 								text-align: left;
 
 								.author-name {
+									cursor: pointer;
 									font-size: 16px;
 									font-family: Source Han Sans CN;
 									font-weight: 400;
 									color: #ACBCC9;
 								}
 
-								.author-value {
+								.author-desc {
 									font-size: 12px;
 									font-family: Source Han Sans CN;
 									font-weight: 400;
 									color: #ACBCC9;
 									line-height: 16px;
 									margin-top: 7px;
+								}
+							}
+
+							.subscription {
+								margin-left: 14px;
+								height: 34px;
+								font-size: 12px;
+								font-family: Arial;
+								font-weight: bold;
+								width: 112px;
+								color: #ACBCC9;
+								background: #37434D;
+								border-radius: 17px;
+								display: flex;
+								flex-direction: row;
+								align-items: center;
+								justify-content: center;
+								cursor: pointer;
+
+								&.light {
+									color: #00F9E5;
+									background: #1D383B;
+								}
+
+								span {
+									margin-left: 6px;
+								}
+							}
+						}
+
+						.news-info {
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							justify-content: center;
+
+							.news-info-item {
+								min-width: 120px;
+								height: 58px;
+								background: #252D36;
+								border-radius: 8px;
+								margin-left: 12px;
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+								justify-content: space-around;
+
+								.news-info-item-label {
+									display: flex;
+									flex-direction: row;
+									align-items: center;
+									justify-content: center;
+									font-size: 16px;
+									font-family: Arial;
+									font-weight: 400;
+									color: #99B1C4;
+									line-height: 19px;
+									margin-top: 11px;
+
+									img {
+										width: 18px;
+										height: 19px;
+									}
+
+									span {
+										margin-left: 5px;
+									}
+								}
+
+								.news-info-item-value {
+									display: flex;
+									flex-direction: row;
+									align-items: center;
+									justify-content: center;
+									font-size: 12px;
+									font-family: Arial;
+									font-weight: 400;
+									color: #99B1C4;
+									margin-bottom: 11px;
+
+									img {
+										width: 8px;
+										height: 6px;
+									}
+
+									span {
+										margin-left: 3px;
+									}
 								}
 							}
 						}

@@ -1,6 +1,6 @@
 <template>
 	<div class="market-container">
-		<el-breadcrumb style="margin-top: 27px;" separator-class="el-icon-arrow-right">
+		<el-breadcrumb style="margin-top: 38px;" separator-class="el-icon-arrow-right">
 			<el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
 			<el-breadcrumb-item>Marketplace</el-breadcrumb-item>
 		</el-breadcrumb>
@@ -9,24 +9,24 @@
 			<span class="text-sub-color sub">28,308 result</span>
 		</div>
 		<div class="search-container">
-			<el-select v-model="typeValue" style="width: 150px;" filterable placeholder="ALL Types">
+			<el-select v-model="typeValue" style="width: 209px;" filterable placeholder="ALL Types">
 				<el-option v-for="item in typeOptions" :key="item.value" :label="item.label" :value="item.value">
 				</el-option>
 			</el-select>
-			<el-select v-model="categonValues" style="width: 284px;" multiple filterable allow-create
+			<el-select v-model="categonValues" style="width: 395px;" multiple filterable allow-create
 				placeholder="ALL Categons">
 				<el-option v-for="item in categonOptions" :key="item.value" :label="item.label" :value="item.value">
 				</el-option>
 			</el-select>
-			<el-select v-model="pltformValue" style="width: 150px;" filterable placeholder="ALL Pltforms">
+			<el-select v-model="pltformValue" style="width: 209px;" filterable placeholder="ALL Pltforms">
 				<el-option v-for="item in pltformOptions" :key="item.value" :label="item.label" :value="item.value">
 				</el-option>
 			</el-select>
-			<el-select v-model="viewedValue" style="width: 150px;" filterable placeholder="Most viewed">
+			<el-select v-model="viewedValue" style="width: 209px;" filterable placeholder="Most viewed">
 				<el-option v-for="item in viewedOptions" :key="item.value" :label="item.label" :value="item.value">
 				</el-option>
 			</el-select>
-			<el-input style="width: 248px;" placeholder="Search by name or Token ID">
+			<el-input style="width: 344px;" placeholder="Search by name or Token ID">
 				<i slot="prefix" class="el-input__icon el-icon-search"></i>
 			</el-input>
 		</div>
@@ -98,34 +98,34 @@
 	.market-container {
 		.title-container {
 			text-align: left;
-			margin: 25px 0;
+			margin: 35px 0;
 			display: flex;
 			align-items: baseline;
 
 			.title {
-				font-size: 26px;
+				font-size: 36px;
 				font-family: Source Han Sans CN;
 				font-weight: bold;
-				line-height: 26px;
+				line-height: 36px;
 				text-align: left;
 			}
 
 			.sub {
-				font-size: 9px;
+				font-size: 12px;
 				font-family: Source Han Sans CN;
 				font-weight: 400;
 				color: #99B5C4;
-				line-height: 9px;
-				margin-left: 7px;
+				line-height: 12px;
+				margin-left: 10px;
 			}
 		}
 
 		.search-container {
-			height: 52px;
+			height: 72px;
 			background: #1A2027;
-			border-radius: 6px;
-			padding: 11px 12px;
-			margin: 40px 0 14px 0;
+			border-radius: 8px;
+			padding: 15px 16px;
+			margin: 21px 0 19px 0;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
@@ -140,8 +140,8 @@
 				justify-content: space-between;
 
 				.item {
-					width: 246px;
-					margin: 0 17px 17px 0;
+					width: 342px;
+					margin: 0 24px 24px 0;
 
 					&:nth-child(4n) {
 						margin-right: 0;

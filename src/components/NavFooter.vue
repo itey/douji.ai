@@ -77,32 +77,32 @@
 		}
 
 		.label1 {
-			font-size: 10px;
+			font-size: 14px;
 			font-family: Source Han Sans CN;
 			font-weight: bold;
 			color: #FFFFFF;
-			line-height: 17px;
+			line-height: 20px;
 		}
 
 		.label2 {
-			font-size: 10px;
+			font-size: 14px;
 			font-family: Source Han Sans CN;
 			font-weight: 400;
 			color: #FFFFFF;
-			line-height: 23px;
+			line-height: 32px;
 		}
 	}
 
 	.el-menu-item {
 		height: auto;
-		font-size: 12px;
+		font-size: 16px;
 		font-family: Source Han Sans CN;
 		font-weight: 400;
 		text-align: left;
 	}
 
 	.footer-column .el-menu-item {
-		height: 23px !important;
-		line-height: 23px !important;
+		height: 33px !important;
+		line-height: 33px !important;
 	}
 </style>
