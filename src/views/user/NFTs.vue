@@ -9,8 +9,8 @@
 					308 Items
 				</span>
 			</div>
-			<div>
-				<el-input placeholder="Search by name or Token ID" style="width:284px">
+			<div class="search">
+				<el-input placeholder="Search by name or Token ID">
 					<i slot="prefix" class="el-input__icon el-icon-search"></i>
 				</el-input>
 			</div>
@@ -47,7 +47,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.container {
 		padding: 0 50px;
 		display: flex;
@@ -94,5 +94,8 @@
 				}
 			}
 		}
+	}
+	.search .el-input__inner{
+		width:284px;
 	}
 </style>

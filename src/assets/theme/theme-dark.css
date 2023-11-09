@@ -117,6 +117,12 @@
 	background: #0E161D;
 }
 
+.el-input.is-disabled .el-input__inner {
+    background-color: transparent;
+    border-color: #e4e7ed;
+    color: #c0c4cc;
+    cursor: not-allowed;
+}
 .el-textarea__inner {
 	color: #FFFFFF;
 	background: #0E161D;

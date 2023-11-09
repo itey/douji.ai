@@ -109,7 +109,7 @@
 									<div class="mbd-value text-color">2590.0 MBD</div>
 									<div class="mbd-transform">≈$626 57</div>
 								</div>
-								<el-button :disabled="!edit" class="common-btn2 nft-stake-attr-mint">Mint</el-button>
+								<el-button class="common-btn2 nft-stake-attr-mint">Mint</el-button>
 								<div class="nft-stake-attr-tip">
 									Owning
 									<span class="text-color">1 BJxStar</span> To Get
@@ -187,7 +187,9 @@
 		name: 'nft-stake-dialog',
 		data() {
 			return {
-				show: false
+				show: false,
+				privateContent:'',
+				pubContent:''
 			}
 		},
 		methods: {

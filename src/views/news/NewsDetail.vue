@@ -21,7 +21,7 @@
 				<div class="proposal-right-title">15680/50000</div>
 				<div class="proposal-right-sub">Threshold: <span class="text-color">25000</span></div>
 				<div class="proposal-right-btn">
-					<el-button style="width: 118px;height: 42px;" class="common-btn2">Approve</el-button>
+					<el-button @click="$refs['congratulationsDialog'].showDialog()" style="width: 118px;height: 42px;" class="common-btn2">Approve</el-button>
 					<el-button style="margin-left: 24px;width: 118px;height: 42px;" class="common-btn2"
 						:disabled="true">Execute</el-button>
 				</div>
@@ -368,6 +368,8 @@
 		<stake-dialog ref="stakeDialog"></stake-dialog>
 		<retrieve-dialog ref="retrieveDialog"></retrieve-dialog>
 		<nft-stake-dialog ref="nftStakeDialog"></nft-stake-dialog>
+		<check-in-dialog ref="checkInDialog"></check-in-dialog>
+		<congratulations-dialog ref="congratulationsDialog"></congratulations-dialog>
 	</div>
 </template>
 
@@ -378,6 +380,8 @@
 	import StakeDialog from '@/components/news/StakeDialog'
 	import RetrieveDialog from '@/components/news/RetrieveDialog'
 	import NftStakeDialog from '@/components/news/NftStakeDialog'
+	import CheckInDialog from '@/components/news/CheckInDialog'
+	import CongratulationsDialog from '@/components/news/CongratulationsDialog'
 	export default {
 		name: 'news-detail-view',
 		components: {
@@ -387,12 +391,17 @@
 			StakeDialog,
 			RetrieveDialog,
 			NftStakeDialog,
+			CheckInDialog,
+			CongratulationsDialog
 		},
 		data() {
 			return {
 				pubContent: '',
 				subscription: false
 			}
+		},
+		mounted() {
+			console.log('mounted')
 		}
 	}
 </script>

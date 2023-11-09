@@ -48,12 +48,12 @@
 			color: #00F9E5;
 		}
 		.label {
-			font-size: 10px;
-			line-height: 10px;
+			font-size: 14px;
+			line-height: 14px;
 			font-family: Source Han Sans CN;
 			font-weight: bold;
 			text-align: left;
-			margin: 11px 8px 0 8px;
+			margin: 20px 14px 0 14px;
 			word-wrap: break-word;
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
@@ -63,7 +63,7 @@
 		}
 		
 		.nft-bottom {
-			padding: 14px 10px 10px 10px;
+			padding: 15px 14px 15px 14px;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
@@ -72,15 +72,15 @@
 			.bottom-left {
 
 				.value {
-					font-size: 10px;
-					line-height: 10px;
+					font-size: 14px;
+					line-height: 14px;
 					font-family: Source Han Sans CN;
 					font-weight: bold;
 				}
 
 				.transform {
-					font-size: 10px;
-					line-height: 10px;
+					font-size: 14px;
+					line-height: 14px;
 					font-family: Source Han Sans CN;
 					font-weight: 400;
 				}

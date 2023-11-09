@@ -230,8 +230,8 @@
 				<nft-item :style="{
 					background: '#1A2027',
 					border: '1px solid #2C3638',
-					borderRadius: '6px',
-				}" class="item" height="140px" v-for="(item,index) in 8" :key="index"></nft-item>
+					borderRadius: '8px',
+				}" class="item" height="194px" v-for="(item,index) in 8" :key="index"></nft-item>
 			</div>
 		</div>
 		<div style="margin-top: 46px;">
@@ -662,7 +662,7 @@
 				justify-content: space-between;
 
 				.item {
-					width: 342px;
+					width: 340px;
 					margin: 0 24px 24px 0;
 
 					&:nth-child(4n) {
@@ -750,8 +750,6 @@
 						font-family: Arial;
 						font-weight: bold;
 						color: #FFFFFF;
-						background: #0E161D;
-						border: 1px solid #313838;
 						border-radius: 8px;
 						margin-top: 16px;
 					}

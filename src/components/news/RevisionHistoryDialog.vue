@@ -268,7 +268,9 @@
 	.el-table td.el-table__cell:first-child {
 		text-align: left;
 	}
-	.el-table th.el-table__cell:last-child, .el-table td.el-table__cell:last-child {
-	    text-align: left;
+
+	.el-table th.el-table__cell:last-child,
+	.el-table td.el-table__cell:last-child {
+		text-align: left;
 	}
 </style>

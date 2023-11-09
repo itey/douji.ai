@@ -1,6 +1,6 @@
 <template>
 	<el-container class="user-container">
-		<el-aside width="177px" class="left">
+		<el-aside width="246px" class="left">
 			<el-menu :router="true" text-color="#FFFFFF" active-text-color="#00F9E5">
 				<el-menu-item v-for="(item,index) in menuList" :key="index" :index="`/${item.path}`">
 					<div class="menu-item-content" :class="{

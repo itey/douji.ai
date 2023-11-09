@@ -1,14 +1,14 @@
 <template>
 	<div class="comparison-content">
 		<el-table class="comparison-table" :header-row-class-name="'table-header'" :row-class-name="'table-row'"
-			row-class-name="table-row" :data="tableData" border style="width: 100%">
-			<el-table-column prop="column0" label="Feature" width="214px">
+			row-class-name="table-row" :data="tableData" border style="width: 1396px">
+			<el-table-column prop="column0" label="Feature" width="296px">
 			</el-table-column>
-			<el-table-column prop="column1" label="Web2 Creator economic platform" width="270px">
+			<el-table-column prop="column1" label="Web2 Creator economic platform" width="374px">
 			</el-table-column>
-			<el-table-column prop="column2" label="Regular Web3 creator economic platform" width="273px">
+			<el-table-column prop="column2" label="Regular Web3 creator economic platform" width="380px">
 			</el-table-column>
-			<el-table-column prop="column3" label="DOUJI.AI" width="243px">
+			<el-table-column prop="column3" label="DOUJI.AI" width="338px">
 			</el-table-column>
 		</el-table>
 	</div>
@@ -94,6 +94,9 @@
 		padding: 0 0;
 		text-align: center;
 	}
+	.el-table .table-header .el-table__cell {
+		height: 45px;
+	}
 
 	.el-table--enable-row-hover .el-table__body tr:hover>td.el-table__cell {
 		background-color: transparent;
@@ -137,7 +140,7 @@
 		background: #6E69D0;
 	}
 
-	.el-table th.el-table__cell:last-child {
+	.el-table th.el-table__cell:nth-child(4n) {
 		background: #1DDBDB;
 		border-top-right-radius: 8px;
 	}

@@ -242,13 +242,13 @@
 		align-content: space-between;
 
 		.tab-header {
-			width:404px;
+			width:454px;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
 
 			.tab-header-item {
-				font-size: 30px;
+				font-size: 28px;
 				font-family: Source Han Sans CN;
 				font-weight: 800;
 				line-height: 42px;
@@ -261,6 +261,7 @@
 			}
 
 			.select {
+				font-size: 30px;
 				color: #FFFFFF;
 				border-left: 3px solid;
 				border-image: linear-gradient(0deg, #4195F6, #17E7D6) 1;
@@ -273,6 +274,7 @@
 			align-items: center;
 			justify-content: space-around;
 			height: 580px;
+			width: 960px;
 			background: #1A2027;
 			border: 1px solid #2C3638;
 			border-radius: 8px;
@@ -284,7 +286,7 @@
 				display: flex;
 				flex-direction: row;
 				justify-content: space-around;
-				padding: 64px 89px;
+				padding: 64px 96px 67px 80px;
 
 				.tab-row-text {
 					flex: 1;
@@ -295,6 +297,7 @@
 						font-family: Source Han Sans CN;
 						font-weight: bold;
 						color: #FFFFFF;
+						margin-top: 18px;
 					}
 
 					.desc {
@@ -337,7 +340,7 @@
 				.title {
 					margin-top: 0;
 					text-align: center;
-					font-size: 13px;
+					font-size: 18px;
 					font-family: Source Han Sans CN;
 					font-weight: bold;
 					color: #FFFFFF;
@@ -345,12 +348,12 @@
 
 				.desc {
 					text-align: left;
-					margin: 17px;
-					font-size: 10px;
+					margin: 18px 24px 38px 24px;
+					font-size: 14px;
 					font-family: Source Han Sans CN;
 					font-weight: bold;
 					color: #A1B5C6;
-					line-height: 16px;
+					line-height: 22px;
 				}
 			}
 		}
@@ -361,20 +364,18 @@
 			justify-content: space-between;
 
 			.tab-tip {
-				width: 622px;
+				width: 840px;
 				background: #2A343F;
-				border-radius: 7px;
-				line-height: 14px;
-				padding: 9px;
-				font-size: 12px;
+				border-radius: 10px;
+				line-height: 17px;
+				padding: 15px 12px;
+				font-size: 16px;
 				font-family: Source Han Sans CN;
 				font-weight: bold;
 				color: #8DAED5;
-				margin-top: 17px;
+				margin-top: 24px;
 				vertical-align: middle;
 				text-align: left;
-				display: flex;
-				align-items: center;
 			}
 
 			.tab-bottom {
@@ -386,26 +387,26 @@
 					display: flex;
 					flex-direction: row;
 					justify-content: space-around;
-					padding: 46px 64px;
+					padding: 54px 96px;
 
 					.tab-row-text {
 						flex: 1;
 						text-align: left;
 
 						.title {
-							font-size: 13px;
+							font-size: 18px;
 							font-family: Source Han Sans CN;
 							font-weight: bold;
 							color: #FFFFFF;
 						}
 
 						.desc {
-							margin-top: 16px;
-							font-size: 10px;
+							margin-top: 20px;
+							font-size: 14px;
 							font-family: Source Han Sans CN;
 							font-weight: bold;
 							color: #A1B5C6;
-							line-height: 16px;
+							line-height: 20px;
 						}
 					}
 				}
@@ -418,20 +419,18 @@
 			justify-content: space-between;
 
 			.tab-tip {
-				width: 622px;
+				width: 864px;
 				background: #2A343F;
-				border-radius: 7px;
-				line-height: 14px;
-				padding: 9px;
-				font-size: 12px;
+				border-radius: 10px;
+				line-height: 52px;
+				padding:0 9px;
+				font-size: 16px;
 				font-family: Source Han Sans CN;
 				font-weight: bold;
 				color: #8DAED5;
-				margin-top: 17px;
+				margin-top: 24px;
 				vertical-align: middle;
-				text-align: left;
-				display: flex;
-				align-items: center;
+				text-align: center;
 			}
 
 			.tab-bottom {
@@ -440,22 +439,22 @@
 				justify-content: space-around;
 
 				.item {
-					width: 302px;
-					height: 144px;
-					margin-bottom: 19px;
+					width: 420px;
+					height: 200px;
+					margin-bottom: 26px;
 					border: 1px solid #2C3638;
-					border-radius: 7px;
+					border-radius: 10px;
 					position: relative;
 
 					img {
 						position: absolute;
-						left: -15px;
-						top: 46px;
+						left: -18px;
+						top: 64px;
 						background: #1A2027;
 					}
 
 					.title {
-						font-size: 13px;
+						font-size: 18px;
 						font-family: Source Han Sans CN;
 						font-weight: bold;
 						color: #FFFFFF;
@@ -464,12 +463,12 @@
 					}
 
 					.desc {
-						margin: 16px 21px 0 28px;
-						font-size: 10px;
+						margin: 17px 29px 0 39px;
+						font-size: 14px;
 						font-family: Source Han Sans CN;
 						font-weight: bold;
 						color: #A1B5C6;
-						line-height: 16px;
+						line-height: 22px;
 						text-align: left;
 					}
 				}

@@ -26,7 +26,7 @@
 		},
 		methods: {
 			itemClick() {
-				this.$router.push('/news/detail')
+				this.$router.push('/news-detail')
 			}
 		}
 	}
