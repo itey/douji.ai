@@ -6,7 +6,7 @@
         <div class="form-label">Title*</div>
         <div class="form-value">
           <div>
-            <el-input v-model="form.title" @change="checkItem('title')" class="input" maxlength="50"></el-input>
+            <el-input v-model="form.title" @change="checkItem('title')" class="input" maxlength="100"></el-input>
           </div>
           <div v-if="error.title" class="tip-error">{{ error.title }}</div>
           <div v-else class="tip">Name of your content name</div>
@@ -16,7 +16,7 @@
         <div class="form-label">Description*</div>
         <div class="form-value">
           <div>
-            <el-input v-model="form.description" @change="checkItem('description')" class="input" type="textarea" rows="3" maxlength="140"></el-input>
+            <el-input v-model="form.description" @change="checkItem('description')" class="input" type="textarea" rows="3" maxlength="300"></el-input>
           </div>
           <div v-if="error.description" class="tip-error">{{ error.description }}</div>
           <div v-else class="tip">Write some details about your content</div>

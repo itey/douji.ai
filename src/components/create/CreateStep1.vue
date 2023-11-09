@@ -84,7 +84,7 @@
         <div v-if="error.initialQuantity" class="tip-error">{{ error.initialQuantity }}</div>
         <div v-else class="tip">
           Not allowed to change after mint.NFT Maximum Initial Mint Quantity
-          <span class="text-color">250</span>
+          <span class="text-color">{{ form.maxSupply }}</span>
         </div>
       </template>
       <div class="label">NFT Initial Mint Price*</div>
@@ -301,7 +301,7 @@ export default {
           } else {
             if (
               isNaN(Number(this.form.initialPrice)) ||
-              Number(this.form.initialPrice) <= 0
+              Number(this.form.initialPrice) < 0
             ) {
               this.setError(key, this.$t('create.initialPrice_invalid'))
             } else {
@@ -385,7 +385,7 @@ export default {
       } else {
         if (
           isNaN(Number(this.form.initialPrice)) ||
-          Number(this.form.initialPrice) <= 0
+          Number(this.form.initialPrice) < 0
         ) {
           this.setError('initialPrice', this.$t('create.initialPrice_invalid'))
           ifPass = false
