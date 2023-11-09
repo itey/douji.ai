@@ -2,17 +2,14 @@
 	<el-dialog custom-class="mint-success-dialog" :visible.sync="show" width="945px">
 		<img style="width: 104px;height: 104px;margin-top: 85px;" src="@/assets/images/create/mint-success.png" />
 		<div class="mint-success-title">Congratulations</div>
-		<div class="mint-success-label text-color">Your content NFT has been minted successfully!</div>
+		<div class="mint-success-label text-color">You have successfully initiated a vote to amend the NFT profile!
+		</div>
 		<div class="mint-success-info">
 			<div class="info-label">
 				<div class="info-label-item">Transcantion ID</div>
-				<div class="info-label-item">Token Address</div>
-				<div class="info-label-item">Token ID</div>
 			</div>
 			<div class="info-value" v-if="tx.events">
 				<div class="info-value-item">{{ tx.transactionHash }}</div>
-				<div class="info-value-item">{{ tx.to }}</div>
-				<div class="info-value-item">{{ tx.events.Authorised.returnValues.tokenId }}</div>
 			</div>
 		</div>
 		<div class="btn-container">
@@ -23,7 +20,7 @@
 
 <script>
 	export default {
-		name: 'mint-success-dialog',
+		name: 'update-success-dialog',
 		props: {
 			tx: {
 				type: Object,
@@ -44,7 +41,7 @@
 		},
 		data() {
 			return {
-				show: false,
+				show: true,
 			}
 		},
 		methods: {

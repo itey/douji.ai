@@ -11,7 +11,7 @@
 <script>
 import CreateStep1 from '@/components/create/CreateStep1'
 import CreateStep2 from '@/components/create/CreateStep2'
-import UpdateSuccess from '@/components/create/UpdateSuccessDialo'
+import UpdateSuccess from '@/components/create/UpdateSuccessDialog'
 import { weiToEth } from '@/utils/common'
 import { loadFromUrl, unlockContent, uploadJson } from '@/utils/http'
 import {

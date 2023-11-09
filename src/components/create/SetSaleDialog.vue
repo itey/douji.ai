@@ -1,5 +1,5 @@
 <template>
-	<el-dialog custom-class="set-sale-dialog" :visible.sync="show" width="681px">
+	<el-dialog custom-class="set-sale-dialog" :visible.sync="show" width="946px">
 		<div class="set-sale-header text-color" slot="title">
 			Set NFT Sales Promotion
 		</div>
@@ -26,7 +26,7 @@
 					BSC Chain token smart contract address
 				</div>
 				<div class="set-sale-value">
-					<el-input class="input" placeholder="" style="width: 461px;"></el-input>
+					<el-input class="input" placeholder="" style="width: 640px;"></el-input>
 					<i class="el-icon-circle-check" style="color: #00F9E5;margin-left: 4px;"></i>
 					<i class="el-icon-delete" style="color: #87A2B7;margin-left: 12px;"></i>
 					<div class="verify">Verify</div>
@@ -39,7 +39,7 @@
 					Token ID
 				</div>
 				<div class="set-sale-value">
-					<el-input class="input" placeholder="" style="width: 271px;"></el-input>
+					<el-input class="input" placeholder="" style="width: 376px;"></el-input>
 				</div>
 				<div class="set-sale-label text-color">
 					How many discounts can a user get by holding one Licensed token?
@@ -51,13 +51,13 @@
 					Discounts for purchasing NFTs
 				</div>
 				<div class="set-sale-value">
-					<el-input class="input" placeholder="" style="width: 72px;"></el-input>
+					<el-input class="input" placeholder="" style="width: 100px;"></el-input>
 					<div class="set-sale-unit">%</div>
 				</div>
 			</div>
 			<div class="btn-container">
 				<el-button class="common-border-btn" plain @click="show = false">Cancel</el-button>
-				<el-button class="common-btn2" style="margin-left: 59px;">Apply</el-button>
+				<el-button class="common-btn2" style="margin-left: 82px;">Apply</el-button>
 			</div>
 		</div>
 	</el-dialog>
@@ -91,72 +91,72 @@
 
 		.set-sale-header {
 			text-align: left;
-			font-size: 17px;
+			font-size: 24px;
 			font-family: Arial;
 			font-weight: bold;
 		}
 
 		.set-sale-top {
 			border: 1px solid #1F272F;
-			padding:24px 34px 0 34px;
+			padding: 33px 46px 0 46px;
 			text-align: left;
 
 			.label {
-				font-size: 13px;
+				font-size: 18px;
 				font-family: Arial;
 				font-weight: bold;
 				color: #FFFFFF;
-				margin-bottom: 14px;
+				margin-bottom: 20px;
 			}
 		}
 
 		.set-sale-form {
 			background: #212831;
 			border-radius: 11px;
-			margin: 22px 0 60px 0;
-			padding: 27px 0 32px 0;
+			margin: 30px 0 84px 0;
+			padding: 38px 0 44px 0;
 
 			.set-sale-title {
-				font-size: 14px;
+				font-size: 20px;
 				font-family: Arial;
 				font-weight: bold;
 				color: #9FAEC0;
-				margin: 0 25px;
+				margin: 0 35px;
 			}
 
 			.set-sale-label {
-				font-size: 13px;
+				font-size: 18px;
 				font-family: Arial;
 				font-weight: bold;
-				margin:30px 25px 0 25px;
+				margin: 42px 36px 0 36px;
 			}
 
 			.set-sale-value {
 				display: flex;
 				flex-direction: row;
 				align-items: center;
-				margin:14px 25px 0 25px;
+				margin: 20px 36px 0 36px;
 
 				.type-item {
-					min-width: 115px;
-					height: 35px;
-					line-height: 35px;
+					min-width: 160px;
+					height: 48px;
+					line-height: 48px;
 					background: #0E161D;
 					border: 1px solid #313838;
-					border-radius: 6px;
-					font-size: 10px;
+					border-radius: 8px;
+					font-size: 14px;
 					font-family: Source Han Sans CN;
 					font-weight: 400;
 					color: #FFFFFF;
-					margin-right: 6px;
+					margin-right: 9px;
 					text-align: center;
 					cursor: pointer;
 
 					&.light {
 						background: #18252F;
 						border: 1px solid #2FC9BD;
-						border-radius: 6px;
-						font-size: 10px;
+						border-radius: 8px;
+						font-size: 14px;
 						font-family: Source Han Sans CN;
 						font-weight: bold;
 						color: #00FBE6;
@@ -164,21 +164,21 @@
 				}
 
 				.set-sale-unit {
-					margin-left: 4px;
-					font-size: 10px;
+					margin-left: 6px;
+					font-size: 14px;
 					font-family: Arial;
 					font-weight: bold;
 					color: #00F9E5;
 				}
 
 				.verify {
-					width: 72px;
-					height: 35px;
-					line-height: 35px;
+					width: 100px;
+					height: 48px;
+					line-height: 48px;
 					background: #31CAD7;
 					border: 1px solid #313838;
-					border-radius: 6px;
-					font-size: 10px;
+					border-radius: 8px;
+					font-size: 12px;
 					font-family: Arial;
 					font-weight: bold;
 					color: #212831;
@@ -188,11 +188,11 @@
 			}
 
 			.set-sale-tip {
-				font-size: 9px;
+				font-size: 12px;
 				font-family: Arial;
 				font-weight: 400;
 				color: #747C7C;
-				margin:9px 25px 0 25px;
+				margin: 12px 36px 0 36px;
 			}
 		}
 
@@ -219,24 +219,20 @@
 				background: transparent;
 			}
 		}
-	}
 
-	.el-dialog {
-		background: #1A2027;
-		border: 1px solid #2C3638;
-		border-radius: 12px 6px 6px 6px;
-	}
+		.el-dialog {
+			background: #1A2027;
+			border: 1px solid #2C3638;
+			border-radius: 12px 6px 6px 6px;
+		}
 
-	.el-dialog__body {
-		padding: 0 0;
-	}
+		.el-dialog__body {
+			padding: 0 0;
+		}
 
-	.el-switch.is-checked .el-switch__core {
-		border-color: #00F9E5;
-		background-color: #00F9E5;
-	}
-	.el-input__inner {
-	    height: 35px;
-		line-height: 35px;
+		.el-switch.is-checked .el-switch__core {
+			border-color: #00F9E5;
+			background-color: #00F9E5;
+		}
 	}
 </style>

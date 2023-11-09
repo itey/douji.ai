@@ -177,100 +177,100 @@
 				width: 135px;
 			}
 		}
-	}
 
-	.el-dialog {
-		background: #1A2027;
-		border: 1px solid #2C3638;
-		border-radius: 12px 6px 6px 6px;
-	}
-
-	.el-dialog__body {
-		padding: 0 0;
-	}
-
-	.el-switch.is-checked .el-switch__core {
-		border-color: #00F9E5;
-		background-color: #00F9E5;
-	}
-
-	.el-input__inner {
-		height: 35px;
-		line-height: 35px;
-	}
-
-	.el-table {
-		font-size: 9px;
-	}
-
-	.el-table,
-	.el-table tr,
-	.el-table--enable-row-hover .el-table__body tr:hover>td.el-table__cell {
-		background-color: transparent;
-	}
-
-	.el-table th.el-table__cell {
-		background-color: #252D36;
-	}
-
-	.el-table td.el-table__cell,
-	.el-table th.el-table__cell.is-leaf {
-		border-bottom: 1px solid #1F262E;
-	}
-
-	.el-table-column--selection .cell {
-		padding-left: 11px;
-		padding-right: 11px;
-	}
-
-	.el-checkbox__inner {
-		background-color: transparent;
-	}
-
-	.el-checkbox__input.is-checked .el-checkbox__inner {
-		background-color: #ACBCC9;
-		border-color: transparent;
-	}
-
-	.el-table th.el-table__cell,
-	.el-table td.el-table__cell {
-		&:first-child {
-			text-align: center;
+		.el-dialog {
+			background: #1A2027;
+			border: 1px solid #2C3638;
+			border-radius: 12px 6px 6px 6px;
 		}
 
-		&:last-child {
-			padding-right: 14px;
-			text-align: right;
+		.el-dialog__body {
+			padding: 0 0;
 		}
 
-		&:nth-child(4),
-		&:nth-child(5) {
-			text-align: center;
+		.el-switch.is-checked .el-switch__core {
+			border-color: #00F9E5;
+			background-color: #00F9E5;
 		}
 
-	}
+		.el-input__inner {
+			height: 35px;
+			line-height: 35px;
+		}
 
-	.el-table--fit {
-		border-bottom: 1px solid #1F262E;
-	}
+		.el-table {
+			font-size: 9px;
+		}
 
-	.el-table--scrollable-x .el-table__body-wrapper {
-		overflow-x: hidden;
-	}
+		.el-table,
+		.el-table tr,
+		.el-table--enable-row-hover .el-table__body tr:hover>td.el-table__cell {
+			background-color: transparent;
+		}
 
-	.el-table--border::after,
-	.el-table--group::after,
-	.el-table::before {
-		background-color: transparent;
-	}
+		.el-table th.el-table__cell {
+			background-color: #252D36;
+		}
 
-	.el-table th.el-table__cell:first-child,
-	.el-table td.el-table__cell:first-child {
-		text-align: left;
-	}
+		.el-table td.el-table__cell,
+		.el-table th.el-table__cell.is-leaf {
+			border-bottom: 1px solid #1F262E;
+		}
 
-	.el-table th.el-table__cell:last-child,
-	.el-table td.el-table__cell:last-child {
-		text-align: left;
+		.el-table-column--selection .cell {
+			padding-left: 11px;
+			padding-right: 11px;
+		}
+
+		.el-checkbox__inner {
+			background-color: transparent;
+		}
+
+		.el-checkbox__input.is-checked .el-checkbox__inner {
+			background-color: #ACBCC9;
+			border-color: transparent;
+		}
+
+		.el-table th.el-table__cell,
+		.el-table td.el-table__cell {
+			&:first-child {
+				text-align: center;
+			}
+
+			&:last-child {
+				padding-right: 14px;
+				text-align: right;
+			}
+
+			&:nth-child(4),
+			&:nth-child(5) {
+				text-align: center;
+			}
+
+		}
+
+		.el-table--fit {
+			border-bottom: 1px solid #1F262E;
+		}
+
+		.el-table--scrollable-x .el-table__body-wrapper {
+			overflow-x: hidden;
+		}
+
+		.el-table--border::after,
+		.el-table--group::after,
+		.el-table::before {
+			background-color: transparent;
+		}
+
+		.el-table th.el-table__cell:first-child,
+		.el-table td.el-table__cell:first-child {
+			text-align: left;
+		}
+
+		.el-table th.el-table__cell:last-child,
+		.el-table td.el-table__cell:last-child {
+			text-align: left;
+		}
 	}
 </style>

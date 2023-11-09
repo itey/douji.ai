@@ -20,7 +20,7 @@
 				select:currentIndex==5
 			}" @click="currentIndex = 5">Platform DAO governance model</div>
 		</div>
-		<div style="flex:1;">
+		<div>
 			<div v-if="currentIndex==0" class="tab-item tab1">
 				<div class="tab-row">
 					<img style="width: 266px;height:165px;" src="@/assets/images/home/ai.png" />
@@ -242,12 +242,12 @@
 		align-content: space-between;
 
 		.tab-header {
-			width:454px;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
 
 			.tab-header-item {
+				width: 404px;
 				font-size: 28px;
 				font-family: Source Han Sans CN;
 				font-weight: 800;
@@ -423,7 +423,7 @@
 				background: #2A343F;
 				border-radius: 10px;
 				line-height: 52px;
-				padding:0 9px;
+				padding: 0 9px;
 				font-size: 16px;
 				font-family: Source Han Sans CN;
 				font-weight: bold;

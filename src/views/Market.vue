@@ -121,6 +121,7 @@
 		}
 
 		.search-container {
+			width: 1440px;
 			height: 72px;
 			background: #1A2027;
 			border-radius: 8px;
@@ -135,6 +136,7 @@
 			flex: 1;
 
 			.list {
+				width: 1440px;
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: space-between;

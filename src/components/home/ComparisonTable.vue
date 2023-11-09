@@ -67,93 +67,95 @@
 
 <style lang="scss">
 	.comparison-content {
+		width: 1440px;
 		padding: 24px 23px 21px 21px;
 		background: #1A2027;
 		border: 1px solid #2C3638;
 		border-radius: 8px;
-	}
 
-	.el-table {
-		background-color: transparent;
-	}
+		.el-table {
+			background-color: transparent;
+		}
 
-	.el-table th.el-table__cell {
-		background-color: #1A2027;
-	}
+		.el-table th.el-table__cell {
+			background-color: #1A2027;
+		}
 
-	.el-table tr {
-		background-color: #1A2027;
-	}
+		.el-table tr {
+			background-color: #1A2027;
+		}
 
-	.el-table .el-table__cell {
-		height: 62px;
-		font-size: 16px;
-		font-family: Arial;
-		font-weight: bold;
-		color: #FFFFFF;
-		padding: 0 0;
-		text-align: center;
-	}
-	.el-table .table-header .el-table__cell {
-		height: 45px;
-	}
+		.el-table .el-table__cell {
+			height: 62px;
+			font-size: 16px;
+			font-family: Arial;
+			font-weight: bold;
+			color: #FFFFFF;
+			padding: 0 0;
+			text-align: center;
+		}
 
-	.el-table--enable-row-hover .el-table__body tr:hover>td.el-table__cell {
-		background-color: transparent;
-	}
+		.el-table .table-header .el-table__cell {
+			height: 45px;
+		}
 
-	.el-table--border,
-	.el-table--group {
-		border: 1px solid #1F262E;
-	}
+		.el-table--enable-row-hover .el-table__body tr:hover>td.el-table__cell {
+			background-color: transparent;
+		}
 
-	.el-table td.el-table__cell,
-	.el-table th.el-table__cell.is-leaf {
-		border-right: 1px solid #1F262E;
-		border-bottom: 1px solid #1F262E;
-	}
+		.el-table--border,
+		.el-table--group {
+			border: 1px solid #1F262E;
+		}
 
-	.el-table th.el-table__cell.is-leaf {
-		border-right: 0px solid #1F262E;
-	}
+		.el-table td.el-table__cell,
+		.el-table th.el-table__cell.is-leaf {
+			border-right: 1px solid #1F262E;
+			border-bottom: 1px solid #1F262E;
+		}
 
-	.el-table--scrollable-x .el-table__body-wrapper {
-		overflow-x: initial;
-	}
+		.el-table th.el-table__cell.is-leaf {
+			border-right: 0px solid #1F262E;
+		}
 
-	.el-table--border::after,
-	.el-table--group::after,
-	.el-table::before {
-		background-color: transparent;
-	}
+		.el-table--scrollable-x .el-table__body-wrapper {
+			overflow-x: initial;
+		}
 
-	.el-table th.el-table__cell:first-child {
-		background: #5ba0fb;
-		border-top-left-radius: 8px;
-	}
+		.el-table--border::after,
+		.el-table--group::after,
+		.el-table::before {
+			background-color: transparent;
+		}
 
-	.el-table th.el-table__cell:nth-child(2n) {
-		background: #7191F3;
-	}
+		.el-table th.el-table__cell:first-child {
+			background: #5ba0fb;
+			border-top-left-radius: 8px;
+		}
 
-	.el-table th.el-table__cell:nth-child(3n) {
-		background: #6E69D0;
-	}
+		.el-table th.el-table__cell:nth-child(2n) {
+			background: #7191F3;
+		}
 
-	.el-table th.el-table__cell:nth-child(4n) {
-		background: #1DDBDB;
-		border-top-right-radius: 8px;
-	}
+		.el-table th.el-table__cell:nth-child(3n) {
+			background: #6E69D0;
+		}
 
-	.el-table td.el-table__cell:nth-child(2n) {
-		color: #8799A9;
-	}
+		.el-table th.el-table__cell:nth-child(4n) {
+			background: #1DDBDB;
+			border-top-right-radius: 8px;
+		}
 
-	.el-table td.el-table__cell:nth-child(3n) {
-		color: #8799A9;
-	}
+		.el-table td.el-table__cell:nth-child(2n) {
+			color: #8799A9;
+		}
 
-	.el-table td.el-table__cell:nth-child(4n) {
-		color: #00F9E5;
+		.el-table td.el-table__cell:nth-child(3n) {
+			color: #8799A9;
+		}
+
+		.el-table td.el-table__cell:nth-child(4n) {
+			color: #00F9E5;
+		}
 	}
 </style>

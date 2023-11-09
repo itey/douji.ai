@@ -542,13 +542,14 @@
 			}
 
 			.list-container {
+				width: 1440px;
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: space-between;
 
 				.item {
 					width: 342px;
-					margin: 0 24px 24px 0;
+					margin: 0 22px 24px 0;
 
 					&:nth-child(4n) {
 						margin-right: 0;
@@ -558,6 +559,7 @@
 		}
 
 		.news-list-container {
+			width: 1440px;
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
@@ -657,9 +659,9 @@
 			}
 
 			.list-container {
+				width: 1440px;
 				display: flex;
 				flex-wrap: wrap;
-				justify-content: space-between;
 
 				.item {
 					width: 340px;
@@ -782,6 +784,7 @@
 				}
 
 				.tip {
+					width: 1206px;
 					margin: 21px 106px 58px 128px;
 					font-size: 20px;
 					font-family: Source Han Sans CN;

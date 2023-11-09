@@ -470,18 +470,18 @@ export default {
       flex-direction: row;
 
       .item {
-        width: 210px;
-        height: 49px;
+        width: 268px;
+        height: 66px;
         background: #0e161d;
         border: 1px solid #313838;
-        border-radius: 6px;
+        border-radius: 8px;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        margin-right: 14px;
+        margin-right: 16px;
 
-        font-size: 13px;
+        font-size: 18px;
         font-family: Source Han Sans CN;
         font-weight: bold;
         color: #88a2b8;

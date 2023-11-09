@@ -39,11 +39,14 @@
 			background: transparent;
 			border: none;
 		}
-		.el-dialog__header{
+
+		.el-dialog__header {
 			position: absolute;
 			top: 160px;
 			width: 789px;
+			z-index: 10;
 			padding-top: 0;
+
 			.el-dialog__headerbtn {
 				top: 0;
 			}

@@ -370,6 +370,7 @@
 		<nft-stake-dialog ref="nftStakeDialog"></nft-stake-dialog>
 		<check-in-dialog ref="checkInDialog"></check-in-dialog>
 		<congratulations-dialog ref="congratulationsDialog"></congratulations-dialog>
+		<blind-dialog ref="blindDialog"></blind-dialog>
 	</div>
 </template>
 
@@ -382,6 +383,7 @@
 	import NftStakeDialog from '@/components/news/NftStakeDialog'
 	import CheckInDialog from '@/components/news/CheckInDialog'
 	import CongratulationsDialog from '@/components/news/CongratulationsDialog'
+	import BlindDialog from '@/components/news/BlindDialog'
 	export default {
 		name: 'news-detail-view',
 		components: {
@@ -392,7 +394,8 @@
 			RetrieveDialog,
 			NftStakeDialog,
 			CheckInDialog,
-			CongratulationsDialog
+			CongratulationsDialog,
+			BlindDialog
 		},
 		data() {
 			return {

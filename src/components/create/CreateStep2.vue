@@ -66,7 +66,7 @@
           </div>
         </div>
         <div class="form-value">
-          <div style="width: 544px;">
+          <div style="width: 756px;">
             <PubVditor :id="'1'" ref="contentPub" :pdata="form.openContent" />
           </div>
           <div v-if="error.contentUrl" class="tip-error">{{ error.contentUrl }}</div>
@@ -82,7 +82,7 @@
           </div>
         </div>
         <div class="form-value">
-          <div style="width: 544px;">
+          <div style="width: 756px;">
             <PrivateVditor :id="'2'" ref="contentPrivate" :pdata="form.protectedContent" />
           </div>
           <div class="tip">Write some details about your content</div>
@@ -445,7 +445,7 @@ export default {
   .form-container {
     background: #1a2027;
     border-radius: 6px;
-    padding: 58px 0 58px 163px;
+    padding: 58px 0 58px 227px;
 
     .form-item {
       display: flex;
@@ -455,7 +455,7 @@ export default {
       .form-label {
         width: 129px;
         line-height: 35px;
-        font-size: 13px;
+        font-size: 18px;
         font-family: Source Han Sans CN;
         font-weight: bold;
         color: #9faec0;
@@ -468,8 +468,8 @@ export default {
         align-items: center;
 
         .form-label-sub-text {
-          margin-left: 6px;
-          font-size: 10px;
+          margin-left: 8px;
+          font-size: 14px;
           font-family: Arial;
           font-weight: 400;
           color: #00f9e5;
@@ -493,13 +493,13 @@ export default {
             position: relative;
 
             .file-img {
-              width: 361px;
-              height: 131px;
+              width: 502px;
+              height: 182px;
             }
 
             .file-img-delete {
               position: absolute;
-              top: 56px;
+              top: 66px;
               left: calc(50% - 9px);
             }
           }
@@ -512,24 +512,24 @@ export default {
           }
 
           .form-upload-tip {
-            font-size: 9px;
+            font-size: 12px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #707d8c;
-            margin-top: 12px;
+            margin-top: 16px;
           }
         }
 
         .tip {
-          margin-top: 12px;
-          font-size: 9px;
+          margin-top: 16px;
+          font-size: 12px;
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #707d8c;
         }
 
         .input {
-          width: 544px;
+          width: 765px;
         }
 
         .el-tag + .el-tag {
@@ -555,11 +555,11 @@ export default {
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      margin-top: 73px;
-      padding-right: 163px;
+      margin-top: 104px;
+      padding-right: 227px;
 
       .common-btn2 {
-        margin-right: 59px;
+        margin-right: 82px;
 
         &:last-child {
           margin-right: 0;
