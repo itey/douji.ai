@@ -9,14 +9,14 @@
       <div class="form-item">
         <div class="form-label">Aias</div>
         <div class="form-value">
-          <el-input v-model="nickname"></el-input>
+          <el-input v-model="userInfo.nickname"></el-input>
           <div class="form-tip">Alias to be displayed on the public profle page</div>
         </div>
       </div>
       <div class="form-item" style="margin-top: 41px;">
         <div class="form-label">Short Description</div>
         <div class="form-value">
-          <el-input v-model="short_description"></el-input>
+          <el-input v-model="userInfo.short_description"></el-input>
           <div class="form-tip">Short bio to be displayed on the public prohle page</div>
         </div>
       </div>
@@ -27,7 +27,7 @@
       <div class="form-item">
         <div class="form-label">Locaition</div>
         <div class="form-value">
-          <el-input v-model="location"></el-input>
+          <el-input v-model="userInfo.location"></el-input>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
       <div class="form-item">
         <div class="form-label">Twitter</div>
         <div class="form-value">
-          <el-input v-model="twitter"></el-input>
+          <el-input v-model="userInfo.twitter"></el-input>
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
       <div class="form-item">
         <div class="form-label">Telegram</div>
         <div class="form-value">
-          <el-input v-model="telegram"></el-input>
+          <el-input v-model="userInfo.telegram"></el-input>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
       <div class="form-item">
         <div class="form-label">Facebook</div>
         <div class="form-value">
-          <el-input v-model="facebook"></el-input>
+          <el-input v-model="userInfo.facebook"></el-input>
         </div>
       </div>
     </div>
@@ -59,7 +59,7 @@
       <div class="form-item">
         <div class="form-label">Tiktok</div>
         <div class="form-value">
-          <el-input v-model="tiktok"></el-input>
+          <el-input v-model="userInfo.tiktok"></el-input>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@
       <div class="form-item">
         <div class="form-label">Website</div>
         <div class="form-value">
-          <el-input v-model="website"></el-input>
+          <el-input v-model="userInfo.website"></el-input>
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
       <div class="form-item">
         <div class="form-label">Instagram</div>
         <div class="form-value">
-          <el-input v-model="instagram"></el-input>
+          <el-input v-model="userInfo.instagram"></el-input>
         </div>
       </div>
     </div>
@@ -83,7 +83,7 @@
       <div class="form-item">
         <div class="form-label">youtube</div>
         <div class="form-value">
-          <el-input v-model="youtube"></el-input>
+          <el-input v-model="userInfo.youtube"></el-input>
         </div>
       </div>
     </div>
@@ -91,7 +91,7 @@
       <div class="form-item">
         <div class="form-label">Github</div>
         <div class="form-value">
-          <el-input v-model="github"></el-input>
+          <el-input v-model="userInfo.github"></el-input>
         </div>
       </div>
     </div>
@@ -99,7 +99,7 @@
       <div class="form-item">
         <div class="form-label">Wechat</div>
         <div class="form-value">
-          <el-input v-model="wechat"></el-input>
+          <el-input v-model="userInfo.wechat"></el-input>
         </div>
       </div>
     </div>
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { updateUserInfo } from '@/utils/http'
+import { getUserInfo, updateUserInfo } from '@/utils/http'
 export default {
   name: 'profile-view',
   data() {
@@ -138,14 +138,29 @@ export default {
       },
     }
   },
+  mounted() {
+    this.loadUserInfo()
+  },
   methods: {
     /** 保存用户资料 */
     handleSave() {
-      updateUserInfo(this.userInfo).then((res) => {
-        console.log(res)
-        if (res.code === 200) {
-        }
+      updateUserInfo(this.userInfo).then(() => {
+        this.$toast.success(this.$t('user.profile_save_success'))
+        this.loadUserInfo()
       })
+    },
+    /** 获取用户信息 */
+    loadUserInfo() {
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
+      getUserInfo()
+        .then((res) => {
+          this.userInfo = res.data
+        })
+        .finally(() => {
+          loadingInstance.close()
+        })
     },
   },
 }

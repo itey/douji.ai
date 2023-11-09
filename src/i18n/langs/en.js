@@ -43,5 +43,8 @@ export default {
     "data_not_modified":
       "The data you are trying to update is not modified.",
     "nft_voting": "Cannot update a voting NFT."
+  },
+  "user": {
+    "profile_save_success": "Profile saved successfully.",
   }
 }
