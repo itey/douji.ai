@@ -327,7 +327,7 @@ export default {
         this.setError('maxSupply', this.$t('create.maxSupply_required'))
         ifPass = false
       } else {
-        if (!reg.test(this.form.maxSupply)) {
+        if (!reg.test(this.form.maxSupply) || this.form.maxSupply <= 0) {
           this.setError('maxSupply', this.$t('create.maxSupply_invalid'))
           ifPass = false
         }

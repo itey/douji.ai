@@ -3,6 +3,7 @@ import store from '@/store';
 import Vue from 'vue';
 
 const SIGN_STR = 'Wellcome to DOUJI!'
+const DAILY_STR = 'Wellcome to DOUJI,A beautiful day has begun!'
 
 
 /** 检查登录账户*/
@@ -40,6 +41,26 @@ export function loginWalletSign(chainAccount) {
   })
 }
 
+/** 每天签到 */
+export function checkInSign() {
+  return new Promise((resolve, reject) => {
+    const web3 = window.ethereum
+    if (!web3) {
+      reject('web3 is not ready')
+    }
+    const chainAccount = store.state.chain.account
+    web3.eth.personal
+      .sign(DAILY_STR, chainAccount, '')
+      .then((signed) => {
+        resolve(signed)
+      })
+      .catch((error) => {
+        console.log('sign error', error)
+        reject(error)
+      })
+  })
+}
+
 /** BNB余额查询 */
 export function balanceOfBnb(account) {
   return new Promise((resolve, reject) => {
@@ -52,5 +73,20 @@ export function balanceOfBnb(account) {
       .catch(e => {
         reject(e)
       })
+  })
+}
+
+/** 区块高度获取 */
+export function blockHeight() {
+  return new Promise((resolve, reject) => {
+    const web3 = window.ethereum
+    if (!web3) {
+      reject('web3 is not ready')
+    }
+    web3.eth.getBlockNumber().then((height) => {
+      resolve(height)
+    }).catch(e => {
+      reject(e)
+    })
   })
 }

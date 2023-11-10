@@ -1,6 +1,6 @@
-import pairJson from '@/assets/abi/pair.json';
-import i18n from '@/i18n';
-import Vue from 'vue';
+import pairJson from '@/assets/abi/pair.json'
+import i18n from '@/i18n'
+import Vue from 'vue'
 
 var pairContract = undefined
 

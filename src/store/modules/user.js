@@ -1,7 +1,9 @@
 
 import store from '@/store'
-import { login } from '@/utils/http'
-import { loginWalletSign } from '@/utils/web3/chain'
+import cache from '@/utils/cache'
+import { checkIn, login } from '@/utils/http'
+import { checkInSign, loginWalletSign } from '@/utils/web3/chain'
+import { i18n } from 'element-ui/lib/locale'
 import Vue from 'vue'
 
 const user = {
@@ -9,7 +11,8 @@ const user = {
     token: undefined,
     userId: undefined,
     account: undefined,
-    logout: false
+    logout: false,
+    checkTime: undefined
   },
 
   mutations: {
@@ -24,6 +27,9 @@ const user = {
     },
     setLogout: (state, logout) => {
       state.logout = logout
+    },
+    setCheckTime: (state, checkTime) => {
+      state.checkTime = checkTime
     }
   },
 
@@ -56,6 +62,34 @@ const user = {
           console.log(error)
           commit('setLogout', true)
           Vue.$toast.warning(error)
+        })
+      })
+    },
+    // 每日签到
+    CheckInDaily({ commit }) {
+      return new Promise((resolve, reject) => {
+        const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME')
+        if (latestCheck) {
+          const a = new Date(latestCheck).setHours(0, 0, 0, 0)
+          const b = new Date().setHours(0, 0, 0, 0)
+          if (a === b) {
+            reject(i18n.t('common.already_check_in'))
+          }
+        }
+        checkInSign().then(signed => {
+          checkIn(signed).then((res) => {
+            if (res.code == 1) {
+              commit('setCheckTime', new Date().getTime())
+              cache.local.set('DOJI_AI_CHECK_IN_TIME', new Date().getTime())
+              resolve()
+            } else {
+              reject(res.message)
+            }
+          }).catch(e => {
+            reject(e)
+          })
+        }).catch(e => {
+          reject(e)
         })
       })
     },

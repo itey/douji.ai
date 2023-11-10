@@ -18,6 +18,15 @@ export function login({ address, signed, uuid }) {
     })
 }
 
+// 每日签到
+export function checkIn(signed) {
+    return request({
+        url: '/checkIn',
+        params: { signed },
+        method: 'post'
+    })
+}
+
 // 上传文件
 export function uploadFile(file) {
     return request({

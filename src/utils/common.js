@@ -1,3 +1,4 @@
+import cache from './cache';
 
 /** 通用脱敏 */
 export function desensitization(str, beginLen, endLen) {
@@ -262,7 +263,47 @@ export function getUuid() {
   });
 }
 
+export function percentage(val, total) {
+  if (!val || val == 0) {
+    return '0.00%'
+  } else {
+    return (val / total * 100).toFixed(2) + '%'
+  }
+}
+
 // wei->eth
 export function weiToEth(wei) {
   return wei / 100000000;
+}
+
+export function ethToWei(eth) {
+  return eth * 100000000;
+}
+
+/** 判断当天是否已签到 */
+export function ifCheckInToday() {
+  const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME')
+  if (latestCheck) {
+    const a = new Date(latestCheck).setHours(0, 0, 0, 0)
+    const b = new Date().setHours(0, 0, 0, 0)
+    if (a === b) {
+      return true
+    }
+  }
+  return false
+}
+
+/** 获取当天阅读时长 */
+export function getReadTimeToday() {
+  const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME')
+  if (!ifCheckInToday()) {
+    return null
+  }
+  const today = new Date(latestCheck).setHours(0, 0, 0, 0)
+  const times = cache.local.get('DOJI_AI_CHECK_TIMES_' + today)
+  if (!times) {
+    return 0
+  } else {
+    return times
+  }
 }

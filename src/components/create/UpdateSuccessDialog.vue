@@ -1,142 +1,141 @@
 <template>
-	<el-dialog custom-class="mint-success-dialog" :visible.sync="show" width="945px">
-		<img style="width: 104px;height: 104px;margin-top: 85px;" src="@/assets/images/create/mint-success.png" />
-		<div class="mint-success-title">Congratulations</div>
-		<div class="mint-success-label text-color">You have successfully initiated a vote to amend the NFT profile!
-		</div>
-		<div class="mint-success-info">
-			<div class="info-label">
-				<div class="info-label-item">Transcantion ID</div>
-			</div>
-			<div class="info-value" v-if="tx.events">
-				<div class="info-value-item">{{ tx.transactionHash }}</div>
-			</div>
-		</div>
-		<div class="btn-container">
-			<el-button class="common-btn2">View NFT</el-button>
-		</div>
-	</el-dialog>
+  <el-dialog custom-class="mint-success-dialog" :visible.sync="show" width="945px">
+    <img style="width: 104px;height: 104px;margin-top: 85px;" src="@/assets/images/create/mint-success.png" />
+    <div class="mint-success-title">Congratulations</div>
+    <div class="mint-success-label text-color">You have successfully initiated a vote to amend the NFT profile!</div>
+    <div class="mint-success-info">
+      <div class="info-label">
+        <div class="info-label-item">Transcantion ID</div>
+      </div>
+      <div class="info-value" v-if="tx.events">
+        <div class="info-value-item">{{ tx.transactionHash }}</div>
+      </div>
+    </div>
+    <div class="btn-container">
+      <el-button class="common-btn2">View NFT</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script>
-	export default {
-		name: 'update-success-dialog',
-		props: {
-			tx: {
-				type: Object,
-				default: () => {
-					return {
-						transactionHash: undefined,
-						to: undefined,
-						events: {
-							Authorised: {
-								returnValues: {
-									tokenId: undefined,
-								},
-							},
-						},
-					}
-				},
-			},
-		},
-		data() {
-			return {
-				show: true,
-			}
-		},
-		methods: {
-			showDialog() {
-				this.show = true
-			},
-		},
-	}
+export default {
+  name: 'update-success-dialog',
+  props: {
+    tx: {
+      type: Object,
+      default: () => {
+        return {
+          transactionHash: undefined,
+          to: undefined,
+          events: {
+            Authorised: {
+              returnValues: {
+                tokenId: undefined,
+              },
+            },
+          },
+        }
+      },
+    },
+  },
+  data() {
+    return {
+      show: false,
+    }
+  },
+  methods: {
+    showDialog() {
+      this.show = true
+    },
+  },
+}
 </script>
 
 <style lang="scss">
-	.mint-success-dialog {
-		background: #1a2027;
-		border: 1px solid #2c3638;
-		border-radius: 12px 6px 6px 6px;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+.mint-success-dialog {
+  background: #1a2027;
+  border: 1px solid #2c3638;
+  border-radius: 12px 6px 6px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-		.mint-success-title {
-			font-size: 30px;
-			font-family: Arial;
-			font-weight: bold;
-			color: #00f9e5;
-			margin-top: 35px;
-		}
+  .mint-success-title {
+    font-size: 30px;
+    font-family: Arial;
+    font-weight: bold;
+    color: #00f9e5;
+    margin-top: 35px;
+  }
 
-		.mint-success-label {
-			font-size: 18px;
-			font-family: Arial;
-			font-weight: bold;
-			margin-top: 23px;
-		}
+  .mint-success-label {
+    font-size: 18px;
+    font-family: Arial;
+    font-weight: bold;
+    margin-top: 23px;
+  }
 
-		.mint-success-info {
-			background: #212831;
-			border-radius: 15px;
-			padding: 48px 0 51px 0;
-			margin-top: 56px;
-			width: 848px;
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
+  .mint-success-info {
+    background: #212831;
+    border-radius: 15px;
+    padding: 48px 0 51px 0;
+    margin-top: 56px;
+    width: 848px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
-			.info-label {
-				text-align: left;
+    .info-label {
+      text-align: left;
 
-				.info-label-item {
-					font-size: 14px;
-					font-family: Arial;
-					font-weight: 400;
-					color: #87a2b7;
-					margin-bottom: 22px;
+      .info-label-item {
+        font-size: 14px;
+        font-family: Arial;
+        font-weight: 400;
+        color: #87a2b7;
+        margin-bottom: 22px;
 
-					&:last-child {
-						margin-bottom: 0;
-					}
-				}
-			}
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
 
-			.info-value {
-				text-align: left;
-				margin-left: 41px;
+    .info-value {
+      text-align: left;
+      margin-left: 41px;
 
-				.info-value-item {
-					font-size: 14px;
-					font-family: Arial;
-					font-weight: bold;
-					color: #ffffff;
-					margin-bottom: 22px;
+      .info-value-item {
+        font-size: 14px;
+        font-family: Arial;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 22px;
 
-					&:last-child {
-						margin-bottom: 0;
-					}
-				}
-			}
-		}
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 
-		.btn-container {
-			margin: 49px 0 70px 0;
-		}
+  .btn-container {
+    margin: 49px 0 70px 0;
+  }
 
-		.el-dialog {
-			background: #1a2027;
-			border: 1px solid #2c3638;
-			border-radius: 12px 6px 6px 6px;
-		}
+  .el-dialog {
+    background: #1a2027;
+    border: 1px solid #2c3638;
+    border-radius: 12px 6px 6px 6px;
+  }
 
-		.el-dialog__body {
-			padding: 0 0;
-		}
+  .el-dialog__body {
+    padding: 0 0;
+  }
 
-		.el-switch.is-checked .el-switch__core {
-			border-color: #00f9e5;
-			background-color: #00f9e5;
-		}
-	}
+  .el-switch.is-checked .el-switch__core {
+    border-color: #00f9e5;
+    background-color: #00f9e5;
+  }
+}
 </style>

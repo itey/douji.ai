@@ -47,6 +47,32 @@ export function possessorMint(tokenURI, initAmount, priceTokenIdOrAmount, maxSup
 
 }
 
+/** 其他用户mint NFT */
+export function userMint(tokenId, count) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const toAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.mint(toAddress, tokenId, count, '0x')
+      .send({ from: toAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+
+}
+
 
 /** 查询TokenOwner */
 export function tokenOwner(tokenId) {
@@ -84,6 +110,28 @@ export function tokensData(tokenId) {
   }
   return new Promise((resolve, reject) => {
     nftContract.methods.tokens(tokenId)
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+        reject(e)
+      })
+  })
+}
+
+/** 获取余额 */
+export function balanceOf(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.balanceOf(userAccount, tokenId)
       .call()
       .then(res => {
         resolve(res)
@@ -161,6 +209,97 @@ export function startSetTokenURI(tokenId, url) {
       })
       .on('error', (error) => {
         reject(error.message)
+      })
+  })
+}
+
+
+/** stake NFT */
+export function stakeNft(tokenId, count) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.pledgeNft(tokenId, count)
+      .send({ from: fromAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+
+}
+
+
+/** 取回 NFT */
+export function unStakeNft(tokenId, count) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.unPledgeNft(tokenId, count)
+      .send({ from: fromAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
+
+
+/** 总质押数量 */
+export function totalPledgeCount(tokenId) {
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  return new Promise((resolve, reject) => {
+    nftContract.methods.pledgeAllBalanceOf(tokenId)
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+        reject(e)
+      })
+  })
+}
+
+/** 我的质押数量 */
+export function userPledgeCount(tokenId) {
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.pledgeBalanceOf(fromAddress, tokenId)
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+        reject(e)
       })
   })
 }

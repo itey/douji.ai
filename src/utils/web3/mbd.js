@@ -1,6 +1,8 @@
 import mbd from '@/assets/abi/mbd.json'
 import i18n from '@/i18n'
+import store from '@/store'
 import Vue from 'vue'
+import { checkAccount } from './chain'
 
 
 /** 获取MBD合约 */
@@ -26,4 +28,30 @@ export function balanceOfMbd(account) {
         reject(err)
       })
   })
+}
+
+/** 授权MBD */
+export function approveMbd(spender, count) {
+  if (!checkAccount()) {
+    return
+  }
+  const mbdContract = getMBDContract()
+  if (!mbdContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    mbdContract.methods.approve(spender, count)
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+
 }

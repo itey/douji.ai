@@ -67,7 +67,7 @@ export default {
           this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply
           this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply
           this.metadata.initialPrice = weiToEth(
-            this.tokenSupplyInfo.price.tokenIdOrAmount
+            this.tokenSupplyInfo.price.price
           )
           this.loadComplete = true
         })

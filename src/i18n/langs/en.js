@@ -13,7 +13,12 @@ export default {
     "save_success": "Successfully saved",
     "date_saving": "Saving date",
     "img_format_error": "Image format is invalid",
-    "img_large_error": "The image cannot be larger than {0}MB"
+    "img_large_error": "The image cannot be larger than {0}MB",
+    "check_in_failed":
+      "An error occurred checking in. Please try again later.",
+    "already_check_in":
+      "You have already checked in today.",
+    "check_in_success": "Successfully checked in",
   },
   "create": {
     "category_required": "Category is required",
@@ -43,6 +48,43 @@ export default {
     "data_not_modified":
       "The data you are trying to update is not modified.",
     "nft_voting": "Cannot update a voting NFT."
+  },
+  "news-detail": {
+    "have_no_nft":
+      "You do not have any this NFTs.",
+    "unlock_success": "Unlock success.",
+    "unlock_failed": "Unlock failed.",
+    "mbd_approve_failed":
+      "An error occurred approving the MBD. Please check your wallet.",
+    "nft_mint_failed": "An error occurred minting the NFT. Please check your connection.",
+    "nft_mint_success": "NFT minted successfully.",
+    "order_create_failed":
+      "Order create failed.",
+    "order_create_success": "Order create success.",
+    "order_price_required":
+      "Order price is required.",
+    "order_quantity_required":
+      "Order quantity is required.",
+    "order_price_invalid":
+      "Order price is invalid.",
+    "order_quantity_invalid":
+      "Order quantity is invalid.",
+    "stake_count_required":
+      "Stake count is required.",
+    "stake_count_invalid":
+      "Stake count is invalid.",
+    "stake_success":
+      "Stake success.",
+    "stake_failed":
+      "Stake failed.",
+    "retrieve_count_required":
+      "Retrieve count is required.",
+    "retrieve_count_invalid":
+      "Retrieve count is invalid.",
+    "retrieve_success":
+      "Retrieve success.",
+    "retrieve_failed":
+      "Retrieve failed.",
   },
   "user": {
     "profile_save_success": "Profile saved successfully.",
