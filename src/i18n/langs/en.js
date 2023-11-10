@@ -19,6 +19,8 @@ export default {
     "already_check_in":
       "You have already checked in today.",
     "check_in_success": "Successfully checked in",
+    "img_upload_error":
+      "An error occurred uploading the image. Please try again later.",
   },
   "create": {
     "category_required": "Category is required",
