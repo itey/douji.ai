@@ -12,7 +12,7 @@
 import CreateStep1 from '@/components/create/CreateStep1'
 import CreateStep2 from '@/components/create/CreateStep2'
 import UpdateSuccess from '@/components/create/UpdateSuccessDialog'
-import { weiToEth } from '@/utils/common'
+import { weiToMbd } from '@/utils/common'
 import { loadFromUrl, unlockContent, uploadJson } from '@/utils/http'
 import {
   startSetTokenPrice,
@@ -66,7 +66,7 @@ export default {
           this.metadata.maxSupply = this.tokenSupplyInfo.maxSupply
           this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply
           this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply
-          this.metadata.initialPrice = weiToEth(
+          this.metadata.initialPrice = weiToMbd(
             this.tokenSupplyInfo.price.price
           )
           this.loadComplete = true

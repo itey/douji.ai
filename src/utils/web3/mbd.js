@@ -2,7 +2,7 @@ import mbd from '@/assets/abi/mbd.json'
 import i18n from '@/i18n'
 import store from '@/store'
 import Vue from 'vue'
-import { ethToWei } from '../common'
+import { mbdToWei, weiToMbd } from '../common'
 import { checkAccount } from './chain'
 
 
@@ -23,7 +23,7 @@ export function balanceOfMbd(account) {
     contract.methods.balanceOf(account)
       .call()
       .then(balance => {
-        resolve(balance)
+        resolve(weiToMbd(balance))
       })
       .catch(err => {
         reject(err)
@@ -42,7 +42,7 @@ export function approveMbd(spender, count) {
   }
   const userAccount = store.state.chain.account
   return new Promise((resolve, reject) => {
-    mbdContract.methods.approve(spender, ethToWei(count))
+    mbdContract.methods.approve(spender, mbdToWei(count))
       .send({ from: userAccount })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)

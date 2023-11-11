@@ -1,6 +1,6 @@
-import i18n from '@/i18n';
-import store from '@/store';
-import Vue from 'vue';
+import i18n from '@/i18n'
+import store from '@/store'
+import Vue from 'vue'
 
 const SIGN_STR = 'Wellcome to DOUJI!'
 const DAILY_STR = 'Wellcome to DOUJI,A beautiful day has begun!'

@@ -1,5 +1,6 @@
 
 import store from '@/store'
+import { weiToEth, weiToMbd } from '@/utils/common'
 import { balanceOfBnb } from '@/utils/web3/chain'
 import { getMbdPrice } from '@/utils/web3/dex'
 import { balanceOfMbd } from '@/utils/web3/mbd'
@@ -61,7 +62,7 @@ const chain = {
     // 获取Mbd价格
     LoadMbdPrice({ commit }) {
       getMbdPrice().then(res => {
-        const price = res[0] / res[1]
+        const price = weiToEth(res[1]) / weiToMbd(res[0])
         commit('setMbdPrice', price.toFixed(8))
       })
     }

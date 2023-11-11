@@ -1,7 +1,9 @@
 
 import store from '@/store'
 import cache from '@/utils/cache'
+import { eventBus } from '@/utils/event-bus'
 import { checkIn, login } from '@/utils/http'
+import { beginEventBus, endEventBus } from '@/utils/task'
 import { checkInSign, loginWalletSign } from '@/utils/web3/chain'
 import { i18n } from 'element-ui/lib/locale'
 import Vue from 'vue'
@@ -49,17 +51,18 @@ const user = {
             commit('setUserId', userId)
             commit('setUserAccount', payload.address)
             commit('setChainAccount', payload.address)
-            store.dispatch('GetBalanceOfBnb')
-            store.dispatch('GetBalanceOfMbd')
-            store.dispatch('LoadMbdPrice')
+            beginEventBus()
+            eventBus.$emit('user_login')
             resolve()
           }).catch(error => {
             console.log(error)
+            endEventBus()
             commit('setLogout', true)
             Vue.$toast.warning(error)
           })
         }).catch(error => {
           console.log(error)
+          endEventBus()
           commit('setLogout', true)
           Vue.$toast.warning(error)
         })
@@ -100,6 +103,7 @@ const user = {
     },
     // 退出登录
     Logout({ commit }) {
+      endEventBus()
       commit('setToken', '')
       commit('setUserId', '')
       commit('setUserAccount', '')

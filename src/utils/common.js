@@ -271,13 +271,24 @@ export function percentage(val, total) {
   }
 }
 
-// wei->eth
-export function weiToEth(wei) {
-  return wei / 100000000;
+// wei->mbd
+export function weiToMbd(wei) {
+  return wei / Math.pow(10, 8);
 }
 
+// mbd->wei
+export function mbdToWei(eth) {
+  return eth * Math.pow(10, 8);
+}
+
+// wei->eth
+export function weiToEth(wei) {
+  return wei / Math.pow(10, 18);
+}
+
+// eth->wei
 export function ethToWei(eth) {
-  return eth * 100000000;
+  return eth * Math.pow(10, 18);
 }
 
 export function timestampToDate(timestamp) {

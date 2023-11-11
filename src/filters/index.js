@@ -10,17 +10,17 @@ export const omitAddress = (val) => {
 
 // Format decimal places
 export const decimalPlace2 = (val) => {
-  return (Math.floor(val * 100) / 100).toFixed(2)
+  return parseFloat((Math.floor(val * 100) / 100).toFixed(2)).toString()
 }
 export const decimalPlace3 = (val) => {
-  return (Math.floor(val * 1000) / 1000).toFixed(3)
+  return parseFloat((Math.floor(val * 1000) / 1000).toFixed(3)).toString()
 }
 export const decimalPlace4 = (val) => {
-  return (Math.floor(val * 10000) / 10000).toFixed(4)
+  return parseFloat((Math.floor(val * 10000) / 10000).toFixed(4)).toString()
 }
 
 export const decimalPlace8 = (val) => {
-  return (Math.floor(val * 100000000) / 100000000).toFixed(8)
+  return parseFloat((Math.floor(val * 100000000) / 100000000).toFixed(8)).toString()
 }
 
 export const array2String = (arr) => {

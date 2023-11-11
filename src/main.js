@@ -53,5 +53,5 @@ new Vue({
   render: h => {
     i18n.locale = store.state.common.language
     return h(App)
-  }
+  },
 }).$mount('#app')
