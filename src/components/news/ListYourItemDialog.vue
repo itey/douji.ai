@@ -82,7 +82,7 @@ export default {
         this.show = false
       } catch (error) {
         console.log(error)
-        this.$toast.error(this.$t('news-detail.order_create_failed'))
+        this.$toast.error(error)
       } finally {
         loadingInstance.close()
       }

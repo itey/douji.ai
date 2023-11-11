@@ -14,7 +14,8 @@
 </template>
 
 <script>
-import { getBlindBox, setBlindBoxFlagCache } from '@/utils/common'
+import { setBlindBoxFlagCache } from '@/utils/common'
+import { getBlindBox } from '@/utils/http'
 import { getBlindBoxSign } from '@/utils/web3/chain'
 export default {
   name: 'blind-dialog',
