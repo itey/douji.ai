@@ -1030,3 +1030,131 @@ post
 | ---- | :--- |
 | 0    | 失败 |
 | 1    | 成功 |
+
+### 18.NFT 列表
+
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/nftList
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名       | 约束-required | 类型   | 说明                       |
+| :----------- | :------------ | :----- | :------------------------- |
+| page         | true          | int    | 页码 默认 1 每页显示 20 条 |
+| content_type | true          | string | 类型                       |
+| category     | true          | string | 分类                       |
+| pltform      | true          | string | 平台                       |
+
+##### Response parameters:
+
+```json
+{
+  "code": 1,
+  "message": "ok",
+  "data": {
+    "list": [
+      {
+        "id": 7,
+        "token_id": 7,
+        "name": "Outman",
+        "title": "Outman",
+        "image": "https://ipfs.io/ipfs/bafkreifivdsx2gcsolhrdqthuiryz3p5pfxjvhpeqikiycipw7s6c476ai",
+        "description": "奥特曼，又称「初代奥特曼」，是日本特摄剧《奥特曼》中的主人公 [6] 。首次登场于《奥特曼》第1话《奥特作战第一号》（1966年7月17日首播）",
+        "category": null,
+        "content_type": "Digital Arts",
+        "owner_address": "0x36cbe8b131451dc4bae73b867db998504cf2a86f",
+        "language": null,
+        "read_duration": "0.00",
+        "collect_count": 0,
+        "praise_count": 0,
+        "pltform": null,
+        "nickname": "你是什么夫斯基"
+      },
+      {
+        "id": 6,
+        "token_id": 6,
+        "name": "DOUJI.AI",
+        "title": "DOUJI.AI",
+        "image": "https://ipfs.io/ipfs/bafybeiamml3dkatjvrvkcz2jyvccstbyff3xz7fvxand5h3glbnxnusduu",
+        "description": "There are 5 incredible Moca tribes of the Angels, Builders, Dreamers, Connectors, and Neo-Capitalists. ",
+        "category": null,
+        "content_type": "Article",
+        "owner_address": "0x36cbe8b131451dc4bae73b867db998504cf2a86f",
+        "language": null,
+        "read_duration": "0.00",
+        "collect_count": 0,
+        "praise_count": 0,
+        "pltform": null,
+        "nickname": "你是什么夫斯基"
+      }
+    ],
+    "pageCount": 11,
+    "page": 1
+  }
+}
+```
+
+##### Response the result data code instructions
+
+| code | 说明 |
+| ---- | :--- |
+| 0    | 失败 |
+| 1    | 成功 |
+
+### 19.NFT 订单列表
+
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/nftOrders
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名 | 约束-required | 类型 | 说明                       |
+| :----- | :------------ | :--- | :------------------------- |
+| page   | true          | int  | 页码 默认 1 每页显示 20 条 |
+
+##### Response parameters:
+
+```json
+{
+  "code": 1,
+  "message": "ok",
+  "data": {
+    "list": [
+      {
+        "id": 1,
+        "assetAddress": "0xe210760d3f8b9b820856443547abfafdc5101705",
+        "tokenId": 1,
+        "tokenValue": 1,
+        "nftType": 1,
+        "owner": "0xb51dcc6075778ae0ce49c61db0326e412b40ddf1",
+        "price": 10000000,
+        "active": 1,
+        "ended": 0,
+        "ordeId": 1
+      }
+    ],
+    "page": 1
+  }
+}
+```
+
+##### Response the result data code instructions
+
+| code | 说明 |
+| ---- | :--- |
+| 0    | 失败 |
+| 1    | 成功 |

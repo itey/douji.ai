@@ -1,5 +1,6 @@
 export default {
   "common": {
+    "network_error": "Network error",
     "warning": "warning",
     "need_reconnect_wallet": "Please reconnect your wallet.",
     "web3_not_available": "Web3 is not available. Please check your connection.",

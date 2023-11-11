@@ -142,3 +142,21 @@ export function getUserInfo() {
         method: 'post'
     })
 }
+
+// 我的NFT列表
+export function getMyNftList() {
+    return request({
+        url: '/myNfts',
+        method: 'post'
+    })
+}
+
+
+// NFT列表
+export function nftListPage(params) {
+    return request({
+        url: '/nftList',
+        method: 'post',
+        params: params
+    })
+}

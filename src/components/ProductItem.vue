@@ -1,120 +1,117 @@
 <template>
-	<div class="product-item">
-		<img style="width: 100%;height:194px;" />
-		<span class="type">Midjourney</span>
-		<div class="label text-color">
-			dgsdgshgdgjsg'sgdsadgshgdsddfddhsjhjsh
-		</div>
-		<div class="product-bottom">
-			<div class="bottom-left">
-				<span class="value text-color">2500</span>
-				<span class="transform text-sub-color">≈$0.57</span>
-			</div>
-			<div class="bottom-right">
-				<img style="width: 16px;height: 14px;" src="@/assets/images/star.png" />
-				<span class="star text-sub-color">12345</span>
-			</div>
-		</div>
-	</div>
+  <div class="product-item">
+    <img style="width: 100%;height:194px;" :src="item.image" />
+    <span class="type" v-if="item.pltform">{{ item.pltform }}</span>
+    <div class="label text-color">{{ item.title }}</div>
+    <div class="product-bottom">
+      <div class="bottom-left">
+        <span class="value text-color">2500</span>
+        <span class="transform text-sub-color">≈$0.57</span>
+      </div>
+      <div class="bottom-right">
+        <img style="width: 16px;height: 14px;" src="@/assets/images/star.png" />
+        <span class="star text-sub-color">{{ item.praise_count }}</span>
+      </div>
+    </div>
+  </div>
 </template>
 
 
 <script>
-	export default {
-		name: 'ProductItem',
-		props: {
-			item: {
-				type: Object,
-			}
-		}
-	}
+export default {
+  name: 'ProductItem',
+  props: {
+    item: {
+      type: Object,
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
-	.product-item {
-		position: relative;
-		cursor: pointer;
-		background: #1A2027;
-		box-shadow: 0px 8px 18px 0px rgba(9, 11, 12, 0.85);
-		border-radius: 8px;
+.product-item {
+  position: relative;
+  cursor: pointer;
+  background: #1a2027;
+  box-shadow: 0px 8px 18px 0px rgba(9, 11, 12, 0.85);
+  border-radius: 8px;
 
-		img {
-			border-top-left-radius: 8px;
-			border-top-right-radius: 8px;
-		}
+  img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
 
-		&:hover .label {
-			color: #00F9E5;
-		}
+  &:hover .label {
+    color: #00f9e5;
+  }
 
-		.type {
-			position: absolute;
-			top: 12px;
-			left: 15px;
-			background: rgba(13, 18, 18, 0.66);
-			border-radius: 4px;
-			font-size: 14px;
-			font-family: Source Han Sans CN;
-			font-weight: 400;
-			color: #FFFFFF;
-			height: 30px;
-			line-height: 30px;
-		}
+  .type {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    background: rgba(13, 18, 18, 0.66);
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+    color: #ffffff;
+    height: 30px;
+    line-height: 30px;
+  }
 
-		.label {
-			font-size: 14px;
-			line-height: 14px;
-			font-family: Source Han Sans CN;
-			font-weight: bold;
-			text-align: left;
-			margin: 20px 14px 0 14px;
-			word-wrap: break-word;
-			display: -webkit-box;
-			-webkit-box-orient: vertical;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			-webkit-line-clamp: 1;
-		}
+  .label {
+    font-size: 14px;
+    line-height: 14px;
+    font-family: Source Han Sans CN;
+    font-weight: bold;
+    text-align: left;
+    margin: 20px 14px 0 14px;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+  }
 
-		.product-bottom {
-			padding: 15px 14px 17px 14px;
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: space-between;
+  .product-bottom {
+    padding: 15px 14px 17px 14px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 
-			.bottom-left {
+    .bottom-left {
+      .value {
+        font-size: 14px;
+        line-height: 14px;
+        font-family: Source Han Sans CN;
+        font-weight: bold;
+      }
 
-				.value {
-					font-size: 14px;
-					line-height: 14px;
-					font-family: Source Han Sans CN;
-					font-weight: bold;
-				}
+      .transform {
+        font-size: 14px;
+        line-height: 14px;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+      }
+    }
 
-				.transform {
-					font-size: 14px;
-					line-height: 14px;
-					font-family: Source Han Sans CN;
-					font-weight: 400;
-				}
-			}
+    .bottom-right {
+      display: flex;
+      align-items: center;
 
-			.bottom-right {
-				display: flex;
-				align-items: center;
+      img {
+        margin-right: 5px;
+      }
 
-				img {
-					margin-right: 5px;
-				}
-
-				.star {
-					font-size: 14px;
-					line-height: 14px;
-					font-family: Source Han Sans CN;
-					font-weight: 400;
-				}
-			}
-		}
-	}
+      .star {
+        font-size: 14px;
+        line-height: 14px;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+      }
+    }
+  }
+}
 </style>

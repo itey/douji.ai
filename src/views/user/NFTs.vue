@@ -1,101 +1,114 @@
 <template>
-	<div class="container">
-		<div class="top">
-			<div>
-				<span class="text-big text-color">
-					My DOUJI NFTs
-				</span>
-				<span class="sub-value">
-					308 Items
-				</span>
-			</div>
-			<div class="search">
-				<el-input placeholder="Search by name or Token ID">
-					<i slot="prefix" class="el-input__icon el-icon-search"></i>
-				</el-input>
-			</div>
-		</div>
-		<div class="content">
-			<div class="list">
-				<div v-for="(item,index) in list" :key="index" class="item">
-					<nft-item></nft-item>
-				</div>
-			</div>
-			<el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页" :pager-count="4" :total="1000">
-			</el-pagination>
-		</div>
-	</div>
+  <div class="container">
+    <div class="top">
+      <div>
+        <span class="text-big text-color">My DOUJI NFTs</span>
+        <span class="sub-value">308 Items</span>
+      </div>
+      <div class="search">
+        <el-input placeholder="Search by name or Token ID">
+          <i slot="prefix" class="el-input__icon el-icon-search"></i>
+        </el-input>
+      </div>
+    </div>
+    <div class="content">
+      <div class="list">
+        <div v-for="(item,index) in list" :key="index" class="item">
+          <nft-item :item="item"></nft-item>
+        </div>
+      </div>
+      <!-- <el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页" :page-count="4" :total="1000"></el-pagination> -->
+    </div>
+  </div>
 </template>
 
 <script>
-	import NftItem from '@/components/NftItem'
-	export default {
-		name: 'nft-view',
-		components: {
-			NftItem
-		},
-		data() {
-			return {
-				list: []
-			}
-		},
-		created() {
-			for (let i = 0; i < 20; i++) {
-				this.list.push({})
-			}
-		}
-	}
+import NftItem from '@/components/NftItem'
+import { getMyNftList } from '@/utils/http'
+export default {
+  name: 'nft-view',
+  components: {
+    NftItem,
+  },
+  data() {
+    return {
+      list: [],
+    }
+  },
+  created() {
+    this.nftListLoad()
+  },
+  methods: {
+    nftListLoad() {
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
+      getMyNftList()
+        .then((r) => {
+          if (r.code == 1) {
+            this.list = r.data.list
+          }
+        })
+        .catch((e) => {
+          this.$toast.error(e.message)
+        })
+        .finally(() => {
+          loadingInstance.close()
+        })
+    },
+  },
+}
 </script>
 
 <style lang="scss">
-	.container {
-		padding: 0 50px;
-		display: flex;
-		flex-direction: column;
+.container {
+  padding: 0 50px;
+  display: flex;
+  flex-direction: column;
 
-		.top {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			padding: 50px 0;
+  .top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 50px 0;
 
-			.text-big {
-				font-size: 32px;
-				line-height: 32px;
-				font-family: Source Han Sans CN;
-				font-weight: bold;
-				margin-bottom: auto;
-			}
+    .text-big {
+      font-size: 32px;
+      line-height: 32px;
+      font-family: Source Han Sans CN;
+      font-weight: bold;
+      margin-bottom: auto;
+    }
 
-			.sub-value {
-				line-height: 40px;
-				font-size: 14px;
-				font-family: Source Han Sans CN;
-				font-weight: 400;
-				color: #A9B7C3;
-			}
-		}
+    .sub-value {
+      line-height: 40px;
+      font-size: 14px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #a9b7c3;
+    }
+  }
 
-		.content {
-			flex: 1;
+  .content {
+    flex: 1;
 
-			.list {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between;
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
 
-				.item {
-					width: calc((100% - 39px) / 4);
-					margin: 0 13px 13px 0;
+      .item {
+        width: calc((100% - 39px) / 4);
+        margin: 0 13px 13px 0;
 
-					&:nth-child(4n) {
-						margin-right: 0;
-					}
-				}
-			}
-		}
-	}
-	.search .el-input__inner{
-		width:284px;
-	}
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+.search .el-input__inner {
+  width: 284px;
+}
 </style>
