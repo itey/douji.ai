@@ -223,8 +223,8 @@
                 </div>
               </div>
               <div class="form-attr-mbd">
-                <div class="mbd-value text-color">{{ metadata.initialPrice }} MBD</div>
-                <div class="mbd-transform">≈${{ metadata.initialPrice * $store.state.chain.mbdPrice }}</div>
+                <div class="mbd-value text-color">{{ metadata.initialPrice | decimalPlace4 }} MBD</div>
+                <div class="mbd-transform">≈${{ (metadata.initialPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
               </div>
               <el-button @click="handleMint()" :disabled="metadata.availableSupply <= 0" class="common-btn2 form-attr-mint">Mint</el-button>
               <div class="form-attr-tip">
@@ -313,10 +313,7 @@
                 </div>
                 <div class="dividend-pool-item">
                   <div class="dividend-pool-label">You NFT Staked</div>
-                  <div
-                    class="dividend-pool-value text-color"
-                    v-if="userStakeInfo[0]"
-                  >{{ userStakeInfo[0] }} ({{ (userStakeInfo[0]/totalStakeCount * 100).toFixed(2) + '%' }})</div>
+                  <div class="dividend-pool-value text-color" v-if="userStakeInfo && userStakeInfo[0]">{{ userStakeInfo[0] }} ({{ stakePercent }})</div>
                   <div class="dividend-pool-value text-color" v-else>0 (0.00%)</div>
                 </div>
                 <div class="dividend-pool-item">
@@ -408,7 +405,6 @@ import {
   ifCheckInToday,
   setBlindBoxCache,
   setBlindBoxFlagCache,
-  weiToEth,
 } from '@/utils/common'
 import { checkBlindBox, loadFromUrl, unlockContent } from '@/utils/http'
 import { blockHeight } from '@/utils/web3/chain'
@@ -453,6 +449,7 @@ export default {
         availableSupply: null,
         initialQuantity: null,
         initialPrice: null,
+        protectedContent: undefined,
       },
       tokenSupplyInfo: {
         isVoting: false,
@@ -472,29 +469,18 @@ export default {
   },
 
   computed: {
-    boxFlagAvailable() {
-      if (!this.boxFlagInfo) {
-        return false
+    stakePercent() {
+      if (!this.userStakeInfo[0] || this.userStakeInfo[0] == 0) {
+        return '0.00%'
       }
-      const timeGet = Number(this.boxFlagInfo.time)
-      const nowTime = new Date().getTime()
-      if (nowTime - timeGet > 1000 * 60) {
-        return false
-      } else {
-        return true
+      if (!this.totalStakeCount || this.userStakeInfo[0] == 0) {
+        return '0.00%'
       }
-    },
-    boxAvailable() {
-      if (!this.blindBox) {
-        return false
-      }
-      const timeGet = Number(this.blindBox.time)
-      const nowTime = new Date().getTime()
-      if (nowTime - timeGet > 1000 * 60) {
-        return false
-      } else {
-        return true
-      }
+      return (
+        ((this.userStakeInfo[0] / this.totalStakeCount) * 100)
+          .toFixed(2)
+          .toString() + '%'
+      )
     },
   },
 
@@ -620,9 +606,7 @@ export default {
           this.metadata.maxSupply = this.tokenSupplyInfo.maxSupply
           this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply
           this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply
-          this.metadata.initialPrice = weiToEth(
-            this.tokenSupplyInfo.price.price
-          )
+          this.metadata.initialPrice = this.tokenSupplyInfo.price.price
         })
         .catch((e) => {
           console.log(e)
@@ -639,7 +623,7 @@ export default {
       const mbdPrice = this.metadata.initialPrice
       if (mbdPrice && mbdPrice > 0) {
         try {
-          await approveMbd(this.nftContract, mbdPrice(mbdPrice))
+          await approveMbd(this.nftContract, mbdPrice)
         } catch (e) {
           console.log(e)
           this.$toast.warning(this.$t('news-detail.mbd_approve_failed'))
@@ -752,7 +736,7 @@ export default {
       return new Promise((resolve, reject) => {
         totalPledgeCount(this.tokenId)
           .then((count) => {
-            this.totalStakeCount = count
+            this.totalStakeCount = count ? count : 0
             resolve()
           })
           .catch(() => {

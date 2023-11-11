@@ -528,6 +528,14 @@ export default {
           color: #707d8c;
         }
 
+        .tip-error {
+          margin-top: 16px;
+          font-size: 12px;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #a50507;
+        }
+
         .input {
           width: 765px;
         }

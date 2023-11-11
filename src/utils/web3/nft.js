@@ -4,6 +4,7 @@ import store from '@/store'
 import Vue from 'vue'
 import { checkAccount } from './chain'
 
+
 var nftContract = undefined
 
 /** 获取NFT合约 */
@@ -300,6 +301,32 @@ export function userPledgeCount(tokenId) {
       })
       .catch(e => {
         reject(e)
+      })
+  })
+}
+
+
+/** 授权 NFT */
+export function nftApproval(operator) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.setApprovalForAll(operator, true)
+      .send({ from: fromAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
       })
   })
 }

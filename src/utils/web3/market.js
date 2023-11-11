@@ -42,7 +42,7 @@ export function createSaleOrder(tokenId, count, price) {
         resolve(receipt)
       })
       .on('error', (error) => {
-        reject(error.message)
+        reject(error)
       })
   })
 

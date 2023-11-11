@@ -52,7 +52,8 @@ export default {
       this.show = true
     },
     toViewNft() {
-      this.$router.replace('/news-detail', {
+      this.$router.replace({
+        path: '/news-detail',
         query: { tokenId: this.tx.events.Authorised.returnValues.tokenId },
       })
     },

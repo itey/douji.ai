@@ -84,7 +84,7 @@
         <div v-if="error.initialQuantity" class="tip-error">{{ error.initialQuantity }}</div>
         <div v-else class="tip">
           Not allowed to change after mint.NFT Maximum Initial Mint Quantity
-          <span class="text-color">{{ form.maxSupply }}</span>
+          <span class="text-color">{{ availableInitialQuantity }}</span>
         </div>
       </template>
       <div class="label">NFT Initial Mint Price*</div>
@@ -147,6 +147,12 @@ export default {
     }
   },
   computed: {
+    availableInitialQuantity() {
+      if (!this.form.maxSupply) {
+        return 0
+      }
+      return Math.floor(this.form.maxSupply * 0.2)
+    },
     ifUpdate() {
       if (!this.edit) {
         return false
@@ -170,15 +176,7 @@ export default {
     },
     /** 选择分类 */
     choseCategory(val) {
-      this.form.category = val.e_name
-      // const ifExist = this.form.category.includes(val.e_name)
-      // if (!ifExist) {
-      //   this.form.category.push(val.e_name)
-      // } else {
-      //   this.form.category = this.form.category.filter(
-      //     (item) => item !== val.e_name
-      //   )
-      // }
+      this.$set(this.form, 'category', val.e_name)
     },
     /** 选择平台 */
     chosePlatform(val) {
@@ -284,7 +282,7 @@ export default {
           if (!this.form.initialQuantity) {
             this.setError(key, this.$t('create.initialQuantity_required'))
           } else if (
-            this.form.initialQuantity > Math.floor(this.form.maxSupply * 0.2)
+            this.form.initialQuantity > this.availableInitialQuantity
           ) {
             this.setError(key, this.$t('create.initialQuantity_more_than'))
           } else {
@@ -362,9 +360,7 @@ export default {
           this.$t('create.initialQuantity_required')
         )
         ifPass = false
-      } else if (
-        this.form.initialQuantity > Math.floor(this.form.maxSupply * 0.2)
-      ) {
+      } else if (this.form.initialQuantity > this.availableInitialQuantity) {
         this.setError(
           'initialQuantity',
           this.$t('create.initialQuantity_more_than')

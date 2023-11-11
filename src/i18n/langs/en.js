@@ -87,6 +87,8 @@ export default {
       "Retrieve success.",
     "retrieve_failed":
       "Retrieve failed.",
+    "retrieve_unable":
+      "The retrieve condition is not met.",
     "get_blind_box_failed":
       "An error occurred getting the blind box. Please try again later.",
   },

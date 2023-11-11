@@ -35,6 +35,7 @@
 
 <script>
 import { createSaleOrder } from '@/utils/web3/market'
+import { nftApproval } from '@/utils/web3/nft'
 export default {
   name: 'list-your-item-dialog',
   props: {
@@ -52,6 +53,7 @@ export default {
       show: false,
       salePrice: null,
       saleQuantity: null,
+      marketAddress: process.env.VUE_APP_MARKET,
       error: {
         salePrice: undefined,
         saleQuantity: undefined,
@@ -72,10 +74,18 @@ export default {
         background: 'rgba(0, 0, 0, 0.8)',
       })
       try {
+        await nftApproval(this.marketAddress)
+      } catch (error) {
+        console.log(error)
+        this.$toast.error(error)
+        loadingInstance.close()
+        return
+      }
+      try {
         await createSaleOrder(
           this.tokenId,
-          Number(this.salePrice),
-          Number(this.saleQuantity)
+          Number(this.saleQuantity),
+          Number(this.salePrice)
         )
         loadingInstance.close()
         this.$toast.success(this.$t('news-detail.order_create_success'))
