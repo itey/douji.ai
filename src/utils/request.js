@@ -48,9 +48,6 @@ service.interceptors.response.use(
             Vue.$toast.error(msg)
             store.dispatch('Logout')
             return Promise.reject(msg)
-        } else if (code !== 1) {
-            Vue.$toast.error(msg)
-            return Promise.reject(msg)
         } else {
             return res.data
         }

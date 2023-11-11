@@ -280,12 +280,23 @@ export function ethToWei(eth) {
   return eth * 100000000;
 }
 
+export function timestampToDate(timestamp) {
+  var date = new Date(Number(timestamp))  //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  var Y = date.getFullYear() + "-"
+  var M =
+    (date.getMonth() + 1 < 10
+      ? "0" + (date.getMonth() + 1)
+      : date.getMonth() + 1) + "-"
+  var D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + " "
+  return Y + M + D;
+}
+
 /** 判断当天是否已签到 */
-export function ifCheckInToday() {
-  const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME')
+export function ifCheckInToday(account) {
+  const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME_' + account)
   if (latestCheck) {
-    const a = new Date(latestCheck).setHours(0, 0, 0, 0)
-    const b = new Date().setHours(0, 0, 0, 0)
+    const a = timestampToDate(latestCheck)
+    const b = timestampToDate(new Date().getTime())
     if (a === b) {
       return true
     }
@@ -294,16 +305,76 @@ export function ifCheckInToday() {
 }
 
 /** 获取当天阅读时长 */
-export function getReadTimeToday() {
-  const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME')
+export function getBoxCountToday(account) {
+  const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME_' + account)
   if (!ifCheckInToday()) {
     return null
   }
-  const today = new Date(latestCheck).setHours(0, 0, 0, 0)
-  const times = cache.local.get('DOJI_AI_CHECK_TIMES_' + today)
-  if (!times) {
+  const today = timestampToDate(latestCheck)
+  const count = cache.local.get('DOJI_BOX_COUNT_' + account + '_' + today)
+  if (!count) {
     return 0
   } else {
-    return times
+    return Number(count)
   }
+}
+
+/** 增加盲盒次数 */
+export function addBoxCountToday(account) {
+  const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME_' + account)
+  if (!ifCheckInToday()) {
+    return
+  }
+  const today = timestampToDate(latestCheck)
+  const currentCount = getBoxCountToday()
+  cache.local.set('DOJI_BOX_COUNT_' + account + '_' + today, currentCount + 1)
+  return
+}
+
+/** 盲盒次数转时间格式显示 */
+export function boxCount2Time(count) {
+  count = count * 5 * 60
+  const time = Math.floor(count / 3600)
+  var hour = time < 10 ? '0' + time : time
+  var minute = Math.floor((count - time * 3600) / 60)
+  minute = minute < 10 ? '0' + minute : minute
+  var second = Math.floor(count - time * 3600 - minute * 60)
+  second = second < 10 ? '0' + second : second
+  return hour + ':' + minute + ':' + second
+}
+
+/** 保存盲盒标志 */
+export function setBlindBoxFlagCache(userId, flag, invalid) {
+  if (flag) {
+    const data = {
+      flag: flag,
+      time: new Date().getTime(),
+      invalid: invalid
+    }
+    cache.local.setJSON('DOJI_BOX_FLAG_' + userId, data)
+  } else {
+    cache.local.remove('DOJI_BOX_FLAG_' + userId)
+  }
+}
+/** 获取盲盒标志 */
+export function getBlindBoxFlagCache(userId) {
+  return cache.local.getJSON('DOJI_BOX_FLAG_' + userId)
+}
+
+/** 保存盲盒 */
+export function setBlindBoxCache(userId, box, invalid) {
+  if (box) {
+    const data = {
+      box: box,
+      time: new Date().getTime(),
+      invalid: invalid
+    }
+    cache.local.setJSON('DOJI_BOX_' + userId, data)
+  } else {
+    cache.local.remove('DOJI_BOX_' + userId)
+  }
+}
+/** 获取盲盒 */
+export function getBlindBoxCache(userId) {
+  return cache.local.getJSON('DOJI_BOX_' + userId)
 }

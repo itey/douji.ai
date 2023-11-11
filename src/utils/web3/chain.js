@@ -4,6 +4,7 @@ import Vue from 'vue';
 
 const SIGN_STR = 'Wellcome to DOUJI!'
 const DAILY_STR = 'Wellcome to DOUJI,A beautiful day has begun!'
+const GET_BLIND_BOX = 'Collect DOUJI Blind Box!'
 
 
 /** 检查登录账户*/
@@ -51,6 +52,26 @@ export function checkInSign() {
     const chainAccount = store.state.chain.account
     web3.eth.personal
       .sign(DAILY_STR, chainAccount, '')
+      .then((signed) => {
+        resolve(signed)
+      })
+      .catch((error) => {
+        console.log('sign error', error)
+        reject(error)
+      })
+  })
+}
+
+/** 接收盲盒 */
+export function getBlindBoxSign() {
+  return new Promise((resolve, reject) => {
+    const web3 = window.ethereum
+    if (!web3) {
+      reject('web3 is not ready')
+    }
+    const chainAccount = store.state.chain.account
+    web3.eth.personal
+      .sign(GET_BLIND_BOX, chainAccount, '')
       .then((signed) => {
         resolve(signed)
       })

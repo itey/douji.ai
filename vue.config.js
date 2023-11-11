@@ -21,6 +21,15 @@ module.exports = defineConfig({
 		]
 	},
 	devServer: {
-		historyApiFallback: true
+		historyApiFallback: true,
+		proxy: {
+			"/dev-api": {
+				target: "https://dev-api.douji.ai/api",
+				changeOrigin: true,
+				pathRewrite: {
+					"^/dev-api": ""
+				}
+			}
+		}
 	}
 })

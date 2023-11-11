@@ -80,12 +80,17 @@ const user = {
           checkIn(signed).then((res) => {
             if (res.code == 1) {
               commit('setCheckTime', new Date().getTime())
-              cache.local.set('DOJI_AI_CHECK_IN_TIME', new Date().getTime())
+              cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
               resolve()
             } else {
               reject(res.message)
             }
           }).catch(e => {
+            if (e.indexOf('已签过到') >= 0) {
+              commit('setCheckTime', new Date().getTime())
+              cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
+              resolve()
+            }
             reject(e)
           })
         }).catch(e => {

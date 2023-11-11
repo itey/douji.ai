@@ -386,7 +386,7 @@
     <nft-stake-dialog ref="nftStakeDialog"></nft-stake-dialog>
     <check-in-dialog @onCheckedIn="onCheckedIn()" ref="checkInDialog"></check-in-dialog>
     <congratulations-dialog ref="congratulationsDialog"></congratulations-dialog>
-    <blind-dialog ref="blindDialog"></blind-dialog>
+    <blind-dialog :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog"></blind-dialog>
   </div>
 </template>
 
@@ -400,9 +400,17 @@ import NftStakeDialog from '@/components/news/NftStakeDialog'
 import RetrieveDialog from '@/components/news/RetrieveDialog'
 import RevisionHistoryDialog from '@/components/news/RevisionHistoryDialog'
 import StakeDialog from '@/components/news/StakeDialog'
-import store from '@/store'
-import { ifCheckInToday, weiToEth } from '@/utils/common'
-import { loadFromUrl, unlockContent } from '@/utils/http'
+import {
+  boxCount2Time,
+  getBlindBoxCache,
+  getBlindBoxFlagCache,
+  getBoxCountToday,
+  ifCheckInToday,
+  setBlindBoxCache,
+  setBlindBoxFlagCache,
+  weiToEth,
+} from '@/utils/common'
+import { checkBlindBox, loadFromUrl, unlockContent } from '@/utils/http'
 import { blockHeight } from '@/utils/web3/chain'
 import { getSettlePoolBalance } from '@/utils/web3/market'
 import { approveMbd } from '@/utils/web3/mbd'
@@ -431,7 +439,7 @@ export default {
   data() {
     return {
       nftContract: process.env.VUE_APP_NFT,
-      userAccount: store.state.user.account,
+      userId: this.$store.state.user.userId,
       tokenId: undefined,
       tokenOwner: undefined,
       tokenMetaUrl: undefined,
@@ -455,8 +463,39 @@ export default {
       userStakeInfo: {},
       settlePoolBalance: undefined,
       ifCheckedIn: true,
+      blindBoxToday: {},
+      blindBoxTimerTask: undefined,
+      blindBox: {},
+      boxFlagInfo: {},
       subscription: false,
     }
+  },
+
+  computed: {
+    boxFlagAvailable() {
+      if (!this.boxFlagInfo) {
+        return false
+      }
+      const timeGet = Number(this.boxFlagInfo.time)
+      const nowTime = new Date().getTime()
+      if (nowTime - timeGet > 1000 * 60) {
+        return false
+      } else {
+        return true
+      }
+    },
+    boxAvailable() {
+      if (!this.blindBox) {
+        return false
+      }
+      const timeGet = Number(this.blindBox.time)
+      const nowTime = new Date().getTime()
+      if (nowTime - timeGet > 1000 * 60) {
+        return false
+      } else {
+        return true
+      }
+    },
   },
 
   mounted() {
@@ -464,7 +503,7 @@ export default {
     if (!this.tokenId) {
       return
     }
-    if (this.userAccount) {
+    if (this.userId) {
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',
       })
@@ -472,13 +511,22 @@ export default {
         this.pageLoad()
         loadingInstance.close()
         this.checkIn()
+        this.checkBlindBox()
+        this.blindBoxTimerTask = setInterval(() => {
+          this.checkBlindBox()
+        }, 1000 * 20)
       }, 4000)
+    }
+  },
+  destroyed() {
+    if (this.blindBoxTimerTask) {
+      clearInterval(this.blindBoxTimerTask)
     }
   },
   methods: {
     /** 检查每日签到 */
     checkIn() {
-      if (ifCheckInToday()) {
+      if (this.userId && ifCheckInToday(this.userId)) {
         return
       }
       this.ifCheckedIn = false
@@ -487,6 +535,71 @@ export default {
     /** 完成签到 */
     onCheckedIn() {
       this.checkIn()
+    },
+    /** 检查盲盒奖励 */
+    checkBlindBox() {
+      if (this.userId && ifCheckInToday(this.userId)) {
+        var haveBox = false
+        const blindBox = getBlindBoxCache(this.userId)
+        if (blindBox && blindBox.time) {
+          const timeGet = Number(blindBox.time)
+          const nowTime = new Date().getTime()
+          if (nowTime - timeGet > 1000 * 60) {
+            setBlindBoxCache(this.userId, blindBox.box, true)
+            haveBox = false
+          } else if (!blindBox.invalid) {
+            this.blindBox = blindBox
+            haveBox = true
+          }
+        }
+        var haveFlag = false
+        if (!haveBox) {
+          const flag = getBlindBoxFlagCache(this.userId)
+          if (flag && flag.time) {
+            const timeGet = Number(flag.time)
+            const nowTime = new Date().getTime()
+            if (nowTime - timeGet > 1000 * 60) {
+              setBlindBoxFlagCache(this.userId, flag.flag, true)
+              haveFlag = false
+            } else if (!flag.invalid) {
+              this.boxFlagInfo = flag
+              haveFlag = true
+              this.$refs['blindDialog'].showDialog()
+            }
+          }
+        }
+        if (!haveFlag) {
+          checkBlindBox().then((r) => {
+            if (r.code == 1) {
+              const boxFlag = r.data.get_box_flag
+              if (boxFlag) {
+                const currentFlag = getBlindBoxFlagCache(this.userId)
+                if (!currentFlag || currentFlag.flag != boxFlag) {
+                  setBlindBoxFlagCache(this.userId, boxFlag)
+                  this.boxFlagInfo = getBlindBoxFlagCache(this.userId)
+                  this.$refs['blindDialog'].showDialog()
+                }
+              }
+            }
+            // const boxFlag = 'A005'
+            // if (boxFlag) {
+            //   const currentFlag = getBlindBoxFlagCache(this.userId)
+            //   if (!currentFlag || currentFlag.flag != boxFlag) {
+            //     setBlindBoxFlagCache(this.userId, boxFlag)
+            //     this.boxFlagInfo = getBlindBoxFlagCache(this.userId)
+            //     this.$refs['blindDialog'].showDialog()
+            //   }
+            // }
+          })
+        }
+      }
+    },
+    /** 获取当日盲盒数据 */
+    getBlindBoxToday() {
+      if (this.userId) {
+        this.blindBoxToday.boxCount = getBoxCountToday(this.userId)
+        this.blindBoxToday.readTime = boxCount2Time(this.blindBoxToday.boxCount)
+      }
     },
     /** 加载数据 */
     pageLoad() {

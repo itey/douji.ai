@@ -27,6 +27,23 @@ export function checkIn(signed) {
     })
 }
 
+// 检查是否有盲盒开
+export function checkBlindBox() {
+    return request({
+        url: '/checkHasBox',
+        method: 'get'
+    })
+}
+
+// 接收盲盒
+export function getBlindBox(signed, get_box_flag, tokenId) {
+    return request({
+        url: '/getBox',
+        params: { signed, get_box_flag, tokenId },
+        method: 'post'
+    })
+}
+
 // 上传文件
 export function uploadFile(file) {
     return request({

@@ -87,6 +87,8 @@ export default {
       "Retrieve success.",
     "retrieve_failed":
       "Retrieve failed.",
+    "get_blind_box_failed":
+      "An error occurred getting the blind box. Please try again later.",
   },
   "user": {
     "profile_save_success": "Profile saved successfully.",
