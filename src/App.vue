@@ -1,9 +1,7 @@
 <template>
 	<el-container id="app" class="theme-container">
 		<el-header style="height: auto;">
-			<div class="app-content">
-				<NavBar />
-			</div>
+			<NavBar />
 		</el-header>
 		<creator v-if="$route.path == '/creator'"></creator>
 		<el-container>
@@ -50,6 +48,7 @@
 			justify-content: center;
 			background: #1a2027;
 			border-bottom: 1px solid #29383f;
+			padding: 0 0;
 		}
 
 		.banner {
@@ -74,8 +73,7 @@
 		}
 
 		.app-content {
-			width: 100%;
-			max-width: 1440px;
+			width: 1440px;
 		}
 
 	}

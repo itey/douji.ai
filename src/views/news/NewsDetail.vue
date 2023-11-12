@@ -384,12 +384,14 @@
     <check-in-dialog @onCheckedIn="onCheckedIn()" ref="checkInDialog"></check-in-dialog>
     <congratulations-dialog ref="congratulationsDialog"></congratulations-dialog>
     <blind-dialog :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog"></blind-dialog>
+    <BlindOpenDialog />
   </div>
 </template>
 
 <script>
 import NewsItem from '@/components/NewsItem'
 import BlindDialog from '@/components/news/BlindDialog'
+import BlindOpenDialog from '@/components/news/BlindOpenDialog'
 import CheckInDialog from '@/components/news/CheckInDialog'
 import CongratulationsDialog from '@/components/news/CongratulationsDialog'
 import ListYourItemDialog from '@/components/news/ListYourItemDialog'
@@ -436,6 +438,7 @@ export default {
     CheckInDialog,
     CongratulationsDialog,
     BlindDialog,
+    BlindOpenDialog,
   },
   data() {
     return {
