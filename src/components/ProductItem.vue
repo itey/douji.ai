@@ -2,7 +2,7 @@
   <div class="product-item">
     <img style="width: 100%;height:194px;" :src="item.image" />
     <span class="type" v-if="item.pltform">{{ item.pltform }}</span>
-    <div class="label text-color">{{ item.title }}</div>
+    <div class="label text-color" @click="$router.push({path: '/news-detail', query: {tokenId: item.token_id}})">{{ item.title }}</div>
     <div class="product-bottom">
       <div class="bottom-left">
         <span class="value text-color">2500</span>

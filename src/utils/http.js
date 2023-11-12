@@ -160,3 +160,12 @@ export function nftListPage(params) {
         params: params
     })
 }
+
+// 获取挂单列表
+export function getNftOrders(page, tokenId) {
+    return request({
+        url: '/nftOrders',
+        method: 'post',
+        params: { page, tokenId }
+    })
+}

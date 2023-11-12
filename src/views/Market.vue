@@ -31,7 +31,15 @@
           <product-item :item="item"></product-item>
         </div>
       </div>
-      <el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页" :page-count="pageSize" :total="totalCount"></el-pagination>
+      <el-pagination
+        @current-change="onPageChange"
+        style="width:100%;margin: 20px 0;"
+        background
+        layout="pager,next"
+        next-text="下一页"
+        :page-count="pageSize"
+        :total="totalCount"
+      ></el-pagination>
     </div>
   </div>
 </template>
@@ -87,13 +95,18 @@ export default {
     this.loadPageList()
   },
   methods: {
+    /** 页码变化 */
+    onPageChange(page) {
+      this.pageNo = page
+      this.loadPageList()
+    },
     /** 列表加载 */
     loadPageList() {
       const param = {
-        page: 1,
-        content_type: null,
-        category: null,
-        pltform: null,
+        page: this.pageNo,
+        content_type: this.typeValue,
+        category: this.categoryValue,
+        pltform: this.platformValue,
       }
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',

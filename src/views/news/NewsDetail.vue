@@ -246,21 +246,21 @@
             <div class="form-second-market">
               <div class="second-market-column" style="width: 130px;">
                 <div class="second-market-header" style="padding-left: 14px;">From</div>
-                <div class="second-market-td" style="padding-left: 14px;" v-for="(item,index) in 3">0x7Fa...4745d</div>
+                <div class="second-market-td" style="padding-left: 14px;" v-for="(item,index) in nftOrderList" :key="index">{{ item.owner | omitAddress }}</div>
               </div>
               <div class="second-market-column" style="text-align: right;width: 91px;">
                 <div class="second-market-header">Price(MBD)</div>
-                <div class="second-market-td" v-for="(item,index) in 3">2790.0</div>
+                <div class="second-market-td" v-for="(item,index) in nftOrderList" :key="index">{{ item.price }}</div>
               </div>
               <div class="second-market-column" style="text-align: right;width: 104px;">
                 <div class="second-market-header" style="padding-right: 12px;">Available</div>
-                <div class="second-market-td" style="padding-right: 12px;" v-for="(item,index) in 3">12</div>
+                <div class="second-market-td" style="padding-right: 12px;" v-for="(item,index) in nftOrderList" :key="index">{{ item.tokenValue }}</div>
               </div>
               <div class="second-market-column" style="width: 60px;">
                 <div class="second-market-header"></div>
-                <div class="second-market-td" style="font-size: 12px;" v-for="(item,index) in 3">
+                <div class="second-market-td" style="font-size: 12px;" v-for="(item,index) in nftOrderList" :key="index">
                   <div class="second-btn">
-                    <span v-if="index==0" style="color: #00F9E5;">Buy</span>
+                    <span v-if="item.owner != $store.state.user.account" style="color: #00F9E5;">Buy</span>
                     <span v-else style="color: #92B5DE;">Cancel</span>
                   </div>
                 </div>
@@ -406,7 +406,12 @@ import {
   setBlindBoxCache,
   setBlindBoxFlagCache,
 } from '@/utils/common'
-import { checkBlindBox, loadFromUrl, unlockContent } from '@/utils/http'
+import {
+  checkBlindBox,
+  getNftOrders,
+  loadFromUrl,
+  unlockContent,
+} from '@/utils/http'
 import { blockHeight } from '@/utils/web3/chain'
 import { getSettlePoolBalance } from '@/utils/web3/market'
 import { approveMbd } from '@/utils/web3/mbd'
@@ -464,6 +469,7 @@ export default {
       blindBoxTimerTask: undefined,
       blindBox: {},
       boxFlagInfo: {},
+      nftOrderList: {},
       subscription: false,
     }
   },
@@ -567,15 +573,6 @@ export default {
                 }
               }
             }
-            // const boxFlag = 'A005'
-            // if (boxFlag) {
-            //   const currentFlag = getBlindBoxFlagCache(this.userId)
-            //   if (!currentFlag || currentFlag.flag != boxFlag) {
-            //     setBlindBoxFlagCache(this.userId, boxFlag)
-            //     this.boxFlagInfo = getBlindBoxFlagCache(this.userId)
-            //     this.$refs['blindDialog'].showDialog()
-            //   }
-            // }
           })
         }
       }
@@ -601,6 +598,7 @@ export default {
         this.getTotalStakeCount(),
         this.getUserStakeCount(),
         this.getMbdSettleBalance(),
+        this.loadNftOrderList(),
       ])
         .then(() => {
           this.metadata.maxSupply = this.tokenSupplyInfo.maxSupply
@@ -614,6 +612,21 @@ export default {
         .finally(() => {
           loadingInstance.close()
         })
+    },
+    /** 加载挂单数据 */
+    loadNftOrderList() {
+      return new Promise((resolve, reject) => {
+        getNftOrders(1, this.tokenId)
+          .then((r) => {
+            if (r.code == 1) {
+              this.nftOrderList = r.data.list
+            }
+            resolve()
+          })
+          .catch((e) => {
+            reject(e)
+          })
+      })
     },
     /** 用户点击mint */
     async handleMint() {
@@ -1463,6 +1476,7 @@ export default {
                 text-align: center;
                 background: linear-gradient(-16deg, #848d98, #97a8a7);
                 border-radius: 15px;
+                cursor: pointer;
               }
             }
           }

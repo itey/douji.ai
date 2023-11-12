@@ -356,13 +356,19 @@ export function boxCount2Time(count) {
 
 /** 保存盲盒标志 */
 export function setBlindBoxFlagCache(userId, flag, invalid) {
+  var cacheData = getBlindBoxFlagCache(userId)
   if (flag) {
-    const data = {
-      flag: flag,
-      time: new Date().getTime(),
-      invalid: invalid
+    if (!cacheData) {
+      cacheData = {
+        flag: flag,
+        time: new Date().getTime(),
+        invalid: invalid
+      }
+    } else {
+      cacheData.flag = flag
+      cacheData.invalid = invalid != undefined && invalid != null ? invalid : false
     }
-    cache.local.setJSON('DOJI_BOX_FLAG_' + userId, data)
+    cache.local.setJSON('DOJI_BOX_FLAG_' + userId, cacheData)
   } else {
     cache.local.remove('DOJI_BOX_FLAG_' + userId)
   }
@@ -374,13 +380,19 @@ export function getBlindBoxFlagCache(userId) {
 
 /** 保存盲盒 */
 export function setBlindBoxCache(userId, box, invalid) {
+  var cacheData = getBlindBoxCache(userId)
   if (box) {
-    const data = {
-      box: box,
-      time: new Date().getTime(),
-      invalid: invalid
+    if (!cacheData) {
+      cacheData = {
+        box: box,
+        time: new Date().getTime(),
+        invalid: invalid
+      }
+    } else {
+      cacheData.box = box
+      cacheData.invalid = invalid != undefined && invalid != null ? invalid : false
     }
-    cache.local.setJSON('DOJI_BOX_' + userId, data)
+    cache.local.setJSON('DOJI_BOX_' + userId, cacheData)
   } else {
     cache.local.remove('DOJI_BOX_' + userId)
   }
