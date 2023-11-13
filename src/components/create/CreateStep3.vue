@@ -152,13 +152,6 @@
               </div>
             </div>
           </div>
-          <div class="form-attr-container" v-if="edit">
-            <div class="form-attr-title text-color">Optional Setting</div>
-            <div class="form-attr-setting">
-              <div class="form-attr-set" @click="showSetDialog">Set NFT Sales Promotion</div>
-              <div class="form-attr-set" @click="showDaoDialog">Set NFT DAO Governace</div>
-            </div>
-          </div>
         </div>
       </div>
       <div class="form-add" v-if="!edit">
@@ -178,16 +171,12 @@
         </div>
       </div>
     </div>
-    <set-sale-dialog ref="setSaleDialog"></set-sale-dialog>
-    <set-dao-dialog ref="setDaoDialog"></set-dao-dialog>
     <mint-success-dialog ref="successDialog" :tx="txObject"></mint-success-dialog>
   </div>
 </template>
 
 <script>
 import MintSuccessDialog from '@/components/create/MintSuccessDialog'
-import SetDaoDialog from '@/components/create/SetDaoDialog'
-import SetSaleDialog from '@/components/create/SetSaleDialog'
 import cache from '@/utils/cache'
 import { uploadJson } from '@/utils/http'
 import { possessorMint } from '@/utils/web3/nft'
@@ -211,8 +200,6 @@ var md = require('markdown-it')({
 export default {
   name: 'create-step3',
   components: {
-    SetSaleDialog,
-    SetDaoDialog,
     MintSuccessDialog,
   },
   props: {
@@ -354,12 +341,6 @@ export default {
     /** 完成铸造后处理 */
     afterMinted() {
       cache.local.remove('NFT_MINT_CACHE')
-    },
-    showSetDialog() {
-      this.$refs['setSaleDialog'].showDialog()
-    },
-    showDaoDialog() {
-      this.$refs['setDaoDialog'].showDialog()
     },
   },
 }

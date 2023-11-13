@@ -130,11 +130,11 @@
                 <div class="dao-set-item-label">Update Content</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
-              <div class="dao-set-item" style="width: 178px;">
+              <div class="dao-set-item" style="width: 178px;" @click="$refs['setSaleDialog'].showDialog()">
                 <div class="dao-set-item-label">Set NFT Sales Promotion</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
-              <div class="dao-set-item" style="width: 190px;">
+              <div class="dao-set-item" style="width: 190px;" @click="$refs['setDaoDialog'].showDialog()">
                 <div class="dao-set-item-label">Set NFT DAO Govemnance</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
@@ -384,11 +384,15 @@
     <CheckInDialog @onCheckedIn="onCheckedIn()" ref="checkInDialog" />
     <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />
     <BlindOpenDialog :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
+    <SetSaleDialog :tokenId="tokenId" ref="setSaleDialog" />
+    <SetDaoDialog :tokenId="tokenId" ref="setDaoDialog" />
   </div>
 </template>
 
 <script>
 import NewsItem from '@/components/NewsItem'
+import SetDaoDialog from '@/components/create/SetDaoDialog'
+import SetSaleDialog from '@/components/create/SetSaleDialog'
 import BlindDialog from '@/components/news/BlindDialog'
 import BlindOpenDialog from '@/components/news/BlindOpenDialog'
 import CheckInDialog from '@/components/news/CheckInDialog'
@@ -436,6 +440,8 @@ export default {
     CheckInDialog,
     BlindDialog,
     BlindOpenDialog,
+    SetSaleDialog,
+    SetDaoDialog,
   },
   data() {
     return {
