@@ -14,11 +14,11 @@
           <div class="form-content text-color">
             <div v-html="pubContent"></div>
           </div>
-          <div class="form-label-sub">
+          <div class="form-label-sub" v-if="privateContent">
             <img style="width: 14px;height: 14px;" src="@/assets/images/create/protect.png" />
             <div class="form-label-sub-text">Protected</div>
           </div>
-          <div class="form-content text-color">
+          <div class="form-content text-color" v-if="privateContent">
             <div v-html="privateContent"></div>
           </div>
           <div class="form-tag">
@@ -38,13 +38,13 @@
                 <div class="form-attr-label">Category</div>
                 <div class="form-attr-value">{{ form.category }}</div>
               </div>
-              <div class="form-attr-item" v-if="form.prompt && form.prompt.length">
+              <div class="form-attr-item" v-if="form.prompt">
                 <div class="form-attr-label">Platform</div>
-                <div class="form-attr-value">{{ form.prompt | arrayMax1 }}</div>
+                <div class="form-attr-value">{{ form.prompt }}</div>
               </div>
-              <div class="form-attr-item" v-if="form.language && form.language.length">
+              <div class="form-attr-item" v-if="form.language">
                 <div class="form-attr-label">Language</div>
-                <div class="form-attr-value">{{ form.language | arrayMax1 }}</div>
+                <div class="form-attr-value">{{ form.language }}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Max Supply</div>

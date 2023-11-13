@@ -83,10 +83,12 @@
 }
 
 .text-color {
+	font-size: 14px;
 	color: #FFFFFF;
 }
 
 .text-sub-color {
+	font-size: 14px;
 	color: #A9B7C3;
 }
 

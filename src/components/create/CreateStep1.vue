@@ -33,7 +33,7 @@
           <div
             class="item"
             :class="{
-					light:form.prompt && form.prompt.includes(item.e_name)
+					light:form.prompt == item.e_name
 				}"
             v-for="(item, index) in platformList"
             :key="index"
@@ -48,7 +48,7 @@
         <div
           class="item"
           :class="{
-					light:form.language && form.language.includes(item.english)
+					light:form.language == item.english
 				}"
           v-for="(item, index) in languageList"
           :key="index"
@@ -136,8 +136,8 @@ export default {
       form: {
         contentType: undefined,
         category: undefined,
-        prompt: [],
-        language: [],
+        prompt: undefined,
+        language: undefined,
         keyword: [],
         maxSupply: undefined,
         initialQuantity: undefined,
@@ -180,28 +180,11 @@ export default {
     },
     /** 选择平台 */
     chosePlatform(val) {
-      if (!this.form.prompt) {
-        this.form.prompt = []
-      }
-      const ifExist = this.form.prompt && this.form.prompt.includes(val.e_name)
-      if (!ifExist) {
-        this.form.prompt.push(val.e_name)
-      } else {
-        this.form.prompt = this.form.prompt.filter(
-          (item) => item !== val.e_name
-        )
-      }
+      this.$set(this.form, 'prompt', val.e_name)
     },
     /** 选择语言 */
     choseLanguage(val) {
-      const ifExist = this.form.language.includes(val.english)
-      if (!ifExist) {
-        this.form.language.push(val.english)
-      } else {
-        this.form.language = this.form.language.filter(
-          (item) => item !== val.english
-        )
-      }
+      this.$set(this.form, 'language', val.english)
     },
     /** 获取大类 */
     loadTypeList() {
@@ -480,7 +463,7 @@ export default {
         font-size: 18px;
         font-family: Source Han Sans CN;
         font-weight: bold;
-        color: #88a2b8;
+        color: #fff;
         cursor: pointer;
 
         img {
@@ -503,15 +486,18 @@ export default {
       flex-wrap: wrap;
 
       .item {
+        padding-top: 5px;
         width: 131px;
-        height: 27px;
+        height: 30px;
         line-height: 27px;
         background: #0e161d;
         border: 1px solid #313838;
         border-radius: 4px;
         margin: 0 9px 10px 0;
+        color: #fff;
+        cursor: pointer;
 
-        font-size: 10px;
+        font-size: 12px;
         font-family: Arial;
         font-weight: bold;
 

@@ -25,7 +25,7 @@
           <span class="text-color">25000</span>
         </div>
         <div class="proposal-right-btn">
-          <el-button @click="$refs['congratulationsDialog'].showDialog()" style="width: 118px;height: 42px;" class="common-btn2">Approve</el-button>
+          <el-button style="width: 118px;height: 42px;" class="common-btn2">Approve</el-button>
           <el-button style="margin-left: 24px;width: 118px;height: 42px;" class="common-btn2" :disabled="true">Execute</el-button>
         </div>
         <div class="proposal-right-tip">
@@ -376,15 +376,14 @@
         </div>
       </div>
     </div>
-    <list-your-item-dialog :tokenId="tokenId" :userOwned="userOwned" ref="listYourItemDialog"></list-your-item-dialog>
-    <revision-history-dialog ref="revisionHistoryDialog"></revision-history-dialog>
-    <stake-dialog :tokenId="tokenId" :userOwned="userOwned" ref="stakeDialog"></stake-dialog>
-    <retrieve-dialog :tokenId="tokenId" :blockHeight="currentHeight" :userStakeInfo="userStakeInfo" ref="retrieveDialog"></retrieve-dialog>
-    <nft-stake-dialog ref="nftStakeDialog"></nft-stake-dialog>
-    <check-in-dialog @onCheckedIn="onCheckedIn()" ref="checkInDialog"></check-in-dialog>
-    <congratulations-dialog ref="congratulationsDialog"></congratulations-dialog>
-    <blind-dialog :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog"></blind-dialog>
-    <BlindOpenDialog />
+    <ListYourItemDialog :tokenId="tokenId" :userOwned="userOwned" ref="listYourItemDialog" />
+    <RevisionHistoryDialog ref="revisionHistoryDialog" />
+    <StakeDialog :tokenId="tokenId" :userOwned="userOwned" ref="stakeDialog" />
+    <RetrieveDialog :tokenId="tokenId" :blockHeight="currentHeight" :userStakeInfo="userStakeInfo" ref="retrieveDialog" />
+    <NftStakeDialog ref="nftStakeDialog" />
+    <CheckInDialog @onCheckedIn="onCheckedIn()" ref="checkInDialog" />
+    <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />
+    <BlindOpenDialog :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
   </div>
 </template>
 
@@ -393,7 +392,6 @@ import NewsItem from '@/components/NewsItem'
 import BlindDialog from '@/components/news/BlindDialog'
 import BlindOpenDialog from '@/components/news/BlindOpenDialog'
 import CheckInDialog from '@/components/news/CheckInDialog'
-import CongratulationsDialog from '@/components/news/CongratulationsDialog'
 import ListYourItemDialog from '@/components/news/ListYourItemDialog'
 import NftStakeDialog from '@/components/news/NftStakeDialog'
 import RetrieveDialog from '@/components/news/RetrieveDialog'
@@ -436,7 +434,6 @@ export default {
     RetrieveDialog,
     NftStakeDialog,
     CheckInDialog,
-    CongratulationsDialog,
     BlindDialog,
     BlindOpenDialog,
   },
@@ -545,6 +542,8 @@ export default {
           } else if (!blindBox.invalid) {
             this.blindBox = blindBox
             haveBox = true
+            this.$refs['blindOpenDialog'].showDialog()
+            return
           }
         }
         var haveFlag = false
@@ -570,7 +569,7 @@ export default {
               if (boxFlag) {
                 const currentFlag = getBlindBoxFlagCache(this.userId)
                 if (!currentFlag || currentFlag.flag != boxFlag) {
-                  setBlindBoxFlagCache(this.userId, boxFlag)
+                  setBlindBoxFlagCache(this.userId, boxFlag, false)
                   this.boxFlagInfo = getBlindBoxFlagCache(this.userId)
                   this.$refs['blindDialog'].showDialog()
                 }
@@ -586,6 +585,11 @@ export default {
         this.blindBoxToday.boxCount = getBoxCountToday(this.userId)
         this.blindBoxToday.readTime = boxCount2Time(this.blindBoxToday.boxCount)
       }
+    },
+    /** 点击接收盲盒 */
+    handleReceiveBox() {
+      this.blindBox = getBlindBoxCache(this.userId)
+      this.$refs['blindOpenDialog'].showDialog()
     },
     /** 加载数据 */
     pageLoad() {
