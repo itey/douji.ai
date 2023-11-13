@@ -122,15 +122,15 @@
           <div class="dao-container">
             <div class="dao-title text-color">NFT DAO Governance</div>
             <div class="dao-set">
-              <div class="dao-set-item" style="width: 158px;" @click="$router.push( { path: '/update', query: {'tokenId': tokenId, 'step': 1}})">
+              <div class="dao-set-item" style="width: 158px;" @click="handleUpdate(1)">
                 <div class="dao-set-item-label">Update NFT Attributes</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
-              <div class="dao-set-item" style="width: 158px;" @click="$router.push( { path: '/update', query: {'tokenId': tokenId, 'step': 2}})">
+              <div class="dao-set-item" style="width: 158px;" @click="handleUpdate(2)">
                 <div class="dao-set-item-label">Update Content</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
-              <div class="dao-set-item" style="width: 178px;" @click="$refs['setSaleDialog'].showDialog()">
+              <div class="dao-set-item" style="width: 178px;" @click="handleUpdateSale()">
                 <div class="dao-set-item-label">Set NFT Sales Promotion</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
@@ -421,7 +421,7 @@ import { getSettlePoolBalance } from '@/utils/web3/market'
 import { approveMbd } from '@/utils/web3/mbd'
 import {
   balanceOf,
-  tokenOwner,
+  getTokenOwner,
   tokenURI,
   tokensData,
   totalPledgeCount,
@@ -460,6 +460,15 @@ export default {
     SetDaoDialog,
   },
   computed: {
+    canUpdate() {
+      if (
+        this.tokenOwner &&
+        this.tokenOwner.toLowerCase() == this.userAccount.toLowerCase()
+      ) {
+        return true
+      }
+      return false
+    },
     pubContent() {
       if (this.metadata.openContent) {
         return md.render(this.metadata.openContent)
@@ -492,6 +501,7 @@ export default {
     return {
       nftContract: process.env.VUE_APP_NFT,
       userId: this.$store.state.user.userId,
+      userAccount: this.$store.state.user.account,
       tokenId: undefined,
       tokenOwner: undefined,
       tokenMetaUrl: undefined,
@@ -754,13 +764,40 @@ export default {
       }
       this.$refs['retrieveDialog'].showDialog()
     },
+    /** 点击更新1 */
+    handleUpdate(step) {
+      if (!this.canUpdate) {
+        this.$toast.info(this.$t('news-detail.update_unable'))
+        return
+      }
+      if (this.tokenSupplyInfo.isVoting) {
+        this.$toast.info(this.$t('create.nft_voting'))
+        return
+      }
+      this.$router.push({
+        path: '/update',
+        query: { tokenId: this.tokenId, step: step },
+      })
+    },
+    /** 点击更新销售策略 */
+    handleUpdateSale() {
+      if (!this.canUpdate) {
+        this.$toast.info(this.$t('news-detail.update_unable'))
+        return
+      }
+      if (this.tokenSupplyInfo.isVoting) {
+        this.$toast.info(this.$t('create.nft_voting'))
+        return
+      }
+      this.$refs['setSaleDialog'].showDialog()
+    },
     /** 获取token拥有者 */
     getOwner() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
           reject()
         }
-        tokenOwner(this.tokenId)
+        getTokenOwner(this.tokenId)
           .then((owner) => {
             this.tokenOwner = owner
             resolve()

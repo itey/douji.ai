@@ -92,6 +92,10 @@ export default {
       "The retrieve condition is not met.",
     "get_blind_box_failed":
       "An error occurred getting the blind box. Please try again later.",
+    "submit_success":
+      "Submit success.",
+    "update_unable":
+      "No permission to update.",
   },
   "user": {
     "profile_save_success": "Profile saved successfully.",

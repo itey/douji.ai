@@ -12,17 +12,21 @@
           <el-form-item>
             <div class="set-sale-label text-color">BSC Chain token standard</div>
             <div class="set-sale-value">
-              <div class="type-item" :class="{
-					light:item==form.type
-				}" v-for="item in typeList" :key="item" @click="form.type = item">{{item}}</div>
+              <div
+                class="type-item"
+                :class="{ light:item.value == form.type}"
+                v-for="item in typeList"
+                :key="item.value"
+                @click="form.type = item.value"
+              >{{item.label}}</div>
             </div>
           </el-form-item>
           <div class="set-sale-label text-color">BSC Chain token smart contract address</div>
           <el-form-item class="set-sale-value" prop="contract">
             <el-input v-model="form.contract" class="input" placeholder style="width: 80%;"></el-input>
-            <i class="el-icon-circle-check" style="color: #00F9E5;margin-left: 4px;"></i>
-            <i class="el-icon-delete" style="color: #87A2B7;margin-left: 12px;"></i>
-            <div class="verify">Verify</div>
+            <!-- <i class="el-icon-circle-check" style="color: #00F9E5;margin-left: 4px;" v-if="isVerify"></i> -->
+            <!-- <i class="el-icon-delete" @click="clearContract" style="color: #87A2B7;margin-left: 12px;" v-if="form.contract"></i> -->
+            <!-- <div class="verify">Verify</div> -->
             <div class="set-sale-tip">
               Alows oken smart contraces that support
               <span class="text-color">
@@ -31,39 +35,101 @@
               </span>
             </div>
           </el-form-item>
-          <div class="set-sale-label text-color">Token ID</div>
-          <el-form-item class="set-sale-value" prop="disTokenId">
-            <el-input class="input" placeholder style="width: 376px;"></el-input>
-          </el-form-item>
+          <template v-if="form.type==2">
+            <div class="set-sale-label text-color">Token ID</div>
+            <el-form-item class="set-sale-value" prop="disTokenId">
+              <el-input v-model="form.disTokenId" class="input" placeholder style="width: 376px;"></el-input>
+            </el-form-item>
+          </template>
           <div class="set-sale-label text-color">How many discounts can a user get by holding one Licensed token?</div>
-          <el-form-item class="set-sale-value" prop>
-            <el-input class="input" placeholder style="width: 271px;"></el-input>
+          <el-form-item class="set-sale-value" prop="discounts">
+            <el-input v-model="form.discounts" class="input" placeholder style="width: 271px;"></el-input>
           </el-form-item>
           <div class="set-sale-label text-color">Discounts for purchasing NFTs</div>
-          <el-form-item class="set-sale-value">
-            <el-input class="input" placeholder style="width: 100px; float: left;"></el-input>
+          <el-form-item class="set-sale-value" prop="discountsFee">
+            <el-input v-model="form.discountsFee" @blur="handleInputFee" class="input" placeholder style="width: 150px; float: left;"></el-input>
             <div class="set-sale-unit" style="float: left;">%</div>
           </el-form-item>
         </div>
       </el-form>
       <div class="btn-container">
         <el-button class="common-border-btn" plain @click="show = false">Cancel</el-button>
-        <el-button class="common-btn2" style="margin-left: 82px;">Apply</el-button>
+        <el-button @click="handleSubmit()" class="common-btn2" style="margin-left: 82px;">Apply</el-button>
       </div>
     </div>
   </el-dialog>
 </template>
 
 <script>
+import { checkIfContract } from '@/utils/web3/chain'
+import { startSetNsp } from '@/utils/web3/nft'
 export default {
   name: 'set-sale-dialog',
+  props: {
+    tokenId: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
+    var reg = /^[0-9]+.?[0-9]*$/
+    var validateTokenId = (rule, value, callback) => {
+      if (this.form.type == 2 && !value) {
+        callback(new Error('Please enter the token ID'))
+      }
+      callback()
+    }
+    var validateContractAddress = (rule, value, callback) => {
+      if (value) {
+        if (value.indexOf('0x') != 0 || value.length != 42) {
+          callback(new Error('Contract address is invalid'))
+        }
+        checkIfContract(value).then((r) => {
+          if (!r) {
+            callback(new Error('Address is not contract'))
+          } else {
+            callback()
+          }
+        })
+      } else {
+        callback(new Error('Please enter the contract address'))
+      }
+    }
+    var validateNumber = (rule, value, callback) => {
+      if (!reg.test(value)) {
+        callback(new Error('Please enter a integer'))
+      }
+      if (value <= 0) {
+        callback(new Error('Must be greater than 0'))
+      }
+      callback()
+    }
+    var validateDecimal = (rule, value, callback) => {
+      if (isNaN(Number(value)) || Number(value) < 0) {
+        callback(new Error('Input value invalid'))
+      }
+      callback()
+    }
     return {
       show: false,
-      typeList: ['BEP-20', 'BEP-721', 'BEP-1155'],
+      typeList: [
+        {
+          label: 'BEP-20',
+          value: 0,
+        },
+        {
+          label: 'BEP-721',
+          value: 1,
+        },
+        {
+          label: 'BEP-1155',
+          value: 2,
+        },
+      ],
+      isVerify: false,
       form: {
         isOpen: true,
-        type: 'BEP-20',
+        type: 0,
         contract: '',
         disTokenId: '',
         discounts: undefined,
@@ -77,18 +143,68 @@ export default {
             trigger: 'blur',
           },
           { min: 42, max: 42, message: 'Length should be 42', trigger: 'blur' },
+          {
+            validator: validateContractAddress,
+            trigger: 'blur',
+          },
+        ],
+        disTokenId: [{ validator: validateTokenId, trigger: 'blur' }],
+        discounts: [
+          {
+            required: true,
+            message: 'Please enter the discounts',
+            trigger: 'blur',
+          },
+          { validator: validateNumber, trigger: 'blur' },
+        ],
+        discountsFee: [
+          {
+            required: true,
+            message: 'Please enter the discountsFee',
+            trigger: 'blur',
+          },
+          {
+            validator: validateDecimal,
+            trigger: 'blur',
+          },
         ],
       },
     }
   },
   methods: {
+    /** 表单提交 */
+    handleSubmit() {
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          var loadingInstance = this.$loading({
+            background: 'rgba(0, 0, 0, 0.8)',
+          })
+          startSetNsp(this.tokenId, this.form)
+            .then(() => {
+              this.$toast.success(this.$t('news-detail.submit_success'))
+              this.show = false
+            })
+            .catch((e) => {
+              this.$toast.error(e)
+            })
+            .finally(() => {
+              loadingInstance.close()
+            })
+        }
+      })
+    },
+    handleInputFee(e) {
+      this.form.discountsFee =
+        e.target.value.match(/^\d*(\.?\d{0,2})/g)[0] || null
+    },
+    /** 清理地址 */
+    clearContract() {
+      this.form.contract = ''
+      this.isVerify = false
+    },
     showDialog() {
       this.show = true
     },
-  },
-  mounted() {
-    const r = '0xe210760d3F8b9B820856443547abfafDC5101705'
-    console.log(r.length)
   },
 }
 </script>
@@ -146,6 +262,10 @@ export default {
       flex-direction: row;
       align-items: center;
       margin: 20px 36px 0 36px;
+
+      .el-icon-delete {
+        cursor: pointer;
+      }
 
       .type-item {
         min-width: 160px;

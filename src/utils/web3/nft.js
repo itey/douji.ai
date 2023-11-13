@@ -76,7 +76,7 @@ export function userMint(tokenId, count) {
 
 
 /** 查询TokenOwner */
-export function tokenOwner(tokenId) {
+export function getTokenOwner(tokenId) {
   if (!checkAccount()) {
     return
   }
@@ -201,6 +201,39 @@ export function startSetTokenURI(tokenId, url) {
   const userAccount = store.state.chain.account
   return new Promise((resolve, reject) => {
     nftContract.methods.startSetTokenURI(tokenId, url)
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
+
+/** update-sale */
+export function startSetNsp(tokenId, param) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.startSetNsp(
+      tokenId,
+      param.isOpen,
+      param.type,
+      param.contract,
+      param.discounts,
+      param.discountsFee,
+      param.disTokenId
+    )
       .send({ from: userAccount })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)

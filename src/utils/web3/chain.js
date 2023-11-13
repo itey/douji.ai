@@ -23,6 +23,22 @@ export function checkAccount() {
   return true
 }
 
+/** 检查是否为合约地址 */
+export function checkIfContract(account) {
+  return new Promise((resolve, reject) => {
+    const web3 = window.ethereum
+    if (!web3) {
+      reject('web3 is not ready')
+    }
+    web3.eth.getCode(account).then(code => {
+      if (code === '0x') {
+        resolve(false)
+      }
+      resolve(true)
+    })
+  })
+}
+
 /** 登录签名 */
 export function loginWalletSign(chainAccount) {
   return new Promise((resolve, reject) => {

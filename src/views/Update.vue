@@ -15,9 +15,9 @@ import UpdateSuccess from '@/components/create/UpdateSuccessDialog'
 import { weiToMbd } from '@/utils/common'
 import { loadFromUrl, unlockContent, uploadJson } from '@/utils/http'
 import {
+  getTokenOwner,
   startSetTokenPrice,
   startSetTokenURI,
-  tokenOwner,
   tokenURI,
   tokensData,
 } from '@/utils/web3/nft'
@@ -90,7 +90,7 @@ export default {
         if (!this.tokenId) {
           reject()
         }
-        tokenOwner(this.tokenId)
+        getTokenOwner(this.tokenId)
           .then((owner) => {
             this.tokenOwner = owner
             resolve()
