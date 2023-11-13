@@ -96,8 +96,10 @@ function WalletButton() {
             {({ openConnectModal }) => {
 
                 const handleOpenConnectModal = () => {
-                  openConnectModal();
-                  setLoginProcess(true);
+                  connectKit.disconnect().then(() => {
+                    openConnectModal();
+                    setLoginProcess(true);
+                  })
                 }
 
                 useEffect(() => {
@@ -109,7 +111,7 @@ function WalletButton() {
 
                 return (
                     <div>
-                        <button className={'connect-button'} onClick={handleOpenConnectModal} disabled={!!accountInfo.account}>Connect Wallet</button>
+                        <button className={'connect-button'} onClick={handleOpenConnectModal}>Connect Wallet</button>
                     </div>
                 );
             }}

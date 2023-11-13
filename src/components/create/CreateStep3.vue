@@ -1,6 +1,6 @@
 <template>
   <div class="create-step3">
-    <div class="title text-color">{{edit?'Step 3 Preview NFT':'Step 3 Mint NFT'}}</div>
+    <div class="title text-color">Step 3 Mint NFT</div>
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
@@ -69,115 +69,17 @@
               </div>
               <div class="form-attr-mbd">
                 <div class="mbd-value text-color">{{ form.initialPrice }} MBD</div>
-                <div class="mbd-transform">≈${{ (form.initialPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
+                <div class="form-attr-mbd-value">≈${{ (form.initialPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
               </div>
-              <el-button :disabled="!edit" class="common-btn2 form-attr-mint">Mint</el-button>
-              <div class="form-attr-tip" v-if="edit">
-                Owning
-                <span class="text-color">1 BJxStar</span> To Get
-                <span class="text-color">20%</span>
-                discount
-              </div>
-            </div>
-          </div>
-          <div v-if="edit" class="form-attr-container">
-            <div class="form-attr-title">
-              <div class="text-color">Secondary Market</div>
-              <div class="form-attr-action">+ List Your item</div>
-            </div>
-            <div class="form-second-market">
-              <div class="second-market-column" style="width: 94px;padding-left: 11px;">
-                <div class="second-market-header">From</div>
-                <div class="second-market-td text-color" v-for="(item,index) in 3">0x7Fa...4745d</div>
-              </div>
-              <div class="second-market-column" style="text-align: right;width: 76px;">
-                <div class="second-market-header">Price(MBD)</div>
-                <div class="second-market-td text-color" v-for="(item,index) in 3">2790.0</div>
-              </div>
-              <div class="second-market-column" style="text-align: right;width: 79px;padding-right: 25px;">
-                <div class="second-market-header">Available</div>
-                <div class="second-market-td text-color" v-for="(item,index) in 3">12</div>
-              </div>
-            </div>
-          </div>
-          <div v-if="edit" class="form-attr-container">
-            <div class="form-attr-title text-color">DOUJI NFT DAO Governance</div>
-            <div class="form-dao">
-              <div class="dao-title text-color">NFT DAO Eamings</div>
-              <div class="dao-sub">
-                The NFT DAO members of this item will receive
-                <span class="text-color">10%</span>
-                forevery sale
-              </div>
-              <div class="dao-title text-color" style="margin-top: 26px;margin-bottom:3px">
-                NFT DAO Income
-                Distribution
-              </div>
-              <div class="dao-income-item">
-                <div class="dao-income-label">Creators Earngings</div>
-                <div class="dao-income-value text-color">80%</div>
-              </div>
-              <div class="dao-income-item">
-                <div class="dao-income-label">NFT Stakers</div>
-                <div class="dao-income-value text-color">80%</div>
-              </div>
-              <div class="dao-member dao-member-header">
-                <div class="dao-member-left">Mermber</div>
-                <div class="dao-member-right">Proportion of Revenue</div>
-              </div>
-              <div v-for="(item,index) in 2" class="dao-member dao-member-td">
-                <div class="dao-member-left text-color">0x7Fa...4745d</div>
-                <div class="dao-member-right">70%</div>
-              </div>
-              <div class="dao-title text-color" style="margin-top: 16px;">NFT DAO Govemance</div>
-              <div class="dao-income-item" style="margin-top: 16px;">
-                <div class="dao-income-label">Execution Threshold</div>
-                <div class="dao-income-value text-color">80</div>
-              </div>
-              <div class="dao-title text-color" style="margin-top: 28px;">NFT Staker Bonus Dividend Pool</div>
-              <div class="dividend-pool">
-                <div class="dividend-pool-item">
-                  <div class="dividend-pool-label">Balance</div>
-                  <div class="dividend-pool-value text-color">2080.0808 MBD</div>
-                </div>
-                <div class="dividend-pool-item">
-                  <div class="dividend-pool-label">All members NFT Staked</div>
-                  <div class="dividend-pool-value text-color">168</div>
-                </div>
-                <div class="dividend-pool-item">
-                  <div class="dividend-pool-label">You NFT Staked</div>
-                  <div class="dividend-pool-value text-color">3 (17.86%)</div>
-                </div>
-                <div class="dividend-pool-item">
-                  <div class="dividend-pool-label">You NFT Staked Time</div>
-                  <div class="dividend-pool-value text-color">4 Days</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-attr-container" v-if="edit">
-            <div class="form-attr-title text-color">Optional Setting</div>
-            <div class="form-attr-setting">
-              <div class="form-attr-set" @click="showSetDialog">Set NFT Sales Promotion</div>
-              <div class="form-attr-set" @click="showDaoDialog">Set NFT DAO Governace</div>
+              <el-button disabled class="common-btn2 form-attr-mint">Mint</el-button>
             </div>
           </div>
         </div>
       </div>
-      <div class="form-add" v-if="!edit">
+      <div class="form-add">
         <div class="btn-container" v-if="!txObject || !txObject.status">
           <el-button class="common-btn2" @click="backClick">Back</el-button>
           <el-button class="common-btn2" @click="mintClick">Mint</el-button>
-        </div>
-      </div>
-      <div class="form-edit" v-else>
-        <div class="form-fee-count">
-          Total Mint Service Fee (Fee radio 10%):
-          <span class="text-color">2500 MBD</span>
-        </div>
-        <div class="btn-container" v-if="!txObject || !txObject.status">
-          <el-button class="common-btn2" @click="backClick">Back</el-button>
-          <el-button class="common-btn2" @click="updateClick">Update</el-button>
         </div>
       </div>
     </div>
@@ -213,10 +115,6 @@ export default {
     MintSuccessDialog,
   },
   props: {
-    edit: {
-      type: Boolean,
-      default: true,
-    },
     metadata: {
       type: Object,
       default: () => {},
@@ -542,12 +440,6 @@ export default {
               flex-direction: row;
               align-items: baseline;
               margin-top: 28px;
-
-              .form-attr-mbd-value {
-                font-size: 36px;
-                font-family: Arial;
-                font-weight: bold;
-              }
 
               .form-attr-mbd-value {
                 font-size: 14px;

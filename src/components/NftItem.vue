@@ -1,5 +1,5 @@
 <template>
-  <div class="nft-item">
+  <div class="nft-item" v-if="item && item.image">
     <img :src="item.image" :style="{
 			width: '100%',
 			height: height,

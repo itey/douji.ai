@@ -120,7 +120,7 @@ const user = {
     // 检查登录状态，未登录则弹窗登录
     CheckLogin({ commit }, ifOpenConnect) {
       return new Promise((resolve) => {
-        if (store.state.user.token) {
+        if (store.state.user.token && window.ethereum) {
           resolve(true)
         } else {
           if (ifOpenConnect) {

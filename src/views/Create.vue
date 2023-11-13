@@ -58,8 +58,8 @@ export default {
       metadata: {
         contentType: undefined,
         category: undefined,
-        prompt: [],
-        language: [],
+        prompt: undefined,
+        language: undefined,
         keyword: [],
         maxSupply: undefined,
         initialQuantity: undefined,

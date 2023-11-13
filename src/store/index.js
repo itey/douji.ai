@@ -15,8 +15,8 @@ const store = new Vuex.Store({
   },
   plugins: [VueXAlong({
     name: 'v-store',
-    local: false,
-    session: { list: ['web3'], isFilter: true }
+    local: { list: [''] },
+    session: { list: [] }
   })]
 })
 

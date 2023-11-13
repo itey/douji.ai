@@ -379,6 +379,9 @@ export default {
       if (!this.form.step) {
         this.form.step = 1
       }
+      if (this.form.prompt != 'Prompt') {
+        this.form.prompt = null
+      }
       this.$emit('saveClick', this.form)
       this.$toast.success(this.$t('common.save_success'))
     },
