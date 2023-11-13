@@ -44,6 +44,15 @@ export function getBlindBox(signed, get_box_flag, tokenId) {
     })
 }
 
+// 打开盲盒
+export function openBlindBox(signed, open_box_flag, hashTx) {
+    return request({
+        url: '/openBox',
+        params: { signed, open_box_flag, hashTx },
+        method: 'post'
+    })
+}
+
 // 上传文件
 export function uploadFile(file) {
     return request({

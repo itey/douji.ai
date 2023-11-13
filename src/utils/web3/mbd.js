@@ -56,3 +56,30 @@ export function approveMbd(spender, count) {
   })
 
 }
+
+
+/** MBD转账 */
+export function transferMbd(to, count) {
+  if (!checkAccount()) {
+    return
+  }
+  const mbdContract = getMBDContract()
+  if (!mbdContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    mbdContract.methods.transfer(to, mbdToWei(count))
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+
+}

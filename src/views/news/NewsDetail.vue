@@ -187,13 +187,13 @@
                 <div class="form-attr-label">Category</div>
                 <div class="form-attr-value">{{ metadata.category }}</div>
               </div>
-              <div class="form-attr-item" v-if="metadata.prompt && metadata.prompt.length">
+              <div class="form-attr-item" v-if="metadata.prompt">
                 <div class="form-attr-label">Platform</div>
-                <div class="form-attr-value">{{ metadata.prompt | arrayMax1 }}</div>
+                <div class="form-attr-value">{{ metadata.prompt }}</div>
               </div>
-              <div class="form-attr-item" v-if="metadata.language && metadata.language.length">
+              <div class="form-attr-item" v-if="metadata.language">
                 <div class="form-attr-label">Language</div>
-                <div class="form-attr-value">{{ metadata.language | arrayMax1 }}</div>
+                <div class="form-attr-value">{{ metadata.language }}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Max Supply</div>

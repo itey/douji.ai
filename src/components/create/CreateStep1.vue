@@ -459,6 +459,7 @@ export default {
         align-items: center;
         justify-content: center;
         margin-right: 16px;
+        margin-bottom: 10px;
 
         font-size: 18px;
         font-family: Source Han Sans CN;

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog custom-class="mint-success-dialog" :visible.sync="show" width="945px">
+  <el-dialog custom-class="mint-success-dialog" top="0vh" :visible.sync="show" width="945px">
     <img style="width: 104px;height: 104px;margin-top: 85px;" src="@/assets/images/create/mint-success.png" />
     <div class="mint-success-title">Congratulations</div>
     <div class="mint-success-label text-color">Your content NFT has been minted successfully!</div>
