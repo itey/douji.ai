@@ -97,14 +97,14 @@
             <div class="form-label-sub-text">Open to Access</div>
           </div>
           <div class="form-content text-color">
-            <div v-html="metadata.openContent"></div>
+            <div v-html="pubContent"></div>
           </div>
-          <div class="form-label-sub">
+          <div class="form-label-sub" v-if="privateContent">
             <img style="width: 14px;height: 14px;" src="@/assets/images/create/protect.png" />
             <div class="form-label-sub-text">Protected</div>
           </div>
-          <div class="form-content text-color" v-if="metadata.protectedContent">
-            <div v-html="metadata.protectedContent"></div>
+          <div class="form-content text-color" v-if="privateContent">
+            <div v-html="privateContent"></div>
           </div>
           <div style="display: flex;flex-direction: column;align-items: center;" v-else>
             <div class="text-color" style="font-size: 12px;">
@@ -428,6 +428,22 @@ import {
   userMint,
   userPledgeCount,
 } from '@/utils/web3/nft'
+var md = require('markdown-it')({
+  html: true,
+  linkify: true,
+  typographer: true,
+  breaks: true,
+  // highlight: function (str, lang) {
+  //   if (lang && hljs.getLanguage(lang)) {
+  //     try {
+  //       return hljs.highlight(lang, str).value
+  //     } catch (e) {
+  //       console.log(e)
+  //     }
+  //   }
+  //   return '' // 使用额外的默认转义
+  // },
+})
 export default {
   name: 'news-detail-view',
   components: {
@@ -442,6 +458,35 @@ export default {
     BlindOpenDialog,
     SetSaleDialog,
     SetDaoDialog,
+  },
+  computed: {
+    pubContent() {
+      if (this.metadata.openContent) {
+        return md.render(this.metadata.openContent)
+      } else {
+        return null
+      }
+    },
+    privateContent() {
+      if (this.metadata.protectedContent) {
+        return md.render(this.metadata.protectedContent)
+      } else {
+        return null
+      }
+    },
+    stakePercent() {
+      if (!this.userStakeInfo[0] || this.userStakeInfo[0] == 0) {
+        return '0.00%'
+      }
+      if (!this.totalStakeCount || this.userStakeInfo[0] == 0) {
+        return '0.00%'
+      }
+      return (
+        ((this.userStakeInfo[0] / this.totalStakeCount) * 100)
+          .toFixed(2)
+          .toString() + '%'
+      )
+    },
   },
   data() {
     return {
@@ -478,22 +523,6 @@ export default {
       nftOrderList: {},
       subscription: false,
     }
-  },
-
-  computed: {
-    stakePercent() {
-      if (!this.userStakeInfo[0] || this.userStakeInfo[0] == 0) {
-        return '0.00%'
-      }
-      if (!this.totalStakeCount || this.userStakeInfo[0] == 0) {
-        return '0.00%'
-      }
-      return (
-        ((this.userStakeInfo[0] / this.totalStakeCount) * 100)
-          .toFixed(2)
-          .toString() + '%'
-      )
-    },
   },
 
   mounted() {
@@ -1250,9 +1279,9 @@ export default {
             font-family: Arial;
             font-weight: bold;
           }
-			.transactions-head .transactions-column{
-				color: #9ab8db;
-			}
+          .transactions-head .transactions-column {
+            color: #9ab8db;
+          }
           .transactions-head,
           .transactions-item {
             display: flex;
