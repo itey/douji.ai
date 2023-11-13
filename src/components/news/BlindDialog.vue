@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog custom-class="blind-dialog" :visible.sync="show" @close="handleClose" width="789px">
+    <el-dialog custom-class="blind-dialog" top="0vh" :visible.sync="show" @close="handleClose" width="789px">
       <div class="title" slot="title">Receive Blind Box</div>
       <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
       <div class="content">
@@ -89,7 +89,6 @@ export default {
           const time = Number(this.boxFlag.time) + 60000
           const now = new Date().getTime()
           this.countdown = Math.floor((time - now) / 1000)
-          console.log(this.countdown)
           if (this.countdown < 0) {
             this.countdown = 0
             setBlindBoxFlagCache(

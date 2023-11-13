@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog custom-class="blind-dialog" :visible.sync="show" @close="handleClose" width="789px">
+    <el-dialog custom-class="blind-dialog" top="0vh" :visible.sync="show" @close="handleClose" width="789px">
       <div class="title" slot="title">Open Blind Box</div>
       <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
       <div class="content">
@@ -11,11 +11,11 @@
         <img style="width: 388px;height: 347px;" src="@/assets/images/news/blind-box-icon.png" />
         <div class="label">Open the blind box and you will 100% get the following rewards</div>
         <div class="blind-list">
-          <div v-for="(item,index) in 7" class="blind-item" :style="getStyle(index)">
-            <img v-if="index==6" :src="require(`@/assets/images/news/bi-icon.png`)" style="width: 52px;height: 52px;" />
+          <div v-for="(item,index) in rewardsOptions" class="blind-item" :key="index" :style="getStyle(index)">
+            <img v-if="item.coin=='NFT'" :src="require(`@/assets/images/news/bi-icon.png`)" style="width: 52px;height: 52px;" />
             <img v-else :src="require(`@/assets/images/news/mbd-icon.png`)" style="width: 52px;height: 52px;" />
-            <div class="blind-label">100 MBD</div>
-            <div class="blind-value">15%</div>
+            <div class="blind-label">{{ item.count }} {{ item.coin=='MBD' ? 'MBD' : 'BJXStar NFT' }}</div>
+            <div class="blind-value">{{ item.percent }}</div>
           </div>
         </div>
         <div class="btn-container">
@@ -28,13 +28,16 @@
         </div>
       </div>
     </el-dialog>
-    <CongratulationsDialog ref="successDialog" />
+    <CongratulationsDialog :boxPrizes="boxPrizes" ref="successDialog" />
   </div>
 </template>
 
 <script>
 import CongratulationsDialog from '@/components/news/CongratulationsDialog'
 import { setBlindBoxCache } from '@/utils/common'
+import { openBlindBox } from '@/utils/http'
+import { openBlindBoxSign } from '@/utils/web3/chain'
+import { transferMbd } from '@/utils/web3/mbd'
 export default {
   name: 'blind-open-dialog',
   props: {
@@ -48,9 +51,48 @@ export default {
   },
   data() {
     return {
+      rewardsOptions: [
+        {
+          coin: 'MBD',
+          count: 100,
+          percent: '15%',
+        },
+        {
+          coin: 'MBD',
+          count: 200,
+          percent: '30%',
+        },
+        {
+          coin: 'MBD',
+          count: 500,
+          percent: '25%',
+        },
+        {
+          coin: 'MBD',
+          count: 600,
+          percent: '15%',
+        },
+        {
+          coin: 'MBD',
+          count: 1000,
+          percent: '10%',
+        },
+        {
+          coin: 'MBD',
+          count: 2000,
+          percent: '4%',
+        },
+        {
+          coin: 'NFT',
+          count: 1,
+          percent: '1%',
+        },
+      ],
+      centerAddress: process.env.VUE_APP_RECEIVE_ADDR,
       show: false,
-      countdown: 50,
+      countdown: 60,
       timer: undefined,
+      boxPrizes: {},
     }
   },
   mounted() {
@@ -62,22 +104,42 @@ export default {
     }
   },
   methods: {
-    showDialog() {
-      this.show = true
-    },
+    /** 打开盲盒 */
     openClick() {
-      this.show = false
-      this.$refs['successDialog'].showDialog()
+      openBlindBoxSign()
+        .then((signed) => {
+          var loadingInstance = this.$loading({
+            background: 'rgba(0, 0, 0, 0.8)',
+          })
+          transferMbd(this.centerAddress, 500)
+            .then((txJson) => {
+              openBlindBox(signed, this.blindBox.box, txJson.transactionHash)
+                .then((r) => {
+                  if (r.code == 1) {
+                    this.boxPrizes = r.data
+                    this.show = false
+                    this.$refs['successDialog'].showDialog()
+                  } else {
+                    this.$toast.error(r.message)
+                  }
+                })
+                .catch((e) => {
+                  this.$toast.error(e)
+                })
+                .finally(() => {
+                  loadingInstance.close()
+                })
+            })
+            .catch((e) => {
+              this.$toast.error(e)
+              loadingInstance.close()
+            })
+        })
+        .catch((e) => {
+          this.$toast.error(e)
+        })
     },
-    giveUpClick() {
-      this.show = false
-    },
-    getStyle(index) {
-      return {
-        marginRight: index == 3 || index == 6 ? 0 : '8px',
-        marginBottom: index > 3 ? 0 : '14px',
-      }
-    },
+    /** 倒计时 */
     countdownTime() {
       this.timer = setInterval(() => {
         if (this.blindBox && this.blindBox.time) {
@@ -99,9 +161,24 @@ export default {
         }
       }, 1000)
     },
+    /** 放弃盲盒 */
+    giveUpClick() {
+      setBlindBoxCache(this.$store.state.user.userId, this.blindBox.box, true)
+      this.show = false
+    },
+    /** 点击关闭 */
     handleClose() {
       setBlindBoxCache(this.$store.state.user.userId, this.blindBox.box, true)
       this.show = false
+    },
+    showDialog() {
+      this.show = true
+    },
+    getStyle(index) {
+      return {
+        marginRight: index == 3 || index == 6 ? 0 : '8px',
+        marginBottom: index > 3 ? 0 : '14px',
+      }
     },
   },
 }
