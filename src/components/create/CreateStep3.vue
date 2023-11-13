@@ -1,21 +1,21 @@
 <template>
   <div class="create-step3">
-    <div class="title">{{edit?'Step 3 Preview NFT':'Step 3 Mint NFT'}}</div>
+    <div class="title text-color">{{edit?'Step 3 Preview NFT':'Step 3 Mint NFT'}}</div>
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
           <div class="form-title text-color">{{ form.title }}</div>
-          <img style="width: 676px;height: 383px;margin-top:36px;" :src="form.image" />
+          <img style="width: 939px;height: 532px;margin-top:50px;" :src="form.image" />
           <div class="form-desc">{{ form.description }}</div>
-          <div class="form-label-sub" style="margin-top: 16px;">
-            <img style="width: 14px;height: 14px;" src="@/assets/images/create/website.png" />
+          <div class="form-label-sub" style="margin-top: 22px;">
+            <img style="width: 28px;height: 28px;" src="@/assets/images/create/website.png" />
             <div class="form-label-sub-text">Open to Access</div>
           </div>
           <div class="form-content text-color">
             <div v-html="pubContent"></div>
           </div>
           <div class="form-label-sub" v-if="privateContent">
-            <img style="width: 14px;height: 14px;" src="@/assets/images/create/protect.png" />
+            <img style="width: 28px;height: 28px;" src="@/assets/images/create/protect.png" />
             <div class="form-label-sub-text">Protected</div>
           </div>
           <div class="form-content text-color" v-if="privateContent">
@@ -86,17 +86,17 @@
               <div class="form-attr-action">+ List Your item</div>
             </div>
             <div class="form-second-market">
-              <div class="second-market-column" style="width: 77px;padding-left: 10px;">
+              <div class="second-market-column" style="width: 94px;padding-left: 11px;">
                 <div class="second-market-header">From</div>
-                <div class="second-market-td" v-for="(item,index) in 3">0x7Fa...4745d</div>
+                <div class="second-market-td text-color" v-for="(item,index) in 3">0x7Fa...4745d</div>
               </div>
-              <div class="second-market-column" style="text-align: right;width: 75px;">
+              <div class="second-market-column" style="text-align: right;width: 76px;">
                 <div class="second-market-header">Price(MBD)</div>
-                <div class="second-market-td" v-for="(item,index) in 3">2790.0</div>
+                <div class="second-market-td text-color" v-for="(item,index) in 3">2790.0</div>
               </div>
-              <div class="second-market-column" style="text-align: right;width: 75px;padding-right: 12px;">
+              <div class="second-market-column" style="text-align: right;width: 79px;padding-right: 25px;">
                 <div class="second-market-header">Available</div>
-                <div class="second-market-td" v-for="(item,index) in 3">12</div>
+                <div class="second-market-td text-color" v-for="(item,index) in 3">12</div>
               </div>
             </div>
           </div>
@@ -109,7 +109,10 @@
                 <span class="text-color">10%</span>
                 forevery sale
               </div>
-              <div class="dao-title text-color" style="margin-top: 26px;margin-bottom:3px">NFT DAO Income Distribution</div>
+              <div class="dao-title text-color" style="margin-top: 26px;margin-bottom:3px">
+                NFT DAO Income
+                Distribution
+              </div>
               <div class="dao-income-item">
                 <div class="dao-income-label">Creators Earngings</div>
                 <div class="dao-income-value text-color">80%</div>
@@ -150,6 +153,13 @@
                   <div class="dividend-pool-value text-color">4 Days</div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="form-attr-container" v-if="edit">
+            <div class="form-attr-title text-color">Optional Setting</div>
+            <div class="form-attr-setting">
+              <div class="form-attr-set" @click="showSetDialog">Set NFT Sales Promotion</div>
+              <div class="form-attr-set" @click="showDaoDialog">Set NFT DAO Governace</div>
             </div>
           </div>
         </div>
@@ -205,7 +215,7 @@ export default {
   props: {
     edit: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     metadata: {
       type: Object,
@@ -349,19 +359,18 @@ export default {
 <style lang="scss" scoped>
 .create-step3 {
   .title {
-    margin-top: 63px;
-    margin-bottom: 12px;
-    font-size: 14px;
+    margin-top: 89px;
+    margin-bottom: 16px;
+    font-size: 20px;
     font-family: Source Han Sans CN;
     font-weight: bold;
-    color: #ffffff;
     text-align: left;
   }
 
   .form-container {
     background: #1a2027;
-    border-radius: 6px;
-    padding: 30px 20px;
+    border-radius: 8px;
+    padding: 45px 29px;
 
     .form-top {
       display: flex;
@@ -370,25 +379,25 @@ export default {
       text-align: left;
 
       .form-left {
-        width: 683px;
+        width: 949px;
 
         .form-title {
-          font-size: 23px;
+          font-size: 32px;
           font-family: Source Han Sans CN;
           font-weight: bold;
-          line-height: 35px;
+          line-height: 48px;
         }
 
         .form-desc {
-          padding-left: 12px;
-          font-size: 12px;
+          padding-left: 17px;
+          font-size: 16px;
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #ffffff;
-          line-height: 22px;
+          line-height: 30px;
           border-left: 2px solid;
           border-image: linear-gradient(0deg, #50ced5, #46d1af) 1;
-          margin-top: 32px;
+          margin-top: 44px;
         }
 
         .form-label-sub {
@@ -398,20 +407,20 @@ export default {
           justify-content: center;
 
           .form-label-sub-text {
-            font-size: 13px;
+            font-size: 18px;
             font-family: Source Han Sans CN;
             font-weight: bold;
             color: #00f9e5;
-            margin-left: 8px;
+            margin-left: 12px;
           }
         }
 
         .form-content {
-          font-size: 12px;
+          font-size: 16px;
           font-family: Source Han Sans CN;
           font-weight: 400;
-          line-height: 22px;
-          margin: 40px 0;
+          line-height: 30px;
+          margin: 50px 0;
         }
 
         .form-tag {
@@ -420,42 +429,42 @@ export default {
           align-items: center;
 
           .form-tag-label {
-            font-size: 10px;
+            font-size: 14px;
             font-family: Source Han Sans CN;
             font-weight: bold;
           }
 
           .form-tag-item {
-            font-size: 9px;
-            line-height: 17px;
+            font-size: 12px;
+            line-height: 24px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            height: 17px;
+            height: 24px;
             background: #434d56;
-            border-radius: 4px;
-            padding: 0 9px;
-            min-width: 36px;
-            margin-left: 9px;
+            border-radius: 5px;
+            padding: 0 15px;
+            min-width: 50px;
+            margin-left: 12px;
             text-align: center;
           }
         }
       }
 
       .form-right {
-        width: 277px;
+        width: 385px;
 
         .form-attr-container {
           border: 1px solid #363e3e;
-          border-radius: 6px;
-          margin-bottom: 22px;
+          border-radius: 8px;
+          margin-bottom: 30px;
           height: auto;
 
           .form-attr-title {
-            height: 48px;
-            line-height: 48px;
-            padding: 0 17px;
+            height: 66px;
+            line-height: 66px;
+            padding: 0 23px;
             background: #37434d;
-            font-size: 13px;
+            font-size: 18px;
             font-family: Arial;
             font-weight: bold;
             color: #ffffff;
@@ -465,11 +474,11 @@ export default {
             justify-content: space-between;
 
             .form-attr-action {
-              font-size: 10px;
+              font-size: 14px;
               font-family: Arial;
               font-weight: bold;
               color: #acbcc9;
-              line-height: 48px;
+              line-height: 66px;
               cursor: pointer;
             }
           }
@@ -479,30 +488,30 @@ export default {
             flex-direction: row;
             flex-wrap: wrap;
             justify-content: space-between;
-            padding: 17px 12px 4px 12px;
+            padding: 24px 16px 4px 16px;
 
             .form-attr-item {
-              width: 122px;
-              padding: 14px 0;
+              width: 170px;
+              padding: 20px 0;
               background: #1e252d;
               border-radius: 6px;
-              margin-bottom: 13px;
+              margin-bottom: 18px;
 
               .form-attr-label {
-                font-size: 10px;
+                font-size: 14px;
                 font-family: Source Han Sans CN;
                 font-weight: 400;
                 color: #88a2b8;
-                margin-left: 9px;
+                margin-left: 12px;
               }
 
               .form-attr-value {
-                font-size: 12px;
+                font-size: 16px;
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
-                margin-top: 7px;
-                margin-left: 9px;
+                margin-top: 10px;
+                margin-left: 12px;
               }
             }
           }
@@ -511,38 +520,37 @@ export default {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 17px 17px 22px 17px;
+            padding: 24px 16px 30px 16px;
             text-align: center;
 
             .form-attr-available {
               background: #1e252d;
-              border-radius: 6px;
-              height: 24px;
-              line-height: 24px;
-              font-size: 10px;
+              border-radius: 5px;
+              height: 34px;
+              line-height: 34px;
+              font-size: 14px;
               font-family: Source Han Sans CN;
               font-weight: bold;
               color: #acbcc9;
-              min-width: 122px;
+              min-width: 170px;
               text-align: center;
-              padding: 0 17px;
-              margin-top: 17px;
+              padding: 0 13px;
             }
 
             .form-attr-mbd {
               display: flex;
               flex-direction: row;
               align-items: baseline;
-              margin-top: 20px;
+              margin-top: 28px;
 
               .form-attr-mbd-value {
-                font-size: 26px;
+                font-size: 36px;
                 font-family: Arial;
                 font-weight: bold;
               }
 
               .form-attr-mbd-value {
-                font-size: 10px;
+                font-size: 14px;
                 font-family: Arial;
                 font-weight: 400;
                 color: #88a2b8;
@@ -550,17 +558,16 @@ export default {
             }
 
             .form-attr-mint {
-              margin: 17px 0 9px 0;
+              margin: 24px 0 13px 0;
               border-radius: 18px;
-              font-size: 13px;
+              font-size: 18px;
               font-family: Arial;
               font-weight: bold;
-              color: #4b5760;
               width: 100%;
             }
 
             .form-attr-tip {
-              font-size: 10px;
+              font-size: 14px;
               font-family: Arial;
               font-weight: 400;
               color: #88a2b8;
@@ -570,7 +577,7 @@ export default {
           .form-second-market {
             display: flex;
             flex-direction: row;
-            padding: 17px 12px;
+            padding: 24px 16px;
 
             .second-market-column {
               line-height: 24px;
@@ -582,28 +589,26 @@ export default {
             }
 
             .second-market-header {
-              height: 24px;
+              height: 34px;
             }
 
             .second-market-td {
-              font-size: 10px;
+              font-size: 14px;
               font-family: Arial;
               font-weight: 400;
-              color: #ffffff;
-              line-height: 37px;
+              line-height: 46px;
               border-bottom: 1px solid #252d36;
             }
           }
 
           .form-dao {
-            padding: 17px 12px;
+            padding: 23px 19px;
 
             .dao-title {
               padding: 0 6px;
-              font-size: 12px;
+              font-size: 16px;
               font-family: Arial;
               font-weight: bold;
-              color: #ffffff;
             }
 
             .dao-sub {
@@ -618,24 +623,24 @@ export default {
 
             .dao-income-item {
               padding: 0 6px;
-              margin-top: 12px;
+              height: 51px;
+              line-height: 51px;
               display: flex;
               flex-direction: row;
               align-items: center;
               justify-content: space-between;
 
               .dao-income-label {
-                font-size: 10px;
+                font-size: 14px;
                 font-family: Arial;
                 font-weight: bold;
                 color: #9ab8db;
               }
 
               .dao-income-value {
-                font-size: 10px;
+                font-size: 14px;
                 font-family: Arial;
                 font-weight: bold;
-                color: #ffffff;
               }
             }
 
@@ -647,50 +652,52 @@ export default {
               justify-content: space-between;
 
               &.dao-member-header {
-                margin-top: 14px;
-                height: 24px;
+                margin-top: 19px;
+                height: 34px;
                 background: #1e252d;
 
                 .dao-member-left {
-                  font-size: 9px;
+                  font-size: 12px;
                   font-family: Source Han Sans CN;
                   font-weight: 400;
                   color: #acbcc9;
-                  line-height: 24px;
+                  line-height: 34px;
                 }
 
                 .dao-member-right {
-                  font-size: 9px;
+                  font-size: 12px;
                   font-family: Source Han Sans CN;
                   font-weight: 400;
                   color: #acbcc9;
-                  line-height: 24px;
+                  line-height: 34px;
                 }
               }
 
               &.dao-member-td {
-                height: 33px;
+                height: 46px;
 
                 .dao-member-left {
-                  font-size: 10px;
+                  font-size: 14px;
                   font-family: Arial;
                   font-weight: 400;
-                  line-height: 33px;
+                  line-height: 46px;
                 }
 
                 .dao-member-right {
-                  font-size: 10px;
+                  font-size: 14px;
                   font-family: Arial;
                   font-weight: 400;
                   color: #acbcc9;
-                  line-height: 33px;
+                  line-height: 46px;
                 }
               }
             }
 
             .dividend-pool {
               .dividend-pool-item {
-                padding: 14px 6px;
+                padding: 0 6px;
+                height: 51px;
+                line-height: 51px;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
@@ -702,14 +709,14 @@ export default {
                 }
 
                 .dividend-pool-label {
-                  font-size: 10px;
+                  font-size: 14px;
                   font-family: Arial;
                   font-weight: bold;
                   color: #9ab8db;
                 }
 
                 .dividend-pool-value {
-                  font-size: 10px;
+                  font-size: 14px;
                   font-family: Arial;
                   font-weight: bold;
                   color: #ffffff;
@@ -748,6 +755,7 @@ export default {
 
     .form-add {
       margin-top: 40px;
+
       .form-fee-count {
         font-size: 13px;
         font-family: Source Han Sans CN;
