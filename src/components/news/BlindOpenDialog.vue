@@ -119,6 +119,7 @@ export default {
                     this.boxPrizes = r.data
                     this.show = false
                     this.$refs['successDialog'].showDialog()
+                    this.$emit('handleReload')
                   } else {
                     this.$toast.error(r.message)
                   }

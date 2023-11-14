@@ -134,7 +134,7 @@
                 <div class="dao-set-item-label">Set NFT Sales Promotion</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
-              <div class="dao-set-item" style="width: 190px;" @click="$refs['setDaoDialog'].showDialog()">
+              <div class="dao-set-item" style="width: 190px;" @click="handleUpdateDao()">
                 <div class="dao-set-item-label">Set NFT DAO Govemnance</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
@@ -383,9 +383,9 @@
     <NftStakeDialog ref="nftStakeDialog" />
     <CheckInDialog @onCheckedIn="onCheckedIn()" ref="checkInDialog" />
     <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />
-    <BlindOpenDialog :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
-    <SetSaleDialog :tokenId="tokenId" ref="setSaleDialog" />
-    <SetDaoDialog :tokenId="tokenId" ref="setDaoDialog" />
+    <BlindOpenDialog @handleReload="pageLoad" :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
+    <SetSaleDialog @handleReload="pageLoad" :tokenId="tokenId" ref="setSaleDialog" />
+    <SetDaoDialog @handleReload="pageLoad" :tokenId="tokenId" ref="setDaoDialog" />
   </div>
 </template>
 
@@ -402,31 +402,32 @@ import RetrieveDialog from '@/components/news/RetrieveDialog'
 import RevisionHistoryDialog from '@/components/news/RevisionHistoryDialog'
 import StakeDialog from '@/components/news/StakeDialog'
 import {
-  boxCount2Time,
-  getBlindBoxCache,
-  getBlindBoxFlagCache,
-  getBoxCountToday,
-  ifCheckInToday,
-  setBlindBoxCache,
-  setBlindBoxFlagCache,
+boxCount2Time,
+getBlindBoxCache,
+getBlindBoxFlagCache,
+getBoxCountToday,
+ifCheckInToday,
+setBlindBoxCache,
+setBlindBoxFlagCache,
 } from '@/utils/common'
+import { eventBus } from '@/utils/event-bus'
 import {
-  checkBlindBox,
-  getNftOrders,
-  loadFromUrl,
-  unlockContent,
+checkBlindBox,
+getNftOrders,
+loadFromUrl,
+unlockContent,
 } from '@/utils/http'
 import { blockHeight } from '@/utils/web3/chain'
 import { getSettlePoolBalance } from '@/utils/web3/market'
 import { approveMbd } from '@/utils/web3/mbd'
 import {
-  balanceOf,
-  getTokenOwner,
-  tokenURI,
-  tokensData,
-  totalPledgeCount,
-  userMint,
-  userPledgeCount,
+balanceOf,
+getTokenOwner,
+tokenURI,
+tokensData,
+totalPledgeCount,
+userMint,
+userPledgeCount,
 } from '@/utils/web3/nft'
 var md = require('markdown-it')({
   html: true,
@@ -553,6 +554,21 @@ export default {
           this.checkBlindBox()
         }, 1000 * 20)
       }, 4000)
+    } else {
+      eventBus.$on('user_login', () => {
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        setTimeout(() => {
+          this.pageLoad()
+          loadingInstance.close()
+          this.checkIn()
+          this.checkBlindBox()
+          this.blindBoxTimerTask = setInterval(() => {
+            this.checkBlindBox()
+          }, 1000 * 20)
+        }, 4000)
+      })
     }
   },
   destroyed() {
@@ -790,6 +806,18 @@ export default {
         return
       }
       this.$refs['setSaleDialog'].showDialog()
+    },
+    /** 点击更新Dao策略 */
+    handleUpdateDao() {
+      if (!this.canUpdate) {
+        this.$toast.info(this.$t('news-detail.update_unable'))
+        return
+      }
+      if (this.tokenSupplyInfo.isVoting) {
+        this.$toast.info(this.$t('create.nft_voting'))
+        return
+      }
+      this.$refs['setDaoDialog'].showDialog()
     },
     /** 获取token拥有者 */
     getOwner() {

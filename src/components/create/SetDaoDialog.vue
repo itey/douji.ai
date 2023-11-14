@@ -1,240 +1,339 @@
 <template>
-	<el-dialog custom-class="set-dao-dialog" :visible.sync="show" width="945px">
-		<div class="set-dao-header text-color" slot="title">
-			Set NFT DAO Governance
-		</div>
-		<div class="set-dao-top">
-			<div class="label text-color">
-				NFT DAO Earnings
-			</div>
-			<div class="set-dao-value" style="margin-left: 0;">
-				<el-input class="input" placeholder="" style="width: 72px;"></el-input>
-				<div class="set-dao-unit">%</div>
-			</div>
-			<div class="set-dao-tip" style="margin-left: 0;">
-				The NFT DAO members of this item will receive <span class="text-color">10%</span> forevery sale
-			</div>
-			<div class="set-dao-form">
-				<div class="set-dao-title">
-					NFT DAO Income Distribution
-				</div>
-				<div class="set-dao-label text-color">
-					Creators Earngings
-				</div>
-				<div class="set-dao-value">
-					<el-input class="input" placeholder="" style="width: 72px;"></el-input>
-					<div class="set-dao-unit">%</div>
-				</div>
-				<div style="display: flex;flex-direction: row;">
-					<div class="set-dao-label text-color" style="width: 252px;margin-right: 73px;">
-						Creator 1 Wallet Address
-					</div>
-					<div class="set-dao-label text-color">
-						Proportion of revenue
-					</div>
-				</div>
-				<div v-for="(item,index) in 2" style="display: flex;flex-direction: row;">
-					<div class="set-dao-value" style="width: 325px;">
-						<el-input class="input" placeholder="" style="width: 252px;"></el-input>
-						<i class="el-icon-circle-check" style="color: #00F9E5;margin-left: 4px;"></i>
-						<i class="el-icon-delete" style="color: #87A2B7;margin-left: 12px;"></i>
-						<div class="verify">Verify</div>
-					</div>
-					<div class="set-dao-value" style="margin-left: 0;">
-						<el-input class="input" placeholder="" style="width: 124px;"></el-input>
-						<div class="set-dao-unit">%</div>
-						<i class="el-icon-circle-check" style="color: #00F9E5;margin-left: 4px;"></i>
-						<i class="el-icon-delete" style="color: #87A2B7;margin-left: 12px;"></i>
-					</div>
-				</div>
-				<div class="set-dao-add">+ Add Creator</div>
-				<div class="set-dao-label text-color">
-					NFT holders Earngings
-				</div>
-				<div class="set-dao-value">
-					<el-input class="input" placeholder="" style="width: 72px;"></el-input>
-					<div class="set-dao-unit">%</div>
-				</div>
-				<div class="set-dao-tip">
-					NFT holders distribute income according to the proportion of NF
-				</div>
-				<div class="set-dao-label text-color">
-					NFT modify execution threshold
-				</div>
-				<div class="set-dao-value">
-					<el-input class="input" placeholder="" style="width: 105px;"></el-input>
-				</div>
-				<div class="set-dao-tip">
-					The modifcation request can only be executed when all the voting weights of the NFT DAO obtainecare
-					greater than or equal to the threshold.
-				</div>
-			</div>
-			<div class="btn-container">
-				<el-button class="common-border-btn" plain @click="show = false">Cancel</el-button>
-				<el-button class="common-btn2" style="margin-left: 59px;">Apply</el-button>
-			</div>
-		</div>
-	</el-dialog>
+  <el-dialog custom-class="set-dao-dialog" :visible.sync="show" width="800px" @open="onOpen()">
+    <div class="set-dao-header text-color" slot="title">Set NFT DAO Governance</div>
+    <div class="set-dao-top">
+      <el-form ref="form" :rules="rules" :model="form" label-position="top">
+        <el-form-item prop="daoFee">
+          <div class="label text-color">NFT DAO Earnings</div>
+          <div class="set-dao-value" style="margin-left: 0;">
+            <el-input v-model="form.daoFee" @blur="handleInputFee" class="input" placeholder style="width: 72px;"></el-input>
+            <div class="set-dao-unit">%</div>
+          </div>
+          <div class="set-dao-tip" style="margin-left: 0;">
+            The NFT DAO members of this item will receive
+            <span class="text-color">{{form.daoFee}}%</span> for every sale
+          </div>
+        </el-form-item>
+        <el-form-item prop="mVoteCount">
+          <div class="label text-color">NFT modify execution mVoteCount</div>
+          <div class="set-dao-value" style="margin-left: 0;">
+            <el-input v-model="form.mVoteCount" class="input" placeholder style="width: 105px;"></el-input>
+          </div>
+          <div
+            class="set-dao-tip"
+            style="margin-left: 0;"
+          >Modification requests can only be executed when all voting weights of the NFT DAO are greater than or equal to the value.</div>
+        </el-form-item>
+      </el-form>
+      <div class="btn-container">
+        <el-button class="common-border-btn" plain @click="show = false">Cancel</el-button>
+        <el-button :disabled="!isModification" class="common-btn2" style="margin-left: 59px;" @click="handleSubmit()">Apply</el-button>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script>
-	export default {
-		name: 'set-dao-dialog',
-		data() {
-			return {
-				show: false
-			}
-		},
-		methods: {
-			showDialog() {
-				this.show = true
-			}
-		}
-	}
+import { getDaoRule, startSetDaoRule, tokensData } from '@/utils/web3/nft'
+export default {
+  name: 'set-dao-dialog',
+  props: {
+    tokenId: {
+      type: String,
+      default: '',
+    },
+  },
+  computed: {
+    isModification() {
+      if (
+        this.currentJson.mVoteCount == this.form.mVoteCount &&
+        this.currentJson.daoFee == this.form.daoFee * 100
+      ) {
+        return false
+      } else {
+        return true
+      }
+    },
+  },
+  data() {
+    var reg = /^\+?[1-9][0-9]*$/
+    var validateDecimal = (rule, value, callback) => {
+      if (isNaN(Number(value)) || Number(value) < 0) {
+        callback(new Error('Input value invalid'))
+      }
+      callback()
+    }
+    var validateNumber = (rule, value, callback) => {
+      if (!reg.test(value)) {
+        callback(new Error('Please enter a integer'))
+      }
+      if (value <= 0) {
+        callback(new Error('Must be greater than 0'))
+      }
+      callback()
+    }
+    return {
+      show: false,
+      currentJson: {},
+      daoRule: [],
+      form: {
+        daoFee: undefined,
+        mVoteCount: undefined,
+      },
+      rules: {
+        daoFee: [
+          {
+            required: true,
+            message: 'Please enter the DAO fee',
+            trigger: 'blur',
+          },
+          {
+            validator: validateDecimal,
+            trigger: 'blur',
+          },
+        ],
+        mVoteCount: [
+          {
+            required: true,
+            message: 'Please enter the mVoteCount',
+            trigger: 'blur',
+          },
+          { validator: validateNumber, trigger: 'blur' },
+        ],
+      },
+    }
+  },
+  methods: {
+    showDialog() {
+      this.show = true
+    },
+    /** 提交数据 */
+    handleSubmit() {
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          console.log(this.isModification)
+          var loadingInstance = this.$loading({
+            background: 'rgba(0, 0, 0, 0.8)',
+          })
+          var param = JSON.parse(JSON.stringify(this.currentJson))
+          param.daoFee = (this.form.daoFee * 100).toFixed()
+          param.mVoteCount = this.form.mVoteCount
+          const {
+            daoFee,
+            daoCreatorFee,
+            daoHolderFee,
+            mVoteCount,
+            creatorAddress,
+            curCreatorFees,
+          } = param
+          startSetDaoRule(this.tokenId, {
+            daoFee,
+            daoCreatorFee,
+            daoHolderFee,
+            mVoteCount,
+            creatorAddress,
+            curCreatorFees,
+          })
+            .then(() => {
+              this.$toast.success(this.$t('news-detail.submit_success'))
+              this.$emit('handleReload')
+              this.show = false
+            })
+            .finally(() => {
+              loadingInstance.close()
+            })
+        }
+      })
+    },
+    /** 加载数据 */
+    onOpen() {
+      if (this.tokenId) {
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        Promise.all([this.getTokenInfoData(), this.getDaoRuleData()]).then(
+          () => {
+            this.currentJson.creatorAddress = this.daoRule[3]
+            this.currentJson.curCreatorFees = this.daoRule[4]
+            loadingInstance.close()
+          }
+        )
+      }
+    },
+    /** 加载tokenInfo */
+    getTokenInfoData() {
+      return new Promise((resolve, reject) => {
+        tokensData(this.tokenId)
+          .then((res) => {
+            this.currentJson = res
+            this.form.mVoteCount = res.mVoteCount
+            this.form.daoFee = (res.daoFee / 100).toFixed(2)
+            resolve()
+          })
+          .catch((e) => {
+            reject(e)
+          })
+      })
+    },
+    /** 加载DaoRule */
+    getDaoRuleData() {
+      return new Promise((resolve, reject) => {
+        getDaoRule(this.tokenId)
+          .then((daoRule) => {
+            this.daoRule = daoRule
+            resolve()
+          })
+          .catch((e) => {
+            reject(e)
+          })
+      })
+    },
+    handleInputFee(e) {
+      this.form.daoFee = e.target.value.match(/^\d*(\.?\d{0,2})/g)[0] || null
+    },
+  },
+}
 </script>
 
 <style lang="scss">
-	.set-dao-dialog {
-		background: #1A2027;
-		border: 1px solid #2C3638;
-		border-radius: 12px 6px 6px 6px;
+.set-dao-dialog {
+  background: #1a2027;
+  border: 1px solid #2c3638;
+  border-radius: 12px 6px 6px 6px;
 
-		.set-dao-header {
-			text-align: left;
-			font-size: 24px;
-			font-family: Arial;
-			font-weight: bold;
-		}
+  .set-dao-header {
+    text-align: left;
+    font-size: 24px;
+    font-family: Arial;
+    font-weight: bold;
+  }
 
-		.set-dao-top {
-			border: 1px solid #1F272F;
-			padding: 33px 47px 0 47px;
-			text-align: left;
+  .set-dao-top {
+    border: 1px solid #1f272f;
+    padding: 33px 47px 0 47px;
+    text-align: left;
 
-			.label {
-				font-size: 18px;
-				font-family: Arial;
-				font-weight: bold;
-				color: #FFFFFF;
-				margin-bottom: 17px;
-			}
-		}
+    .label {
+      font-size: 18px;
+      font-family: Arial;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 17px;
+    }
+  }
 
-		.set-dao-form {
-			background: #212831;
-			border-radius: 11px;
-			margin: 30px 0 84px 0;
-			padding: 38px 0 44px 0;
+  .set-dao-form {
+    background: #212831;
+    border-radius: 11px;
+    margin: 30px 0 84px 0;
+    padding: 38px 0 44px 0;
+  }
 
-		}
+  .set-dao-title {
+    font-size: 20px;
+    font-family: Arial;
+    font-weight: bold;
+    color: #17e7d6;
+    margin: 0 35px;
+  }
 
-		.set-dao-title {
-			font-size: 20px;
-			font-family: Arial;
-			font-weight: bold;
-			color: #17E7D6;
-			margin: 0 35px;
-		}
+  .set-dao-label {
+    font-size: 13px;
+    font-family: Arial;
+    font-weight: bold;
+    margin: 38px 35px 0 35px;
+  }
 
-		.set-dao-label {
-			font-size: 13px;
-			font-family: Arial;
-			font-weight: bold;
-			margin: 38px 35px 0 35px;
-		}
+  .set-dao-value {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 20px 35px 0 35px;
 
-		.set-dao-value {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			margin: 20px 35px 0 35px;
+    .set-dao-unit {
+      margin-left: 8px;
+      font-size: 14px;
+      font-family: Arial;
+      font-weight: bold;
+      color: #00f9e5;
+    }
 
-			.set-dao-unit {
-				margin-left: 8px;
-				font-size: 14px;
-				font-family: Arial;
-				font-weight: bold;
-				color: #00F9E5;
-			}
+    .verify {
+      width: 76px;
+      height: 48px;
+      line-height: 48px;
+      background: #31cad7;
+      border: 1px solid #313838;
+      border-radius: 8px;
+      font-size: 10px;
+      font-family: Arial;
+      font-weight: bold;
+      color: #212831;
+      text-align: center;
+      margin-left: 8px;
+    }
+  }
 
-			.verify {
-				width: 76px;
-				height: 48px;
-				line-height: 48px;
-				background: #31CAD7;
-				border: 1px solid #313838;
-				border-radius: 8px;
-				font-size: 10px;
-				font-family: Arial;
-				font-weight: bold;
-				color: #212831;
-				text-align: center;
-				margin-left: 8px;
-			}
-		}
+  .set-dao-add {
+    width: 624px;
+    height: 48px;
+    line-height: 48px;
+    background: #0e161d;
+    border: 1px solid #313838;
+    border-radius: 8px;
+    font-size: 10px;
+    font-family: Arial;
+    font-weight: 400;
+    color: #87a2b7;
+    text-align: center;
+    margin: 22px 0 0 35px;
+  }
 
-		.set-dao-add {
-			width: 624px;
-			height: 48px;
-			line-height: 48px;
-			background: #0E161D;
-			border: 1px solid #313838;
-			border-radius: 8px;
-			font-size: 10px;
-			font-family: Arial;
-			font-weight: 400;
-			color: #87A2B7;
-			text-align: center;
-			margin: 22px 0 0 35px;
-		}
+  .set-dao-tip {
+    font-size: 12px;
+    font-family: Arial;
+    font-weight: 400;
+    color: #747c7c;
+    margin: 12px 35px 0 35px;
+  }
 
-		.set-dao-tip {
-			font-size: 12px;
-			font-family: Arial;
-			font-weight: 400;
-			color: #747C7C;
-			margin: 12px 35px 0 35px;
-		}
+  .btn-container {
+    margin-top: 95px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 74px;
 
-		.btn-container {
-			margin-top: 95px;
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: center;
-			margin-bottom: 74px;
+    .common-border-btn,
+    .common-btn2 {
+      width: 188px;
+    }
 
-			.common-border-btn,
-			.common-btn2 {
-				width: 188px;
-			}
+    .common-border-btn {
+      border: 1px solid #26beef;
+      border-radius: 7px;
+      font-size: 16px;
+      font-family: Arial;
+      font-weight: bold;
+      color: #14daeb;
+      background: transparent;
+    }
+  }
 
-			.common-border-btn {
-				border: 1px solid #26BEEF;
-				border-radius: 7px;
-				font-size: 16px;
-				font-family: Arial;
-				font-weight: bold;
-				color: #14DAEB;
-				background: transparent;
-			}
-		}
-		
-		.el-dialog {
-			background: #1A2027;
-			border: 1px solid #2C3638;
-			border-radius: 12px 6px 6px 6px;
-		}
-		
-		.el-dialog__body {
-			padding: 0 0;
-		}
-		
-		.el-switch.is-checked .el-switch__core {
-			border-color: #00F9E5;
-			background-color: #00F9E5;
-		}
-		
-	}
+  .el-dialog {
+    background: #1a2027;
+    border: 1px solid #2c3638;
+    border-radius: 12px 6px 6px 6px;
+  }
 
+  .el-dialog__body {
+    padding: 0 0;
+  }
+
+  .el-switch.is-checked .el-switch__core {
+    border-color: #00f9e5;
+    background-color: #00f9e5;
+  }
+}
 </style>

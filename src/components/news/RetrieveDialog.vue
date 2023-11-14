@@ -85,7 +85,7 @@ export default {
     /** 检查输入项 */
     checkInput() {
       var ifPass = true
-      var reg = /^[0-9]+.?[0-9]*$/
+      var reg = /^\+?[1-9][0-9]*$/
       if (!this.unStakeCount) {
         this.error = this.$t('news-detail.retrieve_count_required')
         ifPass = false

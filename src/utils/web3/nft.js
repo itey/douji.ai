@@ -74,6 +74,27 @@ export function userMint(tokenId, count) {
 
 }
 
+/** 查询DaoRule */
+export function getDaoRule(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  return new Promise((resolve, reject) => {
+    nftContract.methods.getDaoRule(tokenId)
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+        reject(e)
+      })
+  })
+}
+
 
 /** 查询TokenOwner */
 export function getTokenOwner(tokenId) {
@@ -231,8 +252,42 @@ export function startSetNsp(tokenId, param) {
       param.type,
       param.contract,
       param.discounts,
-      param.discountsFee,
+      (param.discountsFee * 100).toFixed(0),
       param.disTokenId
+    )
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
+
+/** update-dao */
+export function startSetDaoRule(tokenId, param) {
+  console.log(param)
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.startSetDaoRule(
+      tokenId,
+      param.daoFee,
+      param.daoCreatorFee,
+      param.daoHolderFee,
+      param.mVoteCount,
+      param.creatorAddress,
+      param.curCreatorFees
     )
       .send({ from: userAccount })
       .on('transactionHash', (hash) => {

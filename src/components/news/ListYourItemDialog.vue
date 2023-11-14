@@ -104,7 +104,7 @@ export default {
         saleQuantity: true,
       }
       var ifSuccess = true
-      var reg = /^[0-9]+.?[0-9]*$/
+      var reg = /^\+?[1-9][0-9]*$/
       if (!this.salePrice) {
         this.error.salePrice = this.$t('news-detail.order_price_required')
         ifSuccess = false

@@ -70,7 +70,7 @@ export default {
     },
     checkInput() {
       var ifPass = true
-      var reg = /^[0-9]+.?[0-9]*$/
+      var reg = /^\+?[1-9][0-9]*$/
       if (!this.stakeCount) {
         this.error = this.$t('news-detail.stake_count_required')
         ifPass = false

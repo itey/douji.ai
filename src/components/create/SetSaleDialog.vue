@@ -72,7 +72,7 @@ export default {
     },
   },
   data() {
-    var reg = /^[0-9]+.?[0-9]*$/
+    var reg = /^\+?[1-9][0-9]*$/
     var validateTokenId = (rule, value, callback) => {
       if (this.form.type == 2 && !value) {
         callback(new Error('Please enter the token ID'))
@@ -182,6 +182,7 @@ export default {
           startSetNsp(this.tokenId, this.form)
             .then(() => {
               this.$toast.success(this.$t('news-detail.submit_success'))
+              this.$emit('handleReload')
               this.show = false
             })
             .catch((e) => {

@@ -223,7 +223,7 @@ export default {
     },
     /** 单项检查 */
     checkItem(key) {
-      var reg = /^[0-9]+.?[0-9]*$/
+      var reg = /^\+?[1-9][0-9]*$/
       switch (key) {
         case 'category':
           if (!this.form.category) {
