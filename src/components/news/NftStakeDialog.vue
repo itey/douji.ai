@@ -1,13 +1,13 @@
 <template>
   <el-dialog custom-class="nft-stake-dialog" :visible.sync="show" width="1440px">
-    <div class="nft-stake-header text-color" slot="title">NFT Stake Income settlement</div>
+    <div class="nft-stake-header text-color" slot="title">View the latest NFT information</div>
     <div class="nft-stake-content">
       <div class="nft-stake-container">
         <div class="nft-stake-top">
           <div class="nft-stake-left">
-            <div class="nft-stake-title text-color">Enterprise Metaverse Users Prefer Simplifed Digital Avatars Ove</div>
-            <img style="width: 939px;height: 532px;margin-top:50px;" />
-            <div class="nft-stake-desc text-color">The easy-to-use prompt to generate the portrait photography wit</div>
+            <div class="nft-stake-title text-color">{{ metadata.title }}</div>
+            <img style="width: 939px;height: 532px;margin-top:50px;" :src="metadata.image" />
+            <div class="nft-stake-desc text-color">{{ metadata.description }}</div>
             <div class="nft-stake-label-sub" style="margin-top: 16px;">
               <img style="width: 28px;height: 28px;" src="@/assets/images/create/website.png" />
               <div class="nft-stake-label-sub-text">Open to Access</div>
@@ -15,16 +15,18 @@
             <div class="nft-stake-content text-color">
               <div v-html="pubContent"></div>
             </div>
-            <div class="nft-stake-label-sub">
-              <img style="width: 28px;height: 28px;" src="@/assets/images/create/protect.png" />
-              <div class="nft-stake-label-sub-text">Protected</div>
-            </div>
-            <div class="nft-stake-content text-color">
-              <div v-html="privateContent"></div>
-            </div>
+            <template v-if="privateContent">
+              <div class="nft-stake-label-sub">
+                <img style="width: 28px;height: 28px;" src="@/assets/images/create/protect.png" />
+                <div class="nft-stake-label-sub-text">Protected</div>
+              </div>
+              <div class="nft-stake-content text-color">
+                <div v-html="privateContent"></div>
+              </div>
+            </template>
             <div class="nft-stake-tag">
               <div class="nft-stake-tag-label text-color">Tags:</div>
-              <div class="nft-stake-tag-item text-color" v-for="(item,index) in 4" :key="index">NFT</div>
+              <div class="nft-stake-tag-item text-color" v-for="(item,index) in metadata.keyword" :key="index">{{ item }}</div>
             </div>
           </div>
           <div class="nft-stake-right">
@@ -33,11 +35,11 @@
               <div class="nft-stake-attr-list">
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Token Address</div>
-                  <div class="nft-stake-attr-value">0x87Fa...47485</div>
+                  <div class="nft-stake-attr-value">{{ tokenAddress | omitAddress }}</div>
                 </div>
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Token ID</div>
-                  <div class="nft-stake-attr-value">2</div>
+                  <div class="nft-stake-attr-value">{{ this.tokenId }}</div>
                 </div>
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Token Standard</div>
@@ -45,7 +47,7 @@
                 </div>
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Creator</div>
-                  <div class="nft-stake-attr-value">0x87Fa...47485</div>
+                  <div class="nft-stake-attr-value">{{ tokenOwner | omitAddress}}</div>
                 </div>
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Created At</div>
@@ -53,7 +55,7 @@
                 </div>
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Updated At</div>
-                  <div class="nft-stake-attr-value">2023/9/3 13:03:38</div>
+                  <div class="nft-stake-attr-value">{{ voteData.vote.startTime | Stamp2Time }}</div>
                 </div>
               </div>
             </div>
@@ -62,31 +64,31 @@
               <div class="nft-stake-attr-list">
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Content Type</div>
-                  <div class="nft-stake-attr-value">Airticle</div>
+                  <div class="nft-stake-attr-value">{{ metadata.contentType }}</div>
                 </div>
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Category</div>
-                  <div class="nft-stake-attr-value">AIGC</div>
+                  <div class="nft-stake-attr-value">{{ metadata.category }}</div>
                 </div>
-                <div class="nft-stake-attr-item">
+                <div class="nft-stake-attr-item" v-if="metadata.prompt">
                   <div class="nft-stake-attr-label">Platform</div>
-                  <div class="nft-stake-attr-value">GPT</div>
+                  <div class="nft-stake-attr-value">{{ metadata.prompt }}</div>
                 </div>
-                <div class="nft-stake-attr-item">
+                <div class="nft-stake-attr-item" v-if="metadata.language">
                   <div class="nft-stake-attr-label">Language</div>
-                  <div class="nft-stake-attr-value">English</div>
+                  <div class="nft-stake-attr-value">{{ metadata.language }}</div>
                 </div>
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Max Supply</div>
-                  <div class="nft-stake-attr-value">50,000</div>
+                  <div class="nft-stake-attr-value">{{ metadata.maxSupply | toLocalString}}</div>
                 </div>
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Available Supply</div>
-                  <div class="nft-stake-attr-value">50,000</div>
+                  <div class="nft-stake-attr-value">{{ metadata.availableSupply | toLocalString }}</div>
                 </div>
                 <div class="nft-stake-attr-item">
                   <div class="nft-stake-attr-label">Initial Mint Quantity</div>
-                  <div class="nft-stake-attr-value">250</div>
+                  <div class="nft-stake-attr-value">{{ metadata.initialQuantity | toLocalString }}</div>
                 </div>
               </div>
             </div>
@@ -95,13 +97,13 @@
               <div class="nft-stake-attr-market">
                 <div class="nft-stake-attr-available">
                   Available :
-                  <span class="text-color">123</span>
+                  <span class="text-color">{{ metadata.availableSupply | toLocalString }}</span>
                 </div>
                 <div class="nft-stake-attr-mbd">
-                  <div class="mbd-value text-color">2590.0 MBD</div>
-                  <div class="mbd-transform">≈$626 57</div>
+                  <div class="mbd-value text-color">{{ metadata.initialPrice | decimalPlace4 }} MBD</div>
+                  <div class="mbd-transform">≈${{ (metadata.initialPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
                 </div>
-                <el-button :disabled="!edit" class="common-btn2 nft-stake-attr-mint">Mint</el-button>
+                <el-button disabled class="common-btn2 nft-stake-attr-mint">Mint</el-button>
                 <div class="nft-stake-attr-tip">
                   Owning
                   <span class="text-color">1 BJxStar</span> To Get
@@ -110,64 +112,7 @@
                 </div>
               </div>
             </div>
-            <div class="nft-stake-attr-container">
-              <div class="nft-stake-attr-title text-color">DOUJI NFT DAO Governance</div>
-              <div class="nft-stake-dao">
-                <div class="dao-title text-color">NFT DAO Eamings</div>
-                <div class="dao-sub">
-                  The NFT DAO members of this item will receive
-                  <span class="text-color">10%</span>
-                  forevery sale
-                </div>
-                <div class="dao-title text-color" style="margin-top: 26px;margin-bottom:3px">
-                  NFT DAO
-                  Income Distribution
-                </div>
-                <div class="dao-income-item">
-                  <div class="dao-income-label">Creators Earngings</div>
-                  <div class="dao-income-value text-color">80%</div>
-                </div>
-                <div class="dao-income-item">
-                  <div class="dao-income-label">NFT Stakers</div>
-                  <div class="dao-income-value text-color">80%</div>
-                </div>
-                <div class="dao-member dao-member-header">
-                  <div class="dao-member-left">Mermber</div>
-                  <div class="dao-member-right">Proportion of Revenue</div>
-                </div>
-                <div v-for="(item,index) in 2" class="dao-member dao-member-td">
-                  <div class="dao-member-left text-color">0x7Fa...4745d</div>
-                  <div class="dao-member-right">70%</div>
-                </div>
-                <div class="dao-title text-color" style="margin-top: 16px;">NFT DAO Govemance</div>
-                <div class="dao-income-item" style="margin-top: 16px;">
-                  <div class="dao-income-label">Execution Threshold</div>
-                  <div class="dao-income-value text-color">80</div>
-                </div>
-                <div class="dao-title text-color" style="margin-top: 28px;">
-                  NFT Staker Bonus Dividend
-                  Pool
-                </div>
-                <div class="dividend-pool">
-                  <div class="dividend-pool-item">
-                    <div class="dividend-pool-label">Balance</div>
-                    <div class="dividend-pool-value text-color">2080.0808 MBD</div>
-                  </div>
-                  <div class="dividend-pool-item">
-                    <div class="dividend-pool-label">All members NFT Staked</div>
-                    <div class="dividend-pool-value text-color">168</div>
-                  </div>
-                  <div class="dividend-pool-item">
-                    <div class="dividend-pool-label">You NFT Staked</div>
-                    <div class="dividend-pool-value text-color">3 (17.86%)</div>
-                  </div>
-                  <div class="dividend-pool-item">
-                    <div class="dividend-pool-label">You NFT Staked Time</div>
-                    <div class="dividend-pool-value text-color">4 Days</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <NftDaoGovernance :tokenId="tokenId" />
           </div>
         </div>
         <div class="btn-container">
@@ -178,25 +123,186 @@
   </el-dialog>
 </template>
 
+ 
 <script>
+import NftDaoGovernance from '@/components/news/NftDaoGovernance'
+import { weiToMbd } from '@/utils/common'
+import { loadFromUrl, unlockContent } from '@/utils/http'
+import { tokenURI, tokensData } from '@/utils/web3/nft'
+var md = require('markdown-it')({
+  html: true,
+  linkify: true,
+  typographer: true,
+  breaks: true,
+  // highlight: function (str, lang) {
+  //   if (lang && hljs.getLanguage(lang)) {
+  //     try {
+  //       return hljs.highlight(lang, str).value
+  //     } catch (e) {
+  //       console.log(e)
+  //     }
+  //   }
+  //   return '' // 使用额外的默认转义
+  // },
+})
 export default {
   name: 'nft-stake-dialog',
   props: {
-    edit: {
-      type: Boolean,
-      default: false,
+    voteData: {
+      type: Object,
+      default: () => {},
+    },
+    tokenId: {
+      type: String,
+      default: '',
+    },
+    tokenOwner: {
+      type: String,
+      default: '',
     },
   },
+  components: {
+    NftDaoGovernance,
+  },
+  computed: {
+    pubContent() {
+      if (this.metadata.openContent) {
+        return md.render(this.metadata.openContent)
+      } else {
+        return null
+      }
+    },
+    privateContent() {
+      if (this.metadata.protectedContent) {
+        return md.render(this.metadata.protectedContent)
+      } else {
+        return null
+      }
+    },
+  },
+  mounted() {
+    Promise.all([this.loadSupplyInfo(), this.loadMetadata()])
+      .then(() => {
+        this.metadata.maxSupply = this.tokenSupplyInfo.maxSupply
+        this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply
+        this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply
+        this.metadata.initialPrice = weiToMbd(this.tokenSupplyInfo.price.price)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  },
   data() {
+    /**
+      URL,//修改url
+      DA0,//修改Dao
+      P_A,//修改价格和供应量PRICE AVAILABLESUPPLY
+      N S P//更新折扣 NFTSALESPROMOTION
+    */
     return {
+      tokenAddress: process.env.VUE_APP_NFT,
       show: false,
-      pubContent: '',
-      privateContent: '',
+      tokenSupplyInfo: {},
+      metadata: {
+        openContent: undefined,
+        protectedContent: undefined,
+      },
     }
   },
   methods: {
     showDialog() {
       this.show = true
+    },
+    /** 加载元数据 */
+    loadMetadata() {
+      return new Promise((resolve, reject) => {
+        if (!this.tokenId) {
+          reject()
+        }
+        tokenURI(this.tokenId)
+          .then((uri) => {
+            this.tokenMetaUrl = uri
+            loadFromUrl(this.tokenMetaUrl).then((r) => {
+              if (r.status !== 200) {
+                reject(r.statusText)
+              }
+              var meta = r.data
+              this.ipfsData = meta
+              this.metadata.title = meta.title
+              this.metadata.description = meta.description
+              this.metadata.image = meta.image
+              this.metadata.contentType = meta.contentType
+              this.metadata.category = meta.category
+              this.metadata.contentUrl = meta.contentUrl
+              this.metadata.protected = meta.protected
+              this.metadata.language = meta.language
+              this.metadata.prompt = meta.prompt
+              this.metadata.keyword = meta.keyword ? meta.keyword : []
+              if (this.metadata.contentUrl) {
+                return Promise.all([
+                  this.loadOpenContent(this.metadata.contentUrl),
+                  this.loadProtectedContent(this.metadata.protected),
+                ])
+                  .then(([openContent, protectedContent]) => {
+                    this.metadata.openContent = openContent
+                    this.metadata.protectedContent = protectedContent
+                    resolve()
+                  })
+                  .catch((e) => {
+                    reject(e)
+                  })
+              }
+              resolve()
+            })
+          })
+          .catch(() => {
+            reject()
+          })
+      })
+    },
+    /** 加载公开数据 */
+    loadOpenContent(url) {
+      return new Promise((resolve, reject) => {
+        loadFromUrl(url).then((res) => {
+          if (res.status !== 200) {
+            reject(res.statusText)
+          }
+          resolve(res.data)
+        })
+      })
+    },
+    /** 加载私有数据 */
+    loadProtectedContent(data) {
+      return new Promise((resolve, reject) => {
+        unlockContent(data, this.tokenId).then((res) => {
+          if (res.code != 1) {
+            reject(res.message)
+          }
+          const ipfsUrl = res.data.url
+          loadFromUrl(ipfsUrl).then((r) => {
+            if (r.status !== 200) {
+              reject(r.statusText)
+            }
+            resolve(r.data)
+          })
+        })
+      })
+    },
+    /** 加载数据 */
+    loadSupplyInfo() {
+      return new Promise((resolve, reject) => {
+        if (!this.tokenId) {
+          reject()
+        }
+        tokensData(this.tokenId)
+          .then((res) => {
+            this.tokenSupplyInfo = res
+            resolve()
+          })
+          .catch(() => {
+            reject()
+          })
+      })
     },
   },
 }
@@ -298,7 +404,7 @@ export default {
             }
 
             .nft-stake-tag-item {
-              font-size: 2px;
+              font-size: 12px;
               line-height: 24px;
               font-family: Source Han Sans CN;
               font-weight: 400;

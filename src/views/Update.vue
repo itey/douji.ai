@@ -138,8 +138,8 @@ export default {
               this.metadata.category = meta.category
               this.metadata.contentUrl = meta.contentUrl
               this.metadata.protected = meta.protected
-              this.metadata.language = meta.language ? meta.language : []
-              this.metadata.prompt = meta.prompt ? meta.prompt : []
+              this.metadata.language = meta.language
+              this.metadata.prompt = meta.prompt
               this.metadata.keyword = meta.keyword ? meta.keyword : []
               if (this.metadata.contentUrl && this.step == 2) {
                 return Promise.all([

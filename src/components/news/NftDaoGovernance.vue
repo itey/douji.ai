@@ -1,0 +1,557 @@
+<template>
+  <div class="form-attr-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
+    <div class="form-attr-title text-color">DOUJI NFT DAO Governance</div>
+    <div class="form-dao">
+      <div class="dao-title text-color">NFT DAO Earnings</div>
+      <div class="dao-sub">
+        The NFT DAO members of this item will receive
+        <span class="text-color">{{ tokenSupplyInfo.daoFee | fee2Percent }}</span>
+        for every sale
+      </div>
+      <div class="dao-title text-color" style="margin-top: 22px;">NFT DAO Governance</div>
+      <div class="dao-income-item" style="margin-top: 22px;">
+        <div class="dao-income-label">Execution Threshold</div>
+        <div class="dao-income-value text-color">{{ tokenSupplyInfo.mVoteCount }}</div>
+      </div>
+      <div class="dao-title text-color" style="margin-top: 39px;">NFT Staker Bonus Dividend Pool</div>
+      <div class="dividend-pool">
+        <div class="dividend-pool-item">
+          <div class="dividend-pool-label">Balance</div>
+          <div class="dividend-pool-value text-color">{{ settlePoolBalance | toLocalString }} MBD</div>
+        </div>
+        <div class="dividend-pool-item">
+          <div class="dividend-pool-label">All members NFT Staked</div>
+          <div class="dividend-pool-value text-color">{{ totalStakeCount }}</div>
+        </div>
+        <div class="dividend-pool-item">
+          <div class="dividend-pool-label">You NFT Staked</div>
+          <div class="dividend-pool-value text-color" v-if="userStakeInfo && userStakeInfo[0]">{{ userStakeInfo[0] }} ({{ stakePercent }})</div>
+          <div class="dividend-pool-value text-color" v-else>0 (0.00%)</div>
+        </div>
+        <div class="dividend-pool-item">
+          <div class="dividend-pool-label">Retrieve BSC Block Number</div>
+          <div class="dividend-pool-value text-color">{{ userStakeInfo[1] }}</div>
+        </div>
+        <div class="dividend-pool-item">
+          <div class="dividend-pool-label">Current BSC Block Number</div>
+          <div class="dividend-pool-value text-color">{{ currentHeight }}</div>
+        </div>
+      </div>
+      <div class="dao-btn-container" v-if="operable">
+        <div class="dao-btn" @click="$refs['stakeDialog'].showDialog()">Stake</div>
+        <div class="dao-btn-border" @click="handleRetrieve()">Retrieve</div>
+      </div>
+    </div>
+    <StakeDialog :tokenId="tokenId" :userOwned="userOwned" ref="stakeDialog" />
+    <RetrieveDialog :tokenId="tokenId" :blockHeight="currentHeight" :userStakeInfo="userStakeInfo" ref="retrieveDialog" />
+  </div>
+</template>
+
+<script>
+import RetrieveDialog from '@/components/news/RetrieveDialog'
+import StakeDialog from '@/components/news/StakeDialog'
+import { blockHeight } from '@/utils/web3/chain'
+import { getSettlePoolBalance } from '@/utils/web3/market'
+import { tokensData, totalPledgeCount, userPledgeCount } from '@/utils/web3/nft'
+export default {
+  name: 'nft-dao-vote',
+  props: {
+    tokenId: {
+      type: String,
+      default: '',
+    },
+    operable: {
+      type: Boolean,
+      default: false,
+    },
+    userOwned: {
+      type: String,
+      default: '',
+    },
+  },
+  components: {
+    StakeDialog,
+    RetrieveDialog,
+  },
+  computed: {
+    stakePercent() {
+      if (!this.userStakeInfo[0] || this.userStakeInfo[0] == 0) {
+        return '0.00%'
+      }
+      if (!this.totalStakeCount || this.userStakeInfo[0] == 0) {
+        return '0.00%'
+      }
+      return (
+        ((this.userStakeInfo[0] / this.totalStakeCount) * 100)
+          .toFixed(2)
+          .toString() + '%'
+      )
+    },
+  },
+  data() {
+    return {
+      loading: false,
+      userAccount: this.$store.state.user.account,
+      currentHeight: undefined,
+      settlePoolBalance: undefined,
+      totalStakeCount: undefined,
+      userStakeInfo: {},
+      tokenSupplyInfo: {},
+    }
+  },
+  mounted() {
+    this.loading = true
+    setTimeout(() => {
+      Promise.all([
+        this.getCurrentHeight(),
+        this.getUserStakeCount(),
+        this.getTotalStakeCount(),
+        this.getMbdSettleBalance(),
+        this.loadSupplyInfo(),
+      ]).then(() => {
+        this.loading = false
+      })
+    }, 4000)
+  },
+  methods: {
+    /** 获取用户质押信息 */
+    getUserStakeCount() {
+      if (!this.tokenId) {
+        return
+      }
+      return new Promise((resolve, reject) => {
+        userPledgeCount(this.tokenId)
+          .then((data) => {
+            this.userStakeInfo = data
+            resolve()
+          })
+          .catch(() => {
+            reject()
+          })
+      })
+    },
+    /** 获取质押总量 */
+    getTotalStakeCount() {
+      if (!this.tokenId) {
+        return
+      }
+      return new Promise((resolve, reject) => {
+        totalPledgeCount(this.tokenId)
+          .then((count) => {
+            this.totalStakeCount = count ? count : 0
+            resolve()
+          })
+          .catch(() => {
+            reject()
+          })
+      })
+    },
+    /** 取合约里DAO 质押奖金池子的额度 */
+    getMbdSettleBalance() {
+      if (!this.tokenId) {
+        return
+      }
+      return new Promise((resolve, reject) => {
+        getSettlePoolBalance(this.tokenId)
+          .then((balance) => {
+            this.settlePoolBalance = balance
+            resolve()
+          })
+          .catch((e) => {
+            reject(e)
+          })
+      })
+    },
+    /** 获取当前区块高度 */
+    getCurrentHeight() {
+      return new Promise((resolve, reject) => {
+        blockHeight()
+          .then((height) => {
+            this.currentHeight = height
+            resolve()
+          })
+          .catch(() => {
+            reject()
+          })
+      })
+    },
+    /** 加载数据 */
+    loadSupplyInfo() {
+      return new Promise((resolve, reject) => {
+        if (!this.tokenId) {
+          reject()
+        }
+        tokensData(this.tokenId)
+          .then((res) => {
+            this.tokenSupplyInfo = res
+            resolve()
+          })
+          .catch(() => {
+            reject()
+          })
+      })
+    },
+  },
+}
+</script>
+
+<style lang="scss">
+.form-attr-container {
+  border: 1px solid #363e3e;
+  border-radius: 6px;
+  margin-bottom: 22px;
+  height: auto;
+
+  .form-attr-title {
+    height: 66px;
+    line-height: 66px;
+    padding: 0 23px;
+    background: #37434d;
+    font-size: 18px;
+    font-family: Arial;
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .form-attr-action {
+      font-size: 14px;
+      font-family: Arial;
+      font-weight: bold;
+      color: #00f9e5;
+      line-height: 66px;
+      cursor: pointer;
+    }
+  }
+
+  .form-attr-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 16px 16px;
+
+    .form-attr-item {
+      width: 170px;
+      padding: 14px 0;
+      background: #1e252d;
+      border-radius: 6px;
+      margin-bottom: 18px;
+
+      .form-attr-label {
+        font-size: 14px;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+        color: #88a2b8;
+        margin-left: 12px;
+      }
+
+      .form-attr-value {
+        font-size: 16px;
+        font-family: Source Han Sans CN;
+        font-weight: bold;
+        color: #ffffff;
+        margin-top: 14px;
+        margin-left: 12px;
+      }
+    }
+  }
+
+  .form-attr-market {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 17px 17px 22px 17px;
+    text-align: center;
+
+    .form-attr-market-top {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .form-attr-available {
+        background: #1e252d;
+        margin-left: 13px;
+        border-radius: 6px;
+        width: 144px;
+        height: 34px;
+        line-height: 34px;
+        font-size: 14px;
+        font-family: Source Han Sans CN;
+        font-weight: bold;
+        color: #acbcc9;
+        min-width: 122px;
+        text-align: left;
+        padding: 0 13px;
+        margin-top: 24px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .form-attr-mbd {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      margin-top: 20px;
+
+      .form-attr-mbd-value {
+        font-size: 26px;
+        font-family: Arial;
+        font-weight: bold;
+      }
+
+      .form-attr-mbd-value {
+        font-size: 10px;
+        font-family: Arial;
+        font-weight: 400;
+        color: #88a2b8;
+      }
+    }
+
+    .form-attr-mint {
+      margin: 17px 0 9px 0;
+      border-radius: 18px;
+      font-size: 13px;
+      font-family: Arial;
+      font-weight: bold;
+      color: #4b5760;
+      width: 100%;
+    }
+
+    .form-attr-tip {
+      font-size: 10px;
+      font-family: Arial;
+      font-weight: 400;
+      color: #88a2b8;
+    }
+  }
+
+  .form-second-market {
+    display: flex;
+    flex-direction: row;
+    padding: 24px 16px;
+
+    .second-market-column {
+      line-height: 49px;
+      font-size: 14px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #acbcc9;
+    }
+
+    .second-market-header {
+      height: 34px;
+      font-size: 12px;
+      line-height: 34px;
+      background: #252d36;
+    }
+
+    .second-market-td {
+      font-size: 12px;
+      font-family: Arial;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 46px;
+      border-bottom: 1px solid #252d36;
+
+      .second-btn {
+        margin: 8px 0;
+        width: 60px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        background: linear-gradient(-16deg, #848d98, #97a8a7);
+        border-radius: 15px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .form-dao {
+    padding: 17px 12px;
+
+    .dao-title {
+      padding: 0 13px;
+      font-size: 16px;
+      font-family: Arial;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .dao-sub {
+      padding: 0 13px;
+      font-size: 14px;
+      font-family: Arial;
+      font-weight: 400;
+      color: #acbcc9;
+      line-height: 17px;
+      margin-top: 13px;
+    }
+
+    .dao-income-item {
+      padding: 0 13px;
+      margin-top: 16px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      .dao-income-label {
+        font-size: 14px;
+        font-family: Arial;
+        font-weight: bold;
+        color: #9ab8db;
+      }
+
+      .dao-income-value {
+        font-size: 14px;
+        font-family: Arial;
+        font-weight: bold;
+        color: #ffffff;
+      }
+    }
+
+    .dao-member {
+      padding: 0 14px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      &.dao-member-header {
+        margin-top: 19px;
+        height: 34px;
+        background: #1e252d;
+
+        .dao-member-left {
+          font-size: 12px;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #acbcc9;
+          line-height: 34px;
+        }
+
+        .dao-member-right {
+          font-size: 12px;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #acbcc9;
+          line-height: 34px;
+        }
+      }
+
+      &.dao-member-td {
+        height: 46px;
+
+        .dao-member-left {
+          font-size: 14px;
+          font-family: Arial;
+          font-weight: 400;
+          line-height: 46px;
+        }
+
+        .dao-member-right {
+          font-size: 14px;
+          font-family: Arial;
+          font-weight: 400;
+          color: #acbcc9;
+          line-height: 46px;
+        }
+      }
+    }
+
+    .dividend-pool {
+      .dividend-pool-item {
+        padding: 19px 13px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #1f262e;
+
+        &:last-child {
+          border: none;
+        }
+
+        .dividend-pool-label {
+          font-size: 14px;
+          font-family: Arial;
+          font-weight: bold;
+          color: #9ab8db;
+        }
+
+        .dividend-pool-value {
+          font-size: 14px;
+          font-family: Arial;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .dao-btn-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      .dao-btn {
+        width: 110px;
+        height: 36px;
+        background: #3c9ef2;
+        border-radius: 10px;
+        font-size: 14px;
+        font-family: Arial;
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 36px;
+        cursor: pointer;
+      }
+
+      .dao-btn-border {
+        margin-left: 20px;
+        width: 110px;
+        height: 36px;
+        border: 1px solid #3c9ef2;
+        border-radius: 10px;
+        font-size: 14px;
+        font-family: Arial;
+        font-weight: 400;
+        color: #5cb1fa;
+        line-height: 36px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .form-attr-setting {
+    padding: 16px 13px;
+
+    .form-attr-set {
+      cursor: pointer;
+      height: 26px;
+      line-height: 26px;
+      background: linear-gradient(-16deg, #848d98, #97a8a7);
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: Source Han Sans CN;
+      font-weight: bold;
+      color: #acbcc9;
+      padding: 0 17px;
+
+      &:first-child {
+        margin-bottom: 10px;
+      }
+
+      &:hover {
+        color: #00f9e5;
+      }
+    }
+  }
+}
+</style>

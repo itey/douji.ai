@@ -5,35 +5,8 @@
       <el-breadcrumb-item :to="{ path: '/news' }">News</el-breadcrumb-item>
       <el-breadcrumb-item v-if="metadata.title">{{ metadata.title }}</el-breadcrumb-item>
     </el-breadcrumb>
-    <div class="proposal-container" v-if="tokenSupplyInfo.isVoting">
-      <div class="proposal-left">
-        <div class="proposal-left-title text-color">NFT DAO Proposal</div>
-        <div class="proposal-left-sub">
-          <span class="text-color">0x87Fa...47485</span>has initiated a proposato modify the content and rules
-          of this NFT at
-          <span class="text-color">2023/03/22 17:20:18</span>. Pleasereview the proposal
-          before
-          <span class="text-color">2023/03/22 17:20:18</span>. It expires. After that, the proposal
-          will be invalidated.
-        </div>
-        <div class="proposal-left-link" @click="$refs['nftStakeDialog'].showDialog()">View the latest NFT infomation >></div>
-      </div>
-      <div class="proposal-right">
-        <div class="proposal-right-title">15680/50000</div>
-        <div class="proposal-right-sub">
-          Threshold:
-          <span class="text-color">25000</span>
-        </div>
-        <div class="proposal-right-btn">
-          <el-button style="width: 118px;height: 42px;" class="common-btn2">Approve</el-button>
-          <el-button style="margin-left: 24px;width: 118px;height: 42px;" class="common-btn2" :disabled="true">Execute</el-button>
-        </div>
-        <div class="proposal-right-tip">
-          Your Voting:
-          <span class="text-color">100</span>
-        </div>
-      </div>
-    </div>
+
+    <NftDaoVote v-if="tokenSupplyInfo.isVoting" :tokenOwner="tokenOwner" :voteData="tokenSupplyInfo" :tokenId="tokenId" />
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
@@ -187,13 +160,13 @@
                 <div class="form-attr-label">Category</div>
                 <div class="form-attr-value">{{ metadata.category }}</div>
               </div>
-              <div class="form-attr-item" v-if="metadata.prompt && metadata.prompt.length">
+              <div class="form-attr-item" v-if="metadata.prompt">
                 <div class="form-attr-label">Platform</div>
-                <div class="form-attr-value">{{ metadata.prompt | arrayMax1 }}</div>
+                <div class="form-attr-value">{{ metadata.prompt }}</div>
               </div>
-              <div class="form-attr-item" v-if="metadata.language && metadata.language.length">
+              <div class="form-attr-item" v-if="metadata.language">
                 <div class="form-attr-label">Language</div>
-                <div class="form-attr-value">{{ metadata.language | arrayMax1 }}</div>
+                <div class="form-attr-value">{{ metadata.language }}</div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">Max Supply</div>
@@ -267,70 +240,7 @@
               </div>
             </div>
           </div>
-          <div class="form-attr-container">
-            <div class="form-attr-title text-color">DOUJI NFT DAO Governance</div>
-            <div class="form-dao">
-              <div class="dao-title text-color">NFT DAO Eamings</div>
-              <div class="dao-sub">
-                The NFT DAO members of this item will receive
-                <span class="text-color">10%</span>
-                forevery sale
-              </div>
-              <div class="dao-title text-color" style="margin-top: 26px;margin-bottom:3px">
-                NFT DAO Income
-                Distribution
-              </div>
-              <div class="dao-income-item">
-                <div class="dao-income-label">Creators Earngings</div>
-                <div class="dao-income-value text-color">80%</div>
-              </div>
-              <div class="dao-income-item">
-                <div class="dao-income-label">NFT Stakers</div>
-                <div class="dao-income-value text-color">80%</div>
-              </div>
-              <div class="dao-member dao-member-header">
-                <div class="dao-member-left">Mermber</div>
-                <div class="dao-member-right">Proportion of Revenue</div>
-              </div>
-              <div v-for="(item,index) in 2" class="dao-member dao-member-td">
-                <div class="dao-member-left text-color">0x7Fa...4745d</div>
-                <div class="dao-member-right">70%</div>
-              </div>
-              <div class="dao-title text-color" style="margin-top: 22px;">NFT DAO Govemance</div>
-              <div class="dao-income-item" style="margin-top: 22px;">
-                <div class="dao-income-label">Execution Threshold</div>
-                <div class="dao-income-value text-color">80</div>
-              </div>
-              <div class="dao-title text-color" style="margin-top: 39px;">NFT Staker Bonus Dividend Pool</div>
-              <div class="dividend-pool">
-                <div class="dividend-pool-item">
-                  <div class="dividend-pool-label">Balance</div>
-                  <div class="dividend-pool-value text-color">{{ settlePoolBalance | toLocalString }} MBD</div>
-                </div>
-                <div class="dividend-pool-item">
-                  <div class="dividend-pool-label">All members NFT Staked</div>
-                  <div class="dividend-pool-value text-color">{{ totalStakeCount }}</div>
-                </div>
-                <div class="dividend-pool-item">
-                  <div class="dividend-pool-label">You NFT Staked</div>
-                  <div class="dividend-pool-value text-color" v-if="userStakeInfo && userStakeInfo[0]">{{ userStakeInfo[0] }} ({{ stakePercent }})</div>
-                  <div class="dividend-pool-value text-color" v-else>0 (0.00%)</div>
-                </div>
-                <div class="dividend-pool-item">
-                  <div class="dividend-pool-label">Retrieve BSC Block Number</div>
-                  <div class="dividend-pool-value text-color">{{ userStakeInfo[1] }}</div>
-                </div>
-                <div class="dividend-pool-item">
-                  <div class="dividend-pool-label">Current BSC Block Number</div>
-                  <div class="dividend-pool-value text-color">{{ currentHeight }}</div>
-                </div>
-              </div>
-              <div class="dao-btn-container">
-                <div class="dao-btn" @click="$refs['stakeDialog'].showDialog()">Stake</div>
-                <div class="dao-btn-border" @click="handleRetrieve()">Retrieve</div>
-              </div>
-            </div>
-          </div>
+          <NftDaoGovernance :userOwned="userOwned" :tokenId="tokenId" :operable="true" />
           <div class="form-attr-container">
             <div class="form-attr-title text-color">DOUJI NFT Information</div>
             <div class="form-attr-list">
@@ -378,9 +288,6 @@
     </div>
     <ListYourItemDialog :tokenId="tokenId" :userOwned="userOwned" ref="listYourItemDialog" />
     <RevisionHistoryDialog ref="revisionHistoryDialog" />
-    <StakeDialog :tokenId="tokenId" :userOwned="userOwned" ref="stakeDialog" />
-    <RetrieveDialog :tokenId="tokenId" :blockHeight="currentHeight" :userStakeInfo="userStakeInfo" ref="retrieveDialog" />
-    <NftStakeDialog ref="nftStakeDialog" />
     <CheckInDialog @onCheckedIn="onCheckedIn()" ref="checkInDialog" />
     <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />
     <BlindOpenDialog @handleReload="pageLoad" :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
@@ -397,37 +304,32 @@ import BlindDialog from '@/components/news/BlindDialog'
 import BlindOpenDialog from '@/components/news/BlindOpenDialog'
 import CheckInDialog from '@/components/news/CheckInDialog'
 import ListYourItemDialog from '@/components/news/ListYourItemDialog'
-import NftStakeDialog from '@/components/news/NftStakeDialog'
-import RetrieveDialog from '@/components/news/RetrieveDialog'
+import NftDaoGovernance from '@/components/news/NftDaoGovernance'
+import NftDaoVote from '@/components/news/NftDaoVote.vue'
 import RevisionHistoryDialog from '@/components/news/RevisionHistoryDialog'
-import StakeDialog from '@/components/news/StakeDialog'
 import {
-boxCount2Time,
-getBlindBoxCache,
-getBlindBoxFlagCache,
-getBoxCountToday,
-ifCheckInToday,
-setBlindBoxCache,
-setBlindBoxFlagCache,
+  boxCount2Time,
+  getBlindBoxCache,
+  getBlindBoxFlagCache,
+  getBoxCountToday,
+  ifCheckInToday,
+  setBlindBoxCache,
+  setBlindBoxFlagCache,
 } from '@/utils/common'
 import { eventBus } from '@/utils/event-bus'
 import {
-checkBlindBox,
-getNftOrders,
-loadFromUrl,
-unlockContent,
+  checkBlindBox,
+  getNftOrders,
+  loadFromUrl,
+  unlockContent,
 } from '@/utils/http'
-import { blockHeight } from '@/utils/web3/chain'
-import { getSettlePoolBalance } from '@/utils/web3/market'
 import { approveMbd } from '@/utils/web3/mbd'
 import {
-balanceOf,
-getTokenOwner,
-tokenURI,
-tokensData,
-totalPledgeCount,
-userMint,
-userPledgeCount,
+  balanceOf,
+  getTokenOwner,
+  tokenURI,
+  tokensData,
+  userMint,
 } from '@/utils/web3/nft'
 var md = require('markdown-it')({
   html: true,
@@ -451,14 +353,13 @@ export default {
     NewsItem,
     ListYourItemDialog,
     RevisionHistoryDialog,
-    StakeDialog,
-    RetrieveDialog,
-    NftStakeDialog,
     CheckInDialog,
     BlindDialog,
     BlindOpenDialog,
     SetSaleDialog,
     SetDaoDialog,
+    NftDaoVote,
+    NftDaoGovernance,
   },
   computed: {
     canUpdate() {
@@ -483,19 +384,6 @@ export default {
       } else {
         return null
       }
-    },
-    stakePercent() {
-      if (!this.userStakeInfo[0] || this.userStakeInfo[0] == 0) {
-        return '0.00%'
-      }
-      if (!this.totalStakeCount || this.userStakeInfo[0] == 0) {
-        return '0.00%'
-      }
-      return (
-        ((this.userStakeInfo[0] / this.totalStakeCount) * 100)
-          .toFixed(2)
-          .toString() + '%'
-      )
     },
   },
   data() {
@@ -522,10 +410,6 @@ export default {
         isVoting: false,
       },
       userOwned: undefined,
-      currentHeight: undefined,
-      totalStakeCount: undefined,
-      userStakeInfo: {},
-      settlePoolBalance: undefined,
       ifCheckedIn: true,
       blindBoxToday: {},
       blindBoxTimerTask: undefined,
@@ -662,10 +546,6 @@ export default {
         this.loadSupplyInfo(),
         this.loadMetadata(),
         this.getUserOwned(),
-        this.getCurrentHeight(),
-        this.getTotalStakeCount(),
-        this.getUserStakeCount(),
-        this.getMbdSettleBalance(),
         this.loadNftOrderList(),
       ])
         .then(() => {
@@ -673,6 +553,7 @@ export default {
           this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply
           this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply
           this.metadata.initialPrice = this.tokenSupplyInfo.price.price
+          console.log(this.tokenSupplyInfo)
         })
         .catch((e) => {
           console.log(e)
@@ -723,19 +604,6 @@ export default {
       this.$toast.success(this.$t('news-detail.nft_mint_success'))
       loadingInstance.close()
       this.pageLoad()
-    },
-    /** 取合约里DAO 质押奖金池子的额度 */
-    getMbdSettleBalance() {
-      return new Promise((resolve, reject) => {
-        getSettlePoolBalance(this.tokenId)
-          .then((balance) => {
-            this.settlePoolBalance = balance
-            resolve()
-          })
-          .catch((e) => {
-            reject(e)
-          })
-      })
     },
     /** 获取用户拥有数量 */
     getUserOwned() {
@@ -835,51 +703,6 @@ export default {
           })
       })
     },
-    /** 获取当前区块高度 */
-    getCurrentHeight() {
-      return new Promise((resolve, reject) => {
-        blockHeight()
-          .then((height) => {
-            this.currentHeight = height
-            resolve()
-          })
-          .catch(() => {
-            reject()
-          })
-      })
-    },
-    /** 获取质押总量 */
-    getTotalStakeCount() {
-      if (!this.tokenId) {
-        return
-      }
-      return new Promise((resolve, reject) => {
-        totalPledgeCount(this.tokenId)
-          .then((count) => {
-            this.totalStakeCount = count ? count : 0
-            resolve()
-          })
-          .catch(() => {
-            reject()
-          })
-      })
-    },
-    /** 获取用户质押信息 */
-    getUserStakeCount() {
-      if (!this.tokenId) {
-        return
-      }
-      return new Promise((resolve, reject) => {
-        userPledgeCount(this.tokenId)
-          .then((data) => {
-            this.userStakeInfo = data
-            resolve()
-          })
-          .catch(() => {
-            reject()
-          })
-      })
-    },
     /** 加载数据 */
     loadSupplyInfo() {
       return new Promise((resolve, reject) => {
@@ -918,8 +741,8 @@ export default {
               this.metadata.category = meta.category
               this.metadata.contentUrl = meta.contentUrl
               this.metadata.protected = meta.protected
-              this.metadata.language = meta.language ? meta.language : []
-              this.metadata.prompt = meta.prompt ? meta.prompt : []
+              this.metadata.language = meta.language
+              this.metadata.prompt = meta.prompt
               this.metadata.keyword = meta.keyword ? meta.keyword : []
               if (this.metadata.contentUrl) {
                 this.loadOpenContent(this.metadata.contentUrl)
@@ -984,90 +807,6 @@ export default {
     line-height: 26px;
     text-align: left;
     margin: 27px 0 40px 0;
-  }
-
-  .proposal-container {
-    display: flex;
-    flex-direction: row;
-    background: #37434d;
-    border: 1px solid #74939e;
-    border-radius: 10px;
-    margin-top: 29px;
-
-    .proposal-left {
-      text-align: left;
-      margin-top: 30px;
-      margin-left: 42px;
-      margin-bottom: 34px;
-      padding-left: 19px;
-      border-left: 2px solid;
-      border-image: linear-gradient(0deg, #50ced5, #46d1af) 1;
-
-      .proposal-left-title {
-        font-size: 24px;
-        line-height: 24px;
-        font-family: Arial;
-        font-weight: bold;
-      }
-
-      .proposal-left-sub {
-        margin-top: 32px;
-        font-size: 14px;
-        line-height: 17px;
-        font-family: Arial;
-        font-weight: bold;
-        color: #acbcc9;
-      }
-
-      .proposal-left-link {
-        margin-top: 17px;
-        font-size: 12px;
-        line-height: 12px;
-        font-family: Arial;
-        font-weight: bold;
-        color: #4097f5;
-        cursor: pointer;
-      }
-    }
-
-    .proposal-right {
-      padding: 43px 109px 22px 88px;
-
-      .proposal-right-title {
-        font-size: 30px;
-        line-height: 23px;
-        font-family: Arial;
-        font-weight: bold;
-        color: #ffffff;
-      }
-
-      .proposal-right-sub {
-        margin-top: 11px;
-        font-size: 12px;
-        line-height: 10px;
-        font-family: Arial;
-        font-weight: 400;
-        color: #acbcc9;
-      }
-
-      .proposal-right-btn {
-        margin-top: 19px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .proposal-right-tip {
-        margin-top: 8px;
-        font-size: 12px;
-        line-height: 10px;
-        font-family: Source Han Sans CN;
-        font-weight: 400;
-        color: #acbcc9;
-        text-align: left;
-      }
-    }
   }
 
   .form-container {
@@ -1259,13 +998,13 @@ export default {
           margin-top: 58px;
 
           .form-tag-label {
-            font-size: 10px;
+            font-size: 14px;
             font-family: Source Han Sans CN;
             font-weight: bold;
           }
 
           .form-tag-item {
-            font-size: 9px;
+            font-size: 12px;
             line-height: 17px;
             font-family: Source Han Sans CN;
             font-weight: 400;

@@ -1,3 +1,5 @@
+import moment from "moment"
+
 // Wallet address thumbnail display
 export const omitAddress = (val) => {
   if (val.length <= 7) {
@@ -75,4 +77,19 @@ export const toFixedString = (x) => {
   }
   return x;
 
+}
+
+// 1699934223
+export const Stamp2Time = (timestamp) => {
+  if (!timestamp) return ''
+  if (timestamp.length === 10) {
+    timestamp = timestamp * 1000
+  }
+  return moment(timestamp).format('YYYY/MM/DD HH:mm:ss')
+}
+
+
+export const fee2Percent = (fee) => {
+  if (!fee) return ''
+  return (fee / 100).toFixed(2) + '%'
 }
