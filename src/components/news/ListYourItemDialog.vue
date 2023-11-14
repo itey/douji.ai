@@ -1,5 +1,5 @@
 <template>
-  <el-dialog custom-class="list-your-item-dialog" :visible.sync="show" width="946px">
+  <el-dialog custom-class="list-your-item-dialog" :visible.sync="show" @open="getUserOwned()" width="946px">
     <div class="list-your-item-header text-color" slot="title">List Your Item</div>
     <div class="list-your-item-content">
       <div class="item-input-container">
@@ -35,17 +35,13 @@
 
 <script>
 import { createSaleOrder } from '@/utils/web3/market'
-import { nftApproval } from '@/utils/web3/nft'
+import { balanceOf, nftApproval } from '@/utils/web3/nft'
 export default {
   name: 'list-your-item-dialog',
   props: {
     tokenId: {
       type: String,
       default: '',
-    },
-    userOwned: {
-      type: String,
-      default: '0',
     },
   },
   data() {
@@ -54,6 +50,7 @@ export default {
       salePrice: null,
       saleQuantity: null,
       marketAddress: process.env.VUE_APP_MARKET,
+      userOwned: 0,
       error: {
         salePrice: undefined,
         saleQuantity: undefined,
@@ -63,6 +60,9 @@ export default {
         saleQuantity: true,
       },
     }
+  },
+  created() {
+    this.getUserOwned()
   },
   methods: {
     /** 点击创建订单 */
@@ -137,12 +137,24 @@ export default {
       if (this.ifPass.saleQuantity) {
         this.error.saleQuantity = ''
       }
-
       return ifSuccess
     },
     /** 显示控制 */
     showDialog() {
       this.show = true
+    },
+    /** 获取用户拥有数量 */
+    getUserOwned() {
+      return new Promise((resolve, reject) => {
+        balanceOf(this.tokenId)
+          .then((balance) => {
+            this.userOwned = balance
+            resolve()
+          })
+          .catch((e) => {
+            reject(e)
+          })
+      })
     },
   },
 }

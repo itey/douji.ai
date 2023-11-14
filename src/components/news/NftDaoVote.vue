@@ -5,9 +5,9 @@
       <div class="proposal-left-sub">
         <span class="text-color">{{ tokenOwner | omitAddress }}</span>has initiated a proposato modify the content and rules
         of this NFT at
-        <span class="text-color">{{ vote.startTime | Stamp2Time}}</span>. Pleasereview the proposal
+        <span class="text-color">{{ vote.startTime | stamp2Time}}</span>. Pleasereview the proposal
         before
-        <span class="text-color">{{ (Number(vote.startTime) + 259200).toString() | Stamp2Time}}</span>. It expires. After that, the proposal
+        <span class="text-color">{{ (Number(vote.startTime) + 259200).toString() | stamp2Time}}</span>. It expires. After that, the proposal
         will be invalidated.
       </div>
       <div class="proposal-left-link" @click="$refs['nftStakeDialog'].showDialog()">View the latest NFT infomation >></div>
@@ -27,12 +27,13 @@
         <span class="text-color">{{ userVoteCount }}</span>
       </div>
     </div>
-    <NftStakeDialog ref="nftStakeDialog" :voteData="voteData" :tokenOwner="tokenOwner" :tokenId="tokenId" />
+    <NftUpdateInfoDialog ref="nftStakeDialog" :voteData="voteData" :tokenOwner="tokenOwner" :tokenId="tokenId" />
   </div>
 </template>
 
 <script>
-import NftStakeDialog from '@/components/news/NftStakeDialog'
+import NftUpdateInfoDialog from '@/components/news/NftUpdateInfoDialog'
+import { eventBus } from '@/utils/event-bus'
 import { userPledgeCount } from '@/utils/web3/nft'
 export default {
   name: 'nft-dao-vote',
@@ -51,7 +52,7 @@ export default {
     },
   },
   components: {
-    NftStakeDialog,
+    NftUpdateInfoDialog,
   },
   computed: {
     userVoteCount() {
@@ -75,6 +76,10 @@ export default {
   },
   mounted() {
     this.getUserPledgeCount()
+    eventBus.$on('refresh_stake_info', this.getUserPledgeCount)
+  },
+  destroyed() {
+    eventBus.$off('refresh_stake_info')
   },
   methods: {
     /** 获取我的质押数量 */

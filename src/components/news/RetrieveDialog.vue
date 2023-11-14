@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { eventBus } from '@/utils/event-bus'
 import { unStakeNft } from '@/utils/web3/nft'
 export default {
   name: 'retrieve-dialog',
@@ -45,7 +46,7 @@ export default {
       if (!this.userStakeInfo || this.userStakeInfo[0] <= 0) {
         return false
       }
-      if (this.userStakeInfo[1] < this.blockHeight) {
+      if (this.userStakeInfo[1] > this.blockHeight) {
         return false
       }
       return true
@@ -74,6 +75,7 @@ export default {
         const txJson = await unStakeNft(this.tokenId, this.unStakeCount)
         console.log(txJson)
         this.$toast.success(this.$t('news-detail.retrieve_success'))
+        eventBus.$emit('refresh_stake_info', this.tokenId)
         this.show = false
       } catch (error) {
         console.log(error)

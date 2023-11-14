@@ -221,9 +221,21 @@ export default {
             trait_type: 'contentUrl',
             value: this.form.contentUrl,
           },
+          {
+            display_type: 'date',
+            trait_type: 'Birthday',
+            value: new Date().getTime(),
+          },
+          {
+            display_type: 'date',
+            trait_type: 'UpdateDay',
+            value: new Date().getTime(),
+          },
         ],
         contentUrl: this.form.contentUrl,
         protected: this.form.protected,
+        Birthday: new Date().getTime(),
+        UpdateDay: new Date().getTime(),
       }
       if (this.form.language) {
         metaJson.language = this.form.language

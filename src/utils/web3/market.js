@@ -48,6 +48,60 @@ export function createSaleOrder(tokenId, count, price) {
 
 }
 
+/** 取消订单 */
+export function cancelSaleOrder(orderId) {
+  if (!checkAccount()) {
+    return
+  }
+  const marketContract = getMarketContract()
+  if (!marketContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    // nftType 0-721 1-1155
+    marketContract.methods.cancel(orderId)
+      .send({ from: fromAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error)
+      })
+  })
+
+}
+
+/** 交易下单 */
+export function swapOrder(orderId) {
+  if (!checkAccount()) {
+    return
+  }
+  const marketContract = getMarketContract()
+  if (!marketContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    // nftType 0-721 1-1155
+    marketContract.methods.swap(orderId)
+      .send({ from: fromAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error)
+      })
+  })
+
+}
+
 
 /** 取合约里DAO 质押奖金池子的额度 */
 export function getSettlePoolBalance(tokenId) {

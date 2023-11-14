@@ -141,6 +141,8 @@ export default {
               this.metadata.language = meta.language
               this.metadata.prompt = meta.prompt
               this.metadata.keyword = meta.keyword ? meta.keyword : []
+              this.metadata.Birthday = meta.Birthday
+              this.metadata.UpdateDay = meta.UpdateDay
               if (this.metadata.contentUrl && this.step == 2) {
                 return Promise.all([
                   this.loadOpenContent(this.metadata.contentUrl),
@@ -274,9 +276,21 @@ export default {
             trait_type: 'contentUrl',
             value: form.contentUrl,
           },
+          {
+            display_type: 'date',
+            trait_type: 'Birthday',
+            value: form.Birthday,
+          },
+          {
+            display_type: 'date',
+            trait_type: 'UpdateDay',
+            value: new Date().getTime(),
+          },
         ],
         contentUrl: form.contentUrl,
         protected: form.protected,
+        UpdateDay: new Date().getTime(),
+        Birthday: form.Birthday,
       }
       if (form.language) {
         metaJson.language = form.language

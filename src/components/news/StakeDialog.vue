@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { eventBus } from '@/utils/event-bus'
 import { stakeNft } from '@/utils/web3/nft'
 export default {
   name: 'stake-dialog',
@@ -60,6 +61,7 @@ export default {
         const txJson = await stakeNft(this.tokenId, this.stakeCount)
         console.log(txJson)
         this.$toast.success(this.$t('news-detail.stake_success'))
+        eventBus.$emit('refresh_stake_info')
         this.show = false
       } catch (error) {
         console.log(error)

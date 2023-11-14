@@ -20,7 +20,7 @@ const chain = {
     account: undefined,
     balanceBnb: undefined,
     balanceMbd: undefined,
-    mbdPrice: undefined
+    mbdPrice: undefined,
   },
 
   mutations: {
@@ -35,7 +35,7 @@ const chain = {
     },
     setMbdPrice: (state, mbdPrice) => {
       state.mbdPrice = mbdPrice
-    }
+    },
   },
 
   actions: {
@@ -65,7 +65,7 @@ const chain = {
         const price = weiToEth(res[1]) / weiToMbd(res[0])
         commit('setMbdPrice', price.toFixed(8))
       })
-    }
+    },
   }
 }
 

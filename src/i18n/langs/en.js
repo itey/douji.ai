@@ -96,6 +96,10 @@ export default {
       "Submit success.",
     "update_unable":
       "No permission to update.",
+    "order_cancel_success":
+      "Order cancel success.",
+    "swap_success":
+      "Swap success.",
   },
   "user": {
     "profile_save_success": "Profile saved successfully.",

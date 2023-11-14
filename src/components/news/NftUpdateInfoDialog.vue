@@ -49,13 +49,13 @@
                   <div class="nft-stake-attr-label">Creator</div>
                   <div class="nft-stake-attr-value">{{ tokenOwner | omitAddress}}</div>
                 </div>
-                <div class="nft-stake-attr-item">
+                <div class="nft-stake-attr-item" v-if="metadata.Birthday">
                   <div class="nft-stake-attr-label">Created At</div>
-                  <div class="nft-stake-attr-value">2023/2/2 09:42:45</div>
+                  <div class="nft-stake-attr-value">{{ metadata.Birthday | stamp2Time }}</div>
                 </div>
-                <div class="nft-stake-attr-item">
+                <div class="nft-stake-attr-item" v-if="metadata.UpdateDay">
                   <div class="nft-stake-attr-label">Updated At</div>
-                  <div class="nft-stake-attr-value">{{ voteData.vote.startTime | Stamp2Time }}</div>
+                  <div class="nft-stake-attr-value">{{ metadata.UpdateDay | stamp2Time }}</div>
                 </div>
               </div>
             </div>
@@ -146,7 +146,7 @@ var md = require('markdown-it')({
   // },
 })
 export default {
-  name: 'nft-stake-dialog',
+  name: 'nft-update-info',
   props: {
     voteData: {
       type: Object,

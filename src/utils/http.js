@@ -178,3 +178,21 @@ export function getNftOrders(page, tokenId) {
         params: { page, tokenId }
     })
 }
+
+// 获取交易历史（近10条）
+export function getNftTransactions(tokenId) {
+    return request({
+        url: '/getNftTransactions',
+        method: 'post',
+        params: { tokenId }
+    })
+}
+
+// 通知后端更新列表
+export function notifyUpdateOrder(tokenId) {
+    return request({
+        url: '/notifyUpdateOrder',
+        method: 'post',
+        params: { tokenId }
+    })
+}

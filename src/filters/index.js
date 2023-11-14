@@ -10,6 +10,15 @@ export const omitAddress = (val) => {
   return prefix + '...' + suffix
 }
 
+export const omitTxHash = (val) => {
+  if (val.length <= 7) {
+    return val
+  }
+  const prefix = val.substring(0, 10)
+  const suffix = val.substring(val.length - 5)
+  return prefix + '...' + suffix
+}
+
 // Format decimal places
 export const decimalPlace2 = (val) => {
   return parseFloat((Math.floor(val * 100) / 100).toFixed(2)).toString()
@@ -80,7 +89,7 @@ export const toFixedString = (x) => {
 }
 
 // 1699934223
-export const Stamp2Time = (timestamp) => {
+export const stamp2Time = (timestamp) => {
   if (!timestamp) return ''
   if (timestamp.length === 10) {
     timestamp = timestamp * 1000

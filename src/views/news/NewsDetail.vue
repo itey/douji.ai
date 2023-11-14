@@ -123,8 +123,8 @@
           </div>
           <div class="transactions-container">
             <div class="transactions-title text-color">
-              <span>Transactions</span>
-              <span style="font-size: 16px;color: #ACBCC9;">(3)</span>
+              <span>Latest Transactions</span>
+              <!-- <span style="font-size: 16px;color: #ACBCC9;">(3)</span> -->
             </div>
             <div class="transactions-head">
               <div class="transactions-column">Transactions ID</div>
@@ -132,12 +132,15 @@
               <div class="transactions-column">To</div>
               <div class="transactions-column">Amount</div>
             </div>
-            <div class="transactions-item" v-for="(item,index) in 3">
-              <div class="transactions-column text-color">0x78d8ksfa...4d7bw68745d</div>
-              <div class="transactions-column text-color">0x78d8ksfa...4d7bw68745d</div>
-              <div class="transactions-column text-color">0x78d8ksfa...4d7bw68745d</div>
-              <div class="transactions-column text-color">12</div>
-            </div>
+            <template v-if="transactionHistory.length">
+              <div class="transactions-item" v-for="(item,index) in transactionHistory" :key="index">
+                <div class="transactions-column text-color">{{ item.hash | omitTxHash }}</div>
+                <div class="transactions-column text-color">{{ item.from | omitAddress }}</div>
+                <div class="transactions-column text-color">{{ item.to | omitAddress }}</div>
+                <div class="transactions-column text-color">{{ item.amount }}</div>
+              </div>
+            </template>
+            <div class="transactions-item" v-else>No transactions</div>
           </div>
           <div class="more-container">
             <div class="more-title text-color">More from this creator</div>
@@ -208,38 +211,7 @@
               </div>
             </div>
           </div>
-          <div class="form-attr-container">
-            <div class="form-attr-title">
-              <div class="text-color">Secondary Market</div>
-              <div class="form-attr-action" @click="$refs['listYourItemDialog'].showDialog()">
-                + List Your
-                item
-              </div>
-            </div>
-            <div class="form-second-market">
-              <div class="second-market-column" style="width: 130px;">
-                <div class="second-market-header" style="padding-left: 14px;">From</div>
-                <div class="second-market-td" style="padding-left: 14px;" v-for="(item,index) in nftOrderList" :key="index">{{ item.owner | omitAddress }}</div>
-              </div>
-              <div class="second-market-column" style="text-align: right;width: 91px;">
-                <div class="second-market-header">Price(MBD)</div>
-                <div class="second-market-td" v-for="(item,index) in nftOrderList" :key="index">{{ item.price }}</div>
-              </div>
-              <div class="second-market-column" style="text-align: right;width: 104px;">
-                <div class="second-market-header" style="padding-right: 12px;">Available</div>
-                <div class="second-market-td" style="padding-right: 12px;" v-for="(item,index) in nftOrderList" :key="index">{{ item.tokenValue }}</div>
-              </div>
-              <div class="second-market-column" style="width: 60px;">
-                <div class="second-market-header"></div>
-                <div class="second-market-td" style="font-size: 12px;" v-for="(item,index) in nftOrderList" :key="index">
-                  <div class="second-btn">
-                    <span v-if="item.owner != $store.state.user.account" style="color: #00F9E5;">Buy</span>
-                    <span v-else style="color: #92B5DE;">Cancel</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <MarketOrderList :tokenId="tokenId" />
           <NftDaoGovernance :userOwned="userOwned" :tokenId="tokenId" :operable="true" />
           <div class="form-attr-container">
             <div class="form-attr-title text-color">DOUJI NFT Information</div>
@@ -260,13 +232,13 @@
                 <div class="form-attr-label">Creator</div>
                 <div class="form-attr-value">English</div>
               </div>
-              <div class="form-attr-item">
+              <div class="form-attr-item" v-if="metadata.Birthday">
                 <div class="form-attr-label">Created At</div>
-                <div class="form-attr-value">2023/2/2 09:42:45</div>
+                <div class="form-attr-value">{{ metadata.Birthday | stamp2Time }}</div>
               </div>
-              <div class="form-attr-item">
+              <div class="form-attr-item" v-if="metadata.UpdateDay">
                 <div class="form-attr-label">Updated At</div>
-                <div class="form-attr-value">2023/9/3 13:03:38</div>
+                <div class="form-attr-value">{{ metadata.UpdateDay | stamp2Time}}</div>
               </div>
             </div>
           </div>
@@ -286,7 +258,7 @@
         </div>
       </div>
     </div>
-    <ListYourItemDialog :tokenId="tokenId" :userOwned="userOwned" ref="listYourItemDialog" />
+
     <RevisionHistoryDialog ref="revisionHistoryDialog" />
     <CheckInDialog @onCheckedIn="onCheckedIn()" ref="checkInDialog" />
     <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />
@@ -303,7 +275,7 @@ import SetSaleDialog from '@/components/create/SetSaleDialog'
 import BlindDialog from '@/components/news/BlindDialog'
 import BlindOpenDialog from '@/components/news/BlindOpenDialog'
 import CheckInDialog from '@/components/news/CheckInDialog'
-import ListYourItemDialog from '@/components/news/ListYourItemDialog'
+import MarketOrderList from '@/components/news/MarketOrderList'
 import NftDaoGovernance from '@/components/news/NftDaoGovernance'
 import NftDaoVote from '@/components/news/NftDaoVote.vue'
 import RevisionHistoryDialog from '@/components/news/RevisionHistoryDialog'
@@ -319,7 +291,7 @@ import {
 import { eventBus } from '@/utils/event-bus'
 import {
   checkBlindBox,
-  getNftOrders,
+  getNftTransactions,
   loadFromUrl,
   unlockContent,
 } from '@/utils/http'
@@ -351,7 +323,6 @@ export default {
   name: 'news-detail-view',
   components: {
     NewsItem,
-    ListYourItemDialog,
     RevisionHistoryDialog,
     CheckInDialog,
     BlindDialog,
@@ -360,6 +331,7 @@ export default {
     SetDaoDialog,
     NftDaoVote,
     NftDaoGovernance,
+    MarketOrderList,
   },
   computed: {
     canUpdate() {
@@ -410,18 +382,19 @@ export default {
         isVoting: false,
       },
       userOwned: undefined,
-      ifCheckedIn: true,
+      ifCheckedIn: false,
       blindBoxToday: {},
       blindBoxTimerTask: undefined,
       blindBox: {},
       boxFlagInfo: {},
-      nftOrderList: {},
+      transactionHistory: [],
       subscription: false,
     }
   },
-
-  mounted() {
+  created() {
     this.tokenId = this.$route.query.tokenId
+  },
+  mounted() {
     if (!this.tokenId) {
       return
     }
@@ -546,14 +519,13 @@ export default {
         this.loadSupplyInfo(),
         this.loadMetadata(),
         this.getUserOwned(),
-        this.loadNftOrderList(),
+        this.loadTransactionHistory(),
       ])
         .then(() => {
           this.metadata.maxSupply = this.tokenSupplyInfo.maxSupply
           this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply
           this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply
           this.metadata.initialPrice = this.tokenSupplyInfo.price.price
-          console.log(this.tokenSupplyInfo)
         })
         .catch((e) => {
           console.log(e)
@@ -561,21 +533,6 @@ export default {
         .finally(() => {
           loadingInstance.close()
         })
-    },
-    /** 加载挂单数据 */
-    loadNftOrderList() {
-      return new Promise((resolve, reject) => {
-        getNftOrders(1, this.tokenId)
-          .then((r) => {
-            if (r.code == 1) {
-              this.nftOrderList = r.data.list
-            }
-            resolve()
-          })
-          .catch((e) => {
-            reject(e)
-          })
-      })
     },
     /** 用户点击mint */
     async handleMint() {
@@ -786,6 +743,20 @@ export default {
             }
             resolve(r.data)
           })
+        })
+      })
+    },
+    /** 加载交易历史数据 */
+    loadTransactionHistory() {
+      return new Promise((resolve, reject) => {
+        getNftTransactions(this.tokenId).then((res) => {
+          if (res.code == 1) {
+            this.transactionHistory = res.data.list
+            console.log(res)
+            resolve()
+          } else {
+            reject(res.message)
+          }
         })
       })
     },
