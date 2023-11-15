@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="btn-container">
-      <el-button class="common-btn2">View NFT</el-button>
+      <el-button @click="toViewNft()" class="common-btn2">View NFT</el-button>
     </div>
   </el-dialog>
 </template>
@@ -23,19 +23,11 @@ export default {
   props: {
     tx: {
       type: Object,
-      default: () => {
-        return {
-          transactionHash: undefined,
-          to: undefined,
-          events: {
-            Authorised: {
-              returnValues: {
-                tokenId: undefined,
-              },
-            },
-          },
-        }
-      },
+      default: () => {},
+    },
+    tokenId: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -46,6 +38,12 @@ export default {
   methods: {
     showDialog() {
       this.show = true
+    },
+    toViewNft() {
+      this.$router.replace({
+        path: '/news-detail',
+        query: { tokenId: this.tokenId },
+      })
     },
   },
 }

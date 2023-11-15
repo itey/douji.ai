@@ -3,7 +3,7 @@
     <template v-if="loadComplete">
       <create-step1 v-if="step==1" :edit="true" :metadata="metadata" @handleUpdate="handleUpdate1" @backClick="backClick"></create-step1>
       <create-step2 v-if="step==2" :edit="true" :metadata="metadata" @handleUpdate="handleUpdate2" @backClick="backClick"></create-step2>
-      <UpdateSuccess ref="successDialog" :tx="updateTxJson" />
+      <UpdateSuccess :tokenId="tokenId" ref="successDialog" :tx="updateTxJson" />
     </template>
   </div>
 </template>
@@ -129,20 +129,7 @@ export default {
               if (r.status !== 200) {
                 reject(r.statusText)
               }
-              var meta = r.data
-              this.ipfsData = meta
-              this.metadata.title = meta.title
-              this.metadata.description = meta.description
-              this.metadata.image = meta.image
-              this.metadata.contentType = meta.contentType
-              this.metadata.category = meta.category
-              this.metadata.contentUrl = meta.contentUrl
-              this.metadata.protected = meta.protected
-              this.metadata.language = meta.language
-              this.metadata.prompt = meta.prompt
-              this.metadata.keyword = meta.keyword ? meta.keyword : []
-              this.metadata.Birthday = meta.Birthday
-              this.metadata.UpdateDay = meta.UpdateDay
+              this.metadata = r.data
               if (this.metadata.contentUrl && this.step == 2) {
                 return Promise.all([
                   this.loadOpenContent(this.metadata.contentUrl),

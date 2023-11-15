@@ -2,6 +2,9 @@ import moment from "moment"
 
 // Wallet address thumbnail display
 export const omitAddress = (val) => {
+  if (!val) {
+    return val
+  }
   if (val.length <= 7) {
     return val
   }
@@ -11,6 +14,9 @@ export const omitAddress = (val) => {
 }
 
 export const omitTxHash = (val) => {
+  if (!val) {
+    return val
+  }
   if (val.length <= 7) {
     return val
   }
@@ -111,4 +117,18 @@ export const fee2Percent = (fee) => {
   return (fee / 100).toFixed(2) + '%'
 }
 
-
+export const sptType2Name = (type) => {
+  if (!type) {
+    return type
+  }
+  switch (type) {
+    case '0':
+      return 'EBP-20'
+    case '1':
+      return 'EBP-721'
+    case '2':
+      return 'EBP-1155'
+    default:
+      return type
+  }
+}

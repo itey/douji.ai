@@ -3,7 +3,7 @@
     <div class="proposal-left">
       <div class="proposal-left-title text-color">NFT DAO Proposal</div>
       <div class="proposal-left-sub">
-        <span class="text-color">{{ tokenOwner | omitAddress }}</span>has initiated a proposato modify the content and rules
+        <span class="text-color">{{ tokenOwner | omitAddress }}</span> has initiated a proposato modify the content and rules
         of this NFT at
         <span class="text-color">{{ vote.startTime | stamp2Time}}</span>. Pleasereview the proposal
         before
@@ -27,7 +27,7 @@
         <span class="text-color">{{ userVoteCount }}</span>
       </div>
     </div>
-    <NftUpdateInfoDialog ref="nftStakeDialog" :voteData="voteData" :tokenOwner="tokenOwner" :tokenId="tokenId" />
+    <NftUpdateInfoDialog ref="nftStakeDialog" :voteData="voteData" :userOwned="userOwned" :tokenOwner="tokenOwner" :tokenId="tokenId" />
   </div>
 </template>
 
@@ -47,6 +47,10 @@ export default {
       default: () => {},
     },
     tokenOwner: {
+      type: String,
+      default: '',
+    },
+    userOwned: {
       type: String,
       default: '',
     },

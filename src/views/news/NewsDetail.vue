@@ -6,63 +6,12 @@
       <el-breadcrumb-item v-if="metadata.title">{{ metadata.title }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <NftDaoVote v-if="tokenSupplyInfo.isVoting" :tokenOwner="tokenOwner" :voteData="tokenSupplyInfo" :tokenId="tokenId" />
+    <NftDaoVote v-if="tokenSupplyInfo.isVoting" :tokenOwner="tokenOwner" :voteData="tokenSupplyInfo" :userOwned="userOwned" :tokenId="tokenId" />
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
           <div class="form-title text-color">{{ metadata.title }}</div>
-          <div class="info-container">
-            <div class="author-container">
-              <img style="width: 52px;height: 52px;border-radius: 26px;" />
-              <div class="author-info">
-                <div class="author-name">
-                  by
-                  <span style="color: #00F9E5;">Victor Deaw</span>
-                </div>
-                <div class="author-desc">This paragraph is the author'spersonal description</div>
-              </div>
-              <div class="subscription light" v-if="subscription" @click="subscription = false">
-                <img style="width: 9px;height: 9px;" src="@/assets/images/news/add.png" />
-                <span>Subscription</span>
-              </div>
-              <div class="subscription" v-else @click="subscription = true">
-                <img style="width: 13px;height: 9px;" src="@/assets/images/news/true.png" />
-                <span>Subscription</span>
-              </div>
-            </div>
-            <div class="news-info">
-              <div class="news-info-item">
-                <div class="news-info-item-label">
-                  <img src="@/assets/images/news/date.png" />
-                  <span>6528 Min</span>
-                </div>
-                <div class="news-info-item-value">
-                  <img src="@/assets/images/up.png" />
-                  <span>6528 Min</span>
-                </div>
-              </div>
-              <div class="news-info-item">
-                <div class="news-info-item-label">
-                  <img src="@/assets/images/news/like.png" />
-                  <span>6528</span>
-                </div>
-                <div class="news-info-item-value">
-                  <img src="@/assets/images/up.png" />
-                  <span>6528</span>
-                </div>
-              </div>
-              <div class="news-info-item">
-                <div class="news-info-item-label">
-                  <img src="@/assets/images/news/star.png" />
-                  <span>6528</span>
-                </div>
-                <div class="news-info-item-value">
-                  <img src="@/assets/images/up.png" />
-                  <span>6528</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <NftAuthorInfo />
           <img style="width: 940px;height: 532px;margin-top:36px;" :src="metadata.image" />
           <div class="form-desc">{{ metadata.description }}</div>
           <div class="form-label-sub" style="margin-top: 16px;">
@@ -152,109 +101,12 @@
           </div>
         </div>
         <div class="form-right">
-          <div class="form-attr-container">
-            <div class="form-attr-title text-color">DOUJI NFT Attributes</div>
-            <div class="form-attr-list">
-              <div class="form-attr-item">
-                <div class="form-attr-label">Content Type</div>
-                <div class="form-attr-value">{{ metadata.contentType }}</div>
-              </div>
-              <div class="form-attr-item">
-                <div class="form-attr-label">Category</div>
-                <div class="form-attr-value">{{ metadata.category }}</div>
-              </div>
-              <div class="form-attr-item" v-if="metadata.prompt">
-                <div class="form-attr-label">Platform</div>
-                <div class="form-attr-value">{{ metadata.prompt }}</div>
-              </div>
-              <div class="form-attr-item" v-if="metadata.language">
-                <div class="form-attr-label">Language</div>
-                <div class="form-attr-value">{{ metadata.language }}</div>
-              </div>
-              <div class="form-attr-item">
-                <div class="form-attr-label">Max Supply</div>
-                <div class="form-attr-value">{{ metadata.maxSupply | toLocalString}}</div>
-              </div>
-              <div class="form-attr-item">
-                <div class="form-attr-label">Available Supply</div>
-                <div class="form-attr-value">{{ metadata.availableSupply | toLocalString }}</div>
-              </div>
-              <div class="form-attr-item">
-                <div class="form-attr-label">Initial Mint Quantity</div>
-                <div class="form-attr-value">{{ metadata.initialQuantity | toLocalString }}</div>
-              </div>
-            </div>
-          </div>
-          <div class="form-attr-container">
-            <div class="form-attr-title text-color">Primary Market</div>
-            <div class="form-attr-market">
-              <div class="form-attr-market-top">
-                <div class="form-attr-available">
-                  Available :
-                  <span class="text-color">{{ metadata.availableSupply | toLocalString }}</span>
-                </div>
-                <div class="form-attr-available">
-                  You owned :
-                  <span class="text-color">{{ userOwned }}</span>
-                </div>
-              </div>
-              <div class="form-attr-mbd">
-                <div class="mbd-value text-color">{{ metadata.initialPrice | decimalPlace4 }} MBD</div>
-                <div class="mbd-transform">≈${{ (metadata.initialPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
-              </div>
-              <el-button @click="handleMint()" :disabled="metadata.availableSupply <= 0" class="common-btn2 form-attr-mint">Mint</el-button>
-              <div class="form-attr-tip">
-                Owning
-                <span class="text-color">1 BJxStar</span> To Get
-                <span class="text-color">20%</span>
-                discount
-              </div>
-            </div>
-          </div>
+          <NftAttributes :metadata="metadata" :tokensInfo="tokenSupplyInfo" />
+          <NftPrimaryMarket @handleReload="dataLoad" :metadata="metadata" :tokensInfo="tokenSupplyInfo" :userOwned="userOwned" />
           <MarketOrderList :tokenId="tokenId" />
           <NftDaoGovernance :userOwned="userOwned" :tokenId="tokenId" :operable="true" />
-          <div class="form-attr-container">
-            <div class="form-attr-title text-color">DOUJI NFT Information</div>
-            <div class="form-attr-list">
-              <div class="form-attr-item">
-                <div class="form-attr-label">Token Address</div>
-                <div class="form-attr-value">{{ nftContract | omitAddress }}</div>
-              </div>
-              <div class="form-attr-item">
-                <div class="form-attr-label">Token ID</div>
-                <div class="form-attr-value">{{ tokenId }}</div>
-              </div>
-              <div class="form-attr-item">
-                <div class="form-attr-label">Token Standard</div>
-                <div class="form-attr-value">BEP-1155</div>
-              </div>
-              <div class="form-attr-item">
-                <div class="form-attr-label">Creator</div>
-                <div class="form-attr-value">English</div>
-              </div>
-              <div class="form-attr-item" v-if="metadata.Birthday">
-                <div class="form-attr-label">Created At</div>
-                <div class="form-attr-value">{{ metadata.Birthday | stamp2Time }}</div>
-              </div>
-              <div class="form-attr-item" v-if="metadata.UpdateDay">
-                <div class="form-attr-label">Updated At</div>
-                <div class="form-attr-value">{{ metadata.UpdateDay | stamp2Time}}</div>
-              </div>
-            </div>
-          </div>
-          <div class="reward-container" v-if="ifCheckedIn">
-            <div class="reward-top-title">Reading Reward</div>
-            <div class="reward-value text-color" style="margin-top: 31px;">00:23:46</div>
-            <div class="reward-tip">Total reading time today</div>
-            <div class="reward-value text-color" style="margin-top: 58px;">01/12</div>
-            <div class="reward-tip">Receive blind box mission today</div>
-            <div class="reward-mbd">
-              <div class="reward-mbd-value">100 MBD</div>
-              <div class="reward-mbd-transform">≈$626 57</div>
-            </div>
-            <div class="reward-tip">Receive blind box mission today</div>
-            <el-button class="common-btn2" style="width: 338px;margin: 31px 0 48px 0;">Settlement</el-button>
-          </div>
+          <NftInformation :metadata="metadata" :tokenOwner="tokenOwner" :tokenId="tokenId" />
+          <ReadingReward v-if="ifCheckedIn" />
         </div>
       </div>
     </div>
@@ -262,9 +114,9 @@
     <RevisionHistoryDialog :tokenId="tokenId" ref="revisionHistoryDialog" />
     <CheckInDialog @onCheckedIn="onCheckedIn()" ref="checkInDialog" />
     <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />
-    <BlindOpenDialog @handleReload="pageLoad" :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
-    <SetSaleDialog @handleReload="pageLoad" :tokenId="tokenId" ref="setSaleDialog" />
-    <SetDaoDialog @handleReload="pageLoad" :tokenId="tokenId" ref="setDaoDialog" />
+    <BlindOpenDialog @handleReload="dataLoad" :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
+    <SetSaleDialog @handleReload="dataLoad" :tokenId="tokenId" ref="setSaleDialog" />
+    <SetDaoDialog @handleReload="dataLoad" :tokenId="tokenId" ref="setDaoDialog" />
   </div>
 </template>
 
@@ -276,8 +128,13 @@ import BlindDialog from '@/components/news/BlindDialog'
 import BlindOpenDialog from '@/components/news/BlindOpenDialog'
 import CheckInDialog from '@/components/news/CheckInDialog'
 import MarketOrderList from '@/components/news/MarketOrderList'
+import NftAttributes from '@/components/news/NftAttributes'
+import NftAuthorInfo from '@/components/news/NftAuthorInfo'
 import NftDaoGovernance from '@/components/news/NftDaoGovernance'
 import NftDaoVote from '@/components/news/NftDaoVote.vue'
+import NftInformation from '@/components/news/NftInformation'
+import NftPrimaryMarket from '@/components/news/NftPrimaryMarket'
+import ReadingReward from '@/components/news/ReadingReward'
 import RevisionHistoryDialog from '@/components/news/RevisionHistoryDialog'
 import {
   boxCount2Time,
@@ -295,13 +152,11 @@ import {
   loadFromUrl,
   unlockContent,
 } from '@/utils/http'
-import { approveMbd } from '@/utils/web3/mbd'
 import {
   balanceOf,
   getTokenOwner,
   tokenURI,
   tokensData,
-  userMint,
 } from '@/utils/web3/nft'
 var md = require('markdown-it')({
   html: true,
@@ -332,6 +187,11 @@ export default {
     NftDaoVote,
     NftDaoGovernance,
     MarketOrderList,
+    NftAuthorInfo,
+    NftAttributes,
+    NftPrimaryMarket,
+    NftInformation,
+    ReadingReward,
   },
   computed: {
     canUpdate() {
@@ -367,16 +227,20 @@ export default {
       tokenOwner: undefined,
       tokenMetaUrl: undefined,
       metadata: {
+        language: undefined,
         title: null,
         image: null,
         description: null,
         openContent: null,
         keyword: [],
         maxSupply: null,
-        availableSupply: null,
         initialQuantity: null,
-        initialPrice: null,
         protectedContent: undefined,
+        contentType: undefined,
+        category: undefined,
+        prompt: undefined,
+        Birthday: undefined,
+        UpdateDay: undefined,
       },
       tokenSupplyInfo: {
         isVoting: false,
@@ -403,13 +267,13 @@ export default {
         background: 'rgba(0, 0, 0, 0.8)',
       })
       setTimeout(() => {
-        this.pageLoad()
-        loadingInstance.close()
+        this.dataLoad()
         this.checkIn()
         this.checkBlindBox()
         this.blindBoxTimerTask = setInterval(() => {
           this.checkBlindBox()
         }, 1000 * 20)
+        loadingInstance.close()
       }, 4000)
     } else {
       eventBus.$on('user_login', () => {
@@ -417,7 +281,7 @@ export default {
           background: 'rgba(0, 0, 0, 0.8)',
         })
         setTimeout(() => {
-          this.pageLoad()
+          this.dataLoad()
           loadingInstance.close()
           this.checkIn()
           this.checkBlindBox()
@@ -510,57 +374,24 @@ export default {
       this.$refs['blindOpenDialog'].showDialog()
     },
     /** 加载数据 */
-    pageLoad() {
+    async dataLoad() {
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',
       })
-      Promise.all([
+      const promiseAll = Promise.all([
         this.getOwner(),
         this.loadSupplyInfo(),
         this.loadMetadata(),
         this.getUserOwned(),
         this.loadTransactionHistory(),
       ])
-        .then(() => {
-          this.metadata.maxSupply = this.tokenSupplyInfo.maxSupply
-          this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply
-          this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply
-          this.metadata.initialPrice = this.tokenSupplyInfo.price.price
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-        .finally(() => {
-          loadingInstance.close()
-        })
-    },
-    /** 用户点击mint */
-    async handleMint() {
-      var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
-      const mbdPrice = this.metadata.initialPrice
-      if (mbdPrice && mbdPrice > 0) {
-        try {
-          await approveMbd(this.nftContract, mbdPrice)
-        } catch (e) {
-          console.log(e)
-          this.$toast.warning(this.$t('news-detail.mbd_approve_failed'))
-          loadingInstance.close()
-          return
-        }
-      }
       try {
-        await userMint(this.tokenId, 1)
-      } catch (e) {
-        console.log(e)
-        this.$toast.warning(this.$t('news-detail.nft_mint_failed'))
+        await promiseAll
+      } catch (error) {
+        this.$toast.error(error)
+      } finally {
         loadingInstance.close()
-        return
       }
-      this.$toast.success(this.$t('news-detail.nft_mint_success'))
-      loadingInstance.close()
-      this.pageLoad()
     },
     /** 获取用户拥有数量 */
     getUserOwned() {
@@ -596,14 +427,6 @@ export default {
         this.$toast.info(this.$t('news-detail.have_no_nft'))
         loadingInstance.close()
       }
-    },
-    /** 点击赎回 */
-    handleRetrieve() {
-      if (!this.retrieveUseable) {
-        this.$toast.info(this.$t('news-detail.retrieve_unable'))
-        return
-      }
-      this.$refs['retrieveDialog'].showDialog()
     },
     /** 点击更新1 */
     handleUpdate(step) {
@@ -669,10 +492,12 @@ export default {
         tokensData(this.tokenId)
           .then((res) => {
             this.tokenSupplyInfo = res
+            console.log(this.tokenSupplyInfo)
             resolve()
           })
-          .catch(() => {
-            reject()
+          .catch((e) => {
+            console.log(e)
+            reject(e)
           })
       })
     },
@@ -689,18 +514,7 @@ export default {
               if (r.status !== 200) {
                 reject(r.statusText)
               }
-              var meta = r.data
-              this.ipfsData = meta
-              this.metadata.title = meta.title
-              this.metadata.description = meta.description
-              this.metadata.image = meta.image
-              this.metadata.contentType = meta.contentType
-              this.metadata.category = meta.category
-              this.metadata.contentUrl = meta.contentUrl
-              this.metadata.protected = meta.protected
-              this.metadata.language = meta.language
-              this.metadata.prompt = meta.prompt
-              this.metadata.keyword = meta.keyword ? meta.keyword : []
+              this.metadata = r.data
               if (this.metadata.contentUrl) {
                 this.loadOpenContent(this.metadata.contentUrl)
                   .then((openContent) => {
@@ -752,7 +566,6 @@ export default {
         getNftTransactions(this.tokenId).then((res) => {
           if (res.code == 1) {
             this.transactionHistory = res.data.list
-            console.log(res)
             resolve()
           } else {
             reject(res.message)
@@ -801,129 +614,6 @@ export default {
           font-family: Source Han Sans CN;
           font-weight: bold;
           line-height: 35px;
-        }
-
-        .info-container {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          margin-top: 55px;
-
-          .author-container {
-            display: flex;
-            flex-direction: row;
-
-            .author-info {
-              margin-left: 13px;
-              text-align: left;
-
-              .author-name {
-                cursor: pointer;
-                font-size: 16px;
-                font-family: Source Han Sans CN;
-                font-weight: 400;
-                color: #acbcc9;
-              }
-
-              .author-desc {
-                font-size: 12px;
-                font-family: Source Han Sans CN;
-                font-weight: 400;
-                color: #acbcc9;
-                line-height: 16px;
-                margin-top: 7px;
-              }
-            }
-
-            .subscription {
-              margin-left: 14px;
-              height: 34px;
-              font-size: 12px;
-              font-family: Arial;
-              font-weight: bold;
-              width: 112px;
-              color: #acbcc9;
-              background: #37434d;
-              border-radius: 17px;
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: center;
-              cursor: pointer;
-
-              &.light {
-                color: #00f9e5;
-                background: #1d383b;
-              }
-
-              span {
-                margin-left: 6px;
-              }
-            }
-          }
-
-          .news-info {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-
-            .news-info-item {
-              min-width: 120px;
-              height: 58px;
-              background: #252d36;
-              border-radius: 8px;
-              margin-left: 12px;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: space-around;
-
-              .news-info-item-label {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: center;
-                font-size: 16px;
-                font-family: Arial;
-                font-weight: 400;
-                color: #99b1c4;
-                line-height: 19px;
-                margin-top: 11px;
-
-                img {
-                  width: 18px;
-                  height: 19px;
-                }
-
-                span {
-                  margin-left: 5px;
-                }
-              }
-
-              .news-info-item-value {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: center;
-                font-size: 12px;
-                font-family: Arial;
-                font-weight: 400;
-                color: #99b1c4;
-                margin-bottom: 11px;
-
-                img {
-                  width: 8px;
-                  height: 6px;
-                }
-
-                span {
-                  margin-left: 3px;
-                }
-              }
-            }
-          }
         }
 
         .form-desc {
@@ -1122,422 +812,6 @@ export default {
 
       .form-right {
         width: 385px;
-
-        .form-attr-container {
-          border: 1px solid #363e3e;
-          border-radius: 6px;
-          margin-bottom: 22px;
-          height: auto;
-
-          .form-attr-title {
-            height: 66px;
-            line-height: 66px;
-            padding: 0 23px;
-            background: #37434d;
-            font-size: 18px;
-            font-family: Arial;
-            font-weight: bold;
-            color: #ffffff;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-
-            .form-attr-action {
-              font-size: 14px;
-              font-family: Arial;
-              font-weight: bold;
-              color: #00f9e5;
-              line-height: 66px;
-              cursor: pointer;
-            }
-          }
-
-          .form-attr-list {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            padding: 16px 16px;
-
-            .form-attr-item {
-              width: 170px;
-              padding: 14px 0;
-              background: #1e252d;
-              border-radius: 6px;
-              margin-bottom: 18px;
-
-              .form-attr-label {
-                font-size: 14px;
-                font-family: Source Han Sans CN;
-                font-weight: 400;
-                color: #88a2b8;
-                margin-left: 12px;
-              }
-
-              .form-attr-value {
-                font-size: 16px;
-                font-family: Source Han Sans CN;
-                font-weight: bold;
-                color: #ffffff;
-                margin-top: 14px;
-                margin-left: 12px;
-              }
-            }
-          }
-
-          .form-attr-market {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 17px 17px 22px 17px;
-            text-align: center;
-
-            .form-attr-market-top {
-              display: flex;
-              flex-direction: row;
-              justify-content: space-between;
-
-              .form-attr-available {
-                background: #1e252d;
-                margin-left: 13px;
-                border-radius: 6px;
-                width: 144px;
-                height: 34px;
-                line-height: 34px;
-                font-size: 14px;
-                font-family: Source Han Sans CN;
-                font-weight: bold;
-                color: #acbcc9;
-                min-width: 122px;
-                text-align: left;
-                padding: 0 13px;
-                margin-top: 24px;
-
-                &:first-child {
-                  margin-left: 0;
-                }
-              }
-            }
-
-            .form-attr-mbd {
-              display: flex;
-              flex-direction: row;
-              align-items: baseline;
-              margin-top: 20px;
-
-              .form-attr-mbd-value {
-                font-size: 26px;
-                font-family: Arial;
-                font-weight: bold;
-              }
-
-              .form-attr-mbd-value {
-                font-size: 10px;
-                font-family: Arial;
-                font-weight: 400;
-                color: #88a2b8;
-              }
-            }
-
-            .form-attr-mint {
-              margin: 17px 0 9px 0;
-              border-radius: 18px;
-              font-size: 13px;
-              font-family: Arial;
-              font-weight: bold;
-              color: #4b5760;
-              width: 100%;
-            }
-
-            .form-attr-tip {
-              font-size: 10px;
-              font-family: Arial;
-              font-weight: 400;
-              color: #88a2b8;
-            }
-          }
-
-          .form-second-market {
-            display: flex;
-            flex-direction: row;
-            padding: 24px 16px;
-
-            .second-market-column {
-              line-height: 49px;
-              font-size: 14px;
-              font-family: Source Han Sans CN;
-              font-weight: 400;
-              color: #acbcc9;
-            }
-
-            .second-market-header {
-              height: 34px;
-              font-size: 12px;
-              line-height: 34px;
-              background: #252d36;
-            }
-
-            .second-market-td {
-              font-size: 12px;
-              font-family: Arial;
-              font-weight: 400;
-              color: #ffffff;
-              line-height: 46px;
-              border-bottom: 1px solid #252d36;
-
-              .second-btn {
-                margin: 8px 0;
-                width: 60px;
-                height: 30px;
-                line-height: 30px;
-                text-align: center;
-                background: linear-gradient(-16deg, #848d98, #97a8a7);
-                border-radius: 15px;
-                cursor: pointer;
-              }
-            }
-          }
-
-          .form-dao {
-            padding: 17px 12px;
-
-            .dao-title {
-              padding: 0 13px;
-              font-size: 16px;
-              font-family: Arial;
-              font-weight: bold;
-              color: #ffffff;
-            }
-
-            .dao-sub {
-              padding: 0 13px;
-              font-size: 14px;
-              font-family: Arial;
-              font-weight: 400;
-              color: #acbcc9;
-              line-height: 17px;
-              margin-top: 13px;
-            }
-
-            .dao-income-item {
-              padding: 0 13px;
-              margin-top: 16px;
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: space-between;
-
-              .dao-income-label {
-                font-size: 14px;
-                font-family: Arial;
-                font-weight: bold;
-                color: #9ab8db;
-              }
-
-              .dao-income-value {
-                font-size: 14px;
-                font-family: Arial;
-                font-weight: bold;
-                color: #ffffff;
-              }
-            }
-
-            .dao-member {
-              padding: 0 14px;
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: space-between;
-
-              &.dao-member-header {
-                margin-top: 19px;
-                height: 34px;
-                background: #1e252d;
-
-                .dao-member-left {
-                  font-size: 12px;
-                  font-family: Source Han Sans CN;
-                  font-weight: 400;
-                  color: #acbcc9;
-                  line-height: 34px;
-                }
-
-                .dao-member-right {
-                  font-size: 12px;
-                  font-family: Source Han Sans CN;
-                  font-weight: 400;
-                  color: #acbcc9;
-                  line-height: 34px;
-                }
-              }
-
-              &.dao-member-td {
-                height: 46px;
-
-                .dao-member-left {
-                  font-size: 14px;
-                  font-family: Arial;
-                  font-weight: 400;
-                  line-height: 46px;
-                }
-
-                .dao-member-right {
-                  font-size: 14px;
-                  font-family: Arial;
-                  font-weight: 400;
-                  color: #acbcc9;
-                  line-height: 46px;
-                }
-              }
-            }
-
-            .dividend-pool {
-              .dividend-pool-item {
-                padding: 19px 13px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                border-bottom: 1px solid #1f262e;
-
-                &:last-child {
-                  border: none;
-                }
-
-                .dividend-pool-label {
-                  font-size: 14px;
-                  font-family: Arial;
-                  font-weight: bold;
-                  color: #9ab8db;
-                }
-
-                .dividend-pool-value {
-                  font-size: 14px;
-                  font-family: Arial;
-                  font-weight: bold;
-                }
-              }
-            }
-
-            .dao-btn-container {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: center;
-              text-align: center;
-
-              .dao-btn {
-                width: 110px;
-                height: 36px;
-                background: #3c9ef2;
-                border-radius: 10px;
-                font-size: 14px;
-                font-family: Arial;
-                font-weight: 400;
-                color: #ffffff;
-                line-height: 36px;
-                cursor: pointer;
-              }
-
-              .dao-btn-border {
-                margin-left: 20px;
-                width: 110px;
-                height: 36px;
-                border: 1px solid #3c9ef2;
-                border-radius: 10px;
-                font-size: 14px;
-                font-family: Arial;
-                font-weight: 400;
-                color: #5cb1fa;
-                line-height: 36px;
-                cursor: pointer;
-              }
-            }
-          }
-
-          .form-attr-setting {
-            padding: 16px 13px;
-
-            .form-attr-set {
-              cursor: pointer;
-              height: 26px;
-              line-height: 26px;
-              background: linear-gradient(-16deg, #848d98, #97a8a7);
-              border-radius: 4px;
-              font-size: 12px;
-              font-family: Source Han Sans CN;
-              font-weight: bold;
-              color: #acbcc9;
-              padding: 0 17px;
-
-              &:first-child {
-                margin-bottom: 10px;
-              }
-
-              &:hover {
-                color: #00f9e5;
-              }
-            }
-          }
-        }
-
-        .reward-container {
-          border: 1px solid #17e7d6;
-          border-radius: 8px;
-          height: auto;
-          text-align: center;
-
-          .reward-top-title {
-            height: 66px;
-            line-height: 66px;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            background: linear-gradient(-16deg, #4195f6, #17e7d6);
-            font-size: 18px;
-            font-family: Arial;
-            font-weight: bold;
-            color: #1a2027;
-            padding-left: 23px;
-            text-align: left;
-          }
-
-          .reward-value {
-            font-size: 36px;
-            font-family: Arial;
-            font-weight: bold;
-          }
-
-          .reward-tip {
-            font-size: 14px;
-            font-family: Arial;
-            font-weight: 400;
-            color: #88a2b8;
-            margin-top: 16px;
-          }
-
-          .reward-mbd {
-            margin-top: 53px;
-            display: flex;
-            flex-direction: row;
-            align-items: baseline;
-            justify-content: center;
-
-            .reward-mbd-value {
-              font-size: 36px;
-              font-family: Arial;
-              font-weight: bold;
-              color: #00f9e5;
-            }
-
-            .reward-mbd-transform {
-              font-size: 14px;
-              font-family: Arial;
-              font-weight: 400;
-              color: #88a2b8;
-            }
-          }
-        }
       }
     }
 

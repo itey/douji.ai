@@ -61,9 +61,6 @@ export default {
       },
     }
   },
-  created() {
-    this.getUserOwned()
-  },
   methods: {
     /** 点击创建订单 */
     async handleCreate() {

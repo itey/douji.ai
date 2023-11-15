@@ -1,257 +1,56 @@
 <template>
-  <div class="form-attr-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
-    <div class="form-attr-title text-color">DOUJI NFT DAO Governance</div>
-    <div class="form-dao">
-      <div class="dao-title text-color">NFT DAO Earnings</div>
-      <div class="dao-income-item" style="margin-top: 22px;">
-        <div class="dao-income-label">The amount of share NFT DAO receives for each NFT transaction</div>
-        <div class="dao-income-value text-color">{{ daoFeeShow | fee2Percent }}</div>
+  <div class="form-attr-container">
+    <div class="form-attr-title text-color">DOUJI NFT Information</div>
+    <div class="form-attr-list">
+      <div class="form-attr-item">
+        <div class="form-attr-label">Token Address</div>
+        <div class="form-attr-value">{{ nftContract | omitAddress }}</div>
       </div>
-      <div class="dao-title text-color" style="margin-top: 22px;">NFT DAO Governance</div>
-      <div class="dao-income-item" style="margin-top: 22px;">
-        <div class="dao-income-label">Execution Threshold</div>
-        <div class="dao-income-value text-color">{{ thresholdCount }}</div>
+      <div class="form-attr-item">
+        <div class="form-attr-label">Token ID</div>
+        <div class="form-attr-value">{{ tokenId }}</div>
       </div>
-      <div class="dao-title text-color" style="margin-top: 39px;">NFT Staker Bonus Dividend Pool</div>
-      <div class="dividend-pool">
-        <div class="dividend-pool-item">
-          <div class="dividend-pool-label">Balance</div>
-          <div class="dividend-pool-value text-color">{{ settlePoolBalance | toLocalString }} MBD</div>
-        </div>
-        <div class="dividend-pool-item">
-          <div class="dividend-pool-label">All members NFT Staked</div>
-          <div class="dividend-pool-value text-color">{{ totalStakeCount }}</div>
-        </div>
-        <div class="dividend-pool-item">
-          <div class="dividend-pool-label">You NFT Staked</div>
-          <div class="dividend-pool-value text-color" v-if="userStakeInfo && userStakeInfo[0]">{{ userStakeInfo[0] }} ({{ stakePercent }})</div>
-          <div class="dividend-pool-value text-color" v-else>0 (0.00%)</div>
-        </div>
-        <div class="dividend-pool-item">
-          <div class="dividend-pool-label">Retrieve BSC Block Number</div>
-          <div class="dividend-pool-value text-color">{{ userStakeInfo[1] }}</div>
-        </div>
-        <div class="dividend-pool-item">
-          <div class="dividend-pool-label">Current BSC Block Number</div>
-          <div class="dividend-pool-value text-color">{{ currentHeight }}</div>
-        </div>
+      <div class="form-attr-item">
+        <div class="form-attr-label">Token Standard</div>
+        <div class="form-attr-value">BEP-1155</div>
       </div>
-      <div class="dao-btn-container" v-if="operable">
-        <div class="dao-btn" @click="$refs['stakeDialog'].showDialog()">Stake</div>
-        <div class="dao-btn-border" @click="handleRetrieve()">Retrieve</div>
+      <div class="form-attr-item">
+        <div class="form-attr-label">Creator</div>
+        <div class="form-attr-value">{{ tokenOwner | omitAddress}}</div>
+      </div>
+      <div class="form-attr-item" v-if="metadata.Birthday">
+        <div class="form-attr-label">Created At</div>
+        <div class="form-attr-value">{{ metadata.Birthday | stamp2Time }}</div>
+      </div>
+      <div class="form-attr-item" v-if="metadata.UpdateDay">
+        <div class="form-attr-label">Updated At</div>
+        <div class="form-attr-value">{{ metadata.UpdateDay | stamp2Time}}</div>
       </div>
     </div>
-    <StakeDialog :tokenId="tokenId" :userOwned="userOwned" ref="stakeDialog" />
-    <RetrieveDialog :tokenId="tokenId" :blockHeight="currentHeight" :userStakeInfo="userStakeInfo" ref="retrieveDialog" />
   </div>
 </template>
 
 <script>
-import RetrieveDialog from '@/components/news/RetrieveDialog'
-import StakeDialog from '@/components/news/StakeDialog'
-import { eventBus } from '@/utils/event-bus'
-import { blockHeight } from '@/utils/web3/chain'
-import { getSettlePoolBalance } from '@/utils/web3/market'
-import { tokensData, totalPledgeCount, userPledgeCount } from '@/utils/web3/nft'
 export default {
-  name: 'nft-dao-governance',
+  name: 'nft-attributes',
   props: {
+    metadata: {
+      type: Object,
+      default: () => {},
+    },
+    tokenOwner: {
+      type: String,
+      default: '',
+    },
     tokenId: {
       type: String,
       default: '',
     },
-    operable: {
-      type: Boolean,
-      default: false,
-    },
-    userOwned: {
-      type: String,
-      default: '',
-    },
-    showRevision: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  components: {
-    StakeDialog,
-    RetrieveDialog,
-  },
-  computed: {
-    retrieveUseable() {
-      if (!this.userStakeInfo[1] || !this.currentHeight) {
-        return false
-      }
-      if (this.currentHeight > this.userStakeInfo[1]) {
-        return true
-      } else {
-        return false
-      }
-    },
-    stakePercent() {
-      if (!this.userStakeInfo[0] || this.userStakeInfo[0] == 0) {
-        return '0.00%'
-      }
-      if (!this.totalStakeCount || this.userStakeInfo[0] == 0) {
-        return '0.00%'
-      }
-      return (
-        ((this.userStakeInfo[0] / this.totalStakeCount) * 100)
-          .toFixed(2)
-          .toString() + '%'
-      )
-    },
-    thresholdCount() {
-      if (
-        this.showRevision &&
-        this.tokenSupplyInfo.isVoting &&
-        this.tokenSupplyInfo.vote.voteType == '1'
-      ) {
-        return this.tokenSupplyInfo.vote.tmpToken.mVoteCount
-      } else {
-        return this.tokenSupplyInfo.mVoteCount
-      }
-    },
-    daoFeeShow() {
-      if (
-        this.showRevision &&
-        this.tokenSupplyInfo.isVoting &&
-        this.tokenSupplyInfo.vote.voteType == '1'
-      ) {
-        return this.tokenSupplyInfo.vote.tmpToken.daoFee
-      } else {
-        return this.tokenSupplyInfo.daoFee
-      }
-    },
   },
   data() {
     return {
-      loading: false,
-      userAccount: this.$store.state.user.account,
-      currentHeight: undefined,
-      settlePoolBalance: undefined,
-      totalStakeCount: undefined,
-      userStakeInfo: {},
-      tokenSupplyInfo: {},
+      nftContract: process.env.VUE_APP_NFT,
     }
-  },
-  mounted() {
-    this.loading = true
-    setTimeout(() => {
-      Promise.all([
-        this.getCurrentHeight(),
-        this.getUserStakeCount(),
-        this.getTotalStakeCount(),
-        this.getMbdSettleBalance(),
-        this.loadSupplyInfo(),
-      ]).then(() => {
-        this.loading = false
-        eventBus.$on('refresh_stake_info', this.handleReload)
-      })
-    }, 4000)
-  },
-  destroyed() {
-    eventBus.$off('refresh_stake_info')
-  },
-  methods: {
-    /** 加载数据 */
-    handleReload() {
-      this.loading = true
-      Promise.all([
-        this.loadSupplyInfo(),
-        this.getCurrentHeight(),
-        this.getUserStakeCount(),
-        this.getTotalStakeCount(),
-        this.getMbdSettleBalance(),
-      ]).then(() => {
-        this.loading = false
-      })
-    },
-    /** 获取用户质押信息 */
-    getUserStakeCount() {
-      if (!this.tokenId) {
-        return
-      }
-      return new Promise((resolve, reject) => {
-        userPledgeCount(this.tokenId)
-          .then((data) => {
-            this.userStakeInfo = data
-            resolve()
-          })
-          .catch(() => {
-            reject()
-          })
-      })
-    },
-    /** 获取质押总量 */
-    getTotalStakeCount() {
-      if (!this.tokenId) {
-        return
-      }
-      return new Promise((resolve, reject) => {
-        totalPledgeCount(this.tokenId)
-          .then((count) => {
-            this.totalStakeCount = count ? count : 0
-            resolve()
-          })
-          .catch(() => {
-            reject()
-          })
-      })
-    },
-    /** 取合约里DAO 质押奖金池子的额度 */
-    getMbdSettleBalance() {
-      if (!this.tokenId) {
-        return
-      }
-      return new Promise((resolve, reject) => {
-        getSettlePoolBalance(this.tokenId)
-          .then((balance) => {
-            this.settlePoolBalance = balance
-            resolve()
-          })
-          .catch((e) => {
-            reject(e)
-          })
-      })
-    },
-    /** 获取当前区块高度 */
-    getCurrentHeight() {
-      return new Promise((resolve, reject) => {
-        blockHeight()
-          .then((height) => {
-            this.currentHeight = height
-            resolve()
-          })
-          .catch(() => {
-            reject()
-          })
-      })
-    },
-    /** 加载数据 */
-    loadSupplyInfo() {
-      return new Promise((resolve, reject) => {
-        if (!this.tokenId) {
-          reject()
-        }
-        tokensData(this.tokenId)
-          .then((res) => {
-            this.tokenSupplyInfo = res
-            resolve(res)
-          })
-          .catch((e) => {
-            reject(e)
-          })
-      })
-    },
-    /** 点击赎回 */
-    handleRetrieve() {
-      if (!this.retrieveUseable) {
-        this.$toast.info(this.$t('news-detail.retrieve_unable'))
-        return
-      }
-      this.$refs['retrieveDialog'].showDialog()
-    },
   },
 }
 </script>
@@ -467,7 +266,6 @@ export default {
         font-family: Arial;
         font-weight: bold;
         color: #9ab8db;
-        word-break: keep-all;
       }
 
       .dao-income-value {

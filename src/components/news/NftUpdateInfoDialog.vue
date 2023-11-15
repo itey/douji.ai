@@ -1,5 +1,5 @@
 <template>
-  <el-dialog custom-class="nft-stake-dialog" :visible.sync="show" width="1440px">
+  <el-dialog custom-class="nft-stake-dialog" @open="pageLoad" :visible.sync="show" width="1440px">
     <div class="nft-stake-header text-color" slot="title">View the latest NFT information</div>
     <div class="nft-stake-content">
       <div class="nft-stake-container">
@@ -30,89 +30,9 @@
             </div>
           </div>
           <div class="nft-stake-right">
-            <div class="nft-stake-attr-container">
-              <div class="nft-stake-attr-title text-color">DOUJI NFT Attributes</div>
-              <div class="nft-stake-attr-list">
-                <div class="nft-stake-attr-item">
-                  <div class="nft-stake-attr-label">Token Address</div>
-                  <div class="nft-stake-attr-value">{{ tokenAddress | omitAddress }}</div>
-                </div>
-                <div class="nft-stake-attr-item">
-                  <div class="nft-stake-attr-label">Token ID</div>
-                  <div class="nft-stake-attr-value">{{ this.tokenId }}</div>
-                </div>
-                <div class="nft-stake-attr-item">
-                  <div class="nft-stake-attr-label">Token Standard</div>
-                  <div class="nft-stake-attr-value">BEP-1155</div>
-                </div>
-                <div class="nft-stake-attr-item">
-                  <div class="nft-stake-attr-label">Creator</div>
-                  <div class="nft-stake-attr-value">{{ tokenOwner | omitAddress}}</div>
-                </div>
-                <div class="nft-stake-attr-item" v-if="metadata.Birthday">
-                  <div class="nft-stake-attr-label">Created At</div>
-                  <div class="nft-stake-attr-value">{{ metadata.Birthday | stamp2Time }}</div>
-                </div>
-                <div class="nft-stake-attr-item" v-if="metadata.UpdateDay">
-                  <div class="nft-stake-attr-label">Updated At</div>
-                  <div class="nft-stake-attr-value">{{ metadata.UpdateDay | stamp2Time }}</div>
-                </div>
-              </div>
-            </div>
-            <div class="nft-stake-attr-container">
-              <div class="nft-stake-attr-title text-color">DOUJI NFT Attributes</div>
-              <div class="nft-stake-attr-list">
-                <div class="nft-stake-attr-item">
-                  <div class="nft-stake-attr-label">Content Type</div>
-                  <div class="nft-stake-attr-value">{{ metadata.contentType }}</div>
-                </div>
-                <div class="nft-stake-attr-item">
-                  <div class="nft-stake-attr-label">Category</div>
-                  <div class="nft-stake-attr-value">{{ metadata.category }}</div>
-                </div>
-                <div class="nft-stake-attr-item" v-if="metadata.prompt">
-                  <div class="nft-stake-attr-label">Platform</div>
-                  <div class="nft-stake-attr-value">{{ metadata.prompt }}</div>
-                </div>
-                <div class="nft-stake-attr-item" v-if="metadata.language">
-                  <div class="nft-stake-attr-label">Language</div>
-                  <div class="nft-stake-attr-value">{{ metadata.language }}</div>
-                </div>
-                <div class="nft-stake-attr-item">
-                  <div class="nft-stake-attr-label">Max Supply</div>
-                  <div class="nft-stake-attr-value">{{ metadata.maxSupply | toLocalString}}</div>
-                </div>
-                <div class="nft-stake-attr-item">
-                  <div class="nft-stake-attr-label">Available Supply</div>
-                  <div class="nft-stake-attr-value">{{ metadata.availableSupply | toLocalString }}</div>
-                </div>
-                <div class="nft-stake-attr-item">
-                  <div class="nft-stake-attr-label">Initial Mint Quantity</div>
-                  <div class="nft-stake-attr-value">{{ metadata.initialQuantity | toLocalString }}</div>
-                </div>
-              </div>
-            </div>
-            <div class="nft-stake-attr-container">
-              <div class="nft-stake-attr-title text-color">Primary Market</div>
-              <div class="nft-stake-attr-market">
-                <div class="nft-stake-attr-available">
-                  Available :
-                  <span class="text-color">{{ metadata.availableSupply | toLocalString }}</span>
-                </div>
-                <div class="nft-stake-attr-mbd">
-                  <div class="mbd-value text-color">{{ metadata.initialPrice | decimalPlace4 }} MBD</div>
-                  <div class="mbd-transform">≈${{ (metadata.initialPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
-                </div>
-                <el-button disabled class="common-btn2 nft-stake-attr-mint">Mint</el-button>
-                <div class="nft-stake-attr-tip">
-                  Owning
-                  <span class="text-color">1 BJxStar</span> To Get
-                  <span class="text-color">20%</span>
-                  discount
-                </div>
-              </div>
-            </div>
-            <NftDaoGovernance :tokenId="tokenId" />
+            <NftAttributes :metadata="metadata" :tokensInfo="tokenSupplyInfo" :editShow="true" />
+            <NftPrimaryMarket @handleReload="pageLoad" :editShow="true" :metadata="metadata" :tokensInfo="tokenSupplyInfo" :userOwned="userOwned" />
+            <NftDaoGovernance :tokenId="tokenId" :showRevision="true" />
           </div>
         </div>
         <div class="btn-container">
@@ -125,8 +45,9 @@
 
  
 <script>
+import NftAttributes from '@/components/news/NftAttributes'
 import NftDaoGovernance from '@/components/news/NftDaoGovernance'
-import { weiToMbd } from '@/utils/common'
+import NftPrimaryMarket from '@/components/news/NftPrimaryMarket'
 import { loadFromUrl, unlockContent } from '@/utils/http'
 import { tokenURI, tokensData } from '@/utils/web3/nft'
 var md = require('markdown-it')({
@@ -134,24 +55,10 @@ var md = require('markdown-it')({
   linkify: true,
   typographer: true,
   breaks: true,
-  // highlight: function (str, lang) {
-  //   if (lang && hljs.getLanguage(lang)) {
-  //     try {
-  //       return hljs.highlight(lang, str).value
-  //     } catch (e) {
-  //       console.log(e)
-  //     }
-  //   }
-  //   return '' // 使用额外的默认转义
-  // },
 })
 export default {
   name: 'nft-update-info',
   props: {
-    voteData: {
-      type: Object,
-      default: () => {},
-    },
     tokenId: {
       type: String,
       default: '',
@@ -160,9 +67,15 @@ export default {
       type: String,
       default: '',
     },
+    userOwned: {
+      type: String,
+      default: '',
+    },
   },
   components: {
     NftDaoGovernance,
+    NftAttributes,
+    NftPrimaryMarket,
   },
   computed: {
     pubContent() {
@@ -180,18 +93,6 @@ export default {
       }
     },
   },
-  mounted() {
-    Promise.all([this.loadSupplyInfo(), this.loadMetadata()])
-      .then(() => {
-        this.metadata.maxSupply = this.tokenSupplyInfo.maxSupply
-        this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply
-        this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply
-        this.metadata.initialPrice = weiToMbd(this.tokenSupplyInfo.price.price)
-      })
-      .catch((e) => {
-        console.log(e)
-      })
-  },
   data() {
     /**
       URL,//修改url
@@ -202,6 +103,8 @@ export default {
     return {
       tokenAddress: process.env.VUE_APP_NFT,
       show: false,
+      voteType: undefined,
+      tokenMetaUrl: undefined,
       tokenSupplyInfo: {},
       metadata: {
         openContent: undefined,
@@ -213,52 +116,39 @@ export default {
     showDialog() {
       this.show = true
     },
-    /** 加载元数据 */
-    loadMetadata() {
-      return new Promise((resolve, reject) => {
-        if (!this.tokenId) {
-          reject()
-        }
-        tokenURI(this.tokenId)
-          .then((uri) => {
-            this.tokenMetaUrl = uri
-            loadFromUrl(this.tokenMetaUrl).then((r) => {
-              if (r.status !== 200) {
-                reject(r.statusText)
-              }
-              var meta = r.data
-              this.ipfsData = meta
-              this.metadata.title = meta.title
-              this.metadata.description = meta.description
-              this.metadata.image = meta.image
-              this.metadata.contentType = meta.contentType
-              this.metadata.category = meta.category
-              this.metadata.contentUrl = meta.contentUrl
-              this.metadata.protected = meta.protected
-              this.metadata.language = meta.language
-              this.metadata.prompt = meta.prompt
-              this.metadata.keyword = meta.keyword ? meta.keyword : []
-              if (this.metadata.contentUrl) {
-                return Promise.all([
-                  this.loadOpenContent(this.metadata.contentUrl),
-                  this.loadProtectedContent(this.metadata.protected),
-                ])
-                  .then(([openContent, protectedContent]) => {
-                    this.metadata.openContent = openContent
-                    this.metadata.protectedContent = protectedContent
-                    resolve()
-                  })
-                  .catch((e) => {
-                    reject(e)
-                  })
-              }
-              resolve()
-            })
-          })
-          .catch(() => {
-            reject()
-          })
+    async pageLoad() {
+      this.tokenMetaUrl = undefined
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
       })
+      try {
+        await this.loadSupplyInfo()
+        if (this.voteType == '0') {
+          this.tokenMetaUrl = this.tokenSupplyInfo.vote.uri
+        }
+        if (!this.tokenMetaUrl) {
+          this.tokenMetaUrl = await tokenURI(this.tokenId)
+        }
+        const httpResponse = await loadFromUrl(this.tokenMetaUrl)
+        if (httpResponse.status !== 200) {
+          throw new Error('HTTP error ' + httpResponse.status)
+        }
+
+        this.metadata = httpResponse.data
+        this.metadata.openContent = await this.loadOpenContent(
+          this.metadata.contentUrl
+        )
+        if (this.metadata.protected) {
+          this.metadata.protectedContent = await this.loadProtectedContent(
+            this.metadata.protected
+          )
+        }
+      } catch (e) {
+        this.$toast.error(e)
+        loadingInstance.close()
+      } finally {
+        loadingInstance.close()
+      }
     },
     /** 加载公开数据 */
     loadOpenContent(url) {
@@ -297,6 +187,7 @@ export default {
         tokensData(this.tokenId)
           .then((res) => {
             this.tokenSupplyInfo = res
+            this.voteType = this.tokenSupplyInfo.vote.voteType
             resolve()
           })
           .catch(() => {

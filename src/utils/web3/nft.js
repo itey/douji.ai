@@ -2,6 +2,7 @@ import nft from '@/assets/abi/nft.json'
 import i18n from '@/i18n'
 import store from '@/store'
 import Vue from 'vue'
+import { mbdToWei } from '../common'
 import { checkAccount } from './chain'
 
 
@@ -33,7 +34,7 @@ export function possessorMint(tokenURI, initAmount, priceTokenIdOrAmount, maxSup
   }
   const toAddress = store.state.chain.account
   return new Promise((resolve, reject) => {
-    nftContract.methods.authorise(tokenURI, initAmount, priceTokenIdOrAmount, maxSupply)
+    nftContract.methods.authorise(tokenURI, initAmount, mbdToWei(priceTokenIdOrAmount), maxSupply)
       .send({ from: toAddress })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
@@ -196,7 +197,7 @@ export function startSetTokenPrice(tokenId, price, availableSupply) {
   }
   const userAccount = store.state.chain.account
   return new Promise((resolve, reject) => {
-    nftContract.methods.startSetTokenPrice(tokenId, price, availableSupply)
+    nftContract.methods.startSetTokenPrice(tokenId, mbdToWei(price), availableSupply)
       .send({ from: userAccount })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
