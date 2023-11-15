@@ -134,8 +134,8 @@ export default {
       form: {
         isOpen: true,
         sptType: 0,
-        cAddress: '',
-        tokenId: '',
+        cAddress: undefined,
+        tokenId: undefined,
         discounts: undefined,
         discountsFee: undefined,
       },

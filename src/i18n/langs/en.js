@@ -102,6 +102,8 @@ export default {
       "Swap success.",
     "vote_success":
       "Vote successfully.",
+    "execute_success":
+      "Execute successfully.",
   },
   "user": {
     "profile_save_success": "Profile saved successfully.",

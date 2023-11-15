@@ -118,21 +118,10 @@ export default {
           var param = JSON.parse(JSON.stringify(this.currentJson))
           param.daoFee = (this.form.daoFee * 100).toFixed()
           param.mVoteCount = this.form.mVoteCount
-          const {
-            daoFee,
-            daoCreatorFee,
-            daoHolderFee,
-            mVoteCount,
-            creatorAddress,
-            curCreatorFees,
-          } = param
+          const { daoFee, mVoteCount } = param
           startSetDaoRule(this.tokenId, {
             daoFee,
-            daoCreatorFee,
-            daoHolderFee,
             mVoteCount,
-            creatorAddress,
-            curCreatorFees,
           })
             .then(() => {
               this.$toast.success(this.$t('news-detail.submit_success'))

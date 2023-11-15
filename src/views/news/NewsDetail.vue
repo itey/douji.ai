@@ -6,7 +6,14 @@
       <el-breadcrumb-item v-if="metadata.title">{{ metadata.title }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <NftDaoVote v-if="tokenSupplyInfo.isVoting" :tokenOwner="tokenOwner" :tokenInfo="tokenSupplyInfo" :userOwned="userOwned" :tokenId="tokenId" />
+    <NftDaoVote
+      v-if="tokenSupplyInfo.isVoting"
+      @handleReload="dataLoad"
+      :tokenOwner="tokenOwner"
+      :tokenInfo="tokenSupplyInfo"
+      :userOwned="userOwned"
+      :tokenId="tokenId"
+    />
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
@@ -19,24 +26,27 @@
             <div class="form-label-sub-text">Open to Access</div>
           </div>
           <div class="form-content text-color">
-            <div v-html="pubContent"></div>
+            <div v-html="metadata.openContent"></div>
           </div>
-          <div class="form-label-sub" v-if="privateContent">
-            <img style="width: 14px;height: 14px;" src="@/assets/images/create/protect.png" />
-            <div class="form-label-sub-text">Protected</div>
-          </div>
-          <div class="form-content text-color" v-if="privateContent">
-            <div v-html="privateContent"></div>
-          </div>
-          <div style="display: flex;flex-direction: column;align-items: center;" v-else>
-            <div class="text-color" style="font-size: 12px;">
-              Owning At Least 1 DOUJ NFT (
-              <span style="color: #00F9E5;">Token ID: {{ tokenId }}</span>) And Clicking
-              “
-              <span style="color: #00F9E5;">Unlock</span>”
+          <template v-if="metadata.protected">
+            <div class="form-label-sub">
+              <img style="width: 14px;height: 14px;" src="@/assets/images/create/protect.png" />
+              <div class="form-label-sub-text">Protected</div>
             </div>
-            <el-button @click="handleUnlock()" class="common-btn2" style="border-radius: 25px;margin-top: 29px;">Unlock</el-button>
-          </div>
+            <div class="form-content text-color" v-if="metadata.protectedContent">
+              <div v-html="metadata.protectedContent"></div>
+            </div>
+            <div style="display: flex;flex-direction: column;align-items: center;" v-else>
+              <div class="text-color" style="font-size: 12px;">
+                Owning At Least 1 DOUJ NFT (
+                <span style="color: #00F9E5;">Token ID: {{ tokenId }}</span>) And Clicking
+                “
+                <span style="color: #00F9E5;">Unlock</span>”
+              </div>
+              <el-button @click="handleUnlock()" class="common-btn2" style="border-radius: 25px;margin-top: 29px;">Unlock</el-button>
+            </div>
+          </template>
+
           <div class="form-tag" v-if="metadata.keyword && metadata.keyword.length">
             <div class="form-tag-label text-color">Tags:</div>
             <div class="form-tag-item text-color" v-for="(item,index) in metadata.keyword" :key="index">{{ item }}</div>
@@ -102,7 +112,7 @@
         </div>
         <div class="form-right">
           <NftAttributes :metadata="metadata" :tokensInfo="tokenSupplyInfo" />
-          <NftPrimaryMarket @handleReload="dataLoad" :metadata="metadata" :tokensInfo="tokenSupplyInfo" :userOwned="userOwned" />
+          <NftPrimaryMarket @handleReload="dataLoad" :tokenId="tokenId" :metadata="metadata" :tokensInfo="tokenSupplyInfo" :userOwned="userOwned" />
           <MarketOrderList :tokenId="tokenId" />
           <NftDaoGovernance :userOwned="userOwned" :tokenId="tokenId" :operable="true" />
           <NftInformation :metadata="metadata" :tokenOwner="tokenOwner" :tokenId="tokenId" />
@@ -131,7 +141,7 @@ import MarketOrderList from '@/components/news/MarketOrderList'
 import NftAttributes from '@/components/news/NftAttributes'
 import NftAuthorInfo from '@/components/news/NftAuthorInfo'
 import NftDaoGovernance from '@/components/news/NftDaoGovernance'
-import NftDaoVote from '@/components/news/NftDaoVote.vue'
+import NftDaoVote from '@/components/news/NftDaoVote'
 import NftInformation from '@/components/news/NftInformation'
 import NftPrimaryMarket from '@/components/news/NftPrimaryMarket'
 import ReadingReward from '@/components/news/ReadingReward'
@@ -163,16 +173,6 @@ var md = require('markdown-it')({
   linkify: true,
   typographer: true,
   breaks: true,
-  // highlight: function (str, lang) {
-  //   if (lang && hljs.getLanguage(lang)) {
-  //     try {
-  //       return hljs.highlight(lang, str).value
-  //     } catch (e) {
-  //       console.log(e)
-  //     }
-  //   }
-  //   return '' // 使用额外的默认转义
-  // },
 })
 export default {
   name: 'news-detail-view',
@@ -203,20 +203,6 @@ export default {
       }
       return false
     },
-    pubContent() {
-      if (this.metadata.openContent) {
-        return md.render(this.metadata.openContent)
-      } else {
-        return null
-      }
-    },
-    privateContent() {
-      if (this.metadata.protectedContent) {
-        return md.render(this.metadata.protectedContent)
-      } else {
-        return null
-      }
-    },
   },
   data() {
     return {
@@ -228,13 +214,13 @@ export default {
       tokenMetaUrl: undefined,
       metadata: {
         language: undefined,
-        title: null,
-        image: null,
-        description: null,
-        openContent: null,
+        title: undefined,
+        image: undefined,
+        description: undefined,
+        openContent: undefined,
         keyword: [],
-        maxSupply: null,
-        initialQuantity: null,
+        maxSupply: undefined,
+        initialQuantity: undefined,
         protectedContent: undefined,
         contentType: undefined,
         category: undefined,
@@ -414,7 +400,11 @@ export default {
       if (this.userOwned && this.userOwned > 0) {
         this.loadProtectedContent(this.metadata.protected)
           .then((protectedContent) => {
-            this.metadata.protectedContent = protectedContent
+            this.$set(
+              this.metadata,
+              'protectedContent',
+              md.render(protectedContent)
+            )
             this.$toast.success(this.$t('news-detail.unlock_success'))
             loadingInstance.close()
           })
@@ -518,7 +508,11 @@ export default {
               if (this.metadata.contentUrl) {
                 this.loadOpenContent(this.metadata.contentUrl)
                   .then((openContent) => {
-                    this.metadata.openContent = openContent
+                    this.$set(
+                      this.metadata,
+                      'openContent',
+                      md.render(openContent)
+                    )
                     resolve()
                   })
                   .catch((e) => {

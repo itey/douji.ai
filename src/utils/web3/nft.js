@@ -325,11 +325,11 @@ export function startSetNsp(tokenId, param) {
     nftContract.methods.startSetNsp(
       tokenId,
       param.isOpen,
-      param.type,
-      param.contract,
+      param.sptType,
+      param.cAddress,
       param.discounts,
       (param.discountsFee * 100).toFixed(0),
-      param.disTokenId
+      param.tokenId
     )
       .send({ from: userAccount })
       .on('transactionHash', (hash) => {
@@ -371,7 +371,6 @@ export function setNspDao(tokenId) {
 
 /** update-dao */
 export function startSetDaoRule(tokenId, param) {
-  console.log(param)
   if (!checkAccount()) {
     return
   }
@@ -384,11 +383,7 @@ export function startSetDaoRule(tokenId, param) {
     nftContract.methods.startSetDaoRule(
       tokenId,
       param.daoFee,
-      param.daoCreatorFee,
-      param.daoHolderFee,
-      param.mVoteCount,
-      param.creatorAddress,
-      param.curCreatorFees
+      param.mVoteCount
     )
       .send({ from: userAccount })
       .on('transactionHash', (hash) => {

@@ -41,6 +41,10 @@ import { userMint } from '@/utils/web3/nft'
 export default {
   name: 'nft-attributes',
   props: {
+    tokenId: {
+      type: String,
+      default: '',
+    },
     metadata: {
       type: Object,
       default: () => {},

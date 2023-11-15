@@ -5,21 +5,21 @@
       <div class="proposal-left-sub">
         <span class="text-color">{{ tokenOwner | omitAddress }}</span> has initiated a proposato modify the content and rules
         of this NFT at
-        <span class="text-color">{{ vote.startTime | stamp2Time}}</span>. Pleasereview the proposal
+        <span class="text-color">{{ tokenInfo.vote.startTime | stamp2Time}}</span>. Pleasereview the proposal
         before
-        <span class="text-color">{{ (Number(vote.startTime) + 259200).toString() | stamp2Time}}</span>. It expires. After that, the proposal
+        <span class="text-color">{{ (Number(tokenInfo.vote.startTime) + 259200).toString() | stamp2Time}}</span>. It expires. After that, the proposal
         will be invalidated.
       </div>
       <div class="proposal-left-link" @click="$refs['nftStakeDialog'].showDialog()">View the latest NFT infomation >></div>
     </div>
     <div class="proposal-right">
-      <div class="proposal-right-title">{{vote.count}}/{{ this.tokenInfo.maxSupply }}</div>
+      <div class="proposal-right-title">{{tokenInfo.vote.count}}/{{ this.tokenInfo.maxSupply }}</div>
       <div class="proposal-right-sub">
         Threshold:
         <span class="text-color">{{ tokenInfo.mVoteCount }}</span>
       </div>
       <div class="proposal-right-btn">
-        <el-button style="width: 118px;height: 42px;" class="common-btn2" @click="handleApprove()">Approve</el-button>
+        <el-button style="width: 118px;height: 42px;" class="common-btn2" :disabled="ifVoteOver || userVoteCount <= 0" @click="handleApprove()">Approve</el-button>
         <el-button style="margin-left: 24px;width: 118px;height: 42px;" class="common-btn2" :disabled="!canExecute" @click="handleExecute()">Execute</el-button>
       </div>
       <div class="proposal-right-tip">
@@ -52,7 +52,11 @@ export default {
     },
     tokenInfo: {
       type: Object,
-      default: () => {},
+      default: () => {
+        return {
+          vote: {},
+        }
+      },
     },
     tokenOwner: {
       type: String,
@@ -68,7 +72,10 @@ export default {
   },
   computed: {
     canExecute() {
-      if (this.vote.count && this.vote.count > this.tokenInfo.mVoteCount) {
+      if (
+        this.tokenInfo.vote.count &&
+        this.tokenInfo.vote.count > this.tokenInfo.mVoteCount
+      ) {
         return true
       } else {
         return false
@@ -90,7 +97,6 @@ export default {
   },
   data() {
     return {
-      vote: this.tokenInfo.vote,
       ifVoteOver: true,
       stakeCount: 0,
       userAccount: this.$store.state.user.account,
@@ -120,6 +126,8 @@ export default {
         })
         .finally(() => {
           loadingInstance.close()
+          this.checkIfVote()
+          this.$emit('handleReload')
         })
     },
     /** 点击执行 */
@@ -128,7 +136,7 @@ export default {
         background: 'rgba(0, 0, 0, 0.8)',
       })
       try {
-        const voteType = this.vote.voteType
+        const voteType = this.tokenInfo.vote.voteType
         if (voteType == '0') {
           await setTokenURIDao(this.tokenId)
         }
@@ -141,10 +149,13 @@ export default {
         if (voteType == '3') {
           await setNspDao(this.tokenId)
         }
+        this.$toast.success(this.$t('news-detail.execute_success'))
       } catch (error) {
         this.$toast.error(error)
       } finally {
         loadingInstance.close()
+        this.$emit('handleReload')
+        eventBus.$emit('refresh_stake_info')
       }
     },
     /** 获取我的质押数量 */
@@ -155,7 +166,7 @@ export default {
     },
     /** 查询是否已经投票 */
     checkIfVote() {
-      isAlreadyVote(this.vote.no).then((r) => {
+      isAlreadyVote(this.tokenInfo.vote.no).then((r) => {
         this.ifVoteOver = r
       })
     },
