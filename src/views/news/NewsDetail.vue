@@ -259,7 +259,7 @@
       </div>
     </div>
 
-    <RevisionHistoryDialog ref="revisionHistoryDialog" />
+    <RevisionHistoryDialog :tokenId="tokenId" ref="revisionHistoryDialog" />
     <CheckInDialog @onCheckedIn="onCheckedIn()" ref="checkInDialog" />
     <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />
     <BlindOpenDialog @handleReload="pageLoad" :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />

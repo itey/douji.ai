@@ -211,7 +211,9 @@ post
 {
   "code": 1,
   "message": "ok",
-  "data": {}
+  "data": {
+    "amount": 1212121 //签到获取的mbd额度
+  }
 }
 ```
 
@@ -285,7 +287,8 @@ post
   "code": 1,
   "message": "ok",
   "data": {
-    "open_box_flag": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" //开盲盒标志
+       "open_box_flag": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" //开盲盒标志
+       "amount": 1212121 //签到获取的mbd额度
   }
 }
 ```
@@ -315,6 +318,7 @@ post
 | :------------ | :------------ | :--------------------------------- | :----- |
 | signed        | true          | 钱包签的内容 Open DOUJI Blind Box! | string |
 | open_box_flag | true          | 收取标志 接口 8 提供               | string |
+| hashTx        | true          | 转账交易 hash                      | string |
 
 ##### Response parameters:
 
@@ -948,8 +952,9 @@ post
 
 ##### Request parameters:
 
-| 参数名 | 约束-required | 类型 | 说明 |
-| :----- | :------------ | :--- | :--- |
+| 参数名 | 约束-required | 类型 | 说明                       |
+| :----- | :------------ | :--- | :------------------------- |
+| page   | true          | int  | 页码 默认 1 每页显示 20 条 |
 
 ##### Response parameters:
 
@@ -958,6 +963,8 @@ post
   "code": 1,
   "message": "ok",
   "data": {
+    "pageCount": 11,
+    "page": 1,
     "list": [
       {
         "token_id": 1,
@@ -1122,9 +1129,10 @@ post
 
 ##### Request parameters:
 
-| 参数名 | 约束-required | 类型 | 说明                       |
-| :----- | :------------ | :--- | :------------------------- |
-| page   | true          | int  | 页码 默认 1 每页显示 20 条 |
+| 参数名  | 约束-required | 类型 | 说明                       |
+| :------ | :------------ | :--- | :------------------------- |
+| page    | true          | int  | 页码 默认 1 每页显示 20 条 |
+| tokenId | true          | int  | tokenId                    |
 
 ##### Response parameters:
 
@@ -1147,6 +1155,173 @@ post
         "ordeId": 1
       }
     ],
+    "page": 1
+  }
+}
+```
+
+##### Response the result data code instructions
+
+| code | 说明 |
+| ---- | :--- |
+| 0    | 失败 |
+| 1    | 成功 |
+
+### 20.用户当日阅读情况
+
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/getTodayReadData
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名 | 约束-required | 类型 | 说明 |
+| :----- | :------------ | :--- | :--- |
+
+##### Response parameters:
+
+```json
+{
+  "code": 1,
+  "message": "success",
+  "data": {
+    "income_sum": 1.0, //今日收益
+    "duration_sum": 1, //观看时长秒
+    "reads_count": 1 //领取个数
+  }
+}
+```
+
+##### Response the result data code instructions
+
+| code | 说明 |
+| ---- | :--- |
+| 0    | 失败 |
+| 1    | 成功 |
+
+### 21.通知更新订单
+
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/notifyUpdateOrder
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名  | 约束-required | 类型 | 说明    |
+| :------ | :------------ | :--- | :------ |
+| tokenId | true          | int  | tokenId |
+
+##### Response parameters:
+
+```json
+{
+  "code": 1,
+  "message": "success",
+  "data": {}
+}
+```
+
+##### Response the result data code instructions
+
+| code | 说明 |
+| ---- | :--- |
+| 0    | 失败 |
+| 1    | 成功 |
+
+### 22.NFT 最后 10 比交易记录
+
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/getNftTransactions
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名  | 约束-required | 类型 | 说明    |
+| :------ | :------------ | :--- | :------ |
+| tokenId | true          | int  | tokenId |
+
+##### Response parameters:
+
+```json
+{
+  "code": 1,
+  "message": "ok",
+  "data": {
+    "list": [
+      {
+        "from": "0x910e991a290edf015273696f6c54f340f4e31de5",
+        "to": "0x0a8901b0e25deb55a87524f0cc164e9644020eba",
+        "event_type": "Transfer",
+        "amount": "1",
+        "hash": "xxxxxxxx"
+      }
+    ]
+  }
+}
+```
+
+##### Response the result data code instructions
+
+| code | 说明 |
+| ---- | :--- |
+| 0    | 失败 |
+| 1    | 成功 |
+
+### 23.NFT 更新 uri 记录
+
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/nftUpdateLog
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名  | 约束-required | 类型 | 说明                       |
+| :------ | :------------ | :--- | :------------------------- |
+| tokenId | true          | int  | tokenId                    |
+| page    | true          | int  | 页码 默认 1 每页显示 20 条 |
+
+##### Response parameters:
+
+```json
+{
+  "code": 1,
+  "message": "ok",
+  "data": {
+    "list": [
+      {
+        "id": 1,
+        "tokenId": 1,
+        "uri": "https://ipfs.io/ipfs/bafkreigv7by3mhtg5ztzpzam22fibusrgsiuvwd2nyzxvsdbzlrrufcpmm",
+        "create_time": "2023-11-11 16:29:34",
+        "transactionHash": "0x6abd70134130c810cb5672c3b792dd6f2a0ebc2ea3ec506b11f4c9a9e3f0b432",
+        "block_number": null
+      }
+    ],
+    "pageCount": 1,
     "page": 1
   }
 }

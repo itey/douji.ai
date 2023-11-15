@@ -1,32 +1,52 @@
 <template>
-  <el-dialog custom-class="history-dialog" :visible.sync="show" width="946px">
+  <el-dialog custom-class="history-dialog" :visible.sync="show" @open="onOpen()" width="946px">
     <div class="history-header text-color" slot="title">Revision history</div>
     <div class="history-content">
       <el-table ref="multipleTable" :data="tableData" style="width: 850px">
         <el-table-column label="Timestamp" width="390px">
-          <template slot-scope="scope">2023/2/2 09:42:45</template>
+          <template slot-scope="scope">{{ scope.row.create_time }}</template>
         </el-table-column>
         <el-table-column prop="name" label="IPFS hash address" width="460px">
-          <template slot-scope="scope">QmarHSr9aSNaPSR6G9KFPbuLV9aEqJfTk1y9B8pdwak4Rq</template>
+          <template slot-scope="scope">
+            <a style="color:azure;" :href="scope.row.uri" target="_bank">{{ scope.row.uri | ipfsUri }}</a>
+          </template>
         </el-table-column>
       </el-table>
-      <el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页" :page-count="4" :total="1000"></el-pagination>
+      <el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页" :page-size="20" :page-count="pagerCount"></el-pagination>
     </div>
   </el-dialog>
 </template>
 
 <script>
+import { nftUpdateLog } from '@/utils/http'
 export default {
   name: 'revision-history-dialog',
+  props: {
+    tokenId: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       show: false,
       tableData: [{}, {}],
+      page: 1,
+      pagerCount: null,
     }
   },
   methods: {
     showDialog() {
       this.show = true
+    },
+    onOpen() {
+      nftUpdateLog(this.tokenId, this.page).then((r) => {
+        console.log(r)
+        if (r.code == 1) {
+          this.tableData = r.data.list
+          this.pagerCount = r.data.pageCount
+        }
+      })
     },
   },
 }

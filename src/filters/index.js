@@ -19,6 +19,14 @@ export const omitTxHash = (val) => {
   return prefix + '...' + suffix
 }
 
+export const ipfsUri = (val) => {
+  if (!val) {
+    return val
+  }
+  const index = val.lastIndexOf('/')
+  return val.substring(index + 1)
+}
+
 // Format decimal places
 export const decimalPlace2 = (val) => {
   return parseFloat((Math.floor(val * 100) / 100).toFixed(2)).toString()
@@ -102,3 +110,5 @@ export const fee2Percent = (fee) => {
   if (!fee) return ''
   return (fee / 100).toFixed(2) + '%'
 }
+
+

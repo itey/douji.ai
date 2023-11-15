@@ -170,6 +170,15 @@ export function nftListPage(params) {
     })
 }
 
+// 获取历史更改URI
+export function nftUpdateLog(tokenId, page) {
+    return request({
+        url: '/nftUpdateLog',
+        method: 'post',
+        params: { tokenId, page }
+    })
+}
+
 // 获取挂单列表
 export function getNftOrders(page, tokenId) {
     return request({
