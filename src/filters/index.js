@@ -123,11 +123,11 @@ export const sptType2Name = (type) => {
   }
   switch (type) {
     case '0':
-      return 'EBP-20'
+      return 'BEP-20'
     case '1':
-      return 'EBP-721'
+      return 'BEP-721'
     case '2':
-      return 'EBP-1155'
+      return 'BEP-1155'
     default:
       return type
   }

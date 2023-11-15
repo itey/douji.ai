@@ -13,28 +13,36 @@
       <div class="proposal-left-link" @click="$refs['nftStakeDialog'].showDialog()">View the latest NFT infomation >></div>
     </div>
     <div class="proposal-right">
-      <div class="proposal-right-title">{{vote.count}}/{{ this.voteData.maxSupply }}</div>
+      <div class="proposal-right-title">{{vote.count}}/{{ this.tokenInfo.maxSupply }}</div>
       <div class="proposal-right-sub">
         Threshold:
-        <span class="text-color">{{ voteData.mVoteCount }}</span>
+        <span class="text-color">{{ tokenInfo.mVoteCount }}</span>
       </div>
       <div class="proposal-right-btn">
-        <el-button style="width: 118px;height: 42px;" class="common-btn2">Approve</el-button>
-        <el-button style="margin-left: 24px;width: 118px;height: 42px;" class="common-btn2" :disabled="true">Execute</el-button>
+        <el-button style="width: 118px;height: 42px;" class="common-btn2" @click="handleApprove()">Approve</el-button>
+        <el-button style="margin-left: 24px;width: 118px;height: 42px;" class="common-btn2" :disabled="!canExecute" @click="handleExecute()">Execute</el-button>
       </div>
       <div class="proposal-right-tip">
         Your Voting:
         <span class="text-color">{{ userVoteCount }}</span>
       </div>
     </div>
-    <NftUpdateInfoDialog ref="nftStakeDialog" :voteData="voteData" :userOwned="userOwned" :tokenOwner="tokenOwner" :tokenId="tokenId" />
+    <NftUpdateInfoDialog ref="nftStakeDialog" :userOwned="userOwned" :tokenOwner="tokenOwner" :tokenId="tokenId" />
   </div>
 </template>
 
 <script>
 import NftUpdateInfoDialog from '@/components/news/NftUpdateInfoDialog'
 import { eventBus } from '@/utils/event-bus'
-import { userPledgeCount } from '@/utils/web3/nft'
+import {
+  isAlreadyVote,
+  setDaoRuleDao,
+  setNspDao,
+  setTokenPriceDao,
+  setTokenURIDao,
+  userPledgeCount,
+  voteByBallot,
+} from '@/utils/web3/nft'
 export default {
   name: 'nft-dao-vote',
   props: {
@@ -42,7 +50,7 @@ export default {
       type: String,
       default: '',
     },
-    voteData: {
+    tokenInfo: {
       type: Object,
       default: () => {},
     },
@@ -59,10 +67,19 @@ export default {
     NftUpdateInfoDialog,
   },
   computed: {
+    canExecute() {
+      if (this.vote.count && this.vote.count > this.tokenInfo.mVoteCount) {
+        return true
+      } else {
+        return false
+      }
+    },
     userVoteCount() {
       if (this.userAccount) {
         if (this.userAccount.toLowerCase() === this.tokenOwner.toLowerCase()) {
-          return Number(this.voteData.availableSupply) + Number(this.stakeCount)
+          return (
+            Number(this.tokenInfo.availableSupply) + Number(this.stakeCount)
+          )
         } else {
           return this.stakeCount
         }
@@ -73,23 +90,73 @@ export default {
   },
   data() {
     return {
-      vote: this.voteData.vote,
+      vote: this.tokenInfo.vote,
+      ifVoteOver: true,
       stakeCount: 0,
       userAccount: this.$store.state.user.account,
     }
   },
   mounted() {
     this.getUserPledgeCount()
+    this.checkIfVote()
     eventBus.$on('refresh_stake_info', this.getUserPledgeCount)
   },
   destroyed() {
     eventBus.$off('refresh_stake_info')
   },
   methods: {
+    /** 点击投票 */
+    handleApprove() {
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
+      voteByBallot(this.tokenId)
+        .then((tx) => {
+          console.log(tx)
+          this.$toast.success(this.$t('news-detail.vote_success'))
+        })
+        .catch((e) => {
+          this.$toast.error(e)
+        })
+        .finally(() => {
+          loadingInstance.close()
+        })
+    },
+    /** 点击执行 */
+    async handleExecute() {
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
+      try {
+        const voteType = this.vote.voteType
+        if (voteType == '0') {
+          await setTokenURIDao(this.tokenId)
+        }
+        if (voteType == '1') {
+          await setDaoRuleDao(this.tokenId)
+        }
+        if (voteType == '2') {
+          await setTokenPriceDao(this.tokenId)
+        }
+        if (voteType == '3') {
+          await setNspDao(this.tokenId)
+        }
+      } catch (error) {
+        this.$toast.error(error)
+      } finally {
+        loadingInstance.close()
+      }
+    },
     /** 获取我的质押数量 */
     getUserPledgeCount() {
       userPledgeCount(this.tokenId).then((res) => {
         this.stakeCount = res[0]
+      })
+    },
+    /** 查询是否已经投票 */
+    checkIfVote() {
+      isAlreadyVote(this.vote.no).then((r) => {
+        this.ifVoteOver = r
       })
     },
   },

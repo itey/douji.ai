@@ -100,6 +100,8 @@ export default {
       "Order cancel success.",
     "swap_success":
       "Swap success.",
+    "vote_success":
+      "Vote successfully.",
   },
   "user": {
     "profile_save_success": "Profile saved successfully.",

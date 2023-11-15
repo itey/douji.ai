@@ -6,7 +6,7 @@
       <el-breadcrumb-item v-if="metadata.title">{{ metadata.title }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <NftDaoVote v-if="tokenSupplyInfo.isVoting" :tokenOwner="tokenOwner" :voteData="tokenSupplyInfo" :userOwned="userOwned" :tokenId="tokenId" />
+    <NftDaoVote v-if="tokenSupplyInfo.isVoting" :tokenOwner="tokenOwner" :tokenInfo="tokenSupplyInfo" :userOwned="userOwned" :tokenId="tokenId" />
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
@@ -115,7 +115,7 @@
     <CheckInDialog @onCheckedIn="onCheckedIn()" ref="checkInDialog" />
     <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />
     <BlindOpenDialog @handleReload="dataLoad" :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
-    <SetSaleDialog @handleReload="dataLoad" :tokenId="tokenId" ref="setSaleDialog" />
+    <SetSaleDialog @handleReload="dataLoad" :tokenInfo="tokenSupplyInfo" :tokenId="tokenId" ref="setSaleDialog" />
     <SetDaoDialog @handleReload="dataLoad" :tokenId="tokenId" ref="setDaoDialog" />
   </div>
 </template>

@@ -186,6 +186,31 @@ export function tokenURI(tokenId) {
   })
 }
 
+/** 投票 */
+export function voteByBallot(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.voteByBallot(tokenId)
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
+
 /** update-step1 */
 export function startSetTokenPrice(tokenId, price, availableSupply) {
   if (!checkAccount()) {
@@ -211,6 +236,31 @@ export function startSetTokenPrice(tokenId, price, availableSupply) {
   })
 }
 
+/** 执行 */
+export function setTokenPriceDao(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.setTokenPrice(tokenId)
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
+
 /** update-step2 */
 export function startSetTokenURI(tokenId, url) {
   if (!checkAccount()) {
@@ -223,6 +273,31 @@ export function startSetTokenURI(tokenId, url) {
   const userAccount = store.state.chain.account
   return new Promise((resolve, reject) => {
     nftContract.methods.startSetTokenURI(tokenId, url)
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
+
+/** 执行 */
+export function setTokenURIDao(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.setTokenURI(tokenId)
       .send({ from: userAccount })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
@@ -269,6 +344,31 @@ export function startSetNsp(tokenId, param) {
   })
 }
 
+/** 执行 */
+export function setNspDao(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.setNsp(tokenId)
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
+
 /** update-dao */
 export function startSetDaoRule(tokenId, param) {
   console.log(param)
@@ -299,6 +399,50 @@ export function startSetDaoRule(tokenId, param) {
       })
       .on('error', (error) => {
         reject(error.message)
+      })
+  })
+}
+
+/** 执行 */
+export function setDaoRuleDao(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.setDaoRule(tokenId)
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
+
+/** 查询是否已经投票 */
+export function isAlreadyVote(voteNo) {
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.alreadyVote(voteNo, userAccount)
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+        reject(e)
       })
   })
 }

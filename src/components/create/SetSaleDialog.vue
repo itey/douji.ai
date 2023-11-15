@@ -1,5 +1,5 @@
 <template>
-  <el-dialog custom-class="set-sale-dialog" top="0vh" :visible.sync="show" width="800px">
+  <el-dialog custom-class="set-sale-dialog" top="0vh" :visible.sync="show" @open="onOpen" width="800px">
     <div class="set-sale-header text-color" slot="title">Set NFT Sales Promotion</div>
     <div class="set-sale-top">
       <el-form ref="form" :rules="rules" :model="form" label-position="top">
@@ -14,16 +14,16 @@
             <div class="set-sale-value">
               <div
                 class="type-item"
-                :class="{ light:item.value == form.type}"
+                :class="{ light:item.value == form.sptType}"
                 v-for="item in typeList"
                 :key="item.value"
-                @click="form.type = item.value"
+                @click="form.sptType = item.value"
               >{{item.label}}</div>
             </div>
           </el-form-item>
           <div class="set-sale-label text-color">BSC Chain token smart contract address</div>
-          <el-form-item class="set-sale-value" prop="contract">
-            <el-input v-model="form.contract" class="input" placeholder style="width: 80%;"></el-input>
+          <el-form-item class="set-sale-value" prop="cAddress">
+            <el-input v-model="form.cAddress" class="input" placeholder style="width: 80%;"></el-input>
             <!-- <i class="el-icon-circle-check" style="color: #00F9E5;margin-left: 4px;" v-if="isVerify"></i> -->
             <!-- <i class="el-icon-delete" @click="clearContract" style="color: #87A2B7;margin-left: 12px;" v-if="form.contract"></i> -->
             <!-- <div class="verify">Verify</div> -->
@@ -35,10 +35,10 @@
               </span>
             </div>
           </el-form-item>
-          <template v-if="form.type==2">
+          <template v-if="form.sptType==2">
             <div class="set-sale-label text-color">Token ID</div>
-            <el-form-item class="set-sale-value" prop="disTokenId">
-              <el-input v-model="form.disTokenId" class="input" placeholder style="width: 376px;"></el-input>
+            <el-form-item class="set-sale-value" prop="tokenId">
+              <el-input v-model="form.tokenId" class="input" placeholder style="width: 376px;"></el-input>
             </el-form-item>
           </template>
           <div class="set-sale-label text-color">How many discounts can a user get by holding one Licensed token?</div>
@@ -70,11 +70,15 @@ export default {
       type: String,
       default: '',
     },
+    tokenInfo: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     var reg = /^\+?[1-9][0-9]*$/
     var validateTokenId = (rule, value, callback) => {
-      if (this.form.type == 2 && !value) {
+      if (this.form.sptType == 2 && !value) {
         callback(new Error('Please enter the token ID'))
       }
       callback()
@@ -129,14 +133,14 @@ export default {
       isVerify: false,
       form: {
         isOpen: true,
-        type: 0,
-        contract: '',
-        disTokenId: '',
+        sptType: 0,
+        cAddress: '',
+        tokenId: '',
         discounts: undefined,
         discountsFee: undefined,
       },
       rules: {
-        contract: [
+        cAddress: [
           {
             required: true,
             message: 'Please enter the contract address',
@@ -148,7 +152,7 @@ export default {
             trigger: 'blur',
           },
         ],
-        disTokenId: [{ validator: validateTokenId, trigger: 'blur' }],
+        tokenId: [{ validator: validateTokenId, trigger: 'blur' }],
         discounts: [
           {
             required: true,
@@ -172,6 +176,21 @@ export default {
     }
   },
   methods: {
+    onOpen() {
+      const { cAddress, discounts, discountsFee, isOpen, sptType, tokenId } =
+        this.tokenInfo.nsp
+      this.form = {
+        cAddress,
+        discounts,
+        discountsFee,
+        isOpen,
+        sptType,
+        tokenId,
+      }
+      if (this.form.discountsFee) {
+        this.form.discountsFee = (this.form.discountsFee / 100).toFixed(2)
+      }
+    },
     /** 表单提交 */
     handleSubmit() {
       this.$refs['form'].validate((valid) => {
@@ -200,7 +219,7 @@ export default {
     },
     /** 清理地址 */
     clearContract() {
-      this.form.contract = ''
+      this.form.cAddress = ''
       this.isVerify = false
     },
     showDialog() {

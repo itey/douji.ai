@@ -179,7 +179,7 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
 
     .common-btn2 {
       height: 50px;
