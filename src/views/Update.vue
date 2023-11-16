@@ -14,13 +14,8 @@ import CreateStep2 from '@/components/create/CreateStep2'
 import UpdateSuccess from '@/components/create/UpdateSuccessDialog'
 import { weiToMbd } from '@/utils/common'
 import { loadFromUrl, unlockContent, uploadJson } from '@/utils/http'
-import {
-  getTokenOwner,
-  startSetTokenPrice,
-  startSetTokenURI,
-  tokenURI,
-  tokensData,
-} from '@/utils/web3/nft'
+import { startSetTokenPrice, startSetTokenURI } from '@/utils/web3/nft'
+import { getTokenOwner, tokenURI, tokensData } from '@/utils/web3/open'
 export default {
   name: 'update-view',
   components: {

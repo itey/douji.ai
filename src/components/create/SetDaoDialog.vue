@@ -34,7 +34,8 @@
 </template>
 
 <script>
-import { getDaoRule, startSetDaoRule, tokensData } from '@/utils/web3/nft'
+import { startSetDaoRule } from '@/utils/web3/nft'
+import { getDaoRule, tokensData } from '@/utils/web3/open'
 export default {
   name: 'set-dao-dialog',
   props: {

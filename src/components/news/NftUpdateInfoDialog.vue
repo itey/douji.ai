@@ -49,7 +49,7 @@ import NftAttributes from '@/components/news/NftAttributes'
 import NftDaoGovernance from '@/components/news/NftDaoGovernance'
 import NftPrimaryMarket from '@/components/news/NftPrimaryMarket'
 import { loadFromUrl, unlockContent } from '@/utils/http'
-import { tokenURI, tokensData } from '@/utils/web3/nft'
+import { tokenURI, tokensData } from '@/utils/web3/open'
 var md = require('markdown-it')({
   html: true,
   linkify: true,

@@ -33,7 +33,7 @@ function WalletButton() {
     if(connectKit) {
       connectKit.on('connect', (provider) => {
         if (provider && isEVMProvider(provider)) {
-          window.ethereum = new Web3(provider);
+          window.web3Particle = new Web3(provider);
         }
       });
       connectKit.on('disconnect', () => {

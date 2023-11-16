@@ -1,9 +1,7 @@
 
 import store from '@/store'
 import { weiToEth, weiToMbd } from '@/utils/common'
-import { balanceOfBnb } from '@/utils/web3/chain'
-import { getMbdPrice } from '@/utils/web3/dex'
-import { balanceOfMbd } from '@/utils/web3/mbd'
+import { balanceOfBnb, balanceOfMbd, getMbdPrice } from '@/utils/web3/open'
 import Vue from 'vue'
 
 const projectId = process.env.VUE_APP_PROJECT_ID;

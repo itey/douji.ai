@@ -10,7 +10,7 @@ var nftContract = undefined
 
 /** 获取NFT合约 */
 function getNFTContract() {
-  const web3 = window.ethereum
+  const web3 = window.web3Particle
   if (!web3) {
     Vue.$toast(i18n.t('common.need_reconnect_wallet'))
     return null
@@ -75,74 +75,6 @@ export function userMint(tokenId, count) {
 
 }
 
-/** 查询DaoRule */
-export function getDaoRule(tokenId) {
-  if (!checkAccount()) {
-    return
-  }
-  const nftContract = getNFTContract()
-  if (!nftContract) {
-    return
-  }
-  return new Promise((resolve, reject) => {
-    nftContract.methods.getDaoRule(tokenId)
-      .call()
-      .then(res => {
-        resolve(res)
-      })
-      .catch(e => {
-        reject(e)
-      })
-  })
-}
-
-
-/** 查询TokenOwner */
-export function getTokenOwner(tokenId) {
-  if (!checkAccount()) {
-    return
-  }
-  const nftContract = getNFTContract()
-  if (!nftContract) {
-    return
-  }
-  return new Promise((resolve, reject) => {
-    nftContract.methods.tokenOwners(tokenId)
-      .call()
-      .then(res => {
-        resolve(res)
-      })
-      .catch(e => {
-        reject(e)
-      })
-  })
-}
-
-/**
- * nft信息查询
- * @param {*} tokenId 
- * @returns 
- */
-export function tokensData(tokenId) {
-  if (!checkAccount()) {
-    return
-  }
-  const nftContract = getNFTContract()
-  if (!nftContract) {
-    return
-  }
-  return new Promise((resolve, reject) => {
-    nftContract.methods.tokens(tokenId)
-      .call()
-      .then(res => {
-        resolve(res)
-      })
-      .catch(e => {
-        reject(e)
-      })
-  })
-}
-
 /** 获取余额 */
 export function balanceOf(tokenId) {
   if (!checkAccount()) {
@@ -155,27 +87,6 @@ export function balanceOf(tokenId) {
   const userAccount = store.state.chain.account
   return new Promise((resolve, reject) => {
     nftContract.methods.balanceOf(userAccount, tokenId)
-      .call()
-      .then(res => {
-        resolve(res)
-      })
-      .catch(e => {
-        reject(e)
-      })
-  })
-}
-
-/** 获取metaURI */
-export function tokenURI(tokenId) {
-  if (!checkAccount()) {
-    return
-  }
-  const nftContract = getNFTContract()
-  if (!nftContract) {
-    return
-  }
-  return new Promise((resolve, reject) => {
-    nftContract.methods.uri(tokenId)
       .call()
       .then(res => {
         resolve(res)
@@ -469,7 +380,6 @@ export function stakeNft(tokenId, count) {
 
 }
 
-
 /** 取回 NFT */
 export function unStakeNft(tokenId, count) {
   if (!checkAccount()) {
@@ -495,25 +405,6 @@ export function unStakeNft(tokenId, count) {
   })
 }
 
-
-/** 总质押数量 */
-export function totalPledgeCount(tokenId) {
-  const nftContract = getNFTContract()
-  if (!nftContract) {
-    return
-  }
-  return new Promise((resolve, reject) => {
-    nftContract.methods.pledgeAllBalanceOf(tokenId)
-      .call()
-      .then(res => {
-        resolve(res)
-      })
-      .catch(e => {
-        reject(e)
-      })
-  })
-}
-
 /** 我的质押数量 */
 export function userPledgeCount(tokenId) {
   const nftContract = getNFTContract()
@@ -532,7 +423,6 @@ export function userPledgeCount(tokenId) {
       })
   })
 }
-
 
 /** 授权 NFT */
 export function nftApproval(operator) {

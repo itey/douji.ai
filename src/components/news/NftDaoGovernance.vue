@@ -50,9 +50,13 @@
 import RetrieveDialog from '@/components/news/RetrieveDialog'
 import StakeDialog from '@/components/news/StakeDialog'
 import { eventBus } from '@/utils/event-bus'
-import { blockHeight } from '@/utils/web3/chain'
-import { getSettlePoolBalance } from '@/utils/web3/market'
-import { tokensData, totalPledgeCount, userPledgeCount } from '@/utils/web3/nft'
+import { userPledgeCount } from '@/utils/web3/nft'
+import {
+  blockHeight,
+  getSettlePoolBalance,
+  tokensData,
+  totalPledgeCount,
+} from '@/utils/web3/open'
 export default {
   name: 'nft-dao-governance',
   props: {

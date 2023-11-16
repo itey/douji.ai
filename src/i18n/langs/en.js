@@ -23,6 +23,10 @@ export default {
     "img_upload_error":
       "An error occurred uploading the image. Please try again later.",
   },
+  "home": {
+    "bjx_buy_success":
+      "Successfully bought {count} Bjx use {amount} {coin}",
+  },
   "create": {
     "category_required": "Category is required",
     "maxSupply_required": "Nft max supply is required",

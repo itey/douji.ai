@@ -61,8 +61,8 @@
 </template>
 
 <script>
-import { checkIfContract } from '@/utils/web3/chain'
 import { startSetNsp } from '@/utils/web3/nft'
+import { checkIfContract } from '@/utils/web3/open'
 export default {
   name: 'set-sale-dialog',
   props: {

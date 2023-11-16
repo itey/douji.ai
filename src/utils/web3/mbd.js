@@ -2,33 +2,18 @@ import mbd from '@/assets/abi/mbd.json'
 import i18n from '@/i18n'
 import store from '@/store'
 import Vue from 'vue'
-import { mbdToWei, weiToMbd } from '../common'
+import { mbdToWei } from '../common'
 import { checkAccount } from './chain'
 
 
 /** 获取MBD合约 */
 function getMBDContract() {
-  const web3 = window.ethereum
+  const web3 = window.web3Particle
   if (!web3) {
     Vue.$toast.warning(i18n.t('common.need_reconnect_wallet'))
     return
   }
   return new web3.eth.Contract(mbd.abi, process.env.VUE_APP_MBD)
-}
-
-/** 查询MBD余额 */
-export function balanceOfMbd(account) {
-  const contract = getMBDContract()
-  return new Promise((resolve, reject) => {
-    contract.methods.balanceOf(account)
-      .call()
-      .then(balance => {
-        resolve(weiToMbd(balance))
-      })
-      .catch(err => {
-        reject(err)
-      })
-  })
 }
 
 /** 授权MBD */
@@ -56,7 +41,6 @@ export function approveMbd(spender, count) {
   })
 
 }
-
 
 /** MBD转账 */
 export function transferMbd(to, count) {

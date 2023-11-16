@@ -162,12 +162,8 @@ import {
   loadFromUrl,
   unlockContent,
 } from '@/utils/http'
-import {
-  balanceOf,
-  getTokenOwner,
-  tokenURI,
-  tokensData,
-} from '@/utils/web3/nft'
+import { balanceOf } from '@/utils/web3/nft'
+import { getTokenOwner, tokenURI, tokensData } from '@/utils/web3/open'
 var md = require('markdown-it')({
   html: true,
   linkify: true,
