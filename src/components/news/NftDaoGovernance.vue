@@ -49,6 +49,7 @@
 <script>
 import RetrieveDialog from '@/components/news/RetrieveDialog'
 import StakeDialog from '@/components/news/StakeDialog'
+import { weiToMbd } from '@/utils/common'
 import { eventBus } from '@/utils/event-bus'
 import { userPledgeCount } from '@/utils/web3/nft'
 import {
@@ -211,7 +212,7 @@ export default {
       return new Promise((resolve, reject) => {
         getSettlePoolBalance(this.tokenId)
           .then((balance) => {
-            this.settlePoolBalance = balance
+            this.settlePoolBalance = weiToMbd(balance)
             resolve()
           })
           .catch((e) => {

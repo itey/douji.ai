@@ -34,8 +34,8 @@
     <div class="text-middle text-color">Distributes Income to be settled</div>
     <div class="settle-container">
       <div class="unit text-color">MBD</div>
-      <div class="value text-color">68415.5684</div>
-      <div class="sub-value text-sub-color">≈$27.57</div>
+      <div class="value text-color">0.0000</div>
+      <div class="sub-value text-sub-color">≈$0.0000</div>
     </div>
     <div class="settle-button">
       <el-button class="common-btn1" type="primary">Settlement</el-button>
