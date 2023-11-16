@@ -8,7 +8,6 @@
           <img style="width: 38px;height: 38px;" src="@/assets/images/news/blind-date.png" />
           <div class="time">{{ countdown }}</div>
         </div>
-        <img style="width: 388px;height: 347px;" src="@/assets/images/news/blind-box-icon.png" />
         <div class="label">Open the blind box and you will 100% get the following rewards</div>
         <div class="blind-list">
           <div v-for="(item,index) in rewardsOptions" class="blind-item" :key="index" :style="getStyle(index)">
