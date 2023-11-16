@@ -287,6 +287,7 @@ export default {
     /** 检查每日签到 */
     checkIn() {
       if (this.userId && ifCheckInToday(this.userId)) {
+        this.ifCheckedIn = true
         return
       }
       this.ifCheckedIn = false

@@ -132,3 +132,22 @@ export const sptType2Name = (type) => {
       return type
   }
 }
+
+function zeroPadding(num, length) {
+  var len = num.toString().length;
+  while (len < length) {
+    num = "0" + num;
+    len++;
+  }
+  return num;
+}
+
+export const zeroPadding2 = (num) => {
+  return zeroPadding(num, 2)
+}
+
+export const readSecondsFormat = (seconds) => {
+  if (!seconds) return '00:00:00'
+  const d = moment.duration(seconds, 'seconds')
+  return zeroPadding(d.hours(), 2) + ':' + zeroPadding(d.minutes(), 2) + ':' + zeroPadding(d.seconds(), 2)
+}

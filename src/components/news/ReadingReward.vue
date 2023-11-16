@@ -1,13 +1,13 @@
 <template>
-  <div class="reward-container">
+  <div class="reward-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
     <div class="reward-top-title">Reading Reward</div>
-    <div class="reward-value text-color" style="margin-top: 31px;">00:23:46</div>
+    <div class="reward-value text-color" style="margin-top: 31px;">{{ readReward.duration_sum | readSecondsFormat }}</div>
     <div class="reward-tip">Total reading time today</div>
-    <div class="reward-value text-color" style="margin-top: 58px;">01/12</div>
+    <div class="reward-value text-color" style="margin-top: 58px;">{{readReward.reads_count | zeroPadding2}}/12</div>
     <div class="reward-tip">Receive blind box mission today</div>
     <div class="reward-mbd">
-      <div class="reward-mbd-value">100 MBD</div>
-      <div class="reward-mbd-transform">≈$626 57</div>
+      <div class="reward-mbd-value">{{ readReward.income_sum | decimalPlace4 }} MBD</div>
+      <div class="reward-mbd-transform">≈${{ (readReward.income_sum * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
     </div>
     <div class="reward-tip">Receive blind box mission today</div>
     <el-button class="common-btn2" style="width: 338px;margin: 31px 0 48px 0;">Settlement</el-button>
@@ -15,12 +15,44 @@
 </template>
 
 <script>
+import { getTodayReadData } from '@/utils/http'
 export default {
   name: 'reading-reward',
   data() {
     return {
-      nftContract: process.env.VUE_APP_NFT,
+      loading: false,
+      userId: this.$store.state.user.userId,
+      timer: undefined,
+      readReward: {
+        income_sum: 0,
+        duration_sum: 0,
+        reads_count: 0,
+      },
     }
+  },
+  mounted() {
+    this.getTodayReadData()
+    this.timer = setInterval(() => {
+      this.getTodayReadData()
+    }, 10000)
+  },
+  destroyed() {
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
+  },
+  methods: {
+    async getTodayReadData() {
+      if (!this.userId) {
+        return
+      }
+      const res = await getTodayReadData()
+      if (res.code == 1) {
+        this.readReward = res.data
+      } else {
+        this.$toast.error(res.message)
+      }
+    },
   },
 }
 </script>
@@ -68,7 +100,7 @@ export default {
     justify-content: center;
 
     .reward-mbd-value {
-      font-size: 36px;
+      font-size: 30px;
       font-family: Arial;
       font-weight: bold;
       color: #00f9e5;

@@ -27,6 +27,14 @@ export function checkIn(signed) {
     })
 }
 
+// 获取当日阅读奖励
+export function getTodayReadData() {
+    return request({
+        url: '/getTodayReadData',
+        method: 'post'
+    })
+}
+
 // 检查是否有盲盒开
 export function checkBlindBox() {
     return request({
