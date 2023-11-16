@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import cache from './cache';
 
 /** 通用脱敏 */
@@ -276,7 +277,7 @@ export function weiToMbd(wei) {
   if (!wei) {
     return wei
   }
-  return Number(wei) / Math.pow(10, 8);
+  return Number(wei) / Math.pow(10, 8)
 }
 
 // mbd->wei
@@ -284,7 +285,7 @@ export function mbdToWei(eth) {
   if (!eth) {
     return eth
   }
-  return Math.trunc(Number(eth) * Math.pow(10, 8));
+  return new BigNumber(eth).shiftedBy(8).integerValue()
 }
 
 // wei->eth
@@ -300,7 +301,7 @@ export function ethToWei(eth) {
   if (!eth) {
     return eth
   }
-  return Number(eth) * Math.pow(10, 18);
+  return new BigNumber(eth).shiftedBy(18).integerValue()
 }
 
 export function timestampToDate(timestamp) {

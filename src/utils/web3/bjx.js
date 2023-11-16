@@ -32,7 +32,7 @@ export function erc20Approve(cAddress, amount, decimal) {
   }
   const erc20Contract = new web3.eth.Contract(erc20.abi, cAddress)
   const fromAddress = store.state.chain.account
-  const weiAmount = BigNumber(amount).multipliedBy(Math.pow(10, decimal)).integerValue()
+  const weiAmount = new BigNumber(amount).shiftedBy(decimal).integerValue()
   return new Promise((resolve, reject) => {
     erc20Contract.methods.approve(process.env.VUE_APP_BJX, weiAmount)
       .send({ from: fromAddress })
