@@ -213,3 +213,13 @@ export function notifyUpdateOrder(tokenId) {
         params: { tokenId }
     })
 }
+
+
+// 质押解押通知
+export function notifyPledge(tokenId) {
+    return request({
+        url: '/notifypledge',
+        method: 'post',
+        params: { tokenId }
+    })
+}

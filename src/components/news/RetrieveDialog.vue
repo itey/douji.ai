@@ -21,6 +21,7 @@
 
 <script>
 import { eventBus } from '@/utils/event-bus'
+import { notifyPledge } from '@/utils/http'
 import { unStakeNft } from '@/utils/web3/nft'
 export default {
   name: 'retrieve-dialog',
@@ -76,6 +77,7 @@ export default {
         console.log(txJson)
         this.$toast.success(this.$t('news-detail.retrieve_success'))
         eventBus.$emit('refresh_stake_info', this.tokenId)
+        notifyPledge(this.tokenId)
         this.show = false
       } catch (error) {
         console.log(error)

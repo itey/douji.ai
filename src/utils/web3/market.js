@@ -33,7 +33,7 @@ export function createSaleOrder(tokenId, count, price) {
   const fromAddress = store.state.chain.account
   return new Promise((resolve, reject) => {
     // nftType 0-721 1-1155
-    marketContract.methods.create(process.env.VUE_APP_NFT, tokenId, count, 1, price)
+    marketContract.methods.create(process.env.VUE_APP_NFT, tokenId + '', count + '', 1, price + '')
       .send({ from: fromAddress })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)

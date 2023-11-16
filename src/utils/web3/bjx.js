@@ -34,7 +34,7 @@ export function erc20Approve(cAddress, amount, decimal) {
   const fromAddress = store.state.chain.account
   const weiAmount = new BigNumber(amount).shiftedBy(decimal).integerValue()
   return new Promise((resolve, reject) => {
-    erc20Contract.methods.approve(process.env.VUE_APP_BJX, weiAmount)
+    erc20Contract.methods.approve(process.env.VUE_APP_BJX, weiAmount + '')
       .send({ from: fromAddress })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
@@ -63,7 +63,7 @@ export function mintByErc20(ercAddress, amount) {
       ercAddress,
       fromAddress,
       process.env.VUE_APP_BJX_TOKEN_ID,
-      amount,
+      amount + '',
       '0x'
     )
       .send({ from: fromAddress })
@@ -97,7 +97,7 @@ export function mintByBnb(count, payableAmountWei) {
       count,
       '0x'
     )
-      .send({ from: fromAddress, value: payableAmountWei })
+      .send({ from: fromAddress, value: payableAmountWei + '' })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
       })

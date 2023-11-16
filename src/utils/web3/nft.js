@@ -34,7 +34,7 @@ export function possessorMint(tokenURI, initAmount, priceTokenIdOrAmount, maxSup
   }
   const toAddress = store.state.chain.account
   return new Promise((resolve, reject) => {
-    nftContract.methods.authorise(tokenURI, initAmount, mbdToWei(priceTokenIdOrAmount), maxSupply)
+    nftContract.methods.authorise(tokenURI, initAmount + '', mbdToWei(priceTokenIdOrAmount) + '', maxSupply + '')
       .send({ from: toAddress })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
@@ -60,7 +60,7 @@ export function userMint(tokenId, count) {
   }
   const toAddress = store.state.chain.account
   return new Promise((resolve, reject) => {
-    nftContract.methods.mint(toAddress, tokenId, count, '0x')
+    nftContract.methods.mint(toAddress, tokenId, count + '', '0x')
       .send({ from: toAddress })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
@@ -133,7 +133,7 @@ export function startSetTokenPrice(tokenId, price, availableSupply) {
   }
   const userAccount = store.state.chain.account
   return new Promise((resolve, reject) => {
-    nftContract.methods.startSetTokenPrice(tokenId, mbdToWei(price), availableSupply)
+    nftContract.methods.startSetTokenPrice(tokenId, mbdToWei(price) + '', availableSupply + '')
       .send({ from: userAccount })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
@@ -238,8 +238,8 @@ export function startSetNsp(tokenId, param) {
       param.isOpen,
       param.sptType,
       param.cAddress,
-      param.discounts,
-      (param.discountsFee * 100).toFixed(0),
+      param.discounts + '',
+      (param.discountsFee * 100).toFixed(0) + '',
       param.tokenId
     )
       .send({ from: userAccount })
@@ -293,8 +293,8 @@ export function startSetDaoRule(tokenId, param) {
   return new Promise((resolve, reject) => {
     nftContract.methods.startSetDaoRule(
       tokenId,
-      param.daoFee,
-      param.mVoteCount
+      param.daoFee + '',
+      param.mVoteCount + ''
     )
       .send({ from: userAccount })
       .on('transactionHash', (hash) => {
@@ -365,7 +365,7 @@ export function stakeNft(tokenId, count) {
   }
   const fromAddress = store.state.chain.account
   return new Promise((resolve, reject) => {
-    nftContract.methods.pledgeNft(tokenId, count)
+    nftContract.methods.pledgeNft(tokenId, count + '')
       .send({ from: fromAddress })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
@@ -391,7 +391,7 @@ export function unStakeNft(tokenId, count) {
   }
   const fromAddress = store.state.chain.account
   return new Promise((resolve, reject) => {
-    nftContract.methods.unPledgeNft(tokenId, count)
+    nftContract.methods.unPledgeNft(tokenId, count + '')
       .send({ from: fromAddress })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)

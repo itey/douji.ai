@@ -1333,3 +1333,76 @@ post
 | ---- | :--- |
 | 0    | 失败 |
 | 1    | 成功 |
+
+### 24.质押解押通知
+
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/notifypledge
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名  | 约束-required | 类型 | 说明    |
+| :------ | :------------ | :--- | :------ |
+| tokenId | true          | int  | tokenId |
+
+##### Response parameters:
+
+```json
+{
+  "code": 1,
+  "message": "ok",
+  "data": {}
+}
+```
+
+##### Response the result data code instructions
+
+| code | 说明 |
+| ---- | :--- |
+| 0    | 失败 |
+| 1    | 成功 |
+
+### 25.质押待结算列表
+
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/pledgeSettleList
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名 | 约束-required | 类型 | 说明                       |
+| :----- | :------------ | :--- | :------------------------- |
+| page   | true          | int  | 页码 默认 1 每页显示 20 条 |
+
+##### Response parameters:
+
+```json
+{
+  "code": 1,
+  "message": "ok",
+  "data": {
+    "list": [{ "token_id": 111111 }],
+    "page": 1
+  }
+}
+```
+
+##### Response the result data code instructions
+
+| code | 说明 |
+| ---- | :--- |
+| 0    | 失败 |
+| 1    | 成功 |
