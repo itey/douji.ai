@@ -1,5 +1,5 @@
 <template>
-  <div class="form-attr-container">
+  <div class="form-attr-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
     <div class="form-attr-title text-color">Primary Market</div>
     <div class="form-attr-market">
       <div class="form-attr-market-top">
@@ -7,15 +7,24 @@
           Available :
           <span class="text-color">{{ availableSupply | toLocalString }}</span>
         </div>
-        <div class="form-attr-available">
+        <div class="form-attr-available" v-if="userOwned">
           You owned :
           <span class="text-color">{{ userOwned }}</span>
         </div>
       </div>
-      <div class="form-attr-mbd">
-        <div class="mbd-value text-color">{{ currentPrice | decimalPlace4 }} MBD</div>
-        <div class="mbd-transform">≈${{ (currentPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
-      </div>
+      <template v-if="discountPrice && discountPrice != currentPrice">
+        <div class="form-attr-mbd">
+          <div class="mbd-value text-color">{{ discountPrice | decimalPlace4 }} MBD</div>
+          <div class="mbd-transform">≈${{ (discountPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
+        </div>
+        <div class="form-attr-discount">Original Price: {{ currentPrice | decimalPlace4 }} MBD</div>
+      </template>
+      <template v-else>
+        <div class="form-attr-mbd">
+          <div class="mbd-value text-color">{{ currentPrice | decimalPlace4 }} MBD</div>
+          <div class="mbd-transform">≈${{ (currentPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
+        </div>
+      </template>
       <el-button @click="handleMint()" :disabled="editShow || availableSupply <= 0" class="common-btn2 form-attr-mint">Mint</el-button>
       <div class="form-attr-tip" v-if="discountJson && discountJson.isOpen">
         <div>
@@ -36,8 +45,14 @@
 
 <script>
 import { weiToMbd } from '@/utils/common'
+import { eventBus } from '@/utils/event-bus'
 import { approveMbd } from '@/utils/web3/mbd'
 import { userMint } from '@/utils/web3/nft'
+import {
+  getErc1155BalanceOf,
+  getErc20BalanceOf,
+  getErc721BalanceOf,
+} from '@/utils/web3/open'
 export default {
   name: 'nft-attributes',
   props: {
@@ -120,24 +135,50 @@ export default {
       }
     },
   },
+  watch: {
+    userAccount: function (val, od) {
+      if (val != od) {
+        this.getDiscountPrice()
+      }
+    },
+    tokensInfo: function (val, od) {
+      if (val != od) {
+        this.getDiscountPrice()
+      }
+    },
+  },
   data() {
     return {
+      loading: false,
       nftContract: process.env.VUE_APP_NFT,
       bnbScanUrl: process.env.VUE_APP_BNB_SCAN_URL,
+      userAccount: this.$store.state.user.account,
+      discountPrice: undefined,
     }
+  },
+  mounted() {
+    this.getDiscountPrice()
   },
   methods: {
     /** 用户点击mint */
     async handleMint() {
+      const c = await this.$store.dispatch('CheckLogin', true)
+      if (!c) {
+        return
+      }
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',
       })
-      if (this.currentPrice && this.currentPrice > 0) {
+      var mintPrice = this.currentPrice
+      if (this.discountPrice && this.discountPrice > 0) {
+        mintPrice = this.discountPrice
+      }
+      if (mintPrice && mintPrice > 0) {
         try {
-          await approveMbd(this.nftContract, this.currentPrice)
+          await approveMbd(this.nftContract, mintPrice)
         } catch (e) {
           console.log(e)
-          this.$toast.warning(this.$t('news-detail.mbd_approve_failed'))
+          this.$toast.error(e)
           loadingInstance.close()
           return
         }
@@ -146,14 +187,67 @@ export default {
         await userMint(this.tokenId, 1)
       } catch (e) {
         console.log(e)
-        this.$toast.warning(this.$t('news-detail.nft_mint_failed'))
+        this.$toast.warning(e)
         loadingInstance.close()
         return
       }
       this.$toast.success(this.$t('news-detail.nft_mint_success'))
       loadingInstance.close()
       this.$emit('handleReload')
+      eventBus.$emit('refresh_stake_info')
     },
+    /** 计算折扣额 */
+    async getDiscountPrice() {
+      if (!this.userAccount) {
+        return
+      }
+      if (this.editShow) {
+        return
+      }
+      if (!this.discountJson || !this.discountJson.isOpen) {
+        return
+      }
+      const bepType = this.discountJson.sptType
+
+      if (bepType == '0') {
+        // erc20
+        const erc20Balance = await getErc20BalanceOf(
+          this.discountJson.cAddress,
+          this.userAccount
+        )
+        if (erc20Balance >= this.discountJson.discounts) {
+          this.discountPrice =
+            this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
+        }
+      }
+      this.loading = true
+      if (bepType == '1') {
+        // erc721
+        const erc721Balance = await getErc721BalanceOf(
+          this.discountJson.cAddress,
+          this.userAccount
+        )
+        if (erc721Balance >= this.discountJson.discounts) {
+          this.discountPrice =
+            this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
+        }
+      }
+
+      if (bepType == '2') {
+        // erc1155
+        const erc1155Balance = await getErc1155BalanceOf(
+          this.discountJson.cAddress,
+          this.userAccount,
+          this.discountJson.tokenId
+        )
+        if (erc1155Balance >= this.discountJson.discounts) {
+          this.discountPrice =
+            this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
+        }
+      }
+      this.loading = false
+    },
+    /** 查看折扣Token信息 */
     toBnbScan(address) {
       window.open(this.bnbScanUrl + '/address/' + address, '_blank')
     },
@@ -286,6 +380,12 @@ export default {
         font-weight: 400;
         color: #88a2b8;
       }
+    }
+
+    .form-attr-discount {
+      margin-top: 5px;
+      font-size: 15px;
+      color: #acbcc9;
     }
 
     .form-attr-mint {

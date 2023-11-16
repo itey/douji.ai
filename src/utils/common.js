@@ -284,7 +284,7 @@ export function mbdToWei(eth) {
   if (!eth) {
     return eth
   }
-  return Number(eth) * Math.pow(10, 8);
+  return Math.trunc(Number(eth) * Math.pow(10, 8));
 }
 
 // wei->eth

@@ -368,7 +368,11 @@ export default {
   },
   methods: {
     /** 点击购买BJX */
-    handleBuyBjx() {
+    async handleBuyBjx() {
+      const c = await this.$store.dispatch('CheckLogin', true)
+      if (!c) {
+        return
+      }
       this.$refs['bjxForm'].validate((valid) => {
         if (!valid) return
         this.bjx.buying = true

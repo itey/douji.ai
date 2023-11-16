@@ -1,4 +1,7 @@
 import bjx from '@/assets/abi/bjx.json'
+import erc1155 from '@/assets/abi/erc1155.json'
+import erc20 from '@/assets/abi/erc20.json'
+import erc721 from '@/assets/abi/erc721.json'
 import marketJson from '@/assets/abi/market.json'
 import mbd from '@/assets/abi/mbd.json'
 import nft from '@/assets/abi/nft.json'
@@ -45,6 +48,52 @@ export function balanceOfBnb(account) {
       resolve(weiToEth(balance)))
       .catch(e => {
         reject(e)
+      })
+  })
+}
+
+///////////////////ERC系列///////////////////
+/** erc20余额查询 */
+export function getErc20BalanceOf(cAddress, account) {
+  const contract = new web3.eth.Contract(erc20.abi, cAddress)
+  return new Promise((resolve, reject) => {
+    contract.methods.balanceOf(account)
+      .call()
+      .then(r => {
+        resolve(r)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+/** erc721余额查询 */
+export function getErc721BalanceOf(cAddress, account) {
+  const contract = new web3.eth.Contract(erc721.abi, cAddress)
+  return new Promise((resolve, reject) => {
+    contract.methods.balanceOf(account)
+      .call()
+      .then(r => {
+        resolve(r)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+/** erc1155余额查询 */
+export function getErc1155BalanceOf(cAddress, account, tokenId) {
+  const contract = new web3.eth.Contract(erc1155.abi, cAddress)
+  return new Promise((resolve, reject) => {
+    contract.methods.balanceOf(account, tokenId)
+      .call()
+      .then(r => {
+        resolve(r)
+      })
+      .catch(err => {
+        reject(err)
       })
   })
 }
@@ -197,11 +246,7 @@ export function getTokenOwner(tokenId) {
   })
 }
 
-/**
- * nft信息查询
- * @param {*} tokenId 
- * @returns 
- */
+/** nft信息查询 */
 export function tokensData(tokenId) {
   const nftContract = getNFTContract()
   if (!nftContract) {

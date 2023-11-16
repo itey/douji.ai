@@ -328,19 +328,23 @@ export default {
           }
         }
         if (!haveFlag) {
-          checkBlindBox().then((r) => {
-            if (r.code == 1) {
-              const boxFlag = r.data.get_box_flag
-              if (boxFlag) {
-                const currentFlag = getBlindBoxFlagCache(this.userId)
-                if (!currentFlag || currentFlag.flag != boxFlag) {
-                  setBlindBoxFlagCache(this.userId, boxFlag, false)
-                  this.boxFlagInfo = getBlindBoxFlagCache(this.userId)
-                  this.$refs['blindDialog'].showDialog()
+          checkBlindBox()
+            .then((r) => {
+              if (r.code == 1) {
+                const boxFlag = r.data.get_box_flag
+                if (boxFlag) {
+                  const currentFlag = getBlindBoxFlagCache(this.userId)
+                  if (!currentFlag || currentFlag.flag != boxFlag) {
+                    setBlindBoxFlagCache(this.userId, boxFlag, false)
+                    this.boxFlagInfo = getBlindBoxFlagCache(this.userId)
+                    this.$refs['blindDialog'].showDialog()
+                  }
                 }
               }
-            }
-          })
+            })
+            .catch((e) => {
+              console.log(e)
+            })
         }
       }
     },
