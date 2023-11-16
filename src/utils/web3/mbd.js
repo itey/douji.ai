@@ -1,8 +1,8 @@
-import mbd from '@/assets/abi/mbd.json'
 import i18n from '@/i18n'
 import store from '@/store'
 import Vue from 'vue'
 import { mbdToWei } from '../common'
+import mbd from './abi/mbd'
 import { checkAccount } from './chain'
 
 

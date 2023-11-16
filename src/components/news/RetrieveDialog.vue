@@ -8,7 +8,7 @@
         <el-input v-model="unStakeCount" @change="checkInput()" class="input" placeholder style="width: 640px;"></el-input>
       </div>
       <div class="error-tip" v-if="error">{{ error }}</div>
-      <div class="retrieve-tip" v-else>
+      <div class="retrieve-tip" v-else-if="userStakeInfo && userStakeInfo[0]">
         Maximum Rerieve Staked NFT quantity
         <span class="text-color">{{ userStakeInfo[0] }}</span>
       </div>
@@ -30,7 +30,7 @@ export default {
       default: undefined,
     },
     userStakeInfo: {
-      type: Object,
+      type: Array,
       default: undefined,
     },
     tokenId: {

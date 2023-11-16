@@ -13,15 +13,24 @@
               <div class="nft-stake-label-sub-text">Open to Access</div>
             </div>
             <div class="nft-stake-content text-color">
-              <div v-html="pubContent"></div>
+              <div v-html="metadata.openContent"></div>
             </div>
-            <template v-if="privateContent">
+            <template v-if="metadata.protected">
               <div class="nft-stake-label-sub">
                 <img style="width: 28px;height: 28px;" src="@/assets/images/create/protect.png" />
                 <div class="nft-stake-label-sub-text">Protected</div>
               </div>
-              <div class="nft-stake-content text-color">
-                <div v-html="privateContent"></div>
+              <div class="nft-stake-content text-color" v-if="metadata.protectedContent">
+                <div v-html="metadata.protectedContent"></div>
+              </div>
+              <div style="display: flex;flex-direction: column;align-items: center;" v-else>
+                <div class="text-color" style="font-size: 12px;">
+                  Owning At Least 1 DOUJ NFT (
+                  <span style="color: #00F9E5;">Token ID: {{ tokenId }}</span>) And Clicking
+                  “
+                  <span style="color: #00F9E5;">Unlock</span>”
+                </div>
+                <el-button @click="handleUnlock()" class="common-btn2" style="border-radius: 25px;margin-top: 29px;">Unlock</el-button>
               </div>
             </template>
             <div class="nft-stake-tag">
@@ -49,6 +58,7 @@ import NftAttributes from '@/components/news/NftAttributes'
 import NftDaoGovernance from '@/components/news/NftDaoGovernance'
 import NftPrimaryMarket from '@/components/news/NftPrimaryMarket'
 import { loadFromUrl, unlockContent } from '@/utils/http'
+import { balanceOf } from '@/utils/web3/nft'
 import { tokenURI, tokensData } from '@/utils/web3/open'
 var md = require('markdown-it')({
   html: true,
@@ -67,29 +77,16 @@ export default {
       type: String,
       default: '',
     },
-    userOwned: {
-      type: String,
-      default: '',
-    },
   },
   components: {
     NftDaoGovernance,
     NftAttributes,
     NftPrimaryMarket,
   },
-  computed: {
-    pubContent() {
-      if (this.metadata.openContent) {
-        return md.render(this.metadata.openContent)
-      } else {
-        return null
-      }
-    },
-    privateContent() {
-      if (this.metadata.protectedContent) {
-        return md.render(this.metadata.protectedContent)
-      } else {
-        return null
+  watch: {
+    userId: function (val, od) {
+      if (val !== od) {
+        this.pageLoad()
       }
     },
   },
@@ -102,6 +99,8 @@ export default {
     */
     return {
       tokenAddress: process.env.VUE_APP_NFT,
+      userId: this.$store.state.user.userId,
+      userOwned: undefined,
       show: false,
       voteType: undefined,
       tokenMetaUrl: undefined,
@@ -135,20 +134,47 @@ export default {
         }
 
         this.metadata = httpResponse.data
-        this.metadata.openContent = await this.loadOpenContent(
-          this.metadata.contentUrl
-        )
-        if (this.metadata.protected) {
-          this.metadata.protectedContent = await this.loadProtectedContent(
-            this.metadata.protected
-          )
-        }
+        const openData = await this.loadOpenContent(this.metadata.contentUrl)
+        this.metadata.openContent = openData ? md.render(openData) : null
+
+        await this.getUserOwned()
       } catch (e) {
         this.$toast.error(e)
         loadingInstance.close()
       } finally {
         loadingInstance.close()
       }
+    },
+    /** 点击解锁 */
+    handleUnlock() {
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        if (this.userOwned && this.userOwned > 0) {
+          this.loadProtectedContent(this.metadata.protected)
+            .then((protectedContent) => {
+              this.$set(
+                this.metadata,
+                'protectedContent',
+                md.render(protectedContent)
+              )
+              this.$toast.success(this.$t('news-detail.unlock_success'))
+              loadingInstance.close()
+            })
+            .catch((e) => {
+              console.log(e)
+              this.$toast.error(this.$t('news-detail.unlock_failed'))
+              loadingInstance.close()
+            })
+        } else {
+          this.$toast.info(this.$t('news-detail.have_no_nft'))
+          loadingInstance.close()
+        }
+      })
     },
     /** 加载公开数据 */
     loadOpenContent(url) {
@@ -192,6 +218,22 @@ export default {
           })
           .catch(() => {
             reject()
+          })
+      })
+    },
+    /** 获取用户拥有数量 */
+    getUserOwned() {
+      if (!this.tokenId || !this.userId) {
+        return
+      }
+      return new Promise((resolve, reject) => {
+        balanceOf(this.tokenId)
+          .then((balance) => {
+            this.userOwned = balance
+            resolve()
+          })
+          .catch((e) => {
+            reject(e)
           })
       })
     },

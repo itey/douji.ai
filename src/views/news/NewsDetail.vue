@@ -6,14 +6,7 @@
       <el-breadcrumb-item v-if="metadata.title">{{ metadata.title }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <NftDaoVote
-      v-if="tokenSupplyInfo.isVoting"
-      @handleReload="dataLoad"
-      :tokenOwner="tokenOwner"
-      :tokenInfo="tokenSupplyInfo"
-      :userOwned="userOwned"
-      :tokenId="tokenId"
-    />
+    <NftDaoVote v-if="tokenSupplyInfo.isVoting" @handleReload="dataLoad" :tokenOwner="tokenOwner" :tokenInfo="tokenSupplyInfo" :tokenId="tokenId" />
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
@@ -155,7 +148,6 @@ import {
   setBlindBoxCache,
   setBlindBoxFlagCache,
 } from '@/utils/common'
-import { eventBus } from '@/utils/event-bus'
 import {
   checkBlindBox,
   getNftTransactions,
@@ -198,6 +190,13 @@ export default {
         return true
       }
       return false
+    },
+  },
+  watch: {
+    userAccount: function (val, od) {
+      if (val != od) {
+        this.dataLoad()
+      }
     },
   },
   data() {
@@ -244,35 +243,18 @@ export default {
     if (!this.tokenId) {
       return
     }
-    if (this.userId) {
-      var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
-      setTimeout(() => {
-        this.dataLoad()
-        this.checkIn()
+    var loadingInstance = this.$loading({
+      background: 'rgba(0, 0, 0, 0.8)',
+    })
+    setTimeout(() => {
+      this.dataLoad()
+      this.checkIn()
+      this.checkBlindBox()
+      this.blindBoxTimerTask = setInterval(() => {
         this.checkBlindBox()
-        this.blindBoxTimerTask = setInterval(() => {
-          this.checkBlindBox()
-        }, 1000 * 20)
-        loadingInstance.close()
-      }, 4000)
-    } else {
-      eventBus.$on('user_login', () => {
-        var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
-        setTimeout(() => {
-          this.dataLoad()
-          loadingInstance.close()
-          this.checkIn()
-          this.checkBlindBox()
-          this.blindBoxTimerTask = setInterval(() => {
-            this.checkBlindBox()
-          }, 1000 * 20)
-        }, 4000)
-      })
-    }
+      }, 1000 * 20)
+      loadingInstance.close()
+    }, 4000)
   },
   destroyed() {
     if (this.blindBoxTimerTask) {
@@ -282,12 +264,15 @@ export default {
   methods: {
     /** 检查每日签到 */
     checkIn() {
-      if (this.userId && ifCheckInToday(this.userId)) {
+      if (!this.userId) {
+        return
+      }
+      if (ifCheckInToday(this.userId)) {
         this.ifCheckedIn = true
         return
       }
       this.ifCheckedIn = false
-      this.$refs['checkInDialog'].showDialog()
+      this.$refs.checkInDialog.showDialog()
     },
     /** 完成签到 */
     onCheckedIn() {
@@ -382,6 +367,9 @@ export default {
     },
     /** 获取用户拥有数量 */
     getUserOwned() {
+      if (!this.tokenId || !this.userAccount) {
+        return
+      }
       return new Promise((resolve, reject) => {
         balanceOf(this.tokenId)
           .then((balance) => {
@@ -395,68 +383,88 @@ export default {
     },
     /** 点击解锁 */
     handleUnlock() {
-      var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        if (this.userOwned && this.userOwned > 0) {
+          this.loadProtectedContent(this.metadata.protected)
+            .then((protectedContent) => {
+              this.$set(
+                this.metadata,
+                'protectedContent',
+                md.render(protectedContent)
+              )
+              this.$toast.success(this.$t('news-detail.unlock_success'))
+              loadingInstance.close()
+            })
+            .catch((e) => {
+              console.log(e)
+              this.$toast.error(this.$t('news-detail.unlock_failed'))
+              loadingInstance.close()
+            })
+        } else {
+          this.$toast.info(this.$t('news-detail.have_no_nft'))
+          loadingInstance.close()
+        }
       })
-      if (this.userOwned && this.userOwned > 0) {
-        this.loadProtectedContent(this.metadata.protected)
-          .then((protectedContent) => {
-            this.$set(
-              this.metadata,
-              'protectedContent',
-              md.render(protectedContent)
-            )
-            this.$toast.success(this.$t('news-detail.unlock_success'))
-            loadingInstance.close()
-          })
-          .catch((e) => {
-            console.log(e)
-            this.$toast.error(this.$t('news-detail.unlock_failed'))
-            loadingInstance.close()
-          })
-      } else {
-        this.$toast.info(this.$t('news-detail.have_no_nft'))
-        loadingInstance.close()
-      }
     },
     /** 点击更新1 */
     handleUpdate(step) {
-      if (!this.canUpdate) {
-        this.$toast.info(this.$t('news-detail.update_unable'))
-        return
-      }
-      if (this.tokenSupplyInfo.isVoting) {
-        this.$toast.info(this.$t('create.nft_voting'))
-        return
-      }
-      this.$router.push({
-        path: '/update',
-        query: { tokenId: this.tokenId, step: step },
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        if (!this.canUpdate) {
+          this.$toast.info(this.$t('news-detail.update_unable'))
+          return
+        }
+        if (this.tokenSupplyInfo.isVoting) {
+          this.$toast.info(this.$t('create.nft_voting'))
+          return
+        }
+        this.$router.push({
+          path: '/update',
+          query: { tokenId: this.tokenId, step: step },
+        })
       })
     },
     /** 点击更新销售策略 */
     handleUpdateSale() {
-      if (!this.canUpdate) {
-        this.$toast.info(this.$t('news-detail.update_unable'))
-        return
-      }
-      if (this.tokenSupplyInfo.isVoting) {
-        this.$toast.info(this.$t('create.nft_voting'))
-        return
-      }
-      this.$refs['setSaleDialog'].showDialog()
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        if (!this.canUpdate) {
+          this.$toast.info(this.$t('news-detail.update_unable'))
+          return
+        }
+        if (this.tokenSupplyInfo.isVoting) {
+          this.$toast.info(this.$t('create.nft_voting'))
+          return
+        }
+        this.$refs['setSaleDialog'].showDialog()
+      })
     },
     /** 点击更新Dao策略 */
     handleUpdateDao() {
-      if (!this.canUpdate) {
-        this.$toast.info(this.$t('news-detail.update_unable'))
-        return
-      }
-      if (this.tokenSupplyInfo.isVoting) {
-        this.$toast.info(this.$t('create.nft_voting'))
-        return
-      }
-      this.$refs['setDaoDialog'].showDialog()
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        if (!this.canUpdate) {
+          this.$toast.info(this.$t('news-detail.update_unable'))
+          return
+        }
+        if (this.tokenSupplyInfo.isVoting) {
+          this.$toast.info(this.$t('create.nft_voting'))
+          return
+        }
+        this.$refs['setDaoDialog'].showDialog()
+      })
     },
     /** 获取token拥有者 */
     getOwner() {
@@ -557,6 +565,9 @@ export default {
     },
     /** 加载交易历史数据 */
     loadTransactionHistory() {
+      if (!this.tokenId) {
+        return
+      }
       return new Promise((resolve, reject) => {
         getNftTransactions(this.tokenId).then((res) => {
           if (res.code == 1) {

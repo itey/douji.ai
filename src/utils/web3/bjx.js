@@ -1,9 +1,9 @@
-import bjx from '@/assets/abi/bjx.json'
-import erc20 from '@/assets/abi/erc20.json'
 import i18n from '@/i18n'
 import store from '@/store'
 import BigNumber from 'bignumber.js'
 import Vue from 'vue'
+import bjx from './abi/bjx'
+import erc20 from './abi/erc20'
 import { checkAccount } from './chain'
 
 var contract = undefined

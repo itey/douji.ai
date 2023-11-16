@@ -1,7 +1,7 @@
-import marketJson from '@/assets/abi/market.json'
 import i18n from '@/i18n'
 import store from '@/store'
 import Vue from 'vue'
+import marketJson from './abi/market'
 import { checkAccount } from './chain'
 
 var contract = undefined

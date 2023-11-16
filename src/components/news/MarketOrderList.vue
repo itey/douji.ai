@@ -2,7 +2,7 @@
   <div class="form-attr-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
     <div class="form-attr-title">
       <div class="text-color">Secondary Market</div>
-      <div class="form-attr-action" @click="$refs['listItemDialog'].showDialog()">
+      <div class="form-attr-action" @click="handleListOrder()">
         + List Your
         item
       </div>
@@ -71,6 +71,14 @@ export default {
     }
   },
   methods: {
+    handleListOrder() {
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        this.$refs['listItemDialog'].showDialog()
+      })
+    },
     /** 加载挂单数据 */
     loadNftOrderList() {
       return new Promise((resolve, reject) => {
@@ -92,50 +100,61 @@ export default {
     },
     /** 取消订单 */
     handleCancelOrder(ordeId) {
-      var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
-      cancelSaleOrder(ordeId)
-        .then((tx) => {
-          console.log(tx)
-          this.$toast.success(this.$t('news-detail.order_cancel_success'))
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
         })
-        .catch((e) => {
-          this.$toast.error(e)
-        })
-        .finally(() => {
-          notifyUpdateOrder(this.tokenId).finally(() => {
-            this.loadNftOrderList()
-            loadingInstance.close()
+        cancelSaleOrder(ordeId)
+          .then((tx) => {
+            console.log(tx)
+            this.$toast.success(this.$t('news-detail.order_cancel_success'))
           })
-        })
+          .catch((e) => {
+            this.$toast.error(e)
+          })
+          .finally(() => {
+            notifyUpdateOrder(this.tokenId).finally(() => {
+              this.loadNftOrderList()
+              loadingInstance.close()
+            })
+          })
+      })
     },
     /** 交易下单 */
     handleSwapOrder(order) {
-      var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
-      approveMbd(this.marketAddress, order.price)
-        .then(() => {
-          swapOrder(order.ordeId)
-            .then((tx) => {
-              console.log(tx)
-              this.$toast.success(this.$t('news-detail.swap_success'))
-            })
-            .catch((e) => {
-              this.$toast.error(e)
-            })
-            .finally(() => {
-              notifyUpdateOrder(this.tokenId).finally(() => {
-                this.loadNftOrderList()
-                loadingInstance.close()
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        approveMbd(this.marketAddress, order.price)
+          .then(() => {
+            swapOrder(order.ordeId)
+              .then((tx) => {
+                console.log(tx)
+                this.$toast.success(this.$t('news-detail.swap_success'))
               })
-            })
-        })
-        .catch((e) => {
-          this.$toast.error(e)
-          loadingInstance.close()
-        })
+              .catch((e) => {
+                this.$toast.error(e)
+              })
+              .finally(() => {
+                notifyUpdateOrder(this.tokenId).finally(() => {
+                  this.loadNftOrderList()
+                  loadingInstance.close()
+                })
+              })
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+            loadingInstance.close()
+          })
+      })
     },
   },
 }

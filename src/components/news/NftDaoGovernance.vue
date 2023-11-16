@@ -22,22 +22,24 @@
           <div class="dividend-pool-label">All members NFT Staked</div>
           <div class="dividend-pool-value text-color">{{ totalStakeCount }}</div>
         </div>
-        <div class="dividend-pool-item">
-          <div class="dividend-pool-label">You NFT Staked</div>
-          <div class="dividend-pool-value text-color" v-if="userStakeInfo && userStakeInfo[0]">{{ userStakeInfo[0] }} ({{ stakePercent }})</div>
-          <div class="dividend-pool-value text-color" v-else>0 (0.00%)</div>
-        </div>
-        <div class="dividend-pool-item">
-          <div class="dividend-pool-label">Retrieve BSC Block Number</div>
-          <div class="dividend-pool-value text-color">{{ userStakeInfo[1] }}</div>
-        </div>
-        <div class="dividend-pool-item">
-          <div class="dividend-pool-label">Current BSC Block Number</div>
-          <div class="dividend-pool-value text-color">{{ currentHeight }}</div>
-        </div>
+        <template v-if="userAccount">
+          <div class="dividend-pool-item">
+            <div class="dividend-pool-label">You NFT Staked</div>
+            <div class="dividend-pool-value text-color" v-if="userStakeInfo && userStakeInfo[0]">{{ userStakeInfo[0] }} ({{ stakePercent }})</div>
+            <div class="dividend-pool-value text-color" v-else>0 (0.00%)</div>
+          </div>
+          <div class="dividend-pool-item">
+            <div class="dividend-pool-label">Retrieve BSC Block Number</div>
+            <div class="dividend-pool-value text-color">{{ userStakeInfo[1] }}</div>
+          </div>
+          <div class="dividend-pool-item">
+            <div class="dividend-pool-label">Current BSC Block Number</div>
+            <div class="dividend-pool-value text-color">{{ currentHeight }}</div>
+          </div>
+        </template>
       </div>
       <div class="dao-btn-container" v-if="operable">
-        <div class="dao-btn" @click="$refs['stakeDialog'].showDialog()">Stake</div>
+        <div class="dao-btn" @click="handleOpenStake()">Stake</div>
         <div class="dao-btn-border" @click="handleRetrieve()">Retrieve</div>
       </div>
     </div>
@@ -82,9 +84,20 @@ export default {
     StakeDialog,
     RetrieveDialog,
   },
+  watch: {
+    userAccount: function (val, od) {
+      if (val !== od) {
+        this.getUserStakeInfo()
+      }
+    },
+  },
   computed: {
     retrieveUseable() {
-      if (!this.userStakeInfo[1] || !this.currentHeight) {
+      if (
+        !this.userStakeInfo ||
+        !this.userStakeInfo[1] ||
+        !this.currentHeight
+      ) {
         return false
       }
       if (this.currentHeight > this.userStakeInfo[1]) {
@@ -94,7 +107,11 @@ export default {
       }
     },
     stakePercent() {
-      if (!this.userStakeInfo[0] || this.userStakeInfo[0] == 0) {
+      if (
+        !this.userStakeInfo ||
+        !this.userStakeInfo[0] ||
+        this.userStakeInfo[0] == 0
+      ) {
         return '0.00%'
       }
       if (!this.totalStakeCount || this.userStakeInfo[0] == 0) {
@@ -136,7 +153,7 @@ export default {
       currentHeight: undefined,
       settlePoolBalance: undefined,
       totalStakeCount: undefined,
-      userStakeInfo: {},
+      userStakeInfo: [],
       tokenSupplyInfo: {},
     }
   },
@@ -159,6 +176,15 @@ export default {
     eventBus.$off('refresh_stake_info')
   },
   methods: {
+    /** 点击质押按钮 */
+    handleOpenStake() {
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        this.$refs['stakeDialog'].showDialog()
+      })
+    },
     /** 加载数据 */
     handleReload() {
       this.loading = true
@@ -174,7 +200,7 @@ export default {
     },
     /** 获取用户质押信息 */
     getUserStakeCount() {
-      if (!this.tokenId) {
+      if (!this.tokenId || !this.userAccount) {
         return
       }
       return new Promise((resolve) => {
@@ -251,11 +277,16 @@ export default {
     },
     /** 点击赎回 */
     handleRetrieve() {
-      if (!this.retrieveUseable) {
-        this.$toast.info(this.$t('news-detail.retrieve_unable'))
-        return
-      }
-      this.$refs['retrieveDialog'].showDialog()
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        if (!this.retrieveUseable) {
+          this.$toast.info(this.$t('news-detail.retrieve_unable'))
+          return
+        }
+        this.$refs['retrieveDialog'].showDialog()
+      })
     },
   },
 }

@@ -21,6 +21,7 @@ export default {
     showDialog() {
       this.show = true
     },
+    /** 点击签到 */
     handleCheckIn() {
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',

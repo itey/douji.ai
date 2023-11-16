@@ -25,7 +25,7 @@ export default {
   },
   "home": {
     "bjx_buy_success":
-      "Successfully bought {count} Bjx use {amount} {coin}",
+      "Successfully bought {count} BJXStar use {amount} {coin}",
   },
   "create": {
     "category_required": "Category is required",
@@ -108,6 +108,8 @@ export default {
       "Vote successfully.",
     "execute_success":
       "Execute successfully.",
+    "vote_already":
+      "You have already voted.",
   },
   "user": {
     "profile_save_success": "Profile saved successfully.",

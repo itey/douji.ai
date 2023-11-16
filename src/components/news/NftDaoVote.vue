@@ -19,15 +19,15 @@
         <span class="text-color">{{ tokenInfo.mVoteCount }}</span>
       </div>
       <div class="proposal-right-btn">
-        <el-button style="width: 118px;height: 42px;" class="common-btn2" :disabled="ifVoteOver || userVoteCount <= 0" @click="handleApprove()">Approve</el-button>
+        <el-button style="width: 118px;height: 42px;" class="common-btn2" @click="handleApprove()">Approve</el-button>
         <el-button style="margin-left: 24px;width: 118px;height: 42px;" class="common-btn2" :disabled="!canExecute" @click="handleExecute()">Execute</el-button>
       </div>
-      <div class="proposal-right-tip">
+      <div class="proposal-right-tip" v-if="userAccount">
         Your Voting:
         <span class="text-color">{{ userVoteCount }}</span>
       </div>
     </div>
-    <NftUpdateInfoDialog ref="nftStakeDialog" :userOwned="userOwned" :tokenOwner="tokenOwner" :tokenId="tokenId" />
+    <NftUpdateInfoDialog ref="nftStakeDialog" :tokenOwner="tokenOwner" :tokenId="tokenId" />
   </div>
 </template>
 
@@ -73,6 +73,7 @@ export default {
   computed: {
     canExecute() {
       if (
+        this.userAccount &&
         this.tokenInfo.vote.count &&
         this.tokenInfo.vote.count > this.tokenInfo.mVoteCount
       ) {
@@ -97,14 +98,12 @@ export default {
   },
   data() {
     return {
-      ifVoteOver: true,
       stakeCount: 0,
       userAccount: this.$store.state.user.account,
     }
   },
   mounted() {
     this.getUserPledgeCount()
-    this.checkIfVote()
     eventBus.$on('refresh_stake_info', this.getUserPledgeCount)
   },
   destroyed() {
@@ -113,25 +112,45 @@ export default {
   methods: {
     /** 点击投票 */
     handleApprove() {
-      var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        isAlreadyVote(this.tokenInfo.vote.no)
+          .then((r) => {
+            if (r) {
+              this.$toast.info(this.$t('news-detail.vote_already'))
+              loadingInstance.close()
+              return
+            }
+            voteByBallot(this.tokenId)
+              .then((tx) => {
+                console.log(tx)
+                this.$toast.success(this.$t('news-detail.vote_success'))
+              })
+              .catch((e) => {
+                this.$toast.error(e)
+              })
+              .finally(() => {
+                loadingInstance.close()
+                this.$emit('handleReload')
+              })
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+            loadingInstance.close()
+          })
       })
-      voteByBallot(this.tokenId)
-        .then((tx) => {
-          console.log(tx)
-          this.$toast.success(this.$t('news-detail.vote_success'))
-        })
-        .catch((e) => {
-          this.$toast.error(e)
-        })
-        .finally(() => {
-          loadingInstance.close()
-          this.checkIfVote()
-          this.$emit('handleReload')
-        })
     },
     /** 点击执行 */
     async handleExecute() {
+      const c = await this.$store.dispatch('CheckLogin', true)
+      if (!c) {
+        return
+      }
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',
       })
@@ -160,14 +179,11 @@ export default {
     },
     /** 获取我的质押数量 */
     getUserPledgeCount() {
+      if (this.userAccount) {
+        return
+      }
       userPledgeCount(this.tokenId).then((res) => {
         this.stakeCount = res[0]
-      })
-    },
-    /** 查询是否已经投票 */
-    checkIfVote() {
-      isAlreadyVote(this.tokenInfo.vote.no).then((r) => {
-        this.ifVoteOver = r
       })
     },
   },

@@ -38,6 +38,9 @@ export function loginWalletSign(chainAccount) {
       })
       .catch((error) => {
         console.log('sign error', error)
+        if (error.message.indexOf('User denied message signature.') > -1) {
+          reject('User denied message signature.')
+        }
         reject(error)
       })
   })

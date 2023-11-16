@@ -7,12 +7,12 @@
           Available :
           <span class="text-color">{{ availableSupply | toLocalString }}</span>
         </div>
-        <div class="form-attr-available" v-if="userOwned">
+        <div class="form-attr-available" v-if="userAccount">
           You owned :
           <span class="text-color">{{ userOwned }}</span>
         </div>
       </div>
-      <template v-if="discountPrice && discountPrice != currentPrice">
+      <template v-if="userAccount && discountPrice && discountPrice != currentPrice">
         <div class="form-attr-mbd">
           <div class="mbd-value text-color">{{ discountPrice | decimalPlace4 }} MBD</div>
           <div class="mbd-transform">≈${{ (discountPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
