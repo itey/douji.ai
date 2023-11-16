@@ -71,6 +71,21 @@ export const getBjxTokenInfo = () => {
   })
 }
 
+/** 查询BJXStar */
+export const getBjxBalanceOf = (account) => {
+  const contract = getBjxContract()
+  return new Promise((resolve, reject) => {
+    contract.methods.balanceOf(account, BJX_TOKEN_ID)
+      .call()
+      .then(r => {
+        resolve(r)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
 ///////////////////MBD///////////////////
 
 /** 获取MBD交易对合约 */
@@ -148,9 +163,6 @@ function getNFTContract() {
 
 /** 查询DaoRule */
 export function getDaoRule(tokenId) {
-  if (!checkAccount()) {
-    return
-  }
   const nftContract = getNFTContract()
   if (!nftContract) {
     return

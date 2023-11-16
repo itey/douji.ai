@@ -2,6 +2,7 @@ import bjx from '@/assets/abi/bjx.json'
 import erc20 from '@/assets/abi/erc20.json'
 import i18n from '@/i18n'
 import store from '@/store'
+import BigNumber from 'bignumber.js'
 import Vue from 'vue'
 import { checkAccount } from './chain'
 
@@ -31,8 +32,9 @@ export function erc20Approve(cAddress, amount, decimal) {
   }
   const erc20Contract = new web3.eth.Contract(erc20.abi, cAddress)
   const fromAddress = store.state.chain.account
+  const weiAmount = BigNumber(amount).multipliedBy(Math.pow(10, decimal)).integerValue()
   return new Promise((resolve, reject) => {
-    erc20Contract.methods.approve(process.env.VUE_APP_BJX, amount * Math.pow(10, decimal))
+    erc20Contract.methods.approve(process.env.VUE_APP_BJX, weiAmount)
       .send({ from: fromAddress })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)

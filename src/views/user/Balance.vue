@@ -20,7 +20,7 @@
         <div class="unit text-color">MS</div>
       </div>
       <div class="item">
-        <div class="value text-color">1270</div>
+        <div class="value text-color">{{ bjxBalance }}</div>
         <div class="sub-value text-color">&nbsp;</div>
         <div class="unit text-color">BJX NFT</div>
       </div>
@@ -78,10 +78,25 @@
 
 <script>
 import IncomeDialog from '@/components/user/IncomeDialog'
+import { getBjxBalanceOf } from '@/utils/web3/open'
 export default {
   name: 'balance-view',
   components: {
     IncomeDialog,
+  },
+  data() {
+    return {
+      userAccount: this.$store.state.user.account,
+      bjxBalance: 0,
+    }
+  },
+  mounted() {
+    this.getBjxBalance()
+  },
+  methods: {
+    async getBjxBalance() {
+      this.bjxBalance = await getBjxBalanceOf(this.userAccount)
+    },
   },
 }
 </script>
