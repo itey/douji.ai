@@ -269,7 +269,7 @@
             <span class="text-color">15 USDT</span>
           </div>
           <div style="margin-left: 127px;margin-top: 11px;">
-            <el-button :disabled="bjx.buying" @click="handleBuyBjx()" class="common-btn2">Buy</el-button>
+            <el-button :disabled="bjx.buying" @click="handleBuyBjx()" class="common-btn2">BUY</el-button>
           </div>
         </div>
       </div>
