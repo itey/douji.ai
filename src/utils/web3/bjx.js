@@ -78,7 +78,8 @@ export function mintByErc20(ercAddress, amount) {
 }
 
 /** 使用BNB购买BJX */
-export function mintByBnb(count, payableAmount) {
+export function mintByBnb(count, payableAmountWei) {
+  console.log('mintByBnb')
   if (!checkAccount()) {
     return
   }
@@ -89,13 +90,12 @@ export function mintByBnb(count, payableAmount) {
   const fromAddress = store.state.chain.account
   return new Promise((resolve, reject) => {
     bjxContract.methods.mintWithEth(
-      payableAmount,
       fromAddress,
       process.env.VUE_APP_BJX_TOKEN_ID,
       count,
       '0x'
     )
-      .send({ from: fromAddress })
+      .send({ from: fromAddress, value: payableAmountWei })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
       })

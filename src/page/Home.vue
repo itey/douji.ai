@@ -373,10 +373,18 @@ export default {
         if (!valid) return
         this.bjx.buying = true
         if (this.bjx.priceType == '1') {
-          const payableAmountWei = this.bjx.count * this.bjxInfoJson.bnbPrice
+          const payableAmountWei =
+            Number(this.bjx.count) * Number(this.bjxInfoJson.bnbPrice)
           mintByBnb(this.bjx.count, payableAmountWei)
             .then((tx) => {
               console.log(tx)
+              this.$toast.success(
+                this.$t('home.bjx_buy_success', {
+                  count: this.bjx.count,
+                  amount: this.bjx.count * this.bjx.bnbPrice,
+                  coin: this.bjxTypeOption[this.bjx.priceType],
+                })
+              )
             })
             .catch((e) => {
               this.$toast.error(e)
@@ -384,6 +392,7 @@ export default {
             .finally(() => {
               this.getBjxData()
               this.bjx.buying = false
+              this.bjx.count = null
             })
         } else {
           var erc20Address = process.env.VUE_APP_USDT
@@ -416,6 +425,7 @@ export default {
                 })
                 .finally(() => {
                   this.bjx.buying = false
+                  this.bjx.count = null
                   this.getBjxData()
                 })
             })
@@ -431,7 +441,6 @@ export default {
       getBjxTokenInfo().then((res) => {
         this.bjxInfoJson = res
         this.bjx.bnbPrice = weiToEth(res.bnbPrice)
-        console.log(res)
       })
     },
   },
