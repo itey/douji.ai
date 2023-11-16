@@ -16,7 +16,7 @@
       <div class="dividend-pool">
         <div class="dividend-pool-item">
           <div class="dividend-pool-label">Balance</div>
-          <div class="dividend-pool-value text-color">{{ settlePoolBalance | toLocalString }} MBD</div>
+          <div class="dividend-pool-value text-color">{{ settlePoolBalance | decimalPlace8 }} MBD</div>
         </div>
         <div class="dividend-pool-item">
           <div class="dividend-pool-label">All members NFT Staked</div>
@@ -177,14 +177,14 @@ export default {
       if (!this.tokenId) {
         return
       }
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         userPledgeCount(this.tokenId)
           .then((data) => {
             this.userStakeInfo = data
             resolve()
           })
-          .catch(() => {
-            reject()
+          .catch((e) => {
+            this.$toast.error(e)
           })
       })
     },
@@ -193,14 +193,14 @@ export default {
       if (!this.tokenId) {
         return
       }
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         totalPledgeCount(this.tokenId)
           .then((count) => {
             this.totalStakeCount = count ? count : 0
             resolve()
           })
-          .catch(() => {
-            reject()
+          .catch((e) => {
+            this.$toast.error(e)
           })
       })
     },
@@ -209,14 +209,14 @@ export default {
       if (!this.tokenId) {
         return
       }
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         getSettlePoolBalance(this.tokenId)
           .then((balance) => {
             this.settlePoolBalance = weiToMbd(balance)
             resolve()
           })
           .catch((e) => {
-            reject(e)
+            this.$toast.error(e)
           })
       })
     },
@@ -235,9 +235,9 @@ export default {
     },
     /** 加载数据 */
     loadSupplyInfo() {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         if (!this.tokenId) {
-          reject()
+          return
         }
         tokensData(this.tokenId)
           .then((res) => {
@@ -245,7 +245,7 @@ export default {
             resolve(res)
           })
           .catch((e) => {
-            reject(e)
+            this.$toast.error(e)
           })
       })
     },
