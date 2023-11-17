@@ -60,7 +60,7 @@
                 <i class="el-icon-arrow-right"></i>
               </div>
               <div class="dao-set-item" style="width: 190px;" @click="handleUpdateDao()">
-                <div class="dao-set-item-label">Set NFT DAO Govemnance</div>
+                <div class="dao-set-item-label">Set NFT DAO Governance</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
             </div>
@@ -491,7 +491,6 @@ export default {
         tokensData(this.tokenId)
           .then((res) => {
             this.tokenSupplyInfo = res
-            console.log(this.tokenSupplyInfo)
             resolve()
           })
           .catch((e) => {

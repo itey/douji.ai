@@ -206,7 +206,7 @@ export default {
       return new Promise((resolve) => {
         userPledgeCount(this.tokenId)
           .then((data) => {
-            this.userStakeInfo = data
+            this.userStakeInfo = Array.from(data)
             resolve()
           })
           .catch((e) => {

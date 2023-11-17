@@ -43,10 +43,12 @@ function WalletButton() {
         console.log('chainChanged:', chain)
       });
       connectKit.on('accountsChanged', (accounts) => {
-        store.commit('setChainAccount', accounts[0])
-        store.dispatch('Login', {address: accounts[0]}).then(() => {
-          setLoginProcess(false)
-        })
+        if (accounts && accounts[0]) {
+          store.commit('setChainAccount', accounts[0])
+          store.dispatch('Login', {address: accounts[0]}).then(() => {
+            setLoginProcess(false)
+          })
+        }
       });
     }
   }, []);

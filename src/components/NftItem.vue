@@ -3,8 +3,8 @@
     <img :src="item.image" :style="{
 			width: '100%',
 			height: height,
-		}" />
-    <div class="label text-color">{{ item.title }}</div>
+		}" @click="$router.push({path: '/news-detail', query: {tokenId: item.token_id}})" />
+    <div class="label text-color" @click="$router.push({path: '/news-detail', query: {tokenId: item.token_id}})">{{ item.title }}</div>
     <div class="nft-bottom">
       <div class="bottom-left">
         <span class="value text-color">2500</span>

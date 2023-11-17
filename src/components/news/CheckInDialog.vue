@@ -1,5 +1,5 @@
 <template>
-  <el-dialog custom-class="check-in-dialog" :show-close="false" :visible.sync="show" width="789px">
+  <el-dialog custom-class="check-in-dialog" top="0vh" :show-close="false" :visible.sync="show" width="789px">
     <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
     <div class="content">
       <div class="title">Daily Check-in Gift</div>

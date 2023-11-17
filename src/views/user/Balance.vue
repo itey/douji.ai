@@ -31,42 +31,43 @@
       </div>
     </div>
     <div class="divider"></div>
-    <div class="text-middle text-color">Distributes Income to be settled</div>
-    <div class="settle-container">
-      <div class="unit text-color">MBD</div>
-      <div class="value text-color">0.0000</div>
-      <div class="sub-value text-sub-color">≈$0.0000</div>
-    </div>
-    <div class="settle-button">
-      <el-button class="common-btn1" type="primary">Settlement</el-button>
-    </div>
+    <template v-if="false">
+      <div class="text-middle text-color">Distributes income to be settled</div>
+      <div class="settle-container">
+        <div class="unit text-color">MBD</div>
+        <div class="value text-color">0.0000</div>
+        <div class="sub-value text-sub-color">≈$0.0000</div>
+      </div>
+      <div class="settle-button">
+        <el-button class="common-btn1" type="primary">Settlement</el-button>
+      </div>
+    </template>
     <div class="divider"></div>
-    <div class="text-middle text-color">NFT Stake Income settlement</div>
-    <div class="settle-container">
+    <div class="text-middle text-color">NFT Stake income settlement</div>
+    <!-- <div class="settle-container">
       <div class="unit text-color">MBD</div>
       <div class="value text-color">68415.5684</div>
       <div class="sub-value text-sub-color">≈$27.57</div>
-    </div>
+    </div>-->
     <div class="settle-button">
-      <el-button class="common-btn1" type="primary">Settlement</el-button>
-      <el-button class="common-btn1" style="margin-left: 22px;" type="primary" :disabled="true">Settlement</el-button>
+      <el-button @click="$refs['incomeDialog'].showDialog()" class="common-btn1" type="primary">Go Settlement</el-button>
     </div>
     <div class="divider"></div>
-    <div class="text-middle text-color">Distributes Income to be settled</div>
+    <div class="text-middle text-color">Platform rewards to be settled</div>
     <div class="settle-containers">
       <div class="settle-container">
         <div class="unit text-color">MBD</div>
-        <div class="value text-color">68415.5684</div>
-        <div class="sub-value text-sub-color">≈$27.57</div>
+        <div class="value text-color">0.0000</div>
+        <div class="sub-value text-sub-color">≈$0.00</div>
       </div>
       <div class="settle-container" style="margin-left: 32px;">
         <div class="unit text-color">BJXStar NFT</div>
-        <div class="value text-color">16</div>
-        <div class="sub-value text-sub-color">≈$48.68</div>
+        <div class="value text-color">0</div>
+        <div class="sub-value text-sub-color">≈$0.00</div>
       </div>
     </div>
     <div class="settle-button">
-      <el-button @click="$refs['incomeDialog'].showDialog()" class="common-btn1" type="primary">Settlement</el-button>
+      <el-button class="common-btn1" type="primary">Settlement</el-button>
     </div>
     <div class="text-color settle-label">
       Settlement Fee: 5000 MBD Number of fee-free times:
