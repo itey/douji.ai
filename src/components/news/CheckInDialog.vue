@@ -39,8 +39,10 @@ export default {
         .then((r) => {
           this.$toast.success(this.$t('common.check_in_success'))
           this.$emit('onCheckedIn')
-          this.rewardAmount = r.data.amount
-          this.$refs['rewardDialog'].showDialog()
+          if (r && r.data && r.data.amount) {
+            this.rewardAmount = r.data.amount
+            this.$refs['rewardDialog'].showDialog()
+          }
           this.show = false
         })
         .catch((e) => {

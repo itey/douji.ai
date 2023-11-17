@@ -25,15 +25,14 @@ export function endEventBus() {
 function onLogin() {
   store.dispatch('GetBalanceOfBnb')
   store.dispatch('GetBalanceOfMbd')
-  store.dispatch('LoadMbdPrice')
 }
 
 function taskInit() {
   loginTaskTimer = setInterval(() => {
+    store.dispatch('LoadMbdPrice')
     if (store.state.user.token) {
       store.dispatch('GetBalanceOfBnb')
       store.dispatch('GetBalanceOfMbd')
-      store.dispatch('LoadMbdPrice')
       console.log('Temporary data update')
     }
   }, 20000)

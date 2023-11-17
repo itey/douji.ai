@@ -87,7 +87,7 @@ export default {
   watch: {
     '$store.state.user.account': function (val, od) {
       if (val !== od) {
-        this.getUserStakeInfo()
+        this.getUserStakeCount()
       }
     },
   },

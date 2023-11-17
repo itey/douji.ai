@@ -12,14 +12,14 @@
             <div class="form-label-sub-text">Open to Access</div>
           </div>
           <div class="form-content text-color">
-            <div v-html="pubContent"></div>
+            <div class="md-reader" v-html="pubContent"></div>
           </div>
           <div class="form-label-sub" v-if="privateContent">
             <img style="width: 28px;height: 28px;" src="@/assets/images/create/protect.png" />
             <div class="form-label-sub-text">Protected</div>
           </div>
           <div class="form-content text-color" v-if="privateContent">
-            <div v-html="privateContent"></div>
+            <div class="md-reader" v-html="privateContent"></div>
           </div>
           <div class="form-tag">
             <div class="form-tag-label text-color">Tags:</div>
@@ -689,5 +689,11 @@ export default {
       margin-top: 178px;
     }
   }
+}
+</style>
+<style>
+.md-reader img {
+  max-width: 100%;
+  max-height: auto;
 }
 </style>

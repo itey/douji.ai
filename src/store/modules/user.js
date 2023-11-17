@@ -38,8 +38,11 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, payload) {
+      if (!payload.address) {
+        return
+      }
       const currentAccount = store.state.user.account
-      if (currentAccount && currentAccount.toUpperCase() === payload.address.toUpperCase()) {
+      if (currentAccount && currentAccount.toUpperCase() == payload.address.toUpperCase()) {
         return
       }
       return new Promise((resolve) => {

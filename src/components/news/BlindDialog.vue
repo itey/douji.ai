@@ -1,18 +1,16 @@
 <template>
-  <div>
-    <el-dialog custom-class="blind-dialog" top="0vh" :visible.sync="show" @close="handleClose" width="789px">
-      <div class="title" slot="title">Receive Blind Box</div>
-      <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
-      <div class="content">
-        <div class="time-container">
-          <img style="width: 38px;height: 38px;" src="@/assets/images/news/blind-date.png" />
-          <div class="time">{{ countdown }}</div>
-        </div>
-        <img style="width: 388px;height: 347px;" src="@/assets/images/news/blind-box-icon.png" />
-        <el-button :disabled="countdown<=0" @click="handleReceiveBox()" class="btn">Receive</el-button>
+  <el-dialog custom-class="blind-dialog" top="0vh" :visible.sync="show" @close="handleClose" width="789px">
+    <div class="title" slot="title">Receive Blind Box</div>
+    <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
+    <div class="content">
+      <div class="time-container">
+        <img style="width: 38px;height: 38px;" src="@/assets/images/news/blind-date.png" />
+        <div class="time">{{ countdown }}</div>
       </div>
-    </el-dialog>
-  </div>
+      <img style="width: 388px;height: 347px;" src="@/assets/images/news/blind-box-icon.png" />
+      <el-button :disabled="countdown<=0" @click="handleReceiveBox()" class="btn">Receive</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script>

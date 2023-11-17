@@ -19,7 +19,7 @@
             <div class="form-label-sub-text">Open to Access</div>
           </div>
           <div class="form-content text-color">
-            <div v-html="metadata.openContent"></div>
+            <div class="md-reader" v-html="metadata.openContent"></div>
           </div>
           <template v-if="metadata.protected">
             <div class="form-label-sub">
@@ -27,7 +27,7 @@
               <div class="form-label-sub-text">Protected</div>
             </div>
             <div class="form-content text-color" v-if="metadata.protectedContent">
-              <div v-html="metadata.protectedContent"></div>
+              <div class="md-reader" v-html="metadata.protectedContent"></div>
             </div>
             <div style="display: flex;flex-direction: column;align-items: center;" v-else>
               <div class="text-color" style="font-size: 12px;">
@@ -197,7 +197,6 @@ export default {
   },
   watch: {
     '$store.state.user.userId': function (val, od) {
-      console.log('watch userId', val, od)
       if (val != od) {
         this.dataLoad()
         this.checkIn()
@@ -267,7 +266,6 @@ export default {
   methods: {
     /** 检查每日签到 */
     checkIn() {
-      console.log('检查签到:', this.$store.state.user.userId)
       if (!this.$store.state.user.userId) {
         this.ifCheckedIn = false
         return
@@ -673,6 +671,11 @@ export default {
           font-weight: 400;
           line-height: 22px;
           margin: 40px 0;
+
+          img {
+            max-width: 100%;
+            height: auto;
+          }
         }
 
         .form-tag {
@@ -870,5 +873,12 @@ export default {
       margin-top: 178px;
     }
   }
+}
+</style>
+
+<style>
+.md-reader img {
+  max-width: 100%;
+  max-height: auto;
 }
 </style>

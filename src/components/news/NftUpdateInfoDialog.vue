@@ -9,19 +9,19 @@
             <img style="width: 939px;height: 532px;margin-top:50px;" :src="metadata.image" />
             <div class="nft-stake-desc text-color">{{ metadata.description }}</div>
             <div class="nft-stake-label-sub" style="margin-top: 16px;">
-              <img style="width: 28px;height: 28px;" src="@/assets/images/create/website.png" />
+              <img style="width: 14px;height: 14px;" src="@/assets/images/create/website.png" />
               <div class="nft-stake-label-sub-text">Open to Access</div>
             </div>
             <div class="nft-stake-content text-color">
-              <div v-html="metadata.openContent"></div>
+              <div class="md-reader" v-html="metadata.openContent"></div>
             </div>
             <template v-if="metadata.protected">
-              <div class="nft-stake-label-sub">
-                <img style="width: 28px;height: 28px;" src="@/assets/images/create/protect.png" />
+              <div class="nft-stake-label-sub" style="margin-bottom: 10px;">
+                <img style="width: 14px;height: 14px;" src="@/assets/images/create/protect.png" />
                 <div class="nft-stake-label-sub-text">Protected</div>
               </div>
               <div class="nft-stake-content text-color" v-if="metadata.protectedContent">
-                <div v-html="metadata.protectedContent"></div>
+                <div class="md-reader" v-html="metadata.protectedContent"></div>
               </div>
               <div style="display: flex;flex-direction: column;align-items: center;" v-else>
                 <div class="text-color" style="font-size: 12px;">
@@ -30,7 +30,7 @@
                   “
                   <span style="color: #00F9E5;">Unlock</span>”
                 </div>
-                <el-button @click="handleUnlock()" class="common-btn2" style="border-radius: 25px;margin-top: 29px;">Unlock</el-button>
+                <el-button @click="handleUnlock()" class="common-btn2" style="border-radius: 25px;margin-top: 29px; margin-bottom: 50px;">Unlock</el-button>
               </div>
             </template>
             <div class="nft-stake-tag">
@@ -134,8 +134,11 @@ export default {
 
         this.metadata = httpResponse.data
         const openData = await this.loadOpenContent(this.metadata.contentUrl)
-        this.metadata.openContent = openData ? md.render(openData) : null
-
+        this.metadata.openContent = this.$set(
+          this.metadata,
+          'openContent',
+          md.render(openData ? md.render(openData) : null)
+        )
         await this.getUserOwned()
       } catch (e) {
         this.$toast.error(e)
@@ -148,6 +151,7 @@ export default {
     handleUnlock() {
       this.$store.dispatch('CheckLogin', true).then((c) => {
         if (!c) {
+          this.show = false
           return
         }
         var loadingInstance = this.$loading({
@@ -291,14 +295,15 @@ export default {
           }
 
           .nft-stake-desc {
-            padding-left: 17px;
-            font-size: 16px;
+            padding-left: 12px;
+            font-size: 12px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            line-height: 30px;
+            color: #ffffff;
+            line-height: 22px;
             border-left: 2px solid;
             border-image: linear-gradient(0deg, #50ced5, #46d1af) 1;
-            margin-top: 44px;
+            margin-top: 32px;
           }
 
           .nft-stake-label-sub {
@@ -308,20 +313,20 @@ export default {
             justify-content: center;
 
             .nft-stake-label-sub-text {
-              font-size: 18px;
+              font-size: 13px;
               font-family: Source Han Sans CN;
               font-weight: bold;
               color: #00f9e5;
-              margin-left: 10px;
+              margin-left: 8px;
             }
           }
 
           .nft-stake-content {
-            font-size: 16px;
+            font-size: 12px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            line-height: 30px;
-            margin: 50px 0;
+            line-height: 22px;
+            margin: 40px 0;
           }
 
           .nft-stake-tag {
@@ -605,5 +610,11 @@ export default {
       }
     }
   }
+}
+</style>
+<style>
+.md-reader img {
+  max-width: 100%;
+  max-height: auto;
 }
 </style>

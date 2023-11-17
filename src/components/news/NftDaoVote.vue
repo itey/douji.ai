@@ -181,7 +181,7 @@ export default {
     },
     /** 获取我的质押数量 */
     getUserPledgeCount() {
-      if (this.userAccount) {
+      if (!this.userAccount) {
         return
       }
       userPledgeCount(this.tokenId).then((res) => {
