@@ -1,5 +1,13 @@
 <template>
-  <el-dialog custom-class="blind-dialog" top="0vh" :visible.sync="show" @close="handleClose" width="789px">
+  <el-dialog
+    custom-class="blind-dialog"
+    top="0vh"
+    :close-on-press-escape="false"
+    :close-on-click-modal="false"
+    :visible.sync="show"
+    @close="handleClose"
+    width="789px"
+  >
     <div class="title" slot="title">Receive Blind Box</div>
     <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
     <div class="content">

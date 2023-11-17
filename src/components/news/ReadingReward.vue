@@ -50,11 +50,15 @@ export default {
       if (!this.userId) {
         return
       }
-      const res = await getTodayReadData()
-      if (res.code == 1) {
-        this.readReward = res.data
-      } else {
-        this.$toast.error(res.message)
+      try {
+        const res = await getTodayReadData()
+        if (res.code == 1) {
+          this.readReward = res.data
+        } else {
+          this.$toast.error(res.message)
+        }
+      } catch (error) {
+        console.log(error)
       }
     },
   },

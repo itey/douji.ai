@@ -85,22 +85,19 @@ export default {
     },
     /** 加载挂单数据 */
     loadNftOrderList() {
-      return new Promise((resolve, reject) => {
-        this.loading = true
-        getNftOrders(1, this.tokenId)
-          .then((r) => {
-            if (r.code == 1) {
-              this.nftOrderList = r.data.list
-            }
-            resolve()
-          })
-          .catch((e) => {
-            reject(e)
-          })
-          .finally(() => {
-            this.loading = false
-          })
-      })
+      this.loading = true
+      getNftOrders(1, this.tokenId)
+        .then((r) => {
+          if (r.code == 1) {
+            this.nftOrderList = r.data.list
+          }
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
     /** 取消订单 */
     handleCancelOrder(ordeId) {
