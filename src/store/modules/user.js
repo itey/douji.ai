@@ -84,7 +84,7 @@ const user = {
             if (res.code == 1) {
               commit('setCheckTime', new Date().getTime())
               cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
-              resolve()
+              resolve(res.data)
             } else {
               if (res.message.indexOf('已签过到') >= 0) {
                 commit('setCheckTime', new Date().getTime())

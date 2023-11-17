@@ -23,6 +23,7 @@
           :openAccount="$store.state.common.openAccount"
           :openBuy="$store.state.common.openBuy"
           :openConnect="$store.state.common.openConnect"
+          :isParticleProvider="$store.state.common.isParticleProvider"
         />
       </div>
       <div v-if="$store.state.user.token" class="user-container">
@@ -50,18 +51,20 @@
                 </div>
                 <span>User Center</span>
               </div>
-              <div class="item" v-if="$store.state.common.isParticleProvider" @click="openWalletModal()">
-                <div class="icon">
-                  <img style="width: 17px; height: 13px;" src="@/assets/images/menu-wallet.png" />
+              <template v-if="isParticleProvider">
+                <div class="item" @click="openWalletModal()">
+                  <div class="icon">
+                    <img style="width: 17px; height: 13px;" src="@/assets/images/menu-wallet.png" />
+                  </div>
+                  <span>Wallet</span>
                 </div>
-                <span>Wallet</span>
-              </div>
-              <div class="item" v-if="$store.state.common.isParticleProvider" @click="openBuyModal()">
-                <div class="icon">
-                  <img style="width: 18px; height: 14px;" src="@/assets/images/menu-currency.png" />
+                <div class="item" @click="openBuyModal()">
+                  <div class="icon">
+                    <img style="width: 18px; height: 14px;" src="@/assets/images/menu-currency.png" />
+                  </div>
+                  <span>Buy Crypto Currency</span>
                 </div>
-                <span>Buy Crypto Currency</span>
-              </div>
+              </template>
               <div class="item" @click="handleCopyAddress()">
                 <div class="icon">
                   <img style="width: 17px; height: 17px;" src="@/assets/images/menu-copy.png" />
@@ -115,6 +118,11 @@ export default {
   components: {
     Particle,
     NewsTypes,
+  },
+  computed: {
+    isParticleProvider() {
+      return this.$store.state.common.isParticleProvider
+    },
   },
   data() {
     return {
@@ -279,7 +287,7 @@ export default {
   top: 77px;
   left: 0;
   right: 0;
-  z-index:2023;
+  z-index: 2023;
 }
 
 .el-popover {

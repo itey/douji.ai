@@ -21,10 +21,11 @@ function WalletButton() {
       setLoginProcess(false)
       store.dispatch('Login', {address: account})
     }
-    if(connectId === 'particle') {
-      store.commit('setIsParticleProvider', true)
+    const particleOptions = ['email', 'phone', 'google', 'apple', 'facebook', 'twitter', 'github', 'linkedin', 'particle']
+    if(particleOptions.includes(connectId)) {
+      store.dispatch('UpdateIsParticleProvider', true)
     } else {
-      store.commit('setIsParticleProvider', false)
+      store.dispatch('UpdateIsParticleProvider', false)
     }
   }, [accountInfo])
 

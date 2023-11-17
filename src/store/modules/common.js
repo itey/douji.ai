@@ -31,6 +31,12 @@ const common = {
     }
   },
   actions: {
+
+    /** 更新 */
+    UpdateIsParticleProvider({ commit }, isParticleProvider) {
+      commit('setIsParticleProvider', isParticleProvider)
+    }
+
   }
 }
 

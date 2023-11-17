@@ -159,6 +159,7 @@ export default {
     margin-top: 34px;
 
     .item {
+      min-width: 120px;
       border: 1px solid #28313c;
       border-radius: 8px;
       padding: 28px 27px 31px 27px;

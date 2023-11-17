@@ -1,21 +1,29 @@
 <template>
-  <el-dialog custom-class="check-in-dialog" top="0vh" :show-close="false" :visible.sync="show" width="789px">
-    <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
-    <div class="content">
-      <div class="title">Daily Check-in Gift</div>
-      <img style="width: 244px;height: 256px;" src="@/assets/images/news/gift-icon.png" />
-      <el-button @click="handleCheckIn()" class="common-btn2">Get it</el-button>
-    </div>
-  </el-dialog>
+  <div>
+    <el-dialog custom-class="check-in-dialog" top="0vh" :show-close="false" :visible.sync="show" width="789px">
+      <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
+      <div class="content">
+        <div class="title">Daily Check-in Gift</div>
+        <img style="width: 244px;height: 256px;" src="@/assets/images/news/gift-icon.png" />
+        <el-button @click="handleCheckIn()" class="common-btn2">Get it</el-button>
+      </div>
+    </el-dialog>
+    <CheckRewardDialog ref="rewardDialog" :amount="rewardAmount" />
+  </div>
 </template>
 
 <script>
+import CheckRewardDialog from './CheckRewardDialog'
 export default {
   name: 'check-in-dialog',
   data() {
     return {
       show: false,
+      rewardAmount: undefined,
     }
+  },
+  components: {
+    CheckRewardDialog,
   },
   methods: {
     showDialog() {
@@ -28,9 +36,11 @@ export default {
       })
       this.$store
         .dispatch('CheckInDaily')
-        .then(() => {
+        .then((r) => {
           this.$toast.success(this.$t('common.check_in_success'))
           this.$emit('onCheckedIn')
+          this.rewardAmount = r.data.amount
+          this.$refs['rewardDialog'].showDialog()
           this.show = false
         })
         .catch((e) => {

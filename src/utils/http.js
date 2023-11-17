@@ -223,3 +223,13 @@ export function notifyPledge(tokenId) {
         params: { tokenId }
     })
 }
+
+
+// 质押待结算列表
+export function pledgeSettleList(page) {
+    return request({
+        url: '/pledgeSettleList',
+        method: 'post',
+        params: { page }
+    })
+}

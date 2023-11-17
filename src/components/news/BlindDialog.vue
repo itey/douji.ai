@@ -52,7 +52,7 @@ export default {
     }
   },
   methods: {
-    /** 打开盲盒 */
+    /** 接收盲盒 */
     handleReceiveBox() {
       getBlindBoxSign().then((signed) => {
         var loadingInstance = this.$loading({
