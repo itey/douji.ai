@@ -85,9 +85,13 @@ export default {
   components: {
     IncomeDialog,
   },
+  computed: {
+    userAccount() {
+      return this.$store.state.user.account
+    },
+  },
   data() {
     return {
-      userAccount: this.$store.state.user.account,
       bjxBalance: 0,
     }
   },

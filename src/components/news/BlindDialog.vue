@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       show: false,
-      countdown: 60,
+      countdown: 120,
       timer: undefined,
       blindBox: {},
     }
@@ -86,7 +86,7 @@ export default {
     countdownTime() {
       this.timer = setInterval(() => {
         if (this.boxFlag && this.boxFlag.time) {
-          const time = Number(this.boxFlag.time) + 60000
+          const time = Number(this.boxFlag.time) + 120000
           const now = new Date().getTime()
           this.countdown = Math.floor((time - now) / 1000)
           if (this.countdown < 0) {

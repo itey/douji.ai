@@ -89,7 +89,7 @@ export default {
       ],
       centerAddress: process.env.VUE_APP_RECEIVE_ADDR,
       show: false,
-      countdown: 60,
+      countdown: 120,
       timer: undefined,
       boxPrizes: {},
     }
@@ -143,7 +143,7 @@ export default {
     countdownTime() {
       this.timer = setInterval(() => {
         if (this.blindBox && this.blindBox.time) {
-          const time = Number(this.blindBox.time) + 60000
+          const time = Number(this.blindBox.time) + 120000
           const now = new Date().getTime()
           this.countdown = Math.floor((time - now) / 1000)
           if (this.countdown < 0) {

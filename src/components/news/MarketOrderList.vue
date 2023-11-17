@@ -50,11 +50,15 @@ export default {
   components: {
     ListYourItemDialog,
   },
+  computed: {
+    userAccount() {
+      return this.$store.state.user.account
+    },
+  },
   data() {
     return {
       loading: false,
       marketAddress: process.env.VUE_APP_MARKET,
-      userAccount: this.$store.state.user.account,
       nftOrderList: [],
       timer: undefined,
     }

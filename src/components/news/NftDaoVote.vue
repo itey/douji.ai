@@ -95,11 +95,13 @@ export default {
         return 0
       }
     },
+    userAccount() {
+      return this.$store.state.user.account
+    },
   },
   data() {
     return {
       stakeCount: 0,
-      userAccount: this.$store.state.user.account,
     }
   },
   mounted() {

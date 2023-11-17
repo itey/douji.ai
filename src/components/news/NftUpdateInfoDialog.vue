@@ -84,7 +84,7 @@ export default {
     NftPrimaryMarket,
   },
   watch: {
-    userId: function (val, od) {
+    '$store.state.user.userId': function (val, od) {
       if (val !== od) {
         this.pageLoad()
       }
@@ -99,7 +99,6 @@ export default {
     */
     return {
       tokenAddress: process.env.VUE_APP_NFT,
-      userId: this.$store.state.user.userId,
       userOwned: undefined,
       show: false,
       voteType: undefined,
@@ -223,7 +222,7 @@ export default {
     },
     /** 获取用户拥有数量 */
     getUserOwned() {
-      if (!this.tokenId || !this.userId) {
+      if (!this.tokenId || !this.$store.state.user.userId) {
         return
       }
       return new Promise((resolve, reject) => {

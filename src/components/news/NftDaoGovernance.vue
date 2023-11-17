@@ -22,7 +22,7 @@
           <div class="dividend-pool-label">All members NFT Staked</div>
           <div class="dividend-pool-value text-color">{{ totalStakeCount }}</div>
         </div>
-        <template v-if="userAccount">
+        <template v-if="$store.state.user.account">
           <div class="dividend-pool-item">
             <div class="dividend-pool-label">You NFT Staked</div>
             <div class="dividend-pool-value text-color" v-if="userStakeInfo && userStakeInfo[0]">{{ userStakeInfo[0] }} ({{ stakePercent }})</div>
@@ -85,7 +85,7 @@ export default {
     RetrieveDialog,
   },
   watch: {
-    userAccount: function (val, od) {
+    '$store.state.user.account': function (val, od) {
       if (val !== od) {
         this.getUserStakeInfo()
       }
@@ -149,7 +149,6 @@ export default {
   data() {
     return {
       loading: false,
-      userAccount: this.$store.state.user.account,
       currentHeight: undefined,
       settlePoolBalance: undefined,
       totalStakeCount: undefined,
@@ -200,7 +199,7 @@ export default {
     },
     /** 获取用户质押信息 */
     getUserStakeCount() {
-      if (!this.tokenId || !this.userAccount) {
+      if (!this.tokenId || !this.$store.state.user.account) {
         return
       }
       return new Promise((resolve) => {

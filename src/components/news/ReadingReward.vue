@@ -18,10 +18,14 @@
 import { getTodayReadData } from '@/utils/http'
 export default {
   name: 'reading-reward',
+  computed: {
+    userId() {
+      return this.$store.state.user.userId
+    },
+  },
   data() {
     return {
       loading: false,
-      userId: this.$store.state.user.userId,
       timer: undefined,
       readReward: {
         income_sum: 0,

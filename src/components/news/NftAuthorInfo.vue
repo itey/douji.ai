@@ -59,7 +59,6 @@ export default {
   data() {
     return {
       subscription: false,
-      userAccount: this.$store.state.user.account,
     }
   },
 }

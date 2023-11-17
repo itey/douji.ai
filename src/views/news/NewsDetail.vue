@@ -115,7 +115,7 @@
     </div>
 
     <RevisionHistoryDialog :tokenId="tokenId" ref="revisionHistoryDialog" />
-    <CheckInDialog @onCheckedIn="onCheckedIn()" ref="checkInDialog" />
+    <CheckInDialog @onCheckedIn="checkIn()" ref="checkInDialog" />
     <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />
     <BlindOpenDialog @handleReload="dataLoad" :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
     <SetSaleDialog @handleReload="dataLoad" :tokenInfo="tokenSupplyInfo" :tokenId="tokenId" ref="setSaleDialog" />
@@ -184,26 +184,29 @@ export default {
   computed: {
     canUpdate() {
       if (
-        this.tokenOwner &&
+        this.userAccount &&
         this.tokenOwner.toLowerCase() == this.userAccount.toLowerCase()
       ) {
         return true
       }
       return false
     },
+    userAccount() {
+      return this.$store.state.user.account
+    },
   },
   watch: {
-    userAccount: function (val, od) {
+    '$store.state.user.userId': function (val, od) {
+      console.log('watch userId', val, od)
       if (val != od) {
         this.dataLoad()
+        this.checkIn()
       }
     },
   },
   data() {
     return {
       nftContract: process.env.VUE_APP_NFT,
-      userId: this.$store.state.user.userId,
-      userAccount: this.$store.state.user.account,
       tokenId: undefined,
       tokenOwner: undefined,
       tokenMetaUrl: undefined,
@@ -264,30 +267,31 @@ export default {
   methods: {
     /** 检查每日签到 */
     checkIn() {
-      if (!this.userId) {
+      console.log('检查签到:', this.$store.state.user.userId)
+      if (!this.$store.state.user.userId) {
+        this.ifCheckedIn = false
         return
       }
-      if (ifCheckInToday(this.userId)) {
+      if (ifCheckInToday(this.$store.state.user.userId)) {
         this.ifCheckedIn = true
         return
       }
       this.ifCheckedIn = false
       this.$refs.checkInDialog.showDialog()
     },
-    /** 完成签到 */
-    onCheckedIn() {
-      this.checkIn()
-    },
     /** 检查盲盒奖励 */
     checkBlindBox() {
-      if (this.userId && ifCheckInToday(this.userId)) {
+      if (
+        this.$store.state.user.userId &&
+        ifCheckInToday(this.$store.state.user.userId)
+      ) {
         var haveBox = false
-        const blindBox = getBlindBoxCache(this.userId)
+        const blindBox = getBlindBoxCache(this.$store.state.user.userId)
         if (blindBox && blindBox.time) {
           const timeGet = Number(blindBox.time)
           const nowTime = new Date().getTime()
           if (nowTime - timeGet > 1000 * 60) {
-            setBlindBoxCache(this.userId, blindBox.box, true)
+            setBlindBoxCache(this.$store.state.user.userId, blindBox.box, true)
             haveBox = false
           } else if (!blindBox.invalid) {
             this.blindBox = blindBox
@@ -298,12 +302,16 @@ export default {
         }
         var haveFlag = false
         if (!haveBox) {
-          const flag = getBlindBoxFlagCache(this.userId)
+          const flag = getBlindBoxFlagCache(this.$store.state.user.userId)
           if (flag && flag.time) {
             const timeGet = Number(flag.time)
             const nowTime = new Date().getTime()
             if (nowTime - timeGet > 1000 * 60) {
-              setBlindBoxFlagCache(this.userId, flag.flag, true)
+              setBlindBoxFlagCache(
+                this.$store.state.user.userId,
+                flag.flag,
+                true
+              )
               haveFlag = false
             } else if (!flag.invalid) {
               this.boxFlagInfo = flag
@@ -318,10 +326,18 @@ export default {
               if (r.code == 1) {
                 const boxFlag = r.data.get_box_flag
                 if (boxFlag) {
-                  const currentFlag = getBlindBoxFlagCache(this.userId)
+                  const currentFlag = getBlindBoxFlagCache(
+                    this.$store.state.user.userId
+                  )
                   if (!currentFlag || currentFlag.flag != boxFlag) {
-                    setBlindBoxFlagCache(this.userId, boxFlag, false)
-                    this.boxFlagInfo = getBlindBoxFlagCache(this.userId)
+                    setBlindBoxFlagCache(
+                      this.$store.state.user.userId,
+                      boxFlag,
+                      false
+                    )
+                    this.boxFlagInfo = getBlindBoxFlagCache(
+                      this.$store.state.user.userId
+                    )
                     this.$refs['blindDialog'].showDialog()
                   }
                 }
@@ -335,14 +351,16 @@ export default {
     },
     /** 获取当日盲盒数据 */
     getBlindBoxToday() {
-      if (this.userId) {
-        this.blindBoxToday.boxCount = getBoxCountToday(this.userId)
+      if (this.$store.state.user.userId) {
+        this.blindBoxToday.boxCount = getBoxCountToday(
+          this.$store.state.user.userId
+        )
         this.blindBoxToday.readTime = boxCount2Time(this.blindBoxToday.boxCount)
       }
     },
     /** 点击接收盲盒 */
     handleReceiveBox() {
-      this.blindBox = getBlindBoxCache(this.userId)
+      this.blindBox = getBlindBoxCache(this.$store.state.user.userId)
       this.$refs['blindOpenDialog'].showDialog()
     },
     /** 加载数据 */
@@ -367,7 +385,7 @@ export default {
     },
     /** 获取用户拥有数量 */
     getUserOwned() {
-      if (!this.tokenId || !this.userAccount) {
+      if (!this.tokenId || !this.$store.state.user.userId) {
         return
       }
       return new Promise((resolve, reject) => {

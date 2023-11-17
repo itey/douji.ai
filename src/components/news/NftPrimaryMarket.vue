@@ -7,12 +7,12 @@
           Available :
           <span class="text-color">{{ availableSupply | toLocalString }}</span>
         </div>
-        <div class="form-attr-available" v-if="userAccount">
+        <div class="form-attr-available" v-if="$store.state.user.account">
           You owned :
           <span class="text-color">{{ userOwned }}</span>
         </div>
       </div>
-      <template v-if="userAccount && discountPrice && discountPrice != currentPrice">
+      <template v-if="$store.state.user.account && discountPrice && discountPrice != currentPrice">
         <div class="form-attr-mbd">
           <div class="mbd-value text-color">{{ discountPrice | decimalPlace4 }} MBD</div>
           <div class="mbd-transform">≈${{ (discountPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
@@ -136,7 +136,7 @@ export default {
     },
   },
   watch: {
-    userAccount: function (val, od) {
+    '$store.state.user.account': function (val, od) {
       if (val != od) {
         this.getDiscountPrice()
       }
@@ -152,7 +152,6 @@ export default {
       loading: false,
       nftContract: process.env.VUE_APP_NFT,
       bnbScanUrl: process.env.VUE_APP_BNB_SCAN_URL,
-      userAccount: this.$store.state.user.account,
       discountPrice: undefined,
     }
   },
@@ -198,7 +197,7 @@ export default {
     },
     /** 计算折扣额 */
     async getDiscountPrice() {
-      if (!this.userAccount) {
+      if (!this.$store.state.user.account) {
         return
       }
       if (this.editShow) {
@@ -213,7 +212,7 @@ export default {
         // erc20
         const erc20Balance = await getErc20BalanceOf(
           this.discountJson.cAddress,
-          this.userAccount
+          this.$store.state.user.account
         )
         if (erc20Balance >= this.discountJson.discounts) {
           this.discountPrice =
@@ -225,7 +224,7 @@ export default {
         // erc721
         const erc721Balance = await getErc721BalanceOf(
           this.discountJson.cAddress,
-          this.userAccount
+          this.$store.state.user.account
         )
         if (erc721Balance >= this.discountJson.discounts) {
           this.discountPrice =
@@ -237,7 +236,7 @@ export default {
         // erc1155
         const erc1155Balance = await getErc1155BalanceOf(
           this.discountJson.cAddress,
-          this.userAccount,
+          this.$store.state.user.account,
           this.discountJson.tokenId
         )
         if (erc1155Balance >= this.discountJson.discounts) {
