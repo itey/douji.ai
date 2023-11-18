@@ -138,66 +138,69 @@
     <div class="latest-news-container">
       <div class="title">Latest News</div>
       <div class="list-container">
-        <news-item class="item" v-for="(item,index) in 8" :key="index"></news-item>
+        <NewsItem :item="item" class="item" v-for="(item,index) in latestNews" :key="index" />
       </div>
     </div>
     <div style="margin-top: 43px;">
       <img style="width: 653px;height: 71px;" />
     </div>
-    <div class="news-list-container">
-      <div class="news-item-container">
-        <div class="top">
-          <div class="title text-color">AI News</div>
-          <div class="more">
-            <span>Read more</span>
-            <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+    <template v-if="false">
+      <div class="news-list-container">
+        <div class="news-item-container">
+          <div class="top">
+            <div class="title text-color">AI News</div>
+            <div class="more">
+              <span>Read more</span>
+              <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+            </div>
+          </div>
+          <div class="news-item-list-container">
+            <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
           </div>
         </div>
-        <div class="news-item-list-container">
-          <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
-        </div>
-      </div>
-      <div class="news-item-container">
-        <div class="top">
-          <div class="title text-color">Web3 News</div>
-          <div class="more">
-            <span>Read more</span>
-            <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+        <div class="news-item-container">
+          <div class="top">
+            <div class="title text-color">Web3 News</div>
+            <div class="more">
+              <span>Read more</span>
+              <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+            </div>
+          </div>
+          <div class="news-item-list-container">
+            <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
           </div>
         </div>
-        <div class="news-item-list-container">
-          <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
-        </div>
-      </div>
-      <div class="news-item-container">
-        <div class="top">
-          <div class="title text-color">Crypto News</div>
-          <div class="more">
-            <span>Read more</span>
-            <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+        <div class="news-item-container">
+          <div class="top">
+            <div class="title text-color">Crypto News</div>
+            <div class="more">
+              <span>Read more</span>
+              <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+            </div>
+          </div>
+          <div class="news-item-list-container">
+            <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
           </div>
         </div>
-        <div class="news-item-list-container">
-          <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
-        </div>
-      </div>
-      <div class="news-item-container">
-        <div class="top">
-          <div class="title text-color">Metaverse News</div>
-          <div class="more">
-            <span>Read more</span>
-            <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+        <div class="news-item-container">
+          <div class="top">
+            <div class="title text-color">Metaverse News</div>
+            <div class="more">
+              <span>Read more</span>
+              <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+            </div>
+          </div>
+          <div class="news-item-list-container">
+            <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
           </div>
         </div>
-        <div class="news-item-list-container">
-          <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
-        </div>
       </div>
-    </div>
-    <div style="margin-top: 48px;">
-      <img style="width: 653px;height: 71px;" />
-    </div>
-    <div class="nft-list-container">
+      <div style="margin-top: 48px;">
+        <img style="width: 653px;height: 71px;" />
+      </div>
+    </template>
+
+    <div class="nft-list-container" v-if="promptsList.length">
       <div class="top">
         <div class="title text-color">Featured Prompts NFT</div>
         <div class="more">
@@ -206,10 +209,10 @@
         </div>
       </div>
       <div class="list-container">
-        <product-item class="item" v-for="(item,index) in 8" :key="index"></product-item>
+        <ProductItem class="item" :item="item" v-for="(item,index) in promptsList" :key="index" />
       </div>
     </div>
-    <div class="nft-list-container">
+    <div class="nft-list-container" v-if="digitalList.length">
       <div class="top">
         <div class="title text-color">Featured Digital Arts NFT</div>
         <div class="more">
@@ -218,7 +221,7 @@
         </div>
       </div>
       <div class="list-container">
-        <nft-item
+        <NftItem
           :style="{
 					background: '#1A2027',
 					border: '1px solid #2C3638',
@@ -226,9 +229,10 @@
 				}"
           class="item"
           height="194px"
-          v-for="(item,index) in 8"
+          :item="item"
+          v-for="(item,index) in digitalList"
           :key="index"
-        ></nft-item>
+        />
       </div>
     </div>
     <div style="margin-top: 46px;">
@@ -309,8 +313,10 @@ import ComparisonTab from '@/components/home/ComparisonTab'
 import ComparisonTable from '@/components/home/ComparisonTable'
 import NewsTabItem from '@/components/home/NewsTabItem'
 import { weiToEth } from '@/utils/common'
+import { nftListPage } from '@/utils/http'
 import { erc20Approve, mintByBnb, mintByErc20 } from '@/utils/web3/bjx'
 import { getBjxTokenInfo } from '@/utils/web3/open'
+import { reject } from 'lodash'
 export default {
   name: 'home-view',
   components: {
@@ -333,6 +339,7 @@ export default {
       callback()
     }
     return {
+      loading: {},
       activeName: 'news',
       bjxTypeOption: {
         0: 'USDT',
@@ -361,10 +368,14 @@ export default {
           { validator: validateNumber, trigger: 'blur' },
         ],
       },
+      latestNews: [],
+      promptsList: [],
+      digitalList: [],
     }
   },
   mounted() {
     this.getBjxData()
+    this.newsInit()
   },
   methods: {
     /** 点击购买BJX */
@@ -445,6 +456,65 @@ export default {
       getBjxTokenInfo().then((res) => {
         this.bjxInfoJson = res
         this.bjx.bnbPrice = weiToEth(res.bnbPrice)
+      })
+    },
+    /** 所有内容初始化 */
+    newsInit() {
+      const paramLatestNews = {
+        page: 1,
+        content_type: 'Article',
+      }
+      const promptsNews = {
+        page: 1,
+        content_type: 'Prompt',
+      }
+      const digitalArts = {
+        page: 1,
+        content_type: 'Digital Arts',
+      }
+      this.getNewsList(paramLatestNews)
+        .then((r) => {
+          if (r.length) {
+            this.latestNews = r
+          }
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+      this.getNewsList(promptsNews)
+        .then((r) => {
+          if (r.length) {
+            this.promptsList = r
+          }
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+      this.getNewsList(digitalArts)
+        .then((r) => {
+          if (r.length) {
+            this.digitalList = r
+          }
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    },
+    /** 查询News */
+    getNewsList(param) {
+      return new Promise((resolve) => {
+        nftListPage(param)
+          .then((r) => {
+            if (r.code == 1) {
+              resolve(r.data.list)
+            } else {
+              reject(r.message)
+            }
+          })
+          .catch((e) => {
+            console.log(e)
+            reject(e)
+          })
       })
     },
   },
@@ -780,11 +850,6 @@ export default {
 
       .item {
         width: 340px;
-        margin: 0 24px 24px 0;
-
-        &:nth-child(4n) {
-          margin-right: 0;
-        }
       }
     }
   }
