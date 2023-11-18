@@ -233,3 +233,19 @@ export function pledgeSettleList(page) {
         params: { page }
     })
 }
+
+// 首页精选
+export function selectedList() {
+    return request({
+        url: '/selectedList',
+        method: 'post',
+    })
+}
+
+// 首页热门
+export function hotNewsList() {
+    return request({
+        url: '/hotList',
+        method: 'post',
+    })
+}

@@ -1,63 +1,60 @@
 <template>
-	<div class="news-tab-item" @click="itemClick">
-		<div class="title text-color">
-			dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj dgsdgshgdgjsg'sgdsadgshgdsdd fddhsjhj shdgsdgshgdgj
-			sg'sgdsadgshg dsddfddhsjhjsh
-		</div>
-		<div class="bottom">
-			<div class="sub text-sub-color">
-				by <span style="color: #53CFD2;">Victor Deaw</span>
-			</div>
-			<div class="sub text-sub-color">
-				September 21,2023
-			</div>
-		</div>
-	</div>
+  <div class="news-tab-item">
+    <div class="title text-color" @click="$router.push({path: '/news-detail', query: {tokenId: item.token_id}})">{{ item.title }}</div>
+    <div class="bottom">
+      <div class="sub text-sub-color">
+        by
+        <span style="color: #53CFD2;" v-if="item.nickname">{{ item.nickname }}</span>
+        <span style="color: #53CFD2;" v-else>{{ item.owner_address | omitAddress }}</span>
+      </div>
+      <div class="sub text-sub-color">September 21,2023</div>
+    </div>
+  </div>
 </template>
 
 <script>
-	export default {
-		name: 'NewsTabItem',
-		props: {
-			item: {
-				type: Object,
-			}
-		},
-		methods: {
-			itemClick() {
-				this.$router.push('/news-detail')
-			}
-		}
-	}
+export default {
+  name: 'NewsTabItem',
+  props: {
+    item: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  methods: {
+    itemClick() {
+      this.$router.push('/news-detail')
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
-	.news-tab-item {
-		cursor: pointer;
-		text-align: left;
-		margin: 20px 0 14px 0;
-		&:hover .title {
-			color: #00F9E5;
-		}
-		.title {
-			font-size: 14px;
-			font-family: Source Han Sans CN;
-			font-weight: 800;
-			color: #FFFFFF;
-			line-height: 22px;
-		}
-		
+.news-tab-item {
+  cursor: pointer;
+  text-align: left;
+  margin: 20px 0 14px 0;
+  &:hover .title {
+    color: #00f9e5;
+  }
+  .title {
+    font-size: 14px;
+    font-family: Source Han Sans CN;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 22px;
+  }
 
-		.bottom {
-			margin-top: 22px;
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			.sub {
-				font-size: 12px;
-				font-family: Source Han Sans CN;
-				font-weight: 400;
-			}
-		}
-	}
+  .bottom {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .sub {
+      font-size: 12px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+    }
+  }
+}
 </style>

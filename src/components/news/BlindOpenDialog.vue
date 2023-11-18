@@ -6,6 +6,7 @@
       :close-on-press-escape="false"
       :close-on-click-modal="false"
       :visible.sync="show"
+      @open="onOpen"
       @close="handleClose"
       width="789px"
     >
@@ -14,7 +15,11 @@
       <div class="content">
         <div class="time-container">
           <img style="width: 38px;height: 38px;" src="@/assets/images/news/blind-date.png" />
-          <div class="time">{{ countdown }}</div>
+          <div class="time">
+            <vac :end-time="endTime" @finish="onFinished()">
+              <span slot="process" slot-scope="{ timeObj }">{{ timeObj.ceil.s }}</span>
+            </vac>
+          </div>
         </div>
         <div class="label">Open the blind box and you will 100% get the following rewards</div>
         <div class="blind-list">
@@ -97,17 +102,8 @@ export default {
       ],
       centerAddress: process.env.VUE_APP_RECEIVE_ADDR,
       show: false,
-      countdown: 120,
-      timer: undefined,
+      endTime: undefined,
       boxPrizes: {},
-    }
-  },
-  mounted() {
-    this.countdownTime()
-  },
-  destroyed() {
-    if (this.timer) {
-      clearInterval(this.timer)
     }
   },
   methods: {
@@ -147,27 +143,18 @@ export default {
           this.$toast.error(e)
         })
     },
-    /** 倒计时 */
-    countdownTime() {
-      this.timer = setInterval(() => {
-        if (this.blindBox && this.blindBox.time) {
-          const time = Number(this.blindBox.time) + 120000
-          const now = new Date().getTime()
-          this.countdown = Math.floor((time - now) / 1000)
-          if (this.countdown < 0) {
-            this.countdown = 0
-            setBlindBoxCache(
-              this.$store.state.user.userId,
-              this.blindBox.box,
-              true
-            )
-            this.show = false
-          }
-        } else {
-          this.countdown = 0
-          this.show = false
-        }
-      }, 1000)
+    onOpen() {
+      this.endTime = Number(this.blindBox.time) + 120000
+      const now = new Date().getTime()
+      if (now >= this.endTime) {
+        this.onFinished()
+      }
+    },
+    /** 倒计时结束 */
+    onFinished() {
+      console.log('Time Over')
+      setBlindBoxCache(this.$store.state.user.userId, this.blindBox.box, true)
+      this.show = false
     },
     /** 放弃盲盒 */
     giveUpClick() {

@@ -2,32 +2,29 @@
   <div class="home-container">
     <div class="top-container">
       <div class="news-img-container">
-        <img style="width: 934px;height: 526px;" />
+        <img style="width: 934px;height: 526px;" :src="bannerNews.image" />
         <div class="news-text">
-          <div class="title">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-            labore
-            et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo
-          </div>
+          <div class="title" @click="$router.push({path: '/news-detail', query: {tokenId: bannerNews.token_id}})">{{ bannerNews.title }}</div>
           <div class="bottom">
             <div class="text-sub-color">
               by
-              <span class="text-primary-color text-color">Victor Deaw</span>
+              <span class="text-primary-color text-color" v-if="bannerNews.nickname">{{ bannerNews.nickname }}</span>
+              <span class="text-primary-color text-color" v-else>{{ bannerNews.owner_address | omitAddress }}</span>
             </div>
             <div class="text-sub-color">September 21,2023</div>
           </div>
         </div>
       </div>
-      <div class="news-tab-container">
-        <el-tabs v-model="activeName" :stretch="true">
+      <div class="news-tab-container" v-loading="loading['news']" element-loading-background="rgba(0, 0, 0, 0.3)">
+        <el-tabs v-model="activeName" :stretch="true" @tab-click="newsTabChange">
           <el-tab-pane label="Hot News" name="news">
             <div class="news-list">
-              <news-tab-item v-for="(item,index) in 10" :key="index"></news-tab-item>
+              <news-tab-item :item="item" v-for="(item,index) in hotNewsList" :key="index"></news-tab-item>
             </div>
           </el-tab-pane>
           <el-tab-pane label="Featured" name="feature">
             <div class="news-list">
-              <news-tab-item v-for="(item,index) in 10" :key="index"></news-tab-item>
+              <news-tab-item :item="item" v-for="(item,index) in selectedList" :key="index"></news-tab-item>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -313,10 +310,9 @@ import ComparisonTab from '@/components/home/ComparisonTab'
 import ComparisonTable from '@/components/home/ComparisonTable'
 import NewsTabItem from '@/components/home/NewsTabItem'
 import { weiToEth } from '@/utils/common'
-import { nftListPage } from '@/utils/http'
+import { hotNewsList, nftListPage, selectedList } from '@/utils/http'
 import { erc20Approve, mintByBnb, mintByErc20 } from '@/utils/web3/bjx'
 import { getBjxTokenInfo } from '@/utils/web3/open'
-import { reject } from 'lodash'
 export default {
   name: 'home-view',
   components: {
@@ -371,6 +367,9 @@ export default {
       latestNews: [],
       promptsList: [],
       digitalList: [],
+      selectedList: [],
+      hotNewsList: [],
+      bannerNews: {},
     }
   },
   mounted() {
@@ -378,6 +377,16 @@ export default {
     this.newsInit()
   },
   methods: {
+    /** 点击切换 */
+    newsTabChange(val) {
+      console.log(val)
+      if (val.index == '0') {
+        this.bannerNews = this.hotNewsList[0]
+      }
+      if (val.index == '1') {
+        this.bannerNews = this.selectedList[0]
+      }
+    },
     /** 点击购买BJX */
     async handleBuyBjx() {
       const c = await this.$store.dispatch('CheckLogin', true)
@@ -475,7 +484,7 @@ export default {
       this.getNewsList(paramLatestNews)
         .then((r) => {
           if (r.length) {
-            this.latestNews = r
+            this.latestNews = r.slice(0, 8)
           }
         })
         .catch((e) => {
@@ -499,10 +508,21 @@ export default {
         .catch((e) => {
           console.log(e)
         })
+      this.$set(this.loading, 'news', true)
+      Promise.all([this.getSelectedList(), this.getHotNewsList()])
+        .then(() => {
+          this.bannerNews = this.hotNewsList[0]
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+        .finally(() => {
+          this.$set(this.loading, 'news', false)
+        })
     },
     /** 查询News */
     getNewsList(param) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         nftListPage(param)
           .then((r) => {
             if (r.code == 1) {
@@ -515,6 +535,32 @@ export default {
             console.log(e)
             reject(e)
           })
+      })
+    },
+    /** 精选 */
+    getSelectedList() {
+      return new Promise((resolve, reject) => {
+        selectedList().then((r) => {
+          if (r.code == 1) {
+            this.selectedList = r.data.list
+            resolve(r.data.list)
+          } else {
+            reject(r.message)
+          }
+        })
+      })
+    },
+    /** 热门 */
+    getHotNewsList() {
+      return new Promise((resolve, reject) => {
+        hotNewsList().then((r) => {
+          if (r.code == 1) {
+            this.hotNewsList = r.data.list
+            resolve(r.data.list)
+          } else {
+            reject(r.message)
+          }
+        })
       })
     },
   },
@@ -537,6 +583,10 @@ export default {
         bottom: 30px;
         left: 34px;
         right: 38px;
+        background-color: black;
+        opacity: 0.7;
+        padding: 10px;
+        border-radius: 10px;
 
         .title {
           font-size: 28px;
@@ -545,6 +595,11 @@ export default {
           color: #ffffff;
           line-height: 36px;
           text-align: left;
+          cursor: pointer;
+        }
+
+        .title:hover {
+          color: #00f9e5;
         }
 
         .bottom {

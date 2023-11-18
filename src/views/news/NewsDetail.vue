@@ -288,7 +288,7 @@ export default {
         if (blindBox && blindBox.time) {
           const timeGet = Number(blindBox.time)
           const nowTime = new Date().getTime()
-          if (nowTime - timeGet > 1000 * 60) {
+          if (nowTime - timeGet > 1000 * 120) {
             setBlindBoxCache(this.$store.state.user.userId, blindBox.box, true)
             haveBox = false
           } else if (!blindBox.invalid) {
@@ -304,7 +304,7 @@ export default {
           if (flag && flag.time) {
             const timeGet = Number(flag.time)
             const nowTime = new Date().getTime()
-            if (nowTime - timeGet > 1000 * 60) {
+            if (nowTime - timeGet > 1000 * 120) {
               setBlindBoxFlagCache(
                 this.$store.state.user.userId,
                 flag.flag,

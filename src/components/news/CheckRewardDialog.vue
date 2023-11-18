@@ -15,7 +15,7 @@ export default {
   name: 'checkReward-dialog',
   props: {
     amount: {
-      type: String,
+      type: Number,
       default: null,
     },
   },

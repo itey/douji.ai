@@ -11,16 +11,16 @@ import '@/assets/theme/theme-dark.css'
 import * as filters from '@/filters'
 import ElementUI from 'element-ui'
 import _ from 'lodash'
+import vueAwesomeCountdown from 'vue-awesome-countdown'
 import VueClipBoard from 'vue-clipboard2'
 import Toast from "vue-toastification"
 import "vue-toastification/dist/index.css"
-
-
 
 Vue.prototype._ = _
 
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
+Vue.use(vueAwesomeCountdown, 'vac')
 Vue.use(VuePlugin)
 Vue.use(ElementUI)
 Vue.use(VueClipBoard)

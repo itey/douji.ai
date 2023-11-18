@@ -6,6 +6,7 @@
     :close-on-click-modal="false"
     :visible.sync="show"
     @close="handleClose"
+    @open="onOpen"
     width="789px"
   >
     <div class="title" slot="title">Receive Blind Box</div>
@@ -13,10 +14,14 @@
     <div class="content">
       <div class="time-container">
         <img style="width: 38px;height: 38px;" src="@/assets/images/news/blind-date.png" />
-        <div class="time">{{ countdown }}</div>
+        <div class="time">
+          <vac :end-time="endTime" @finish="onFinished()">
+            <span slot="process" slot-scope="{ timeObj }">{{ timeObj.ceil.s }}</span>
+          </vac>
+        </div>
       </div>
       <img style="width: 388px;height: 347px;" src="@/assets/images/news/blind-box-icon.png" />
-      <el-button :disabled="countdown<=0" @click="handleReceiveBox()" class="btn">Receive</el-button>
+      <el-button @click="handleReceiveBox()" class="btn">Receive</el-button>
     </div>
   </el-dialog>
 </template>
@@ -44,20 +49,18 @@ export default {
   data() {
     return {
       show: false,
-      countdown: 120,
-      timer: undefined,
+      endTime: undefined,
       blindBox: {},
     }
   },
-  mounted() {
-    this.countdownTime()
-  },
-  destroyed() {
-    if (this.timer) {
-      clearInterval(this.timer)
-    }
-  },
   methods: {
+    onOpen() {
+      this.endTime = Number(this.boxFlag.time) + 120000
+      const now = new Date().getTime()
+      if (now >= this.endTime) {
+        this.onFinished()
+      }
+    },
     /** 接收盲盒 */
     handleReceiveBox() {
       getBlindBoxSign().then((signed) => {
@@ -89,26 +92,14 @@ export default {
     showDialog() {
       this.show = true
     },
-    countdownTime() {
-      this.timer = setInterval(() => {
-        if (this.boxFlag && this.boxFlag.time) {
-          const time = Number(this.boxFlag.time) + 120000
-          const now = new Date().getTime()
-          this.countdown = Math.floor((time - now) / 1000)
-          if (this.countdown < 0) {
-            this.countdown = 0
-            setBlindBoxFlagCache(
-              this.$store.state.user.userId,
-              this.boxFlag.flag,
-              true
-            )
-            this.show = false
-          }
-        } else {
-          this.countdown = 0
-          this.show = false
-        }
-      }, 1000)
+    onFinished() {
+      console.log('Time Over')
+      setBlindBoxFlagCache(
+        this.$store.state.user.userId,
+        this.boxFlag.flag,
+        true
+      )
+      this.show = false
     },
     /** 用户关闭 */
     handleClose() {

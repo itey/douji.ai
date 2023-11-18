@@ -1075,24 +1075,8 @@ post
                 "collect_count":0,
                 "praise_count":0,
                 "pltform":null,
-                "nickname":"你是什么夫斯基"
-            },
-            {
-                "id":6,
-                "token_id":6,
-                "name":"DOUJI.AI",
-                "title":"DOUJI.AI",
-                "image":"https:\/\/ipfs.io\/ipfs\/bafybeiamml3dkatjvrvkcz2jyvccstbyff3xz7fvxand5h3glbnxnusduu",
-                "description":"There are 5 incredible Moca tribes of the Angels, Builders, Dreamers, Connectors, and Neo-Capitalists. ",
-                "category":null,
-                "content_type":"Article",
-                "owner_address":"0x36cbe8b131451dc4bae73b867db998504cf2a86f",
-                "language":null,
-                "read_duration":"0.00",
-                "collect_count":0,
-                "praise_count":0,
-                "pltform":null,
-                "nickname":"你是什么夫斯基"
+                "nickname":"你是什么夫斯基",
+                "head_img": "url"
             }
         ],
         "pageCount":11,
@@ -1390,9 +1374,10 @@ post
     "message": "ok",
     "data": {
        "list": [
-          {"token_id":111111}
+          {"token_id":111111,"name": "11111"}
        ],
-       "page": 1
+       "page": 1,
+       "pageCount": 3
     }
 }
 ```
@@ -1404,5 +1389,115 @@ post
 | 0            | 失败   |
 | 1            | 成功   |
 
+### 26.热门
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/hotList
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        "list":[
+            {
+                "id":7,
+                "token_id":7,
+                "name":"Outman",
+                "title":"Outman",
+                "image":"https:\/\/ipfs.io\/ipfs\/bafkreifivdsx2gcsolhrdqthuiryz3p5pfxjvhpeqikiycipw7s6c476ai",
+                "description":"奥特曼，又称「初代奥特曼」，是日本特摄剧《奥特曼》中的主人公 [6] 。首次登场于《奥特曼》第1话《奥特作战第一号》（1966年7月17日首播）",
+                "category":null,
+                "content_type":"Digital Arts",
+                "owner_address":"0x36cbe8b131451dc4bae73b867db998504cf2a86f",
+                "language":null,
+                "read_duration":"0.00",
+                "collect_count":0,
+                "praise_count":0,
+                "pltform":null,
+                "nickname":"你是什么夫斯基",
+                "head_img": "url"
+            }
+        ],
+        "pageCount":11,
+        "page":1
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |    
 
 
+### 27.精选
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/selectedList
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        "list":[
+            {
+                "id":7,
+                "token_id":7,
+                "name":"Outman",
+                "title":"Outman",
+                "image":"https:\/\/ipfs.io\/ipfs\/bafkreifivdsx2gcsolhrdqthuiryz3p5pfxjvhpeqikiycipw7s6c476ai",
+                "description":"奥特曼，又称「初代奥特曼」，是日本特摄剧《奥特曼》中的主人公 [6] 。首次登场于《奥特曼》第1话《奥特作战第一号》（1966年7月17日首播）",
+                "category":null,
+                "content_type":"Digital Arts",
+                "owner_address":"0x36cbe8b131451dc4bae73b867db998504cf2a86f",
+                "language":null,
+                "read_duration":"0.00",
+                "collect_count":0,
+                "praise_count":0,
+                "pltform":null,
+                "nickname":"你是什么夫斯基",
+                "head_img": "url"
+            }
+        ],
+        "pageCount":11,
+        "page":1
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |    
