@@ -12,7 +12,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页" :page-size="20" :page-count="pagerCount"></el-pagination>
+      <el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" :page-size="20" :total="totalCount"></el-pagination>
     </div>
   </el-dialog>
 </template>
@@ -32,7 +32,7 @@ export default {
       show: false,
       tableData: [{}, {}],
       page: 1,
-      pagerCount: null,
+      totalCount: null,
     }
   },
   methods: {
@@ -44,7 +44,7 @@ export default {
         console.log(r)
         if (r.code == 1) {
           this.tableData = r.data.list
-          this.pagerCount = r.data.pageCount
+          this.totalCount = r.data.pageCount
         }
       })
     },

@@ -161,3 +161,33 @@ export const localTimeFormat = (date) => {
   }
   return moment(date).format('lll')
 }
+
+//  秒数转化为时分秒
+export const formatSeconds = (value) => {
+  //  秒
+  let second = parseInt(value)
+  //  分
+  let minute = 0
+  //  小时
+  let hour = 0
+  //  天
+  //  let day = 0
+  //  如果秒数大于60，将秒数转换成整数
+  if (second > 60) {
+    //  获取分钟，除以60取整数，得到整数分钟
+    minute = parseInt(second / 60)
+    //  获取秒数，秒数取佘，得到整数秒数
+    second = parseInt(second % 60)
+    //  如果分钟大于60，将分钟转换成小时
+    if (minute > 60) {
+      //  获取小时，获取分钟除以60，得到整数小时
+      hour = parseInt(minute / 60)
+      //  获取小时后取佘的分，获取分钟除以60取佘的分
+      minute = parseInt(minute % 60)
+    }
+  }
+  if (hour > 0) {
+    return ' ' + parseInt(hour) + ' Hour'
+  }
+  return ' ' + parseInt(minute) + ' Min'
+}

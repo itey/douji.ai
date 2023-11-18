@@ -11,7 +11,7 @@
       <div class="form-top">
         <div class="form-left">
           <div class="form-title text-color">{{ metadata.title }}</div>
-          <NftAuthorInfo />
+          <NftAuthorInfo v-if="tokenOwner" :tokenId="tokenId" :creator="tokenOwner" />
           <img style="width: 940px;height: 532px;margin-top:36px;" :src="metadata.image" />
           <div class="form-desc">{{ metadata.description }}</div>
           <div class="form-label-sub" style="margin-top: 16px;">

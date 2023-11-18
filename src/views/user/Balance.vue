@@ -10,7 +10,7 @@
     </div>
     <div class="balance-value">
       <div class="item">
-        <div class="value text-color">{{ $store.state.chain.balanceMbd | decimalPlace4 }}</div>
+        <div class="value text-color" :style="{ fontSize: fontSize + 'px' }">{{ $store.state.chain.balanceMbd | decimalPlace4 }}</div>
         <div class="sub-value text-sub-color">≈${{ $store.state.chain.balanceMbd * $store.state.chain.mbdPrice || '0.0000' }}</div>
         <div class="unit text-color">MBD</div>
       </div>
@@ -89,6 +89,14 @@ export default {
     userAccount() {
       return this.$store.state.user.account
     },
+    fontSize() {
+      if (!this.$store.state.chain.balanceMbd) {
+        return 24
+      }
+      const r = this.$store.state.chain.balanceMbd.toString()
+      const fs = (r.length * 1.1).toFixed()
+      return fs > 24 ? 24 : fs
+    },
   },
   data() {
     return {
@@ -163,7 +171,7 @@ export default {
     margin-top: 34px;
 
     .item {
-      min-width: 120px;
+      min-width: 150px;
       border: 1px solid #28313c;
       border-radius: 8px;
       padding: 28px 27px 31px 27px;

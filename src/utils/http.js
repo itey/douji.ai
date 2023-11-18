@@ -249,3 +249,41 @@ export function hotNewsList() {
         method: 'post',
     })
 }
+
+// 获取创作者信息
+export function getOtUserInfo(address) {
+    return request({
+        url: '/getOtUserInfo',
+        method: 'post',
+        params: { address }
+    })
+}
+
+
+// 关注
+export function follow(be_uid) {
+    return request({
+        url: '/followUser',
+        method: 'post',
+        params: { be_uid }
+    })
+}
+
+// 取消关注
+export function unfollow(be_uid) {
+    return request({
+        url: '/unfollowUser',
+        method: 'post',
+        params: { be_uid }
+    })
+}
+
+
+// 获取NFT信息
+export function getNftInfo(tokenId) {
+    return request({
+        url: '/nftInfo',
+        method: 'post',
+        params: { tokenId }
+    })
+}

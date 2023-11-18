@@ -1,65 +1,173 @@
 <template>
-  <div class="info-container">
+  <div class="info-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
     <div class="author-container">
-      <img style="width: 52px;height: 52px;border-radius: 26px;" />
+      <img style="width: 52px;height: 52px;border-radius: 26px;" :src="creatorInfo.head_img" v-if="creatorInfo.head_img" />
+      <img style="width: 52px;height: 52px;border-radius: 26px;" v-else src="@/assets/avatar.jpg" />
       <div class="author-info">
         <div class="author-name">
           by
-          <span style="color: #00F9E5;">Victor Deaw</span>
+          <span style="color: #00F9E5;" v-if="creatorInfo.nickname">{{ creatorInfo.nickname }}</span>
+          <span style="color: #00F9E5;" v-else>{{ creator | omitAddress }}</span>
         </div>
-        <div class="author-desc">This paragraph is the author'spersonal description</div>
+        <div class="author-desc">{{ creatorInfo.short_description }}</div>
       </div>
-      <div class="subscription light" v-if="subscription" @click="subscription = false">
-        <img style="width: 9px;height: 9px;" src="@/assets/images/news/add.png" />
-        <span>Subscription</span>
-      </div>
-      <div class="subscription" v-else @click="subscription = true">
-        <img style="width: 13px;height: 9px;" src="@/assets/images/news/true.png" />
-        <span>Subscription</span>
-      </div>
+      <template v-if="userAccount && userAccount.toLowerCase() != creator.toLowerCase()">
+        <div class="subscription" v-if="creatorInfo.isfollow" @click="handleSubOut()">
+          <img style="width: 13px;height: 9px;" src="@/assets/images/news/true.png" />
+          <span>Subscription</span>
+        </div>
+        <div class="subscription light" v-else @click="handleSub()">
+          <img style="width: 9px;height: 9px;" src="@/assets/images/news/add.png" />
+          <span>Subscription</span>
+        </div>
+      </template>
     </div>
     <div class="news-info">
       <div class="news-info-item">
         <div class="news-info-item-label">
           <img src="@/assets/images/news/date.png" />
-          <span>6528 Min</span>
+          <span>{{ nftInfo.read_duration | formatSeconds }}</span>
         </div>
-        <div class="news-info-item-value">
+        <!-- <div class="news-info-item-value">
           <img src="@/assets/images/up.png" />
           <span>6528 Min</span>
-        </div>
+        </div>-->
       </div>
       <div class="news-info-item">
         <div class="news-info-item-label">
           <img src="@/assets/images/news/like.png" />
-          <span>6528</span>
+          <span>{{ nftInfo.praise_count }}</span>
         </div>
-        <div class="news-info-item-value">
+        <!-- <div class="news-info-item-value">
           <img src="@/assets/images/up.png" />
           <span>6528</span>
-        </div>
+        </div>-->
       </div>
       <div class="news-info-item">
         <div class="news-info-item-label">
           <img src="@/assets/images/news/star.png" />
-          <span>6528</span>
+          <span>{{ nftInfo.collect_count }}</span>
         </div>
-        <div class="news-info-item-value">
+        <!-- <div class="news-info-item-value">
           <img src="@/assets/images/up.png" />
           <span>6528</span>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { follow, getNftInfo, getOtUserInfo, unfollow } from '@/utils/http'
 export default {
   name: 'nft-author-info',
+  props: {
+    creator: {
+      type: String,
+      default: '',
+    },
+    tokenId: {
+      type: String,
+      default: '',
+    },
+  },
+  computed: {
+    userAccount() {
+      return this.$store.state.user.account
+    },
+  },
   data() {
     return {
+      loading: false,
       subscription: false,
+      creatorInfo: {},
+      nftInfo: {},
     }
+  },
+  mounted() {
+    if (this.creator) {
+      this.infoInit()
+    }
+  },
+  methods: {
+    /** 点击关注 */
+    handleSub() {
+      follow(this.creatorInfo.uid)
+        .then((r) => {
+          if (r.code == 1) {
+            this.$toast.success(this.$t('common.follow_success'))
+          } else {
+            this.$toast.error(r.message)
+          }
+        })
+        .catch((e) => {
+          this.$toast.error(e)
+        })
+        .finally(() => {
+          this.loadUserInfo()
+        })
+    },
+    /** 点击取消关注 */
+    handleSubOut() {
+      unfollow(this.creatorInfo.uid)
+        .then((r) => {
+          if (r.code == 1) {
+            this.$toast.success(this.$t('common.un_follow_success'))
+          } else {
+            this.$toast.error(r.message)
+          }
+        })
+        .catch((e) => {
+          this.$toast.error(e)
+        })
+        .finally(() => {
+          this.loadUserInfo()
+        })
+    },
+    infoInit() {
+      this.loading = true
+      Promise.all([this.loadUserInfo(), this.loadNftInfo()])
+        .catch((e) => {
+          console.log(e)
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+    /** 加载用户信息 */
+    loadUserInfo() {
+      return new Promise((resolve, reject) => {
+        getOtUserInfo(this.creator)
+          .then((r) => {
+            if (r.code == 1) {
+              this.creatorInfo = r.data
+              resolve()
+            } else {
+              reject(r.message)
+            }
+          })
+          .catch((e) => {
+            reject(e)
+          })
+      })
+    },
+    /** 获取NFT资料 */
+    loadNftInfo() {
+      return new Promise((resolve, reject) => {
+        getNftInfo(this.tokenId)
+          .then((r) => {
+            if (r.code == 1) {
+              this.nftInfo = r.data
+              resolve()
+            } else {
+              reject(r.message)
+            }
+          })
+          .catch((e) => {
+            reject(e)
+          })
+      })
+    },
   },
 }
 </script>
@@ -92,9 +200,14 @@ export default {
         font-size: 12px;
         font-family: Source Han Sans CN;
         font-weight: 400;
-        color: #acbcc9;
+        color: #6c7884;
         line-height: 16px;
         margin-top: 7px;
+        -webkit-line-clamp: 2; // 设置两行文字溢出
+        display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+        -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+        overflow: hidden;
+        padding-right: 30px;
       }
     }
 

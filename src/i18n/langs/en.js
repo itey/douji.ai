@@ -22,6 +22,10 @@ export default {
     "check_in_success": "Successfully checked in",
     "img_upload_error":
       "An error occurred uploading the image. Please try again later.",
+    "follow_success":
+      "Successfully followed",
+    "un_follow_success":
+      "Successfully unfollowed",
   },
   "home": {
     "bjx_buy_success":

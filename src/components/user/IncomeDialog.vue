@@ -2,7 +2,7 @@
   <el-dialog custom-class="income-dialog" @open="onOpen()" :visible.sync="show" width="1100px">
     <div class="income-header text-color" slot="title">Set NFT DAO Governance</div>
     <div class="income-content">
-      <el-table ref="multipleTable" :data="tableData" style="width: 1000px" @selection-change="handleSelectionChange">
+      <el-table ref="multipleTable" :data="tableData" style="width: 1000px">
         <el-table-column type="selection" width="47px"></el-table-column>
         <el-table-column label="Token ID" width="119px">
           <template slot-scope="scope">ID</template>
@@ -20,7 +20,7 @@
           <template slot-scope="scope">Income(MBD)</template>
         </el-table-column>
       </el-table>
-      <el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页" :page-count="pageCount" :page-size="20"></el-pagination>
+      <el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" :total="totalCount" :page-size="20"></el-pagination>
     </div>
     <div class="income-btn">
       <el-button class="common-btn2">Settlement</el-button>
@@ -37,7 +37,7 @@ export default {
       show: false,
       pageNo: 1,
       pageSize: 20,
-      pageCount: 0,
+      totalCount: 0,
       tableData: [],
     }
   },
@@ -45,7 +45,6 @@ export default {
     showDialog() {
       this.show = true
     },
-    handleSelectionChange() {},
     onOpen() {
       this.pageNo = 1
       this.pageLoad()
@@ -60,7 +59,7 @@ export default {
           console.log(r)
           if (r.code == 1) {
             this.tableData = r.data.list
-            this.pageCount = r.data.pageCount
+            this.totalCount = r.data.pageCount
           } else {
             this.$toast.error(r.message)
           }

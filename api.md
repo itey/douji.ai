@@ -1501,3 +1501,170 @@ post
 | -------------|:---------------------------------|
 | 0            | 失败   |
 | 1            | 成功   |    
+
+
+### 28.关注
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/followUser
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| be_uid |true   | int | 被关注人 |
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |    
+
+
+### 29.取消关注
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/unfollowUser
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| be_uid |true   | int | 被关注人 |
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |    
+
+### 30.查询用户信息
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/getOtUserInfo
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| address |true   | string | 用户地址 |
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+         "isfollow": 0/1 //是否关注了对方
+         "nickname": "ssss",
+         "head_img": "头像url",
+         "fans": 121212, //粉丝数
+         "short_description": "简介"
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |    
+
+
+
+### 31.NFTinfo
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/nftInfo
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| tokenId |true   | int |tokenId|
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+            "id":7,
+            "token_id":7,
+            "name":"Outman",
+            "title":"Outman",
+            "image":"https:\/\/ipfs.io\/ipfs\/bafkreifivdsx2gcsolhrdqthuiryz3p5pfxjvhpeqikiycipw7s6c476ai",
+            "description":"奥特曼，又称「初代奥特曼」，是日本特摄剧《奥特曼》中的主人公 [6] 。首次登场于《奥特曼》第1话《奥特作战第一号》（1966年7月17日首播）",
+            "category":null,
+            "content_type":"Digital Arts",
+            "owner_address":"0x36cbe8b131451dc4bae73b867db998504cf2a86f",
+            "language":null,
+            "read_duration":"0.00",
+            "collect_count":0,
+            "praise_count":0,
+            "pltform":null,
+            "nickname":"你是什么夫斯基",
+            "head_img": "url"
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |    

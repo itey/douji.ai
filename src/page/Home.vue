@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <div class="top-container">
+    <div class="top-container" v-loading="loading['news']" element-loading-background="rgba(0, 0, 0, 0.3)">
       <div class="news-img-container">
         <img style="width: 934px;height: 526px;" :src="bannerNews.image" />
         <div class="news-text">
@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <div class="news-tab-container" v-loading="loading['news']" element-loading-background="rgba(0, 0, 0, 0.3)">
+      <div class="news-tab-container">
         <el-tabs v-model="activeName" :stretch="true" @tab-click="newsTabChange">
           <el-tab-pane label="Hot News" name="news">
             <div class="news-list">

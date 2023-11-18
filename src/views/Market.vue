@@ -31,15 +31,7 @@
           <product-item :item="item"></product-item>
         </div>
       </div>
-      <el-pagination
-        @current-change="onPageChange"
-        style="width:100%;margin: 20px 0;"
-        background
-        layout="pager,next"
-        next-text="下一页"
-        :page-count="pageSize"
-        :total="totalCount"
-      ></el-pagination>
+      <el-pagination @current-change="onPageChange" style="width:100%;margin: 20px 0;" background layout="pager,next" :page-size="pageSize" :total="totalCount"></el-pagination>
     </div>
   </div>
 </template>
@@ -227,7 +219,7 @@ export default {
       width: 1440px;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      // justify-content: space-between;
 
       .item {
         width: 342px;
