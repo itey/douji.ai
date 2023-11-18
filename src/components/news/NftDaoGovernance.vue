@@ -30,7 +30,7 @@
           </div>
           <div class="dividend-pool-item">
             <div class="dividend-pool-label">Retrieve BSC Block Number</div>
-            <div class="dividend-pool-value text-color">{{ userStakeInfo[1] || 'No stake' }}</div>
+            <div class="dividend-pool-value text-color">{{ userStakeInfo[1] != '0' ? userStakeInfo[1] : 'No stake' }}</div>
           </div>
           <div class="dividend-pool-item">
             <div class="dividend-pool-label">Current BSC Block Number</div>
@@ -205,7 +205,8 @@ export default {
       return new Promise((resolve) => {
         userPledgeCount(this.tokenId)
           .then((data) => {
-            this.userStakeInfo = Array.from(data)
+            this.userStakeInfo[0] = data[0]
+            this.userStakeInfo[1] = data[1]
             resolve()
           })
           .catch((e) => {
