@@ -11,7 +11,7 @@
               <span class="text-primary-color text-color" v-if="bannerNews.nickname">{{ bannerNews.nickname }}</span>
               <span class="text-primary-color text-color" v-else>{{ bannerNews.owner_address | omitAddress }}</span>
             </div>
-            <div class="text-sub-color">September 21,2023</div>
+            <div class="text-sub-color">{{ bannerNews.create_time | localTimeFormat }}</div>
           </div>
         </div>
       </div>
@@ -19,12 +19,12 @@
         <el-tabs v-model="activeName" :stretch="true" @tab-click="newsTabChange">
           <el-tab-pane label="Hot News" name="news">
             <div class="news-list">
-              <news-tab-item :item="item" v-for="(item,index) in hotNewsList" :key="index"></news-tab-item>
+              <news-tab-item @onHover="onHover" :item="item" v-for="(item,index) in hotNewsList" :key="index"></news-tab-item>
             </div>
           </el-tab-pane>
           <el-tab-pane label="Featured" name="feature">
             <div class="news-list">
-              <news-tab-item :item="item" v-for="(item,index) in selectedList" :key="index"></news-tab-item>
+              <news-tab-item @onHover="onHover" :item="item" v-for="(item,index) in selectedList" :key="index"></news-tab-item>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -377,9 +377,12 @@ export default {
     this.newsInit()
   },
   methods: {
+    /** 鼠标悬浮 */
+    onHover(val) {
+      this.bannerNews = val
+    },
     /** 点击切换 */
     newsTabChange(val) {
-      console.log(val)
       if (val.index == '0') {
         this.bannerNews = this.hotNewsList[0]
       }
@@ -786,7 +789,7 @@ export default {
       width: 1440px;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      // justify-content: space-between;
 
       .item {
         width: 342px;
@@ -902,9 +905,15 @@ export default {
       width: 1440px;
       display: flex;
       flex-wrap: wrap;
+      // justify-content: space-between;
 
       .item {
-        width: 340px;
+        width: 342px;
+        margin: 0 22px 24px 0;
+
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
       }
     }
   }

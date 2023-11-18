@@ -1,3 +1,4 @@
+import store from '@/store'
 import moment from "moment"
 
 // Wallet address thumbnail display
@@ -150,4 +151,13 @@ export const readSecondsFormat = (seconds) => {
   if (!seconds) return '00:00:00'
   const d = moment.duration(seconds, 'seconds')
   return zeroPadding(d.hours(), 2) + ':' + zeroPadding(d.minutes(), 2) + ':' + zeroPadding(d.seconds(), 2)
+}
+
+export const localTimeFormat = (date) => {
+  if (store.state.common.language == 'en') {
+    moment.locale('en')
+  } else {
+    moment.locale('zh-hk')
+  }
+  return moment(date).format('lll')
 }

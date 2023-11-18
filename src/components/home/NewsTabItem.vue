@@ -1,5 +1,5 @@
 <template>
-  <div class="news-tab-item">
+  <div class="news-tab-item" @mouseover="onHover">
     <div class="title text-color" @click="$router.push({path: '/news-detail', query: {tokenId: item.token_id}})">{{ item.title }}</div>
     <div class="bottom">
       <div class="sub text-sub-color">
@@ -7,7 +7,7 @@
         <span style="color: #53CFD2;" v-if="item.nickname">{{ item.nickname }}</span>
         <span style="color: #53CFD2;" v-else>{{ item.owner_address | omitAddress }}</span>
       </div>
-      <div class="sub text-sub-color">September 21,2023</div>
+      <div class="sub text-sub-color">{{ item.create_time | localTimeFormat}}</div>
     </div>
   </div>
 </template>
@@ -22,8 +22,8 @@ export default {
     },
   },
   methods: {
-    itemClick() {
-      this.$router.push('/news-detail')
+    onHover() {
+      this.$emit('onHover', this.item)
     },
   },
 }

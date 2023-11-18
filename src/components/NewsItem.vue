@@ -8,7 +8,7 @@
         <span style="color:#53CFD2; cursor: pointer;" v-if="item.nickname">{{ item.nickname }}</span>
         <span style="color:#53CFD2; cursor: pointer;" v-else>{{ item.owner_address | omitAddress }}</span>
       </div>
-      <div class="sub text-sub-color">September 21,2023</div>
+      <div class="sub text-sub-color">{{ item.create_time | localTimeFormat }}</div>
     </div>
   </div>
 </template>
