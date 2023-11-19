@@ -6,7 +6,13 @@
       <el-breadcrumb-item v-if="metadata.title">{{ metadata.title }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <NftDaoVote v-if="tokenSupplyInfo.isVoting" @handleReload="dataLoad" :tokenOwner="tokenOwner" :tokenInfo="tokenSupplyInfo" :tokenId="tokenId" />
+    <NftDaoVote
+      v-if="tokenSupplyInfo.isVoting && !voteOverTime"
+      @handleReload="dataLoad"
+      :tokenOwner="tokenOwner"
+      :tokenInfo="tokenSupplyInfo"
+      :tokenId="tokenId"
+    />
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
@@ -191,6 +197,16 @@ export default {
       }
       return false
     },
+    voteOverTime() {
+      if (!this.tokenSupplyInfo.isVoting) {
+        return true
+      }
+      return (
+        Number(this.tokenSupplyInfo.vote.startTime) +
+          Number(this.voteKeepTime) <
+        new Date().getTime() / 1000
+      )
+    },
     userAccount() {
       return this.$store.state.user.account
     },
@@ -206,6 +222,7 @@ export default {
   data() {
     return {
       nftContract: process.env.VUE_APP_NFT,
+      voteKeepTime: process.env.VUE_APP_VOTE_TIME,
       tokenId: undefined,
       tokenOwner: undefined,
       tokenMetaUrl: undefined,

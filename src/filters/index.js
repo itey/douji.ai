@@ -106,10 +106,7 @@ export const toFixedString = (x) => {
 // 1699934223
 export const stamp2Time = (timestamp) => {
   if (!timestamp) return ''
-  if (timestamp.length === 10) {
-    timestamp = timestamp * 1000
-  }
-  return moment(timestamp).format('YYYY/MM/DD HH:mm:ss')
+  return moment(timestamp * 1000).format('YYYY/MM/DD HH:mm:ss')
 }
 
 

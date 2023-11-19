@@ -7,7 +7,7 @@
         of this NFT at
         <span class="text-color">{{ tokenInfo.vote.startTime | stamp2Time}}</span>. Pleasereview the proposal
         before
-        <span class="text-color">{{ (Number(tokenInfo.vote.startTime) + 259200).toString() | stamp2Time}}</span>. It expires. After that, the proposal
+        <span class="text-color">{{ (Number(tokenInfo.vote.startTime) + Number(voteKeepTime)) | stamp2Time}}</span>. It expires. After that, the proposal
         will be invalidated.
       </div>
       <div class="proposal-left-link" @click="$refs['nftStakeDialog'].showDialog()">View the latest NFT infomation >></div>
@@ -21,6 +21,12 @@
       <div class="proposal-right-btn">
         <el-button style="width: 118px;height: 42px;" class="common-btn2" @click="handleApprove()">Approve</el-button>
         <el-button style="margin-left: 24px;width: 118px;height: 42px;" class="common-btn2" :disabled="!canExecute" @click="handleExecute()">Execute</el-button>
+        <el-button
+          v-if="userAccount && tokenOwner.toLocaleLowerCase() == userAccount.toLocaleLowerCase()"
+          style="margin-left: 24px;width: 118px;height: 42px;"
+          class="common-btn2"
+          @click="handleCancel()"
+        >Cancel</el-button>
       </div>
       <div class="proposal-right-tip" v-if="userAccount">
         Your Voting:
@@ -101,6 +107,7 @@ export default {
   },
   data() {
     return {
+      voteKeepTime: process.env.VUE_APP_VOTE_TIME,
       stakeCount: 0,
     }
   },
@@ -179,6 +186,8 @@ export default {
         eventBus.$emit('refresh_stake_info')
       }
     },
+    /** 点击取消 */
+    handleCancel() {},
     /** 获取我的质押数量 */
     getUserPledgeCount() {
       if (!this.userAccount) {
