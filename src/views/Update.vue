@@ -23,8 +23,21 @@ export default {
     CreateStep2,
     UpdateSuccess,
   },
+  computed: {
+    voteOverTime() {
+      if (!this.tokenSupplyInfo.isVoting) {
+        return true
+      }
+      return (
+        Number(this.tokenSupplyInfo.vote.startTime) +
+          Number(this.voteKeepTime) <
+        new Date().getTime() / 1000
+      )
+    },
+  },
   data() {
     return {
+      voteKeepTime: process.env.VUE_APP_VOTE_TIME,
       loadComplete: false,
       metadata: {},
       ipfsData: {},
@@ -45,7 +58,7 @@ export default {
     setTimeout(() => {
       Promise.all([this.getOwner(), this.loadSupplyInfo(), this.loadMetadata()])
         .then(() => {
-          if (this.tokenSupplyInfo.isVoting) {
+          if (this.tokenSupplyInfo.isVoting && !this.voteOverTime) {
             this.$toast.warning(this.$t('create.nft_voting'))
             this.$router.back()
             return

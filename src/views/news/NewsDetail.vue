@@ -455,7 +455,7 @@ export default {
           this.$toast.info(this.$t('news-detail.update_unable'))
           return
         }
-        if (this.tokenSupplyInfo.isVoting) {
+        if (this.tokenSupplyInfo.isVoting && !this.voteOverTime) {
           this.$toast.info(this.$t('create.nft_voting'))
           return
         }
@@ -475,7 +475,7 @@ export default {
           this.$toast.info(this.$t('news-detail.update_unable'))
           return
         }
-        if (this.tokenSupplyInfo.isVoting) {
+        if (this.tokenSupplyInfo.isVoting && !this.voteOverTime) {
           this.$toast.info(this.$t('create.nft_voting'))
           return
         }
@@ -492,7 +492,7 @@ export default {
           this.$toast.info(this.$t('news-detail.update_unable'))
           return
         }
-        if (this.tokenSupplyInfo.isVoting) {
+        if (this.tokenSupplyInfo.isVoting && !this.voteOverTime) {
           this.$toast.info(this.$t('create.nft_voting'))
           return
         }

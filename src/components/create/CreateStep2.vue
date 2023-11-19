@@ -175,10 +175,12 @@ export default {
   methods: {
     /** 获取markdown内容 */
     async markdownGetValue() {
-      const pubContent = this.$refs.contentPub.getValue().trim()
-      const privateContent = this.$refs.contentPrivate.getValue().trim()
+      var pubContent = this.$refs.contentPub.getValue()
+      if (pubContent) pubContent = pubContent.trim()
+      var privateContent = this.$refs.contentPrivate.getValue()
+      if (privateContent) privateContent = privateContent.trim()
       if (pubContent != null && pubContent != 'Cg==' && pubContent != '') {
-        if (pubContent != this.metadata.openContent) {
+        if (!emptyCompare(pubContent, this.metadata.openContent)) {
           const r = await uploadContent(pubContent)
           if (r.code == 1) {
             this.form.contentUrl = r.data.url
@@ -194,7 +196,7 @@ export default {
         privateContent != 'Cg==' &&
         privateContent != ''
       ) {
-        if (privateContent != this.metadata.protectedContent) {
+        if (!emptyCompare(privateContent, this.metadata.protectedContent)) {
           const r = await uploadContent(privateContent)
           if (r.code == 1) {
             const protectedUrl = r.data.url
@@ -399,7 +401,7 @@ export default {
         this.metadata.description == this.form.description &&
         this.metadata.image == this.form.image &&
         this.metadata.keyword.join(',') == this.form.keyword.join(',') &&
-        this.metadata.openContent == this.form.openContent &&
+        emptyCompare(this.metadata.openContent, this.form.openContent) &&
         emptyCompare(this.metadata.protectedContent, this.form.protectedContent)
       ) {
         this.$toast(this.$t('create.data_not_modified'))

@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { SHA256 } from 'crypto-js';
 import cache from './cache';
 
 /** 通用脱敏 */
@@ -423,10 +424,11 @@ export function getBlindBoxCache(userId) {
 
 /** 对比 null,undefined,'' 表示同类 */
 export function emptyCompare(a, b) {
-  console.log(a, b)
-  console.log(!a, !b)
-  if (!a && !b) {
+  const v1 = a ? a.toString().trim() : null
+  const v2 = b ? b.toString().trim() : null
+
+  if (!v1 && !v2) {
     return true
   }
-  return a == b
+  return SHA256(v1).toString() == SHA256(v2).toString()
 }
