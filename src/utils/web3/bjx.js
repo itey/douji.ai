@@ -81,7 +81,6 @@ export function mintByErc20(ercAddress, amount) {
 
 /** 使用BNB购买BJX */
 export function mintByBnb(count, payableAmountWei) {
-  console.log('mintByBnb')
   if (!checkAccount()) {
     return
   }
