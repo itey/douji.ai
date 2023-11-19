@@ -83,15 +83,15 @@ export default {
     getOwner() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          reject()
+          return reject()
         }
         getTokenOwner(this.tokenId)
           .then((owner) => {
             this.tokenOwner = owner
-            resolve()
+            return resolve()
           })
           .catch(() => {
-            reject()
+            return reject()
           })
       })
     },
@@ -99,15 +99,15 @@ export default {
     loadSupplyInfo() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          reject()
+          return reject()
         }
         tokensData(this.tokenId)
           .then((res) => {
             this.tokenSupplyInfo = res
-            resolve()
+            return resolve()
           })
           .catch(() => {
-            reject()
+            return reject()
           })
       })
     },
@@ -115,14 +115,14 @@ export default {
     loadMetadata() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          reject()
+          return reject()
         }
         tokenURI(this.tokenId)
           .then((uri) => {
             this.tokenMetaUrl = uri
             loadFromUrl(this.tokenMetaUrl).then((r) => {
               if (r.status !== 200) {
-                reject(r.statusText)
+                return reject(r.statusText)
               }
               this.metadata = r.data
               if (this.metadata.contentUrl && this.step == 2) {
@@ -133,17 +133,17 @@ export default {
                   .then(([openContent, protectedContent]) => {
                     this.metadata.openContent = openContent
                     this.metadata.protectedContent = protectedContent
-                    resolve()
+                    return resolve()
                   })
                   .catch((e) => {
-                    reject(e)
+                    return reject(e)
                   })
               }
-              resolve()
+              return resolve()
             })
           })
           .catch(() => {
-            reject()
+            return reject()
           })
       })
     },
@@ -152,7 +152,7 @@ export default {
       return new Promise((resolve, reject) => {
         loadFromUrl(url).then((res) => {
           if (res.status !== 200) {
-            reject(res.statusText)
+            return reject(res.statusText)
           }
           resolve(res.data)
         })
@@ -161,16 +161,19 @@ export default {
     /** 加载私有数据 */
     loadProtectedContent(data) {
       return new Promise((resolve, reject) => {
+        if (!data) {
+          return resolve('')
+        }
         unlockContent(data, this.tokenId).then((res) => {
           if (res.code != 1) {
-            reject(res.message)
+            return reject(res.message)
           }
           const ipfsUrl = res.data.url
           loadFromUrl(ipfsUrl).then((r) => {
             if (r.status !== 200) {
-              reject(r.statusText)
+              return reject(r.statusText)
             }
-            resolve(r.data)
+            return resolve(r.data)
           })
         })
       })

@@ -90,7 +90,7 @@
       </div>
       <div class="btn-container" v-if="edit">
         <el-button class="common-btn2" @click="backClick">Back</el-button>
-        <el-button class="common-btn2" :disabled="!ifUpdate" @click="updateClick">Update</el-button>
+        <el-button class="common-btn2" @click="updateClick">Update</el-button>
       </div>
       <div class="btn-container" v-else>
         <el-button class="common-btn2" @click="backClick">Back</el-button>
@@ -102,6 +102,7 @@
 </template>
 
 <script>
+import { emptyCompare } from '@/utils/common'
 import { encryptContent, uploadContent, uploadFile } from '@/utils/http'
 import {
   default as PrivateVditor,
@@ -160,28 +161,6 @@ export default {
       inputValue: '',
     }
   },
-  computed: {
-    ifUpdate() {
-      if (
-        this.metadata.title == this.form.title &&
-        this.metadata.description == this.form.description &&
-        this.metadata.image == this.imageUrl &&
-        this.metadata.openContent == this.form.openContent &&
-        this.metadata.protectedContent == this.form.protectedContent
-      ) {
-        if (this.metadata.keyword && this.form.keyword) {
-          if (this.metadata.keyword.join(',') == this.form.keyword.join(',')) {
-            return false
-          } else {
-            return true
-          }
-        }
-        return false
-      } else {
-        return true
-      }
-    },
-  },
   mounted() {
     if (this.metadata) {
       this.form = JSON.parse(JSON.stringify(this.metadata))
@@ -196,9 +175,9 @@ export default {
   methods: {
     /** 获取markdown内容 */
     async markdownGetValue() {
-      const pubContent = this.$refs.contentPub.getValue()
-      const privateContent = this.$refs.contentPrivate.getValue()
-      if (pubContent != null && pubContent != 'Cg==') {
+      const pubContent = this.$refs.contentPub.getValue().trim()
+      const privateContent = this.$refs.contentPrivate.getValue().trim()
+      if (pubContent != null && pubContent != 'Cg==' && pubContent != '') {
         if (pubContent != this.metadata.openContent) {
           const r = await uploadContent(pubContent)
           if (r.code == 1) {
@@ -210,7 +189,11 @@ export default {
         this.form.contentUrl = undefined
         this.form.openContent = undefined
       }
-      if (privateContent != null && pubContent != 'Cg==') {
+      if (
+        privateContent != null &&
+        privateContent != 'Cg==' &&
+        privateContent != ''
+      ) {
         if (privateContent != this.metadata.protectedContent) {
           const r = await uploadContent(privateContent)
           if (r.code == 1) {
@@ -415,9 +398,9 @@ export default {
         this.metadata.title == this.form.title &&
         this.metadata.description == this.form.description &&
         this.metadata.image == this.form.image &&
-        this.metadata.keyword == this.form.keyword &&
+        this.metadata.keyword.join(',') == this.form.keyword.join(',') &&
         this.metadata.openContent == this.form.openContent &&
-        this.metadata.protectedContent == this.form.protectedContent
+        emptyCompare(this.metadata.protectedContent, this.form.protectedContent)
       ) {
         this.$toast(this.$t('create.data_not_modified'))
         return

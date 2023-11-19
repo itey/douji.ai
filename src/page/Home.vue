@@ -218,18 +218,7 @@
         </div>
       </div>
       <div class="list-container">
-        <NftItem
-          :style="{
-					background: '#1A2027',
-					border: '1px solid #2C3638',
-					borderRadius: '8px',
-				}"
-          class="item"
-          height="194px"
-          :item="item"
-          v-for="(item,index) in digitalList"
-          :key="index"
-        />
+        <ProductItem class="item" :item="item" v-for="(item,index) in digitalList" :key="index" />
       </div>
     </div>
     <div style="margin-top: 46px;">
@@ -496,7 +485,7 @@ export default {
       this.getNewsList(promptsNews)
         .then((r) => {
           if (r.length) {
-            this.promptsList = r
+            this.promptsList = r.slice(0, 8)
           }
         })
         .catch((e) => {
@@ -505,7 +494,7 @@ export default {
       this.getNewsList(digitalArts)
         .then((r) => {
           if (r.length) {
-            this.digitalList = r
+            this.digitalList = r.slice(0, 8)
           }
         })
         .catch((e) => {
@@ -529,14 +518,14 @@ export default {
         nftListPage(param)
           .then((r) => {
             if (r.code == 1) {
-              resolve(r.data.list)
+              return resolve(r.data.list)
             } else {
-              reject(r.message)
+              return reject(r.message)
             }
           })
           .catch((e) => {
             console.log(e)
-            reject(e)
+            return reject(e)
           })
       })
     },
@@ -546,9 +535,9 @@ export default {
         selectedList().then((r) => {
           if (r.code == 1) {
             this.selectedList = r.data.list
-            resolve(r.data.list)
+            return resolve(r.data.list)
           } else {
-            reject(r.message)
+            return reject(r.message)
           }
         })
       })
@@ -559,9 +548,9 @@ export default {
         hotNewsList().then((r) => {
           if (r.code == 1) {
             this.hotNewsList = r.data.list
-            resolve(r.data.list)
+            return resolve(r.data.list)
           } else {
-            reject(r.message)
+            return reject(r.message)
           }
         })
       })

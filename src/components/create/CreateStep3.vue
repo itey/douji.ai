@@ -247,14 +247,14 @@ export default {
         uploadJson(metaJson)
           .then((r) => {
             if (r.code == 1) {
-              resolve(r.data.url)
+              return resolve(r.data.url)
             } else {
-              reject(r.message)
+              return reject(r.message)
             }
           })
           .catch((e) => {
             console.log(e)
-            reject(e.message ? e.message : e)
+            return reject(e.message ? e.message : e)
           })
       })
     },

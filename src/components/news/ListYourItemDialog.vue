@@ -146,10 +146,10 @@ export default {
         balanceOf(this.tokenId)
           .then((balance) => {
             this.userOwned = balance
-            resolve()
+            return resolve()
           })
           .catch((e) => {
-            reject(e)
+            return reject(e)
           })
       })
     },

@@ -141,13 +141,13 @@ export default {
           .then((r) => {
             if (r.code == 1) {
               this.creatorInfo = r.data
-              resolve()
+              return resolve()
             } else {
-              reject(r.message)
+              return reject(r.message)
             }
           })
           .catch((e) => {
-            reject(e)
+            return reject(e)
           })
       })
     },
@@ -158,13 +158,13 @@ export default {
           .then((r) => {
             if (r.code == 1) {
               this.nftInfo = r.data
-              resolve()
+              return resolve()
             } else {
-              reject(r.message)
+              return reject(r.message)
             }
           })
           .catch((e) => {
-            reject(e)
+            return reject(e)
           })
       })
     },

@@ -44,7 +44,7 @@
             <div class="form-tag-label text-color">Tags:</div>
             <div class="form-tag-item text-color" v-for="(item,index) in metadata.keyword" :key="index">{{ item }}</div>
           </div>
-          <div class="dao-container">
+          <div class="dao-container" v-if="userAccount && userOwned > 0">
             <div class="dao-title text-color">NFT DAO Governance</div>
             <div class="dao-set">
               <div class="dao-set-item" style="width: 158px;" @click="handleUpdate(1)">
@@ -390,10 +390,10 @@ export default {
         balanceOf(this.tokenId)
           .then((balance) => {
             this.userOwned = balance
-            resolve()
+            return resolve()
           })
           .catch((e) => {
-            reject(e)
+            return reject(e)
           })
       })
     },
@@ -486,15 +486,15 @@ export default {
     getOwner() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          reject()
+          return reject()
         }
         getTokenOwner(this.tokenId)
           .then((owner) => {
             this.tokenOwner = owner
-            resolve()
+            return resolve()
           })
           .catch(() => {
-            reject()
+            return reject()
           })
       })
     },
@@ -502,16 +502,16 @@ export default {
     loadSupplyInfo() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          reject()
+          return reject()
         }
         tokensData(this.tokenId)
           .then((res) => {
             this.tokenSupplyInfo = res
-            resolve()
+            return resolve()
           })
           .catch((e) => {
             console.log(e)
-            reject(e)
+            return reject(e)
           })
       })
     },
@@ -519,14 +519,14 @@ export default {
     loadMetadata() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          reject()
+          return reject()
         }
         tokenURI(this.tokenId)
           .then((uri) => {
             this.tokenMetaUrl = uri
             loadFromUrl(this.tokenMetaUrl).then((r) => {
               if (r.status !== 200) {
-                reject(r.statusText)
+                return reject(r.statusText)
               }
               this.metadata = r.data
               if (this.metadata.contentUrl) {
@@ -537,16 +537,16 @@ export default {
                       'openContent',
                       md.render(openContent)
                     )
-                    resolve()
+                    return resolve()
                   })
                   .catch((e) => {
-                    reject(e)
+                    return reject(e)
                   })
               }
             })
           })
           .catch(() => {
-            reject()
+            return reject()
           })
       })
     },
@@ -555,9 +555,9 @@ export default {
       return new Promise((resolve, reject) => {
         loadFromUrl(url).then((res) => {
           if (res.status !== 200) {
-            reject(res.statusText)
+            return reject(res.statusText)
           }
-          resolve(res.data)
+          return resolve(res.data)
         })
       })
     },
@@ -566,14 +566,14 @@ export default {
       return new Promise((resolve, reject) => {
         unlockContent(data, this.tokenId).then((res) => {
           if (res.code != 1) {
-            reject(res.message)
+            return reject(res.message)
           }
           const ipfsUrl = res.data.url
           loadFromUrl(ipfsUrl).then((r) => {
             if (r.status !== 200) {
-              reject(r.statusText)
+              return reject(r.statusText)
             }
-            resolve(r.data)
+            return resolve(r.data)
           })
         })
       })
@@ -587,9 +587,9 @@ export default {
         getNftTransactions(this.tokenId).then((res) => {
           if (res.code == 1) {
             this.transactionHistory = res.data.list
-            resolve()
+            return resolve()
           } else {
-            reject(res.message)
+            return reject(res.message)
           }
         })
       })

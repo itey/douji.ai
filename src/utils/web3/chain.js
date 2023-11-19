@@ -34,7 +34,7 @@ export function loginWalletSign(chainAccount) {
     web3.eth.personal
       .sign(SIGN_STR, chainAccount, '')
       .then((signed) => {
-        resolve(signed)
+        return resolve(signed)
       })
       .catch((error) => {
         console.log('sign error', error)
@@ -57,7 +57,7 @@ export function checkInSign() {
     web3.eth.personal
       .sign(DAILY_STR, chainAccount, '')
       .then((signed) => {
-        resolve(signed)
+        return resolve(signed)
       })
       .catch((error) => {
         console.log('sign error', error)
@@ -77,7 +77,7 @@ export function getBlindBoxSign() {
     web3.eth.personal
       .sign(GET_BLIND_BOX, chainAccount, '')
       .then((signed) => {
-        resolve(signed)
+        return resolve(signed)
       })
       .catch((error) => {
         console.log('sign error', error)
@@ -97,7 +97,7 @@ export function openBlindBoxSign() {
     web3.eth.personal
       .sign(OPEN_BLIND_BOX, chainAccount, '')
       .then((signed) => {
-        resolve(signed)
+        return resolve(signed)
       })
       .catch((error) => {
         console.log('sign error', error)

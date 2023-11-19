@@ -184,9 +184,9 @@ export default {
       return new Promise((resolve, reject) => {
         loadFromUrl(url).then((res) => {
           if (res.status !== 200) {
-            reject(res.statusText)
+            return reject(res.statusText)
           }
-          resolve(res.data)
+          return resolve(res.data)
         })
       })
     },
@@ -195,14 +195,14 @@ export default {
       return new Promise((resolve, reject) => {
         unlockContent(data, this.tokenId).then((res) => {
           if (res.code != 1) {
-            reject(res.message)
+            return reject(res.message)
           }
           const ipfsUrl = res.data.url
           loadFromUrl(ipfsUrl).then((r) => {
             if (r.status !== 200) {
-              reject(r.statusText)
+              return reject(r.statusText)
             }
-            resolve(r.data)
+            return resolve(r.data)
           })
         })
       })
@@ -211,16 +211,16 @@ export default {
     loadSupplyInfo() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          reject()
+          return reject()
         }
         tokensData(this.tokenId)
           .then((res) => {
             this.tokenSupplyInfo = res
             this.voteType = this.tokenSupplyInfo.vote.voteType
-            resolve()
+            return resolve()
           })
           .catch(() => {
-            reject()
+            return reject()
           })
       })
     },
@@ -233,10 +233,10 @@ export default {
         balanceOf(this.tokenId)
           .then((balance) => {
             this.userOwned = balance
-            resolve()
+            return resolve()
           })
           .catch((e) => {
-            reject(e)
+            return reject(e)
           })
       })
     },

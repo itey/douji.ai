@@ -207,7 +207,7 @@ export default {
           .then((data) => {
             this.userStakeInfo[0] = data[0]
             this.userStakeInfo[1] = data[1]
-            resolve()
+            return resolve()
           })
           .catch((e) => {
             this.$toast.error(e)
@@ -223,7 +223,7 @@ export default {
         totalPledgeCount(this.tokenId)
           .then((count) => {
             this.totalStakeCount = count ? count : 0
-            resolve()
+            return resolve()
           })
           .catch((e) => {
             this.$toast.error(e)
@@ -239,7 +239,7 @@ export default {
         getSettlePoolBalance(this.tokenId)
           .then((balance) => {
             this.settlePoolBalance = weiToMbd(balance)
-            resolve()
+            return resolve()
           })
           .catch((e) => {
             this.$toast.error(e)
@@ -252,10 +252,10 @@ export default {
         blockHeight()
           .then((height) => {
             this.currentHeight = height
-            resolve()
+            return resolve()
           })
           .catch(() => {
-            reject()
+            return reject()
           })
       })
     },
@@ -268,7 +268,7 @@ export default {
         tokensData(this.tokenId)
           .then((res) => {
             this.tokenSupplyInfo = res
-            resolve(res)
+            return resolve(res)
           })
           .catch((e) => {
             this.$toast.error(e)

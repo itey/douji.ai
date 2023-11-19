@@ -194,7 +194,7 @@ export default {
       return new Promise((resolve, reject) => {
         updateUserInfo(this.userInfo)
           .then(() => {
-            resolve()
+            return resolve()
           })
           .catch((e) => {
             reject(e)

@@ -56,7 +56,7 @@ const user = {
             commit('setChainAccount', payload.address)
             beginEventBus()
             eventBus.$emit('user_login')
-            resolve()
+            return resolve()
           }).catch(error => {
             console.log(error)
             endEventBus()
@@ -79,7 +79,7 @@ const user = {
           const a = new Date(latestCheck).setHours(0, 0, 0, 0)
           const b = new Date().setHours(0, 0, 0, 0)
           if (a === b) {
-            reject(i18n.t('common.already_check_in'))
+            return reject(i18n.t('common.already_check_in'))
           }
         }
         checkInSign().then(signed => {
@@ -87,25 +87,25 @@ const user = {
             if (res.code == 1) {
               commit('setCheckTime', new Date().getTime())
               cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
-              resolve(res.data)
+              return resolve(res.data)
             } else {
               if (res.message.indexOf('已签过到') >= 0) {
                 commit('setCheckTime', new Date().getTime())
                 cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
-                resolve()
+                return resolve()
               }
-              reject(res.message)
+              return reject(res.message)
             }
           }).catch(e => {
             if (e.indexOf('已签过到') >= 0) {
               commit('setCheckTime', new Date().getTime())
               cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
-              resolve()
+              return resolve()
             }
-            reject(e)
+            return reject(e)
           })
         }).catch(e => {
-          reject(e)
+          return reject(e)
         })
       })
     },
@@ -124,12 +124,12 @@ const user = {
     CheckLogin({ commit }, ifOpenConnect) {
       return new Promise((resolve) => {
         if (store.state.user.token && window.web3Particle) {
-          resolve(true)
+          return resolve(true)
         } else {
           if (ifOpenConnect) {
             commit('setOpenConnect', true)
           }
-          resolve(false)
+          return resolve(false)
         }
       })
     }

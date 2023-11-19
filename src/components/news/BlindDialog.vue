@@ -29,6 +29,7 @@
 <script>
 import {
   getBlindBoxCache,
+  getBlindBoxFlagCache,
   setBlindBoxCache,
   setBlindBoxFlagCache,
 } from '@/utils/common'
@@ -41,20 +42,18 @@ export default {
       type: String,
       default: '',
     },
-    boxFlag: {
-      type: Object,
-      default: null,
-    },
   },
   data() {
     return {
       show: false,
       endTime: undefined,
       blindBox: {},
+      boxFlag: {},
     }
   },
   methods: {
     onOpen() {
+      this.boxFlag = getBlindBoxFlagCache(this.$store.state.user.userId)
       this.endTime = Number(this.boxFlag.time) + 120000
       const now = new Date().getTime()
       if (now >= this.endTime) {

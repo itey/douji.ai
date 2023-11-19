@@ -158,10 +158,10 @@ export default {
             this.currentJson = res
             this.form.mVoteCount = res.mVoteCount
             this.form.daoFee = (res.daoFee / 100).toFixed(2)
-            resolve()
+            return resolve()
           })
           .catch((e) => {
-            reject(e)
+            return reject(e)
           })
       })
     },
@@ -171,10 +171,10 @@ export default {
         getDaoRule(this.tokenId)
           .then((daoRule) => {
             this.daoRule = daoRule
-            resolve()
+            return resolve()
           })
           .catch((e) => {
-            reject(e)
+            return reject(e)
           })
       })
     },

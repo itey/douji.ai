@@ -420,3 +420,13 @@ export function setBlindBoxCache(userId, box, invalid) {
 export function getBlindBoxCache(userId) {
   return cache.local.getJSON('DOJI_BOX_' + userId)
 }
+
+/** 对比 null,undefined,'' 表示同类 */
+export function emptyCompare(a, b) {
+  console.log(a, b)
+  console.log(!a, !b)
+  if (!a && !b) {
+    return true
+  }
+  return a == b
+}
