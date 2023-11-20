@@ -41,6 +41,9 @@ const user = {
       if (!payload.address) {
         return
       }
+      if (!window.web3Particle) {
+        return
+      }
       const currentAccount = store.state.user.account
       if (currentAccount && currentAccount.toUpperCase() == payload.address.toUpperCase()) {
         return
