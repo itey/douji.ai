@@ -299,3 +299,21 @@ export function totalPledgeCount(tokenId) {
       })
   })
 }
+
+/** 质押解压周期时间 */
+export function getStakeCycleLen() {
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  return new Promise((resolve, reject) => {
+    nftContract.methods.cycleLen()
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+        reject(e)
+      })
+  })
+}

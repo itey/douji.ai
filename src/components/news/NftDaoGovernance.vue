@@ -30,7 +30,7 @@
           </div>
           <div class="dividend-pool-item">
             <div class="dividend-pool-label">Retrieve BSC Block Number</div>
-            <div class="dividend-pool-value text-color">{{ userStakeInfo[1] != '0' ? userStakeInfo[1] : 'No stake' }}</div>
+            <div class="dividend-pool-value text-color">{{ userStakeInfo[1] != '0' ? userStakeInfo[1] + cycleLen : 'No stake' }}</div>
           </div>
           <div class="dividend-pool-item">
             <div class="dividend-pool-label">Current BSC Block Number</div>
@@ -57,6 +57,7 @@ import { userPledgeCount } from '@/utils/web3/nft'
 import {
   blockHeight,
   getSettlePoolBalance,
+  getStakeCycleLen,
   tokensData,
   totalPledgeCount,
 } from '@/utils/web3/open'
@@ -96,11 +97,15 @@ export default {
       if (
         !this.userStakeInfo ||
         !this.userStakeInfo[1] ||
-        !this.currentHeight
+        !this.currentHeight ||
+        !this.cycleLen
       ) {
         return false
       }
-      if (this.currentHeight > this.userStakeInfo[1]) {
+      if (
+        this.currentHeight >
+        Number(this.userStakeInfo[1]) + Number(this.cycleLen)
+      ) {
         return true
       } else {
         return false
@@ -150,6 +155,7 @@ export default {
     return {
       loading: false,
       currentHeight: undefined,
+      cycleLen: undefined,
       settlePoolBalance: undefined,
       totalStakeCount: undefined,
       userStakeInfo: [],
@@ -165,6 +171,7 @@ export default {
         this.getTotalStakeCount(),
         this.getMbdSettleBalance(),
         this.loadSupplyInfo(),
+        this.getStakeLength(),
       ]).then(() => {
         this.loading = false
         eventBus.$on('refresh_stake_info', this.handleReload)
@@ -193,6 +200,7 @@ export default {
         this.getUserStakeCount(),
         this.getTotalStakeCount(),
         this.getMbdSettleBalance(),
+        this.getStakeLength(),
       ]).then(() => {
         this.loading = false
       })
@@ -243,6 +251,19 @@ export default {
           })
           .catch((e) => {
             this.$toast.error(e)
+          })
+      })
+    },
+    /**获取质押周期 */
+    getStakeLength() {
+      return new Promise((resolve, reject) => {
+        getStakeCycleLen()
+          .then((r) => {
+            this.cycleLen = r
+            return resolve()
+          })
+          .catch(() => {
+            return reject()
           })
       })
     },
