@@ -7,7 +7,7 @@
     </el-breadcrumb>
 
     <NftDaoVote
-      v-if="tokenSupplyInfo.isVoting && !voteOverTime"
+      v-if="tokenSupplyInfo.isVoting && !voteOverTime && userOwned > 0"
       @handleReload="dataLoad"
       :tokenOwner="tokenOwner"
       :tokenInfo="tokenSupplyInfo"
@@ -204,7 +204,7 @@ export default {
       return (
         Number(this.tokenSupplyInfo.vote.startTime) +
           Number(this.voteKeepTime) <
-        new Date().getTime() / 1000
+        this.nowTime / 1000
       )
     },
     userAccount() {
@@ -223,6 +223,7 @@ export default {
     return {
       nftContract: process.env.VUE_APP_NFT,
       voteKeepTime: process.env.VUE_APP_VOTE_TIME,
+      nowTime: new Date().getTime(),
       tokenId: undefined,
       tokenOwner: undefined,
       tokenMetaUrl: undefined,
@@ -252,11 +253,14 @@ export default {
       blindBox: {},
       boxFlagInfo: {},
       transactionHistory: [],
-      subscription: false,
+      timeTask: undefined,
     }
   },
   created() {
     this.tokenId = this.$route.query.tokenId
+    this.timeTask = setInterval(() => {
+      this.nowTime = new Date().getTime()
+    }, 1000)
   },
   mounted() {
     if (!this.tokenId) {
@@ -278,6 +282,9 @@ export default {
   destroyed() {
     if (this.blindBoxTimerTask) {
       clearInterval(this.blindBoxTimerTask)
+    }
+    if (this.timeTask) {
+      clearInterval(this.timeTask)
     }
   },
   methods: {

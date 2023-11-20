@@ -218,7 +218,6 @@ export default {
     /** 更新2 */
     handleUpdate2(form) {
       const metaJson = this.makeURI(form)
-      console.log(metaJson)
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',
       })

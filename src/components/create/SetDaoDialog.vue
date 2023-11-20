@@ -129,6 +129,9 @@ export default {
               this.$emit('handleReload')
               this.show = false
             })
+            .catch((e) => {
+              this.$toast.error(e)
+            })
             .finally(() => {
               loadingInstance.close()
             })
