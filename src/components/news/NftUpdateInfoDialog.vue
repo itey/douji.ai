@@ -617,4 +617,8 @@ export default {
   max-width: 100%;
   max-height: auto;
 }
+.md-reader a {
+  color: #7ea4ea;
+  text-decoration: none;
+}
 </style>
