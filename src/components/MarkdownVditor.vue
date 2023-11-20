@@ -33,6 +33,7 @@ export default {
   methods: {
     initVditor() {
       this.contentEditor = new Vditor(this.id, {
+        lang: this.$store.state.common.language == 'en' ? 'en_US' : 'zh_TW',
         upload: {
           max: 1048576,
           fieldName: 'file',

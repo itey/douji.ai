@@ -83,9 +83,11 @@ export function uploadJson(jsonData) {
 // 上传文本
 export function uploadContent(textData) {
     var result = Base64.encode(textData)
+    var fomData = new FormData()
+    fomData.append('contentData', result)
     return request({
         url: '/uploadContent',
-        params: { contentData: result },
+        data: fomData,
         method: 'post'
     })
 }
