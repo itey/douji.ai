@@ -39,8 +39,9 @@
           <span v-if="discountJson.tokenId">TokenId:{{ discountJson.tokenId }}</span>
         </div>
         <div v-if="$store.state.user.account && discountJson && discountJson.isOpen">
-          Unused discount balance:
-          <span class="text-color">{{unusedCount}}</span>
+          Token owned:
+          <span class="text-color">{{disTokenOwned}}</span>
+          ({{unusedCount}} unused)
         </div>
       </div>
     </div>
@@ -158,6 +159,8 @@ export default {
       bnbScanUrl: process.env.VUE_APP_BNB_SCAN_URL,
       discountPrice: undefined,
       unusedCount: undefined,
+      disTokenOwned: 0,
+      disTOkenUsed: 0,
     }
   },
   mounted() {
@@ -212,51 +215,53 @@ export default {
         return
       }
       const bepType = this.discountJson.sptType
-
-      const useCount = await this.getUserAlreadyDiscounts()
-
+      this.loading = true
+      this.disTOkenUsed = await this.getUserAlreadyDiscounts()
       if (bepType == '0') {
         // erc20
-        const erc20Balance = await getErc20BalanceOf(
+        this.disTokenOwned = await getErc20BalanceOf(
           this.discountJson.cAddress,
           this.$store.state.user.account
         )
-        this.unusedCount = erc20Balance - useCount - this.discountJson.discounts
-        if (this.unusedCount >= 0) {
-          this.discountPrice =
-            this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
-        }
       }
-      this.loading = true
       if (bepType == '1') {
         // erc721
-        const erc721Balance = await getErc721BalanceOf(
+        this.disTokenOwned = await getErc721BalanceOf(
           this.discountJson.cAddress,
           this.$store.state.user.account
         )
-        this.unusedCount =
-          erc721Balance - useCount - this.discountJson.discounts
-        if (this.unusedCount >= 0) {
-          this.discountPrice =
-            this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
-        }
       }
-
       if (bepType == '2') {
         // erc1155
-        const erc1155Balance = await getErc1155BalanceOf(
+        this.disTokenOwned = await getErc1155BalanceOf(
           this.discountJson.cAddress,
           this.$store.state.user.account,
           this.discountJson.tokenId
         )
-        this.unusedCount =
-          erc1155Balance - useCount - this.discountJson.discounts
-        if (this.unusedCount >= 0) {
-          this.discountPrice =
-            this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
-        }
       }
       this.loading = false
+      if (this.disTokenOwned == 0) {
+        return
+      }
+
+      if (
+        this.disTokenOwned - this.disTOkenUsed - this.discountJson.discounts <
+        0
+      ) {
+        this.unusedCount = 0
+      }
+      if (
+        this.disTokenOwned - this.disTOkenUsed - this.discountJson.discounts >=
+        0
+      ) {
+        this.unusedCount =
+          this.disTokenOwned -
+          this.disTOkenUsed -
+          this.discountJson.discounts +
+          1
+        this.discountPrice =
+          this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
+      }
     },
     /** 获取我已经使用的折扣数量 */
     getUserAlreadyDiscounts() {
