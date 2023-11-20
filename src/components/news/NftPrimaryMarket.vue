@@ -38,7 +38,7 @@
           ({{ discountJson.sptType | sptType2Name }})
           <span v-if="discountJson.tokenId">TokenId:{{ discountJson.tokenId }}</span>
         </div>
-        <div>
+        <div v-if="$store.state.user.account && discountJson && discountJson.isOpen">
           Unused discount balance:
           <span class="text-color">{{unusedCount}}</span>
         </div>
