@@ -64,19 +64,12 @@
 	font-weight: 400;
 	color: #12C7B8;
 }
-
-.el-pagination.is-background .el-pager li:not(.disabled).active {
-	width: 30px;
-	height: 30px;
-	line-height: 30px;
-	color: #fff;
-	background: #12C7B8;
-	background-color: #12C7B8;
-	border-radius: 6px;
+.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev {
+	background: #12C7B8!important;
+	color: #FFFFFF!important;
 }
 
-.el-pagination.is-background .btn-next,
-.el-pagination.is-background .btn-prev,
+
 .el-pagination.is-background .el-pager li {
 	background-color: transparent;
 }
@@ -88,20 +81,30 @@
 	border-radius: 6px;
 	font-size: 9px;
 	line-height: 30px;
-	background: #12C7B8;
+	background: #12C7B8!important;
 	font-weight: bold;
-	color: #FFFFFF;
+	color: #FFFFFF!important;
 	min-width: 63px;
 	padding: 0 8px;
 	position: absolute;
 	right: 0;
 }
 
-.el-pagination.is-background .btn-next,
-.el-pagination.is-background .btn-prev,
-.el-pagination.is-background .el-pager li {
-    background-color: transparent;
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff!important;
+	background: #12C7B8;
+	background-color: #12C7B8!important;
+	border-radius: 6px;
 }
+
+.el-pagination.is-background .el-pager li {
+    background-color: transparent!important;
+		color: #12C7B8!important;
+}
+
 
 .el-pagination.is-background .btn-next span {
 	line-height: 30px;
@@ -143,4 +146,9 @@
 }
 .el-breadcrumb {
 	font-size: 12px;
+}
+
+
+.el-checkbox__input.is-disabled .el-checkbox__inner {
+	background-color: transparent!important;
 }

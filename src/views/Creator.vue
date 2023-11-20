@@ -10,7 +10,7 @@
           <product-item></product-item>
         </div>
       </div>
-      <el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" next-text="下一页" :page-count="4" :total="1000"></el-pagination>
+      <el-pagination style="width:100%;margin: 20px 0;" background layout="prev,pager,next" next-text="下一页" :page-count="4" :total="1000"></el-pagination>
     </div>
   </div>
 </template>

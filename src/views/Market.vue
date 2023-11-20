@@ -31,7 +31,14 @@
           <product-item :item="item"></product-item>
         </div>
       </div>
-      <el-pagination @current-change="onPageChange" style="width:100%;margin: 20px 0;" background layout="pager,next" :page-size="pageSize" :total="totalCount"></el-pagination>
+      <el-pagination
+        @current-change="onPageChange"
+        style="width:100%;margin: 20px 0;"
+        background
+        layout="prev, pager, next"
+        :page-size="pageSize"
+        :total="totalCount"
+      ></el-pagination>
     </div>
   </div>
 </template>

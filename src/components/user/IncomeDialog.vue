@@ -20,7 +20,7 @@
           <template slot-scope="scope">Income(MBD)</template>
         </el-table-column>
       </el-table>
-      <el-pagination style="width:100%;margin: 20px 0;" background layout="pager,next" :total="totalCount" :page-size="20"></el-pagination>
+      <el-pagination style="width:100%;margin: 20px 0;" background layout="prev,pager,next" :total="totalCount" :page-size="20"></el-pagination>
     </div>
     <div class="income-btn">
       <el-button class="common-btn2">Settlement</el-button>
