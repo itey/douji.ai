@@ -3,6 +3,7 @@
     <el-dialog
       custom-class="blind-dialog"
       top="0vh"
+      :destroy-on-close="true"
       :close-on-press-escape="false"
       :close-on-click-modal="false"
       :visible.sync="show"
