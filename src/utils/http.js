@@ -73,9 +73,11 @@ export function uploadFile(file) {
 // 上传JSON
 export function uploadJson(jsonData) {
     var result = Base64.encode(JSON.stringify(jsonData))
+    var fomData = new FormData()
+    fomData.append('jsonData', result)
     return request({
         url: '/uploadJson',
-        params: { jsonData: result },
+        data: fomData,
         method: 'post'
     })
 }
