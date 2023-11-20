@@ -30,7 +30,7 @@
           </div>
           <div class="dividend-pool-item">
             <div class="dividend-pool-label">Retrieve BSC Block Number</div>
-            <div class="dividend-pool-value text-color">{{ userStakeInfo[1] != '0' ? userStakeInfo[1] + cycleLen : 'No stake' }}</div>
+            <div class="dividend-pool-value text-color">{{ userStakeInfo[1] != '0' ? Number(userStakeInfo[1]) + Number(cycleLen) : 'No stake' }}</div>
           </div>
           <div class="dividend-pool-item">
             <div class="dividend-pool-label">Current BSC Block Number</div>
