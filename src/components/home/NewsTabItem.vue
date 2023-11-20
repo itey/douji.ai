@@ -4,8 +4,12 @@
     <div class="bottom">
       <div class="sub text-sub-color">
         by
-        <span style="color: #53CFD2;" v-if="item.nickname">{{ item.nickname }}</span>
-        <span style="color: #53CFD2;" v-else>{{ item.owner_address | omitAddress }}</span>
+        <span @click="$router.push({path: '/creator', query: {address: item.owner_address}})" style="color: #53CFD2;" v-if="item.nickname">{{ item.nickname }}</span>
+        <span
+          @click="$router.push({path: '/creator', query: {address: item.owner_address}})"
+          style="color: #53CFD2;"
+          v-else
+        >{{ item.owner_address | omitAddress }}</span>
       </div>
       <div class="sub text-sub-color">{{ item.create_time | localTimeFormat}}</div>
     </div>

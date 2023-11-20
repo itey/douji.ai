@@ -1,13 +1,27 @@
 <template>
   <div class="info-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
     <div class="author-container">
-      <img style="width: 52px;height: 52px;border-radius: 26px;" :src="creatorInfo.head_img" v-if="creatorInfo.head_img" />
-      <img style="width: 52px;height: 52px;border-radius: 26px;" v-else src="@/assets/avatar.jpg" />
+      <img
+        @click="$router.push({path: '/creator', query: {address: creator}})"
+        style="width: 52px;height: 52px;border-radius: 26px; cursor: pointer;"
+        :src="creatorInfo.head_img"
+        v-if="creatorInfo.head_img"
+      />
+      <img
+        @click="$router.push({path: '/creator', query: {address: creator}})"
+        style="width: 52px;height: 52px;border-radius: 26px; cursor: pointer;"
+        v-else
+        src="@/assets/avatar.jpg"
+      />
       <div class="author-info">
         <div class="author-name">
           by
-          <span style="color: #00F9E5;" v-if="creatorInfo.nickname">{{ creatorInfo.nickname }}</span>
-          <span style="color: #00F9E5;" v-else>{{ creator | omitAddress }}</span>
+          <span
+            @click="$router.push({path: '/creator', query: {address: creator}})"
+            style="color: #00F9E5;"
+            v-if="creatorInfo.nickname"
+          >{{ creatorInfo.nickname }}</span>
+          <span @click="$router.push({path: '/creator', query: {address: creator}})" style="color: #00F9E5;" v-else>{{ creator | omitAddress }}</span>
         </div>
         <div class="author-desc">{{ creatorInfo.short_description }}</div>
       </div>

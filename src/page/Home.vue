@@ -8,8 +8,16 @@
           <div class="bottom">
             <div class="text-sub-color">
               by
-              <span class="text-primary-color text-color" v-if="bannerNews.nickname">{{ bannerNews.nickname }}</span>
-              <span class="text-primary-color text-color" v-else>{{ bannerNews.owner_address | omitAddress }}</span>
+              <span
+                @click="$router.push({path: '/creator', query: {address: bannerNews.owner_address}})"
+                class="text-primary-color text-color"
+                v-if="bannerNews.nickname"
+              >{{ bannerNews.nickname }}</span>
+              <span
+                @click="$router.push({path: '/creator', query: {address: bannerNews.owner_address}})"
+                class="text-primary-color text-color"
+                v-else
+              >{{ bannerNews.owner_address | omitAddress }}</span>
             </div>
             <div class="text-sub-color">{{ bannerNews.create_time | localTimeFormat }}</div>
           </div>

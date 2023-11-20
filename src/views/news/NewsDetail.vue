@@ -36,7 +36,7 @@
               <div class="md-reader" v-html="metadata.protectedContent"></div>
             </div>
             <div style="display: flex;flex-direction: column;align-items: center;" v-else>
-              <div class="text-color" style="font-size: 12px;">
+              <div class="text-color" style="font-size: 14px;">
                 Owning At Least 1 DOUJ NFT (
                 <span style="color: #00F9E5;">Token ID: {{ tokenId }}</span>) And Clicking
                 “
@@ -662,8 +662,8 @@ export default {
         }
 
         .form-desc {
-          padding-left: 12px;
-          font-size: 12px;
+          padding-left: 14px;
+          font-size: 14px;
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #ffffff;
@@ -690,7 +690,7 @@ export default {
         }
 
         .form-content {
-          font-size: 12px;
+          font-size: 14px;
           font-family: Source Han Sans CN;
           font-weight: 400;
           line-height: 22px;
@@ -715,7 +715,7 @@ export default {
           }
 
           .form-tag-item {
-            font-size: 12px;
+            font-size: 14px;
             line-height: 17px;
             font-family: Source Han Sans CN;
             font-weight: 400;
@@ -770,13 +770,13 @@ export default {
 
               .el-icon-arrow-right {
                 color: #9ab8db;
-                font-size: 12px;
+                font-size: 14px;
               }
             }
           }
 
           .dao-set-tip {
-            font-size: 12px;
+            font-size: 14px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #acbcc9;
@@ -821,7 +821,7 @@ export default {
             height: 42px;
             line-height: 42px;
             background: #252d36;
-            font-size: 12px;
+            font-size: 14px;
             font-family: Arial;
             font-weight: 400;
             color: #acbcc9;

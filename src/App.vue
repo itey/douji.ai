@@ -3,7 +3,7 @@
     <el-header style="height: auto;">
       <NavBar />
     </el-header>
-    <creator v-if="$route.path == '/creator'"></creator>
+    <!-- <creator v-if="$route.path == '/creator'"></creator> -->
     <el-container>
       <el-main>
         <div class="banner">
@@ -22,14 +22,14 @@
   </el-container>
 </template>
 <script>
-import Creator from '@/components/Creator'
+// import Creator from '@/components/Creator'
 import NavBar from '@/components/NavBar'
 import NavFooter from '@/components/NavFooter'
 export default {
   components: {
     NavBar,
     NavFooter,
-    Creator,
+    // Creator,
   },
   created() {
     this.$store.dispatch('LoadMbdPrice')

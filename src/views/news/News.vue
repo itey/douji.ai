@@ -11,7 +11,7 @@
           <news-item></news-item>
         </div>
       </div>
-      <el-pagination style="width:100%;margin: 28px 0;" background layout="prev,pager,next" next-text="下一页" :page-count="4" :total="1000"></el-pagination>
+      <el-pagination style="width:100%;margin: 28px 0;" background layout="prev,pager,next" :page-count="4" :total="1000"></el-pagination>
     </div>
   </div>
 </template>
