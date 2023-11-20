@@ -202,8 +202,8 @@ export default {
         return true
       }
       console.log(
-        Number(this.tokenSupplyInfo.vote.startTime) + Number(this.voteKeepTime),
-        this.nowTime / 1000
+        Number(this.tokenSupplyInfo.vote.startTime),
+        Number(this.voteKeepTime)
       )
       return (
         Number(this.tokenSupplyInfo.vote.startTime) +
