@@ -221,8 +221,8 @@ export default {
           this.discountJson.cAddress,
           this.$store.state.user.account
         )
-        this.unusedCount = erc20Balance - useCount
-        if (this.unusedCount >= this.discountJson.discounts) {
+        this.unusedCount = erc20Balance - useCount - this.discountJson.discounts
+        if (this.unusedCount >= 0) {
           this.discountPrice =
             this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
         }
@@ -234,8 +234,9 @@ export default {
           this.discountJson.cAddress,
           this.$store.state.user.account
         )
-        this.unusedCount = erc721Balance - useCount
-        if (this.unusedCount >= this.discountJson.discounts) {
+        this.unusedCount =
+          erc721Balance - useCount - this.discountJson.discounts
+        if (this.unusedCount >= 0) {
           this.discountPrice =
             this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
         }
@@ -248,8 +249,9 @@ export default {
           this.$store.state.user.account,
           this.discountJson.tokenId
         )
-        this.unusedCount = erc1155Balance - useCount
-        if (this.unusedCount >= this.discountJson.discounts) {
+        this.unusedCount =
+          erc1155Balance - useCount - this.discountJson.discounts
+        if (this.unusedCount >= 0) {
           this.discountPrice =
             this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
         }
