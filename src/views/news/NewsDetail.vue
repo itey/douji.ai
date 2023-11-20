@@ -201,14 +201,10 @@ export default {
       if (!this.tokenSupplyInfo.isVoting) {
         return true
       }
-      console.log(
-        Number(this.tokenSupplyInfo.vote.startTime),
-        this.voteKeepTime
-      )
       return (
         Number(this.tokenSupplyInfo.vote.startTime) +
           Number(this.voteKeepTime) <
-        (this.nowTime / 1000).toFixed()
+        this.nowTime / 1000
       )
     },
     userAccount() {
