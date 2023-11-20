@@ -38,6 +38,10 @@
           ({{ discountJson.sptType | sptType2Name }})
           <span v-if="discountJson.tokenId">TokenId:{{ discountJson.tokenId }}</span>
         </div>
+        <div>
+          Unused discount balance:
+          <span class="text-color">{{unusedCount}}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -47,7 +51,7 @@
 import { weiToMbd } from '@/utils/common'
 import { eventBus } from '@/utils/event-bus'
 import { approveMbd } from '@/utils/web3/mbd'
-import { userMint } from '@/utils/web3/nft'
+import { getAlreadyDiscounts, userMint } from '@/utils/web3/nft'
 import {
   getErc1155BalanceOf,
   getErc20BalanceOf,
@@ -153,6 +157,7 @@ export default {
       nftContract: process.env.VUE_APP_NFT,
       bnbScanUrl: process.env.VUE_APP_BNB_SCAN_URL,
       discountPrice: undefined,
+      unusedCount: undefined,
     }
   },
   mounted() {
@@ -208,13 +213,16 @@ export default {
       }
       const bepType = this.discountJson.sptType
 
+      const useCount = await this.getUserAlreadyDiscounts()
+
       if (bepType == '0') {
         // erc20
         const erc20Balance = await getErc20BalanceOf(
           this.discountJson.cAddress,
           this.$store.state.user.account
         )
-        if (erc20Balance >= this.discountJson.discounts) {
+        this.unusedCount = erc20Balance - useCount
+        if (this.unusedCount >= this.discountJson.discounts) {
           this.discountPrice =
             this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
         }
@@ -226,7 +234,8 @@ export default {
           this.discountJson.cAddress,
           this.$store.state.user.account
         )
-        if (erc721Balance >= this.discountJson.discounts) {
+        this.unusedCount = erc721Balance - useCount
+        if (this.unusedCount >= this.discountJson.discounts) {
           this.discountPrice =
             this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
         }
@@ -239,12 +248,28 @@ export default {
           this.$store.state.user.account,
           this.discountJson.tokenId
         )
-        if (erc1155Balance >= this.discountJson.discounts) {
+        this.unusedCount = erc1155Balance - useCount
+        if (this.unusedCount >= this.discountJson.discounts) {
           this.discountPrice =
             this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
         }
       }
       this.loading = false
+    },
+    /** 获取我已经使用的折扣数量 */
+    getUserAlreadyDiscounts() {
+      if (!this.$store.state.user.userId) {
+        return
+      }
+      return new Promise((resolve, reject) => {
+        getAlreadyDiscounts(this.discountJson.cAddress)
+          .then((r) => {
+            return resolve(r)
+          })
+          .catch((e) => {
+            return reject(e)
+          })
+      })
     },
     /** 查看折扣Token信息 */
     toBnbScan(address) {
@@ -398,7 +423,7 @@ export default {
     }
 
     .form-attr-tip {
-      font-size: 12px;
+      font-size: 12px !important;
       font-family: Arial;
       font-weight: 400;
       color: #88a2b8;

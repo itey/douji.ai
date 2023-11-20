@@ -92,22 +92,11 @@ import MintSuccessDialog from '@/components/create/MintSuccessDialog'
 import cache from '@/utils/cache'
 import { uploadJson } from '@/utils/http'
 import { possessorMint } from '@/utils/web3/nft'
-// var hljs = require('highlight.js')
 var md = require('markdown-it')({
   html: true,
   linkify: true,
   typographer: true,
   breaks: true,
-  // highlight: function (str, lang) {
-  //   if (lang && hljs.getLanguage(lang)) {
-  //     try {
-  //       return hljs.highlight(lang, str).value
-  //     } catch (e) {
-  //       console.log(e)
-  //     }
-  //   }
-  //   return '' // 使用额外的默认转义
-  // },
 })
 export default {
   name: 'create-step3',

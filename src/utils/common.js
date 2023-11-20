@@ -432,3 +432,9 @@ export function emptyCompare(a, b) {
   }
   return SHA256(v1).toString() == SHA256(v2).toString()
 }
+
+/** 过滤特殊字符 */
+export function specialCharFilter(val) {
+  if (!val) { return val }
+  return val.replace(/[`\\<>:"/;'\\·^……+={}“”‘’]/g, '').replace(/\s/g, "")
+}

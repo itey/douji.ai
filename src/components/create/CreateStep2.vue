@@ -6,7 +6,7 @@
         <div class="form-label">Title*</div>
         <div class="form-value">
           <div>
-            <el-input v-model="form.title" @change="checkItem('title')" class="input" maxlength="100"></el-input>
+            <el-input @input="val => form.title = charFilter(val)" v-model="form.title" @change="checkItem('title')" class="input" maxlength="100"></el-input>
           </div>
           <div v-if="error.title" class="tip-error">{{ error.title }}</div>
           <div v-else class="tip">Name of your content name</div>
@@ -16,7 +16,15 @@
         <div class="form-label">Description*</div>
         <div class="form-value">
           <div>
-            <el-input v-model="form.description" @change="checkItem('description')" class="input" type="textarea" rows="3" maxlength="300"></el-input>
+            <el-input
+              @input="val => form.description = charFilter(val)"
+              v-model="form.description"
+              @change="checkItem('description')"
+              class="input"
+              type="textarea"
+              rows="3"
+              maxlength="300"
+            ></el-input>
           </div>
           <div v-if="error.description" class="tip-error">{{ error.description }}</div>
           <div v-else class="tip">Write some details about your content</div>
@@ -46,6 +54,7 @@
               class="input-new-tag"
               v-if="inputVisible"
               v-model="inputValue"
+              @input="val => inputValue = charFilter(val)"
               ref="saveTagInput"
               size="small"
               @keyup.enter.native="handleInputConfirm"
@@ -102,7 +111,7 @@
 </template>
 
 <script>
-import { emptyCompare } from '@/utils/common'
+import { emptyCompare, specialCharFilter } from '@/utils/common'
 import { encryptContent, uploadContent, uploadFile } from '@/utils/http'
 import {
   default as PrivateVditor,
@@ -410,6 +419,9 @@ export default {
       if (this.formCheck()) {
         this.$emit('handleUpdate', this.form)
       }
+    },
+    charFilter(val) {
+      return specialCharFilter(val)
     },
   },
 }

@@ -19,14 +19,14 @@
       <div class="form-item">
         <div class="form-label">Aias</div>
         <div class="form-value">
-          <el-input v-model="userInfo.nickname"></el-input>
+          <el-input @input="val => userInfo.nickname = charFilter(val)" v-model="userInfo.nickname"></el-input>
           <div class="form-tip">Alias to be displayed on the public profle page</div>
         </div>
       </div>
       <div class="form-item">
         <div class="form-label">Short Description</div>
         <div class="form-value">
-          <el-input v-model="userInfo.short_description"></el-input>
+          <el-input @input="val => userInfo.short_description = charFilter(val)" v-model="userInfo.short_description"></el-input>
           <div class="form-tip">Short bio to be displayed on the public prohle page</div>
         </div>
       </div>
@@ -37,7 +37,7 @@
       <div class="form-item">
         <div class="form-label">Locaition</div>
         <div class="form-value">
-          <el-input v-model="userInfo.location"></el-input>
+          <el-input @input="val => userInfo.location = charFilter(val)" v-model="userInfo.location"></el-input>
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@
       <div class="form-item">
         <div class="form-label">Twitter</div>
         <div class="form-value">
-          <el-input v-model="userInfo.twitter"></el-input>
+          <el-input @input="val => userInfo.twitter = charFilter(val)" v-model="userInfo.twitter"></el-input>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
       <div class="form-item">
         <div class="form-label">Telegram</div>
         <div class="form-value">
-          <el-input v-model="userInfo.telegram"></el-input>
+          <el-input @input="val => userInfo.telegram = charFilter(val)" v-model="userInfo.telegram"></el-input>
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@
       <div class="form-item">
         <div class="form-label">Facebook</div>
         <div class="form-value">
-          <el-input v-model="userInfo.facebook"></el-input>
+          <el-input @input="val => userInfo.facebook = charFilter(val)" v-model="userInfo.facebook"></el-input>
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@
       <div class="form-item">
         <div class="form-label">Tiktok</div>
         <div class="form-value">
-          <el-input v-model="userInfo.tiktok"></el-input>
+          <el-input @input="val => userInfo.tiktok = charFilter(val)" v-model="userInfo.tiktok"></el-input>
         </div>
       </div>
     </div>
@@ -77,7 +77,7 @@
       <div class="form-item">
         <div class="form-label">Website</div>
         <div class="form-value">
-          <el-input v-model="userInfo.website"></el-input>
+          <el-input @input="val => userInfo.website = charFilter(val)" v-model="userInfo.website"></el-input>
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@
       <div class="form-item">
         <div class="form-label">Instagram</div>
         <div class="form-value">
-          <el-input v-model="userInfo.instagram"></el-input>
+          <el-input @input="val => userInfo.instagram = charFilter(val)" v-model="userInfo.instagram"></el-input>
         </div>
       </div>
     </div>
@@ -93,7 +93,7 @@
       <div class="form-item">
         <div class="form-label">youtube</div>
         <div class="form-value">
-          <el-input v-model="userInfo.youtube"></el-input>
+          <el-input @input="val => userInfo.youtube = charFilter(val)" v-model="userInfo.youtube"></el-input>
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@
       <div class="form-item">
         <div class="form-label">Github</div>
         <div class="form-value">
-          <el-input v-model="userInfo.github"></el-input>
+          <el-input @input="val => userInfo.github = charFilter(val)" v-model="userInfo.github"></el-input>
         </div>
       </div>
     </div>
@@ -109,7 +109,7 @@
       <div class="form-item">
         <div class="form-label">Wechat</div>
         <div class="form-value">
-          <el-input v-model="userInfo.wechat"></el-input>
+          <el-input @input="val => userInfo.wechat = charFilter(val)" v-model="userInfo.wechat"></el-input>
         </div>
       </div>
     </div>
@@ -120,6 +120,7 @@
 </template>
 
 <script>
+import { specialCharFilter } from '@/utils/common'
 import { getUserInfo, updateUserInfo, uploadFile } from '@/utils/http'
 export default {
   name: 'profile-view',
@@ -224,6 +225,9 @@ export default {
         .finally(() => {
           loadingInstance.close()
         })
+    },
+    charFilter(val) {
+      return specialCharFilter(val)
     },
   },
 }

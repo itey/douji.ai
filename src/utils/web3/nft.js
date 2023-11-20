@@ -448,3 +448,22 @@ export function nftApproval(operator) {
       })
   })
 }
+
+/** 我已经抵扣的数量 */
+export function getAlreadyDiscounts(cAddress) {
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.alreadyDiscounts(fromAddress, cAddress)
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+        reject(e)
+      })
+  })
+}
