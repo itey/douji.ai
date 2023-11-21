@@ -362,3 +362,21 @@ export function getStakeCycleLen() {
       })
   })
 }
+
+/** 查询收藏点赞阅读时长 */
+export function getCPD(tokenId) {
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  return new Promise((resolve, reject) => {
+    nftContract.methods.getC_P_D(tokenId)
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+        reject(e)
+      })
+  })
+}

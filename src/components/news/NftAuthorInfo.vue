@@ -40,7 +40,7 @@
       <div class="news-info-item">
         <div class="news-info-item-label">
           <img src="@/assets/images/news/date.png" />
-          <span>{{ nftInfo.read_duration | formatSeconds }}</span>
+          <span>{{ nftInfo[2] | formatSeconds }}</span>
         </div>
         <!-- <div class="news-info-item-value">
           <img src="@/assets/images/up.png" />
@@ -51,7 +51,7 @@
         <div class="news-info-item-label">
           <img v-if="isPraise" src="@/assets/images/news/is_like.png" />
           <img v-else src="@/assets/images/news/like.png" @click="handlePraise()" />
-          <span>{{ nftInfo.praise_count }}</span>
+          <span>{{ nftInfo[1] }}</span>
         </div>
         <!-- <div class="news-info-item-value">
           <img src="@/assets/images/up.png" />
@@ -62,7 +62,7 @@
         <div class="news-info-item-label">
           <img v-if="isCollect" src="@/assets/images/news/is_star.png" />
           <img v-else src="@/assets/images/news/star.png" @click="collectPraise()" />
-          <span>{{ nftInfo.collect_count }}</span>
+          <span>{{ nftInfo[0] }}</span>
         </div>
         <!-- <div class="news-info-item-value">
           <img src="@/assets/images/up.png" />
@@ -74,13 +74,14 @@
 </template>
 
 <script>
-import { follow, getNftInfo, getOtUserInfo, unfollow } from '@/utils/http'
+import { follow, getOtUserInfo, unfollow } from '@/utils/http'
 import {
   isAlreadyCollect,
   isAlreadyPraise,
   nftCollect,
   nftPraise,
 } from '@/utils/web3/nft'
+import { getCPD  } from '@/utils/web3/open'
 export default {
   name: 'nft-author-info',
   props: {
@@ -112,7 +113,7 @@ export default {
       isPraise: false,
       isCollect: false,
       creatorInfo: {},
-      nftInfo: {},
+      nftInfo: [],
     }
   },
   mounted() {
@@ -188,14 +189,9 @@ export default {
     /** 获取NFT资料 */
     loadNftInfo() {
       return new Promise((resolve, reject) => {
-        getNftInfo(this.tokenId)
+        getCPD(this.tokenId)
           .then((r) => {
-            if (r.code == 1) {
-              this.nftInfo = r.data
-              return resolve()
-            } else {
-              return reject(r.message)
-            }
+            this.nftInfo = r
           })
           .catch((e) => {
             return reject(e)
