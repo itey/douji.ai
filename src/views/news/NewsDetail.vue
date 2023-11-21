@@ -119,7 +119,6 @@
         </div>
       </div>
     </div>
-
     <RevisionHistoryDialog :tokenId="tokenId" ref="revisionHistoryDialog" />
     <CheckInDialog @onCheckedIn="checkIn()" ref="checkInDialog" />
     <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />

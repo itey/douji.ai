@@ -17,11 +17,11 @@
         <template v-if="userAccount && userAccount.toLowerCase() != address.toLowerCase()">
           <div class="subscription" v-if="userInfo.isfollow" @click="handleSubOut()">
             <img style="width: 13px;height: 9px; margin-right: 5px" src="@/assets/images/news/true.png" />
-            <span>Subscription</span>
+            <span>Subscribe</span>
           </div>
           <div class="subscription light" v-else @click="handleSub()">
             <img style="width: 9px;height: 9px; margin-right: 5px" src="@/assets/images/news/add.png" />
-            <span>Subscription</span>
+            <span>Subscribe</span>
           </div>
         </template>
         <div class="tag-container">

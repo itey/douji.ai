@@ -156,7 +156,7 @@ export const localTimeFormat = (date) => {
   } else {
     moment.locale('zh-hk')
   }
-  return moment(date).format('lll')
+  return moment(date).format('LL')
 }
 
 //  秒数转化为时分秒

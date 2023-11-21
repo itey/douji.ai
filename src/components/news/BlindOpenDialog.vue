@@ -3,6 +3,7 @@
     <el-dialog
       custom-class="blind-dialog"
       top="0vh"
+      :fullscreen="true"
       :destroy-on-close="true"
       :close-on-press-escape="false"
       :close-on-click-modal="false"
@@ -190,7 +191,8 @@ export default {
   position: relative;
 
   &.el-dialog {
-    background: transparent;
+    background-color: black;
+    opacity: 0.8;
     border: none;
   }
 
