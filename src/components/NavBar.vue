@@ -47,20 +47,20 @@
 									item_select:$route.path.startsWith('/user')
 								}" @click="menuClick('/user')">
                 <div class="icon">
-                  <img style="width: 12px; height: 12px;" src="@/assets/images/menu-user.png" />
+                  <img style="width: 17px; height: 17px;" src="@/assets/images/menu-user.png" />
                 </div>
                 <span>User Center</span>
               </div>
               <template v-if="isParticleProvider">
                 <div class="item" @click="openWalletModal()">
                   <div class="icon">
-                    <img style="width: 17px; height: 13px;" src="@/assets/images/menu-wallet.png" />
+                    <img style="width: 17px; height: 17px;" src="@/assets/images/menu-wallet.png" />
                   </div>
                   <span>Wallet</span>
                 </div>
                 <div class="item" @click="openBuyModal()">
                   <div class="icon">
-                    <img style="width: 18px; height: 14px;" src="@/assets/images/menu-currency.png" />
+                    <img style="width: 17px; height: 17px;" src="@/assets/images/menu-currency.png" />
                   </div>
                   <span>Buy Crypto Currency</span>
                 </div>
@@ -73,7 +73,7 @@
               </div>
               <div class="item" @click="signOutClick">
                 <div class="icon">
-                  <img style="width: 14px; height: 12px;" src="@/assets/images/menu-exit.png" />
+                  <img style="width: 17px; height: 17px;" src="@/assets/images/menu-exit.png" />
                 </div>
                 <span>Sign Out</span>
               </div>

@@ -41,7 +41,7 @@
         <div v-if="$store.state.user.account && discountJson && discountJson.isOpen">
           Token owned:
           <span class="text-color">{{disTokenOwned}}</span>
-          ({{unusedCount}} unused)
+          <span v-if="disTokenOwned > 0">({{unusedCount || '0'}} unused)</span>
         </div>
       </div>
     </div>
