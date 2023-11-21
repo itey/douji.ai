@@ -114,6 +114,9 @@ export default {
       "Execute successfully.",
     "vote_already":
       "You have already voted.",
+    "like_success": "Thank you for liking it",
+    "collect_success":
+      "Collect successfully.",
   },
   "user": {
     "profile_save_success": "Profile saved successfully.",

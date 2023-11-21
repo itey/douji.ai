@@ -49,7 +49,8 @@
       </div>
       <div class="news-info-item">
         <div class="news-info-item-label">
-          <img src="@/assets/images/news/like.png" />
+          <img v-if="isPraise" src="@/assets/images/news/is_like.png" />
+          <img v-else src="@/assets/images/news/like.png" @click="handlePraise()" />
           <span>{{ nftInfo.praise_count }}</span>
         </div>
         <!-- <div class="news-info-item-value">
@@ -59,7 +60,8 @@
       </div>
       <div class="news-info-item">
         <div class="news-info-item-label">
-          <img src="@/assets/images/news/star.png" />
+          <img v-if="isCollect" src="@/assets/images/news/is_star.png" />
+          <img v-else src="@/assets/images/news/star.png" @click="collectPraise()" />
           <span>{{ nftInfo.collect_count }}</span>
         </div>
         <!-- <div class="news-info-item-value">
@@ -73,6 +75,12 @@
 
 <script>
 import { follow, getNftInfo, getOtUserInfo, unfollow } from '@/utils/http'
+import {
+  isAlreadyCollect,
+  isAlreadyPraise,
+  nftCollect,
+  nftPraise,
+} from '@/utils/web3/nft'
 export default {
   name: 'nft-author-info',
   props: {
@@ -85,6 +93,13 @@ export default {
       default: '',
     },
   },
+  watch: {
+    '$store.state.user.account': function (val, od) {
+      if (val != od) {
+        this.checkIfPraiseCollect()
+      }
+    },
+  },
   computed: {
     userAccount() {
       return this.$store.state.user.account
@@ -94,6 +109,8 @@ export default {
     return {
       loading: false,
       subscription: false,
+      isPraise: false,
+      isCollect: false,
       creatorInfo: {},
       nftInfo: {},
     }
@@ -101,6 +118,9 @@ export default {
   mounted() {
     if (this.creator) {
       this.infoInit()
+    }
+    if (this.userAccount) {
+      this.checkIfPraiseCollect()
     }
   },
   methods: {
@@ -179,6 +199,69 @@ export default {
           })
           .catch((e) => {
             return reject(e)
+          })
+      })
+    },
+    /** 查询是否点赞和关注 */
+    checkIfPraiseCollect() {
+      if (!this.userAccount) {
+        return
+      }
+      Promise.all([
+        isAlreadyPraise(this.tokenId),
+        isAlreadyCollect(this.tokenId),
+      ])
+        .then((arr) => {
+          this.isPraise = arr[0]
+          this.isCollect = arr[1]
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    },
+    /** 点赞NFT */
+    handlePraise() {
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        nftPraise(this.tokenId)
+          .then(() => {
+            this.$toast.success(this.$t('news-detail.like_success'))
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+          })
+          .finally(() => {
+            loadingInstance.close()
+            this.loadNftInfo()
+            this.checkIfPraiseCollect()
+          })
+      })
+    },
+    /** 收藏NFT */
+    collectPraise() {
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        nftCollect(this.tokenId)
+          .then(() => {
+            this.$toast.success(this.$t('news-detail.collect_success'))
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+          })
+          .finally(() => {
+            loadingInstance.close()
+            this.loadNftInfo()
+            this.checkIfPraiseCollect()
           })
       })
     },
@@ -284,6 +367,7 @@ export default {
         img {
           width: 18px;
           height: 19px;
+          cursor: pointer;
         }
 
         span {

@@ -467,3 +467,92 @@ export function getAlreadyDiscounts(cAddress) {
       })
   })
 }
+
+
+/** 查询是否已点赞 */
+export function isAlreadyPraise(tokenId) {
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.praiseUser(tokenId, userAccount)
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+        reject(e)
+      })
+  })
+}
+
+/** 查询是否已收藏 */
+export function isAlreadyCollect(tokenId) {
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.collectUser(tokenId, userAccount)
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+        reject(e)
+      })
+  })
+}
+
+/** 收藏NFT */
+export function nftPraise(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.setPraiseCount(tokenId)
+      .send({ from: fromAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
+
+/** 收藏NFT */
+export function nftCollect(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.setCollectCount(tokenId)
+      .send({ from: fromAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}

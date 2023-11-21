@@ -20,11 +20,11 @@
       </div>
       <div class="form-attr-item" v-if="metadata.Birthday">
         <div class="form-attr-label">Created At</div>
-        <div class="form-attr-value">{{ metadata.Birthday | stamp2Time }}</div>
+        <div class="form-attr-value">{{ metadata.Birthday/1000 | stamp2Time }}</div>
       </div>
       <div class="form-attr-item" v-if="metadata.UpdateDay">
         <div class="form-attr-label">Updated At</div>
-        <div class="form-attr-value">{{ metadata.UpdateDay | stamp2Time}}</div>
+        <div class="form-attr-value">{{ metadata.UpdateDay/1000 | stamp2Time}}</div>
       </div>
     </div>
   </div>
