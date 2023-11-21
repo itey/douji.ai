@@ -1,5 +1,5 @@
 <template>
-  <el-dialog custom-class="congratulations-dialog" :fullscreen="true" @open="onOpen" :visible.sync="show" width="789px">
+  <el-dialog custom-class="congratulations-dialog" top="0vh" :fullscreen="true" @open="onOpen" :visible.sync="show" width="789px">
     <div class="title" slot="title">Congratulations</div>
     <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
     <template v-if="boxPrizes">

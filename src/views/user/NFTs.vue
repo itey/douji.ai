@@ -14,7 +14,7 @@
     <div class="content">
       <div class="list">
         <div v-for="(item,index) in list" :key="index" class="item">
-          <nft-item :item="item"></nft-item>
+          <ProductItem :item="item" />
         </div>
       </div>
       <!-- <el-pagination style="width:100%;margin: 20px 0;" background layout="prev,pager,next" :page-count="4" :total="1000"></el-pagination> -->
@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import NftItem from '@/components/NftItem'
+import ProductItem from '@/components/ProductItem'
 import { getMyNftList } from '@/utils/http'
 export default {
   name: 'nft-view',
   components: {
-    NftItem,
+    ProductItem,
   },
   data() {
     return {
