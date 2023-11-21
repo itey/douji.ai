@@ -37,13 +37,13 @@
           <el-popover :visible-arrow="false" v-model="userMenuVisible">
             <div class="menu-container">
               <img @click="userMenuVisible = false" class="close" src="@/assets/images/menu-close.png" />
-              <div class="item" @click="menuClick('/user')">
+              <div class="item" @click="menuClick({path:'/creator', query: {address:$store.state.user.account}})">
                 <div class="icon">
                   <img style="width: 17px; height: 17px;" src="@/assets/images/user-icon.png" />
                 </div>
                 <span>{{ $store.state.user.account | omitAddress }}</span>
               </div>
-              <div class="item" @click="menuClick({path:'/creator', query: {address:$store.state.user.account}})">
+              <div class="item" @click="menuClick('/user')">
                 <div class="icon">
                   <img style="width: 17px; height: 17px;" src="@/assets/images/menu-user.png" />
                 </div>
