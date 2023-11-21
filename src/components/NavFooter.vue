@@ -41,6 +41,11 @@
     <div>
       <div>
         <div class="title text-color">Follow us</div>
+        <div class="follow-ico">
+          <img src="@/assets/images/twitter.png" alt />
+          <img src="@/assets/images/youtube.png" alt />
+          <img src="@/assets/images/github.png" alt />
+        </div>
       </div>
     </div>
   </div>
@@ -102,5 +107,14 @@ export default {
 .footer-column .el-menu-item {
   height: 33px !important;
   line-height: 33px !important;
+}
+
+.follow-ico {
+  padding-left: 15px;
+  img {
+    margin-right: 10px;
+    height: 24px;
+    width: 24px;
+  }
 }
 </style>
