@@ -109,7 +109,7 @@ export default {
       }
 
       .form-attr-value {
-        font-size: 16px;
+        font-size: 14px;
         font-family: Source Han Sans CN;
         font-weight: bold;
         color: #ffffff;
