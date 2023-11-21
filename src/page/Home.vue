@@ -246,13 +246,13 @@
             <div class="label">Price</div>
             <div class="type-container">
               <div @click="bjx.priceType = '0'" class="item" :class="{ light:bjx.priceType == '0' }">
-                <div>3.00 USDT</div>
+                <div>{{ bjx.usdtPrice }} USDT</div>
               </div>
               <div @click="bjx.priceType = '1'" class="item" :class="{ light:bjx.priceType == '1' }">
                 <div>{{ bjx.bnbPrice | decimalPlace2 }} BNB</div>
               </div>
               <div @click="bjx.priceType = '2'" class="item" :class="{ light:bjx.priceType == '2' }">
-                <div>30000 MBD</div>
+                <div>{{ bjx.mbdPrice }} MBD</div>
               </div>
             </div>
             <div class="label">Quantity to buy</div>
@@ -301,7 +301,6 @@
 
 <script>
 import NewsItem from '@/components/NewsItem'
-import NftItem from '@/components/NftItem'
 import ProductItem from '@/components/ProductItem'
 import ComparisonTab from '@/components/home/ComparisonTab'
 import ComparisonTable from '@/components/home/ComparisonTable'
@@ -309,14 +308,17 @@ import NewsTabItem from '@/components/home/NewsTabItem'
 import { weiToEth } from '@/utils/common'
 import { hotNewsList, nftListPage, selectedList } from '@/utils/http'
 import { erc20Approve, mintByBnb, mintByErc20 } from '@/utils/web3/bjx'
-import { getBjxTokenInfo } from '@/utils/web3/open'
+import {
+  getBjxMbdPrice,
+  getBjxTokenInfo,
+  getBjxUsdtPrice,
+} from '@/utils/web3/open'
 export default {
   name: 'home-view',
   components: {
     NewsTabItem,
     ProductItem,
     NewsItem,
-    NftItem,
     ComparisonTab,
     ComparisonTable,
   },
@@ -343,6 +345,8 @@ export default {
         buying: false,
         priceType: '0',
         bnbPrice: 0,
+        usdtPrice: 0,
+        mbdPrice: 0,
         count: undefined,
       },
       bjxInfoJson: {
@@ -421,11 +425,11 @@ export default {
         } else {
           var erc20Address = process.env.VUE_APP_USDT
           var decimal = 18
-          var ercPrice = 3
+          var ercPrice = this.bjx.usdtPrice
           if (this.bjx.priceType == '2') {
             erc20Address = process.env.VUE_APP_MBD
             decimal = 8
-            ercPrice = 30000
+            ercPrice = this.bjx.mbdPrice
           }
           if (!erc20Address) {
             this.bjx.buying = false
@@ -465,6 +469,12 @@ export default {
       getBjxTokenInfo().then((res) => {
         this.bjxInfoJson = res
         this.bjx.bnbPrice = weiToEth(res.bnbPrice)
+      })
+      getBjxUsdtPrice().then((r) => {
+        this.bjx.usdtPrice = r
+      })
+      getBjxMbdPrice().then((r) => {
+        this.bjx.mbdPrice = r
       })
     },
     /** 所有内容初始化 */

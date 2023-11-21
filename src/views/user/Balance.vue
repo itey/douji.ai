@@ -57,21 +57,21 @@
     <div class="settle-containers">
       <div class="settle-container">
         <div class="unit text-color">MBD</div>
-        <div class="value text-color">0.0000</div>
-        <div class="sub-value text-sub-color">≈$0.00</div>
+        <div class="value text-color">{{ mbdSettleBalance.balance }}</div>
+        <div class="sub-value text-sub-color">≈${{ mbdSettleBalance.balance * $store.state.chain.mbdPrice || '0.0000' }}</div>
       </div>
       <div class="settle-container" style="margin-left: 32px;">
         <div class="unit text-color">BJXStar NFT</div>
-        <div class="value text-color">0</div>
-        <div class="sub-value text-sub-color">≈$0.00</div>
+        <div class="value text-color">{{ Number(bjxSettleBalance.balance) | toFixedString }}</div>
+        <div class="sub-value text-sub-color">≈${{ bjxUsdtPrice * bjxSettleBalance.balance }}</div>
       </div>
     </div>
     <div class="settle-button">
-      <el-button class="common-btn1" type="primary">Settlement</el-button>
+      <el-button class="common-btn1" type="primary" :disabled="!settleFee || settleFee >= mbdSettleBalance.balance">Settlement</el-button>
     </div>
     <div class="text-color settle-label">
-      Settlement Fee: 5000 MBD Number of fee-free times:
-      <span style="color: #47D1AF;">3</span>
+      Settlement Fee:
+      <span :style="{ color: settleFee > mbdSettleBalance.balance ? 'red' : 'white' }">{{ settleFee }}</span> MBD
     </div>
     <income-dialog ref="incomeDialog"></income-dialog>
   </div>
@@ -79,7 +79,8 @@
 
 <script>
 import IncomeDialog from '@/components/user/IncomeDialog'
-import { getBjxBalanceOf } from '@/utils/web3/open'
+import { accountSettle, getPledgeSettleAccount } from '@/utils/http'
+import { getBjxBalanceOf, getBjxUsdtPrice } from '@/utils/web3/open'
 export default {
   name: 'balance-view',
   components: {
@@ -94,21 +95,69 @@ export default {
         return 24
       }
       const r = this.$store.state.chain.balanceMbd.toString()
-      const fs = (r.length * 1.1).toFixed()
+      const fs = (r.length * 1.2).toFixed()
       return fs > 24 ? 24 : fs
+    },
+    settleFee() {
+      if (!this.$store.state.chain.mbdPrice || !this.mbdSettleBalance.balance) {
+        return null
+      }
+      var fee =
+        5 / this.$store.state.chain.mbdPrice +
+        this.mbdSettleBalance.balance * 0.003
+      return fee.toFixed(8)
     },
   },
   data() {
     return {
       bjxBalance: 0,
+      bjxUsdtPrice: 0,
+      settleAccount: [],
+      mbdSettleBalance: {},
+      bjxSettleBalance: {},
     }
   },
   mounted() {
     this.getBjxBalance()
+    this.getSettleAccount()
+    this.getBjxPrice()
   },
   methods: {
+    /** BJX余额 */
     async getBjxBalance() {
       this.bjxBalance = await getBjxBalanceOf(this.userAccount)
+    },
+    /** 待结算账户 */
+    getSettleAccount() {
+      getPledgeSettleAccount()
+        .then((r) => {
+          if (r.code == 1) {
+            this.settleAccount = r.data.list
+            this.mbdSettleBalance = this._.find(this.settleAccount, {
+              wallet_type: 1,
+            })
+            this.bjxSettleBalance = this._.find(this.settleAccount, {
+              wallet_type: 2,
+            })
+          }
+        })
+        .catch((e) => {
+          this.$toast.error(e)
+        })
+    },
+    /** BJX的USDT价格 */
+    getBjxPrice() {
+      getBjxUsdtPrice().then((r) => {
+        this.bjxUsdtPrice = r
+      })
+    },
+    /** 执行结算 */
+    handleSettle() {
+      accountSettle().then((r) => {
+        if (r.code == 1) {
+          this.$toast.success(this.$t('user.settle_success'))
+        }
+      })
     },
   },
 }

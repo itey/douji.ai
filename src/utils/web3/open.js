@@ -135,6 +135,51 @@ export const getBjxBalanceOf = (account) => {
   })
 }
 
+/** BJX的MBD价格 */
+export const getBjxMbdPrice = () => {
+  const contract = getBjxContract()
+  return new Promise((resolve, reject) => {
+    contract.methods.getTokenPrice(BJX_TOKEN_ID, process.env.VUE_APP_MBD)
+      .call()
+      .then(r => {
+        resolve(weiToMbd(r))
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+/** BJX的USDT价格 */
+export const getBjxUsdtPrice = () => {
+  const contract = getBjxContract()
+  return new Promise((resolve, reject) => {
+    contract.methods.getTokenPrice(BJX_TOKEN_ID, process.env.VUE_APP_USDT)
+      .call()
+      .then(r => {
+        resolve(weiToEth(r))
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+/** BJX的BNB价格 */
+export const getBjxBnbPrice = () => {
+  const contract = getBjxContract()
+  return new Promise((resolve, reject) => {
+    contract.methods.getBnbPrice(BJX_TOKEN_ID)
+      .call()
+      .then(r => {
+        resolve(weiToEth(r))
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
 ///////////////////MBD///////////////////
 
 /** 获取MBD交易对合约 */

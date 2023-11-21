@@ -117,5 +117,6 @@ export default {
   },
   "user": {
     "profile_save_success": "Profile saved successfully.",
+    "settle_success": "Settlement application submitted successfully."
   }
 }

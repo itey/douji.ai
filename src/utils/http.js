@@ -291,3 +291,19 @@ export function getNftInfo(tokenId) {
         params: { tokenId }
     })
 }
+
+// 我的待结算账户
+export function getPledgeSettleAccount() {
+    return request({
+        url: '/walletinfo',
+        method: 'post'
+    })
+}
+
+// 执行结算
+export function accountSettle() {
+    return request({
+        url: '/settle',
+        method: 'post'
+    })
+}

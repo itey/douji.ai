@@ -1604,7 +1604,17 @@ post
          "nickname": "ssss",
          "head_img": "头像url",
          "fans": 121212, //粉丝数
-         "short_description": "简介"
+         "short_description": "简介",
+         "location": "mexico",
+         "twitter": "twitter",
+         "telegram": "telegram",
+         "website": "website",
+         "instagram": "instagram",
+         "youtube": "youtube",
+         "facebook": "facebook",
+         "github": "github",
+         "tiktok": "tiktok",
+         "linkedin": "linkedin"
     }
 }
 ```
@@ -1668,3 +1678,85 @@ post
 | -------------|:---------------------------------|
 | 0            | 失败   |
 | 1            | 成功   |    
+
+### 32.walletinfo
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/walletinfo
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+          "list": [
+              {
+                 "uid":121212,
+                 "wallet_type":1,  //mbd
+                 "balance": 121212
+              },
+              {
+                 "uid":121212,
+                 "wallet_type":2,  //BJXStar
+                 "balance": 121212
+              }
+          ]
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |   
+
+
+### 33.结算提现
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/settle
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |   
