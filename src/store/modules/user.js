@@ -1,4 +1,5 @@
 
+import router from '@/router'
 import store from '@/store'
 import cache from '@/utils/cache'
 import { eventBus } from '@/utils/event-bus'
@@ -122,6 +123,7 @@ const user = {
       commit('setBalanceMbd', '')
       commit('setBalanceBnb', '')
       commit('setLogout', true)
+      router.replace('/')
     },
     // 检查登录状态，未登录则弹窗登录
     CheckLogin({ commit }, ifOpenConnect) {

@@ -37,15 +37,13 @@
           <el-popover :visible-arrow="false" v-model="userMenuVisible">
             <div class="menu-container">
               <img @click="userMenuVisible = false" class="close" src="@/assets/images/menu-close.png" />
-              <div class="item">
+              <div class="item" @click="menuClick('/user')">
                 <div class="icon">
                   <img style="width: 17px; height: 17px;" src="@/assets/images/user-icon.png" />
                 </div>
                 <span>{{ $store.state.user.account | omitAddress }}</span>
               </div>
-              <div class="item" :class="{
-									item_select:$route.path.startsWith('/user')
-								}" @click="menuClick('/user')">
+              <div class="item" @click="menuClick({path:'/creator', query: {address:$store.state.user.account}})">
                 <div class="icon">
                   <img style="width: 17px; height: 17px;" src="@/assets/images/menu-user.png" />
                 </div>
@@ -71,7 +69,7 @@
                 </div>
                 <span>Copy Address</span>
               </div>
-              <div class="item" @click="signOutClick">
+              <div class="item" @click="signOutClick()">
                 <div class="icon">
                   <img style="width: 17px; height: 17px;" src="@/assets/images/menu-exit.png" />
                 </div>
@@ -143,9 +141,7 @@ export default {
     },
     menuClick(path) {
       this.userMenuVisible = false
-      if (!this.$route.path.includes(path)) {
-        this.$router.push(path)
-      }
+      this.$router.push(path)
     },
     openWalletModal() {
       this.$store.commit('setOpenAccount', true)
@@ -361,6 +357,12 @@ export default {
         font-family: Source Han Sans CN;
         font-weight: bold;
         color: #ffffff;
+      }
+    }
+
+    .item:hover {
+      span {
+        color: #00fbe6;
       }
     }
   }
