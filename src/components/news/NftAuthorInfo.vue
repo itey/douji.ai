@@ -1,5 +1,5 @@
 <template>
-  <div class="info-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
+  <div class="info-container">
     <div class="author-container">
       <img
         @click="$router.push({path: '/creator', query: {address: creator}})"
@@ -108,7 +108,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       subscription: false,
       isPraise: false,
       isCollect: false,
@@ -160,13 +159,9 @@ export default {
         })
     },
     infoInit() {
-      this.loading = true
       Promise.all([this.loadUserInfo(), this.loadNftInfo()])
         .catch((e) => {
           console.log(e)
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     /** 加载用户信息 */
@@ -192,6 +187,7 @@ export default {
         getCPD(this.tokenId)
           .then((r) => {
             this.nftInfo = r
+            resolve(r)
           })
           .catch((e) => {
             return reject(e)
