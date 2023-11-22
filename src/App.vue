@@ -42,7 +42,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+
 
   .el-header {
     display: flex;
@@ -67,6 +67,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url('@/assets/images/page-background.png');
+    background-repeat: repeat-x;
   }
 
   .el-footer {

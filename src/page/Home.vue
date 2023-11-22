@@ -625,16 +625,25 @@ export default {
             color: #b2b9b9;
             line-height: 12px;
           }
+
+          .text-primary-color {
+            cursor: pointer;
+          }
+          .text-primary-color:hover{
+            color: #00f9e5;
+          }
         }
       }
     }
     .news-tab-container {
       padding: 0 35px;
-      background: #212932;
+      background: #1A2027;
       border-radius: 8px;
       flex: 1;
       height: 526px;
       margin-left: 11px;
+      border-width: 1px;
+      border-color: #2C3638;
 
       .news-list {
         height: 478px;
