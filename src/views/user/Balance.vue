@@ -67,7 +67,7 @@
       </div>
     </div>
     <div class="settle-button">
-      <el-button class="common-btn1" type="primary" :disabled="!settleFee || Number(settleFee) >= Number(mbdSettleBalance.balance)">Settlement</el-button>
+      <el-button @click="handleSettle()" class="common-btn1" type="primary" :disabled="!settleFee || Number(settleFee) >= Number(mbdSettleBalance.balance)">Settlement</el-button>
     </div>
     <div class="text-color settle-label">
       Settlement Fee:
