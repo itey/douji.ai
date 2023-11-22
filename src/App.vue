@@ -67,8 +67,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url('@/assets/images/page-background.png');
-    background-repeat: repeat-x;
   }
 
   .el-footer {
