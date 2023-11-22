@@ -112,6 +112,7 @@ export default {
 .follow-ico {
   padding-left: 15px;
   img {
+    cursor: pointer;
     margin-right: 10px;
     height: 24px;
     width: 24px;

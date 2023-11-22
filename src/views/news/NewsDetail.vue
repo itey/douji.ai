@@ -98,7 +98,7 @@
                 <div class="transactions-column text-color">{{ item.amount }}</div>
               </div>
             </template>
-            <div class="transactions-item" v-else>No transactions</div>
+            <div class="no-transactions" v-else>No transactions</div>
           </div>
           <div class="more-container">
             <div class="more-title text-color">More from this creator</div>
@@ -720,8 +720,8 @@ export default {
             height: 17px;
             background: #434d56;
             border-radius: 4px;
-            padding: 0 9px;
-            min-width: 36px;
+            padding: 2px 8px;
+            // min-width: 36px;
             margin-left: 9px;
             text-align: center;
           }
@@ -815,6 +815,13 @@ export default {
             }
           }
 
+          .no-transactions{
+            text-align: center;
+            width: 100%;
+            color:#999fa5;
+            margin-top: 30px;
+          }
+
           .transactions-head {
             height: 42px;
             line-height: 42px;
@@ -823,7 +830,7 @@ export default {
             font-family: Arial;
             font-weight: 400;
             color: #acbcc9;
-            margin-top: 54px;
+            margin-top: 21px;
           }
 
           .transactions-item {
