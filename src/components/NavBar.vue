@@ -5,12 +5,7 @@
       <div class="navbar-divider"></div>
       <div class="navbar-menu">
         <div class="navbar-menu-item text-color" @click="$router.push('/')">{{$t('common.home')}}</div>
-        <div
-          class="navbar-menu-item text-color"
-          @mouseover="menuToggle(true)"
-          @mouseout="menuToggle(false)"
-          @click="$router.push('/news')"
-        >{{$t('common.news')}}</div>
+        <div class="navbar-menu-item text-color"  @click="$router.push('/news')">{{$t('common.news')}}</div>
         <div class="navbar-menu-item text-color" @click="toNavigation()">{{$t('common.navigation')}}</div>
         <div class="navbar-menu-item text-color" @click="$router.push('/market')">{{$t('common.marketplace')}}</div>
         <div class="navbar-menu-item text-color" @click="$router.push('/create')">{{$t('common.create')}}</div>

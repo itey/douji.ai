@@ -8,15 +8,23 @@
     <div class="content">
       <div class="list">
         <div v-for="(item,index) in list" :key="index" class="item">
-          <news-item></news-item>
+          <NewsItem :item="item" />
         </div>
       </div>
-      <el-pagination style="width:100%;margin: 28px 0;" background layout="prev,pager,next" :page-count="4" :total="1000"></el-pagination>
+      <el-pagination
+        @current-change="onPageChange"
+        style="width:100%;margin: 20px 0;"
+        background
+        layout="prev, pager, next"
+        :page-size="pageSize"
+        :total="totalCount"
+      ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+import { nftListPage } from '@/utils/http'
 import NewsItem from '@/components/NewsItem'
 export default {
   name: 'news-view',
@@ -25,14 +33,41 @@ export default {
   },
   data() {
     return {
+      pageNo: 1,
+      pageSize: 20,
+      totalCount: 0,
       list: [],
     }
   },
   created() {
-    for (let i = 0; i < 20; i++) {
-      this.list.push({})
-    }
+    this.loadPageList()
   },
+  methods: {
+    /** 列表加载 */
+    loadPageList() {
+      const param = {
+        page: this.pageNo,
+        content_type: 'Article'
+      }
+      this.loading = true
+      nftListPage(param)
+        .then((r) => {
+          if (r.code == 1) {
+            this.list = r.data.list
+            this.totalCount = r.data.pageCount
+            this.pageNo = r.data.page
+          }
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+    /** 页码变化 */
+    onPageChange(page) {
+      this.pageNo = page
+      this.loadPageList()
+    },
+  }
 }
 </script>
 <style lang="scss" scoped>

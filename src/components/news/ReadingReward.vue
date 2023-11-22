@@ -9,8 +9,8 @@
       <div class="reward-mbd-value">{{ readReward.income_sum | decimalPlace4 }} MBD</div>
       <div class="reward-mbd-transform">≈${{ (readReward.income_sum * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
     </div>
-    <div class="reward-tip">Receive blind box mission today</div>
-    <el-button class="common-btn2" style="width: 338px;margin: 31px 0 48px 0;">Settlement</el-button>
+    <div class="reward-tip">Estimated reading income today</div>
+    <el-button @click="$router.push('/balance')" class="common-btn2" style="width: 338px;margin: 31px 0 48px 0;">Settlement</el-button>
   </div>
 </template>
 

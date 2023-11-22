@@ -10,16 +10,16 @@
     </div>
     <div class="search-container">
       <el-select v-model="typeValue" @change="onTypeChange" clearable filterable placeholder="ALL Types">
-        <el-option v-for="item in typeOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
+        <el-option class="select-time" v-for="item in typeOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
       </el-select>
       <el-select v-model="categoryValue" @change="onCategoryChange" clearable filterable placeholder="ALL Category">
-        <el-option v-for="item in categoryOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
+        <el-option class="select-time" v-for="item in categoryOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
       </el-select>
       <el-select v-model="platformValue" clearable filterable placeholder="ALL Platform">
-        <el-option v-for="item in platformOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
+        <el-option class="select-time" v-for="item in platformOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
       </el-select>
       <el-select v-model="viewedValue" clearable filterable placeholder="Most viewed">
-        <el-option v-for="item in viewedOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        <el-option class="select-time" v-for="item in viewedOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
       <el-input style="width: 344px;" placeholder="Search by name or Token ID">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
@@ -247,6 +247,13 @@ export default {
       }
     }
   }
+}
+
+.select-time {
+  font-size: 14px;
+}
+.select-time:hover {
+  color: #17e7d6;
 }
 </style>
 
