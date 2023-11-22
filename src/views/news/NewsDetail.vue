@@ -35,7 +35,7 @@
             <div class="form-content text-color" v-if="metadata.protectedContent">
               <div class="md-reader" v-html="metadata.protectedContent"></div>
             </div>
-            <div style="display: flex;flex-direction: column;align-items: center;" v-else>
+            <div style="display: flex;flex-direction: column;align-items: center; margin-top: 20px;" v-else>
               <div class="text-color" style="font-size: 14px;">
                 Owning At Least 1 DOUJ NFT (
                 <span style="color: #00F9E5;">Token ID: {{ tokenId }}</span>) And Clicking
@@ -654,10 +654,10 @@ export default {
         margin-right: 41px;
 
         .form-title {
-          font-size: 23px;
+          font-size: 32px;
           font-family: Source Han Sans CN;
           font-weight: bold;
-          line-height: 35px;
+          line-height: 48px;
         }
 
         .form-desc {
@@ -677,7 +677,6 @@ export default {
           flex-direction: row;
           align-items: center;
           justify-content: center;
-          margin: 40px 0 18px 0;
 
           .form-label-sub-text {
             font-size: 13px;
@@ -689,11 +688,11 @@ export default {
         }
 
         .form-content {
-          font-size: 14px;
+          font-size: 16px;
           font-family: Source Han Sans CN;
           font-weight: 400;
-          line-height: 22px;
-          margin: 40px 0;
+          line-height: 30px;
+          margin: 20px 0;
 
           img {
             max-width: 100%;

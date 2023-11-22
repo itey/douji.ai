@@ -319,7 +319,12 @@ export default {
           font-family: Source Han Sans CN;
           font-weight: 400;
           line-height: 30px;
-          margin: 50px 0;
+          margin: 20px 0;
+
+          img {
+            max-width: 100%;
+            height: auto;
+          }
         }
 
         .form-tag {

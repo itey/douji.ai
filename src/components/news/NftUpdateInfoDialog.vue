@@ -12,7 +12,7 @@
               <img style="width: 14px;height: 14px;" src="@/assets/images/create/website.png" />
               <div class="nft-stake-label-sub-text">Open to Access</div>
             </div>
-            <div class="nft-stake-content text-color">
+            <div class="form-content text-color">
               <div class="md-reader" v-html="metadata.openContent"></div>
             </div>
             <template v-if="metadata.protected">
@@ -20,10 +20,10 @@
                 <img style="width: 14px;height: 14px;" src="@/assets/images/create/protect.png" />
                 <div class="nft-stake-label-sub-text">Protected</div>
               </div>
-              <div class="nft-stake-content text-color" v-if="metadata.protectedContent">
+              <div class="form-content text-color" v-if="metadata.protectedContent">
                 <div class="md-reader" v-html="metadata.protectedContent"></div>
               </div>
-              <div style="display: flex;flex-direction: column;align-items: center;" v-else>
+              <div style="display: flex;flex-direction: column;align-items: center; margin-top: 20px;" v-else>
                 <div class="text-color" style="font-size: 12px;">
                   Owning At Least 1 DOUJ NFT (
                   <span style="color: #00F9E5;">Token ID: {{ tokenId }}</span>) And Clicking
@@ -321,12 +321,17 @@ export default {
             }
           }
 
-          .nft-stake-content {
-            font-size: 12px;
+          .form-content {
+            font-size: 16px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            line-height: 22px;
-            margin: 40px 0;
+            line-height: 30px;
+            margin: 20px 0;
+
+            img {
+              max-width: 100%;
+              height: auto;
+            }
           }
 
           .nft-stake-tag {
