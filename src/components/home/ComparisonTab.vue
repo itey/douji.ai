@@ -28,7 +28,7 @@
 						<div class="title">Al-assisted Production Tools</div>
 						<div class="desc">
 							The platform continues to introduce rich text.picture, audio, and video AGC
-							tools to assist a largebase of interested users to complete contentproduction
+							tools to assist a large base of interested users to complete contentproduction
 							and creation more effciently and quicklytransform them into new creators, and
 							improve thelcreative standards.
 						</div>

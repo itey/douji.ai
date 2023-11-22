@@ -19,14 +19,14 @@
       <div class="form-item">
         <div class="form-label">Aias</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.nickname = charFilter(val)" v-model="userInfo.nickname"></el-input>
+          <el-input @input="val => userInfo.nickname = val.replace(/(\s*$)/g, '')" v-model="userInfo.nickname"></el-input>
           <div class="form-tip">Alias to be displayed on the public profle page</div>
         </div>
       </div>
       <div class="form-item">
         <div class="form-label">Short Description</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.short_description = charFilter(val)" v-model="userInfo.short_description"></el-input>
+          <el-input @input="val => userInfo.short_description = val.replace(/(\s*$)/g, '')" v-model="userInfo.short_description"></el-input>
           <div class="form-tip">Short bio to be displayed on the public prohle page</div>
         </div>
       </div>
@@ -37,7 +37,7 @@
       <div class="form-item">
         <div class="form-label">Locaition</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.location = charFilter(val)" v-model="userInfo.location"></el-input>
+          <el-input @input="val => userInfo.location = val.replace(/(\s*$)/g, '')" v-model="userInfo.location"></el-input>
         </div>
       </div>
     </div>

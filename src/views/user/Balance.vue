@@ -10,7 +10,7 @@
     </div>
     <div class="balance-value">
       <div class="item">
-        <div class="value text-color" :style="{ fontSize: fontSize + 'px' }">{{ $store.state.chain.balanceMbd | decimalPlace4 }}</div>
+        <div class="value text-color">{{ $store.state.chain.balanceMbd | decimalPlace4 }}</div>
         <div class="sub-value text-sub-color">≈${{ $store.state.chain.balanceMbd * $store.state.chain.mbdPrice || '0.0000' }}</div>
         <div class="unit text-color">MBD</div>
       </div>
@@ -67,11 +67,11 @@
       </div>
     </div>
     <div class="settle-button">
-      <el-button class="common-btn1" type="primary" :disabled="!settleFee || settleFee >= mbdSettleBalance.balance">Settlement</el-button>
+      <el-button class="common-btn1" type="primary" :disabled="!settleFee || Number(settleFee) >= Number(mbdSettleBalance.balance)">Settlement</el-button>
     </div>
     <div class="text-color settle-label">
       Settlement Fee:
-      <span :style="{ color: settleFee > mbdSettleBalance.balance ? 'red' : 'white' }">{{ settleFee }}</span> MBD
+      <span :style="{ color: Number(settleFee) >= Number(mbdSettleBalance.balance) ? 'red' : 'white' }">{{ settleFee }}</span> MBD
     </div>
     <income-dialog ref="incomeDialog"></income-dialog>
   </div>
@@ -89,14 +89,6 @@ export default {
   computed: {
     userAccount() {
       return this.$store.state.user.account
-    },
-    fontSize() {
-      if (!this.$store.state.chain.balanceMbd) {
-        return 24
-      }
-      const r = this.$store.state.chain.balanceMbd.toString()
-      const fs = (r.length * 1.2).toFixed()
-      return fs > 24 ? 24 : fs
     },
     settleFee() {
       if (!this.$store.state.chain.mbdPrice || !this.mbdSettleBalance.balance) {

@@ -208,7 +208,7 @@
     <div class="nft-list-container" v-if="promptsList.length">
       <div class="top">
         <div class="title text-color">Featured Prompts NFT</div>
-        <div class="more">
+        <div class="more" @click="$router.push({path:'/market', query: {type: 'Prompt'}})">
           <span>Read more</span>
           <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
         </div>
@@ -220,7 +220,7 @@
     <div class="nft-list-container" v-if="digitalList.length">
       <div class="top">
         <div class="title text-color">Featured Digital Arts NFT</div>
-        <div class="more">
+        <div class="more" @click="$router.push({path:'/market', query: {type: 'Digital Arts'}})">
           <span>Read more</span>
           <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
         </div>
@@ -293,7 +293,7 @@
     </div>
     <div class="video-container">
       <div class="top">Video</div>
-      <div class="title text-color">How to Use？</div>
+      <div class="title text-color">How to use？</div>
       <video style="width: 1440px;height: 674px;"></video>
     </div>
   </div>
@@ -893,6 +893,7 @@ export default {
       }
 
       .more {
+        cursor: pointer;
         font-size: 16px;
         font-family: Arial;
         font-weight: bold;

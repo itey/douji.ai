@@ -12,7 +12,7 @@
       <el-select v-model="typeValue" @change="onTypeChange" style="width: 209px;" clearable filterable placeholder="ALL Types">
         <el-option v-for="item in typeOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
       </el-select>
-      <el-select v-model="categoryValue" style="width: 395px;" clearable filterable placeholder="ALL Category">
+      <el-select v-model="categoryValue" @change="onCategoryChange" style="width: 395px;" clearable filterable placeholder="ALL Category">
         <el-option v-for="item in categoryOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
       </el-select>
       <el-select v-model="platformValue" style="width: 209px;" clearable filterable placeholder="ALL Platform">
@@ -25,7 +25,7 @@
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
     </div>
-    <div class="content">
+    <div class="content" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
       <div class="list">
         <div v-for="(item,index) in list" :key="index" class="item">
           <product-item :item="item"></product-item>
@@ -58,6 +58,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       typeOptions: [],
       typeValue: '',
       categoryOptions: [],
@@ -90,6 +91,9 @@ export default {
     }
   },
   created() {
+    this.$route.query.type && (this.typeValue = this.$route.query.type)
+    this.$route.query.category && (this.categoryValue = this.$route.query.category)
+    this.$route.query.platform && (this.platformValue = this.$route.query.platform)
     this.loadTypeList()
     this.loadPageList()
   },
@@ -107,9 +111,7 @@ export default {
         category: this.categoryValue,
         pltform: this.platformValue,
       }
-      var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+      this.loading = true
       nftListPage(param)
         .then((r) => {
           if (r.code == 1) {
@@ -119,7 +121,7 @@ export default {
           }
         })
         .finally(() => {
-          loadingInstance.close()
+          this.loading = false
         })
     },
     /** 分类变化 */
@@ -128,8 +130,9 @@ export default {
       this.platformOptions = []
       this.loadCategoryList(value)
       this.loadPlatformList(value)
-      this.typeValue = ''
       this.categoryValue = ''
+      this.pageNo = 1
+      this.loadPageList()
     },
     /** 获取分类 */
     loadTypeList() {
@@ -177,6 +180,13 @@ export default {
           console.log(e)
           this.$toast.error(this.$t('common.network_error'))
         })
+    },
+    /** 类型发生变化 */
+    onCategoryChange(value) {
+      this.platformOptions = []
+      this.loadPlatformList(value)
+      this.pageNo = 1
+      this.loadPageList()
     },
   },
 }
@@ -240,3 +250,4 @@ export default {
   }
 }
 </style>
+
