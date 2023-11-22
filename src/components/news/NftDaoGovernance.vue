@@ -16,7 +16,7 @@
       <div class="dividend-pool">
         <div class="dividend-pool-item">
           <div class="dividend-pool-label">Balance</div>
-          <div class="dividend-pool-value text-color">{{ settlePoolBalance | decimalPlace8 }} MBD</div>
+          <div class="dividend-pool-value text-color">{{ settlePoolBalance | toFixedString }} MBD</div>
         </div>
         <div class="dividend-pool-item">
           <div class="dividend-pool-label">All members NFT Staked</div>

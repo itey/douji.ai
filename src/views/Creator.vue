@@ -25,13 +25,70 @@
           </div>
         </template>
         <div class="tag-container">
-          <div v-for="(item,index) in tagList" :key="index">
-            <div class="tag-item" :class="{
-							light:item.light
-						}">
-              <img :src="require(`@/assets/images/creator/`+item.icon+(item.light?'light':'')+`.png`)" />
-              <span>{{item.text}}</span>
-            </div>
+          <div class="tag-item" v-if="userInfo.location">
+            <img :src="require(`@/assets/images/creator/location.png`)" />
+            <span>广州</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.website)" v-if="userInfo.website">
+            <img :src="require(`@/assets/images/creator/web.png`)" />
+            <span>Website</span>
+          </div>
+
+          <div class="tag-item" @click="handleGoTo(userInfo.twitter)" v-if="userInfo.twitter">
+            <img :src="require(`@/assets/images/creator/twitter.png`)" />
+            <span>Twitter</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.instagram)" v-if="userInfo.instagram">
+            <img :src="require(`@/assets/images/creator/instagram.png`)"/>
+            <span>Instagram</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.youtube)" v-if="userInfo.youtube">
+            <img :src="require(`@/assets/images/creator/youtube.png`)" />
+            <span>Youtube</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.facebook)" v-if="userInfo.facebook">
+            <img :src="require(`@/assets/images/creator/facebook.png`)" />
+            <span>Facebook</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.tiktok)" v-if="userInfo.tiktok">
+            <img :src="require(`@/assets/images/creator/tiktok.png`)" />
+            <span>Tiktok</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.github)" v-if="userInfo.github">
+            <img :src="require(`@/assets/images/creator/github.png`)" />
+            <span>Github</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.linkedin)" v-if="userInfo.linkedin">
+            <img :src="require(`@/assets/images/creator/linkedin.png`)" />
+            <span>Linkedin</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.discord)" v-if="userInfo.discord">
+            <img :src="require(`@/assets/images/creator/discord.png`)" />
+            <span>Discord</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.line)" v-if="userInfo.line">
+            <img :src="require(`@/assets/images/creator/line.png`)" />
+            <span>Line</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.medium)" v-if="userInfo.medium">
+            <img :src="require(`@/assets/images/creator/medium-circle-fill.png`)" />
+            <span>Medium</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.telegram)" v-if="userInfo.telegram">
+            <img :src="require(`@/assets/images/creator/telegram.png`)" />
+            <span>Telegram</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.wechat)" v-if="userInfo.wechat">
+            <img :src="require(`@/assets/images/creator/wechat.png`)" />
+            <span>Wechat</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.whatsapp)" v-if="userInfo.whatsapp">
+            <img :src="require(`@/assets/images/creator/whatsapp.png`)" />
+            <span>Whatsapp</span>
+          </div>
+          <div class="tag-item" @click="handleGoTo(userInfo.bilibili)" v-if="userInfo.whatsapp">
+            <img :src="require(`@/assets/images/creator/bilibili.png`)" />
+            <span>Bilibili</span>
           </div>
         </div>
       </div>
@@ -62,45 +119,6 @@ export default {
     return {
       address: undefined,
       userInfo: {},
-      subscription: false,
-      tagList: [
-        {
-          icon: 'mexico',
-          text: 'Mexico',
-        },
-        {
-          icon: 'website',
-          text: 'Website',
-        },
-        {
-          icon: 'twitter',
-          text: 'Twitter',
-        },
-        {
-          icon: 'instagram',
-          text: 'Instagram',
-        },
-        {
-          icon: 'youtube',
-          text: 'Youtube',
-        },
-        {
-          icon: 'facebook',
-          text: 'Facebook',
-        },
-        {
-          icon: 'tiktok',
-          text: 'Tiktok',
-        },
-        {
-          icon: 'github',
-          text: 'Github',
-        },
-        {
-          icon: 'linkedin',
-          text: 'Linkedin',
-        },
-      ],
     }
   },
   components: {
@@ -127,7 +145,6 @@ export default {
         .then((r) => {
           if (r.code == 1) {
             this.userInfo = r.data
-            console.log(this.userInfo)
           } else {
             this.$toast.error(r.message)
           }
@@ -180,6 +197,13 @@ export default {
         .finally(() => {
           this.userInfoGet()
         })
+    },
+    /** 点击跳转 */
+    handleGoTo(url) {
+      if (!url) {
+        return
+      }
+      window.open(url,'_blank')
     },
   },
 }
@@ -283,7 +307,7 @@ export default {
         align-items: center;
 
         .tag-item {
-          height: 19px;
+          // height: 19px;
           background: #262f39;
           border-radius: 4px;
           font-size: 10px;
@@ -295,13 +319,13 @@ export default {
           flex-direction: row;
           align-items: center;
           margin-left: 7px;
-          padding: 0 6px;
+          padding: 3px 6px;
           cursor: pointer;
 
           img {
-            width: 9px;
-            height: 9px;
-            margin: 4px;
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
           }
 
           &.light {
