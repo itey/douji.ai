@@ -145,10 +145,19 @@ export default {
     },
     /** 执行结算 */
     handleSettle() {
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
       accountSettle().then((r) => {
         if (r.code == 1) {
           this.$toast.success(this.$t('user.settle_success'))
+        } else {
+          this.$toast.error(r.message)
         }
+      }).catch(e => {
+        this.$toast.error(e)
+      }).finally(() => {
+        loadingInstance.close()
       })
     },
   },

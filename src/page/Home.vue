@@ -590,13 +590,11 @@ export default {
 
       .news-text {
         position: absolute;
-        bottom: 30px;
-        left: 34px;
-        right: 38px;
-        background-color: black;
-        opacity: 0.7;
-        padding: 10px;
-        border-radius: 10px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(0, 0, 0, 1));
+        padding: 70px 34px 60px 34px;
 
         .title {
           font-size: 28px;
