@@ -25,9 +25,9 @@
           </div>
         </template>
         <div class="tag-container">
-          <div class="tag-item" v-if="userInfo.location">
+          <div class="tag-item" style="cursor: none;" v-if="userInfo.location">
             <img :src="require(`@/assets/images/creator/location.png`)" />
-            <span>{{ userInfo.location | cutString(5) }}</span>
+            <span>{{ userInfo.location | cutString(20) }}</span>
           </div>
           <div class="tag-item" @click="handleGoTo(userInfo.website)" v-if="userInfo.website">
             <img :src="require(`@/assets/images/creator/web.png`)" />
@@ -224,7 +224,7 @@ export default {
     .creator-img {
       width: 118px;
       height: 118px;
-      background: #00f9e5;
+      // background: #00f9e5;
       border: 3px solid #2c3642;
       border-radius: 14px;
       img {
