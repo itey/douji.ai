@@ -67,24 +67,28 @@
       </div>
     </div>
     <div class="settle-button">
-      <el-button @click="handleSettle()" class="common-btn1" type="primary" :disabled="!settleFee || Number(settleFee) >= Number(mbdSettleBalance.balance)">Settlement</el-button>
+      <el-button @click="$refs['settleConfirmDialog'].showDialog()" class="common-btn1" type="primary" :disabled="!settleFee || Number(settleFee) >= Number(mbdSettleBalance.balance)">Settlement</el-button>
     </div>
     <div class="text-color settle-label">
       Settlement Fee:
       <span :style="{ color: Number(settleFee) >= Number(mbdSettleBalance.balance) ? 'red' : 'white' }">{{ settleFee }}</span> MBD
     </div>
-    <income-dialog ref="incomeDialog"></income-dialog>
+    <IncomeDialog ref="incomeDialog" />
+    <SettleConfirmDialog ref="settleConfirmDialog" :settleFee="settleFee" @confirm="handleSettle()"/>
   </div>
 </template>
 
 <script>
 import IncomeDialog from '@/components/user/IncomeDialog'
+import SettleConfirmDialog from '@/components/user/SettleConfirmDialog'
 import { accountSettle, getPledgeSettleAccount } from '@/utils/http'
 import { getBjxBalanceOf, getBjxUsdtPrice } from '@/utils/web3/open'
+import { confirmSettleSign } from '@/utils/web3/chain'
 export default {
   name: 'balance-view',
   components: {
     IncomeDialog,
+    SettleConfirmDialog
   },
   computed: {
     userAccount() {
@@ -148,15 +152,20 @@ export default {
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',
       })
-      accountSettle().then((r) => {
-        if (r.code == 1) {
-          this.$toast.success(this.$t('user.settle_success'))
-        } else {
-          this.$toast.error(r.message)
-        }
+      confirmSettleSign().then(signed => {
+        accountSettle(signed).then((r) => {
+          if (r.code == 1) {
+            this.$toast.success(this.$t('user.settle_success'))
+          } else {
+            this.$toast.error(r.message)
+          }
+        }).catch(e => {
+          this.$toast.error(e)
+        }).finally(() => {
+          loadingInstance.close()
+        })
       }).catch(e => {
         this.$toast.error(e)
-      }).finally(() => {
         loadingInstance.close()
       })
     },

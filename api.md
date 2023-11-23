@@ -1742,6 +1742,7 @@ post
 
 | 参数名   | 约束-required | 类型 | 说明 |
 | :------ |:------ | :------    |:------ |
+| signed |true   | Are you sure you want to settle? |签名内容|
 ##### Response parameters:
 
 ```json

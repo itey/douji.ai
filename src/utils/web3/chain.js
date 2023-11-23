@@ -6,6 +6,7 @@ const SIGN_STR = 'Wellcome to DOUJI!'
 const DAILY_STR = 'Wellcome to DOUJI,A beautiful day has begun!'
 const GET_BLIND_BOX = 'Collect DOUJI Blind Box!'
 const OPEN_BLIND_BOX = 'Open DOUJI Blind Box!'
+const SETTLE_CONFIRM = 'Are you sure you want to settle?'
 
 
 /** 检查登录账户*/
@@ -96,6 +97,26 @@ export function openBlindBoxSign() {
     const chainAccount = store.state.chain.account
     web3.eth.personal
       .sign(OPEN_BLIND_BOX, chainAccount, '')
+      .then((signed) => {
+        return resolve(signed)
+      })
+      .catch((error) => {
+        console.log('sign error', error)
+        reject(error)
+      })
+  })
+}
+
+/** 结算确认签名 */
+export function confirmSettleSign() {
+  return new Promise((resolve, reject) => {
+    const web3 = window.web3Particle
+    if (!web3) {
+      reject('web3 is not ready')
+    }
+    const chainAccount = store.state.chain.account
+    web3.eth.personal
+      .sign(SETTLE_CONFIRM, chainAccount, '')
       .then((signed) => {
         return resolve(signed)
       })
