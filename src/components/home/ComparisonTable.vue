@@ -19,9 +19,24 @@
 <script>
 export default {
   name: 'comparison-tab',
+  watch: {
+    '$store.state.common.language': function (val, od) {
+      if (val != od) {
+        this.init()
+      }
+    }
+  },
+  created() {
+    this.init()
+  },
   data() {
     return {
-      tableData: [
+      tableData: []
+    }
+  },
+  methods: {
+    init() { 
+      this.tableData =  [
         {
           column0: this.$t('home.tab_creation_threshold'),
           column1: this.$t('home.tab_low'),
@@ -70,9 +85,9 @@ export default {
           column2: this.$t('home.tab_none'),
           column3: this.$t('home.tab_owned'),
         },
-      ],
+      ]
     }
-  },
+  }
 }
 </script>
 

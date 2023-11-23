@@ -1760,3 +1760,193 @@ post
 | -------------|:---------------------------------|
 | 0            | 失败   |
 | 1            | 成功   |   
+
+
+### 34.合约签到。首先跟用用户信息里面 isge8model = 1 来判断是不是走合约模式
+ 
+Api path：
+
+```bash
+   运合约地址  0xc83732d70A2d23b1863a655Cc11Ee6F1CC3D02Ac  方法 checkIn
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+       "说明": "签到成功后交易完成之后获取交易hash 调用中心的 35接口 "
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |   
+
+
+### 35.通过合约交易hash签到
+ 
+Api path：
+
+```bash
+  http://43.198.63.219:1538/api/checkInByTxhash
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| txhash |true   | string |交易hash|
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |  
+
+
+
+### 36.合约检查是否有盲盒。首先跟用用户信息里面 isge8model = 1 来判断是不是走合约模式
+ 
+Api path：
+
+```bash
+   运合约地址  0xc83732d70A2d23b1863a655Cc11Ee6F1CC3D02Ac  方法 checkBox
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        "bool": "是否有盒子 如果有盒子true则调用合约方法 openBox  去开盒子。如果没有盒子则调用 getBox 去获取合约", 
+        "uint8": "本周期领盒子数，如果数量>=12 则不在调用合约方法 getBox 去获取合约"
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |   
+
+
+
+### 37.先掉合约的  getBox 通过合约交易hash 调用中心 getBoxByTxhash 
+ 
+Api path：
+
+```bash
+  http://43.198.63.219:1538/api/getBoxByTxhash
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| txhash |true   | string |交易hash|
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |  
+
+### 38.先掉合约的  openBox 通过合约交易hash 调用中心 openBoxByTxhash 
+ 
+Api path：
+
+```bash
+  http://43.198.63.219:1538/api/openBoxByTxhash
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| txhash |true   | string |交易hash|
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |  
+
+
+
+
+

@@ -129,7 +129,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.24h_nft') }}</div>
+              <div class="label">{{ $t('home.24h_nfts') }}</div>
               <div>
                 <span class="value">8,280</span>
                 <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />

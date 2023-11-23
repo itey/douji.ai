@@ -2,23 +2,17 @@
   <el-dialog custom-class="income-dialog" @open="onOpen()" :visible.sync="show" width="1100px">
     <div class="income-header text-color" slot="title">Set NFT DAO Governance</div>
     <div class="income-content">
-      <el-table ref="multipleTable" :data="tableData" style="width: 1000px">
+      <el-table ref="multipleTable" :data="tableData" style="width: 1000px" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="47px"></el-table-column>
-        <el-table-column label="Token ID" width="119px">
-          <template slot-scope="scope">ID</template>
+        <el-table-column label="Token ID" prop="token_id" width="119px"></el-table-column>
+        <el-table-column prop="name" label="NFT name" width="211px"></el-table-column>
+        <el-table-column prop="settlePoolBalance" label="Bonus Dividend Pool BalancelMBD)" width="249px"></el-table-column>
+        <el-table-column label="Your NFTs / Members NFTs" width="209px">
+          <template slot-scope="scope">
+            <span>{{scope.row.userStake}} / {{scope.row.totalStakeCount}}</span>
+          </template>
         </el-table-column>
-        <el-table-column prop="name" label="NFT name" width="211px">
-          <template slot-scope="scope">name</template>
-        </el-table-column>
-        <el-table-column prop="address" label="Bonus Dividend Pool BalancelMBD)" width="249px">
-          <template slot-scope="scope">BalancelMBD</template>
-        </el-table-column>
-        <el-table-column prop="address" label="Your NFTs / Members NFTs" width="209px">
-          <template slot-scope="scope">NFTs</template>
-        </el-table-column>
-        <el-table-column prop="address" label="Stake NFT Income(MBD)" width="165px">
-          <template slot-scope="scope">Income(MBD)</template>
-        </el-table-column>
+        <el-table-column prop="userStake" label="Stake NFT Income(MBD)" width="165px"></el-table-column>
       </el-table>
       <el-pagination style="width:100%;margin: 20px 0;" background layout="prev,pager,next" :total="totalCount" :page-size="20"></el-pagination>
     </div>
@@ -30,6 +24,9 @@
 
 <script>
 import { pledgeSettleList } from '@/utils/http'
+import { userPledgeCount } from '@/utils/web3/nft'
+import { weiToMbd } from '@/utils/common'
+import { totalPledgeCount, getSettlePoolBalance } from '@/utils/web3/open'
 export default {
   name: 'income-dialog',
   data() {
@@ -39,6 +36,7 @@ export default {
       pageSize: 20,
       totalCount: 0,
       tableData: [],
+      multipleSelection: []
     }
   },
   methods: {
@@ -49,27 +47,89 @@ export default {
       this.pageNo = 1
       this.pageLoad()
     },
+    /** 选择的数据发生变化 */
+    handleSelectionChange(val) {
+      console.log(val)
+    },
     /** 加载数据 */
-    pageLoad() {
+    async pageLoad() {
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',
       })
-      pledgeSettleList(this.pageNo)
-        .then((r) => {
-          console.log(r)
-          if (r.code == 1) {
+      try {
+        const r = await pledgeSettleList(this.pageNo)
+        if (r.code == 1) {
+          var stakeList = r.data.list
+          if (stakeList && stakeList.length > 0) {
+            await this.batchQueryStakeInfo(stakeList)
             this.tableData = r.data.list
-            this.totalCount = r.data.pageCount
-          } else {
-            this.$toast.error(r.message)
           }
-        })
-        .catch((e) => {
-          this.$toast.error(e)
-        })
-        .finally(() => {
-          loadingInstance.close()
-        })
+          this.totalCount = r.data.pageCount
+        } else {
+          this.$toast.error(r.message)
+        }
+      } catch (e) {
+        this.$toast.error(e)
+      } finally {
+        loadingInstance.close()
+      }
+      
+    },
+    /** 批量请求查询质押信息 */
+    async batchQueryStakeInfo(stakeList) {
+      var promise = []
+      for (var i = 0; i < stakeList.length; i++) {
+        var stake = stakeList[i]
+        promise.push(this.getUserStakeCount(stake))
+        promise.push(this.getTotalStakeCount(stake))
+        promise.push(this.getMbdSettleBalance(stake))
+      }
+      await Promise.all(promise)
+    },
+    /** 获取用户质押信息 */
+    getUserStakeCount(stake) {
+      if (!this.$store.state.user.account) {
+        return
+      }
+      return new Promise((resolve) => {
+        userPledgeCount(stake.token_id)
+          .then((data) => {
+            stake.userStake = data[0]
+            return resolve()
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+          })
+      })
+    },
+    /** 获取质押总量 */
+    getTotalStakeCount(stake) {
+      return new Promise((resolve) => {
+        totalPledgeCount(stake.token_id)
+          .then((count) => {
+            stake.totalStakeCount = count ? count : 0
+            return resolve()
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+          })
+      })
+    },
+    /** 取合约里DAO 质押奖金池子的额度 */
+    getMbdSettleBalance(stake) {
+      if (!this.tokenId) {
+        return
+      }
+      return new Promise((resolve) => {
+        getSettlePoolBalance(stake.token_id)
+          .then((balance) => {
+            stake.settlePoolBalance = weiToMbd(balance)
+            return resolve()
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+          })
+      })
     },
   },
 }
