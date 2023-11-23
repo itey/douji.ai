@@ -12,7 +12,11 @@
             <span>{{scope.row.userStake}} / {{scope.row.totalStakeCount}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="userStake" label="Stake NFT Income(MBD)" width="165px"></el-table-column>
+        <el-table-column prop="userStake" label="Stake NFT Income(MBD)" width="165px">
+          <template slot-scope="scope">
+            <span>{{ (scope.row.settlePoolBalance * 0.2 * scope.row.userStake / scope.row.totalStakeCount) | decimalPlace8 }}</span>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination style="width:100%;margin: 20px 0;" background layout="prev,pager,next" :total="totalCount" :page-size="20"></el-pagination>
     </div>
@@ -119,15 +123,10 @@ export default {
     },
     /** 取合约里DAO 质押奖金池子的额度 */
     getMbdSettleBalance(stake) {
-      if (!this.tokenId) {
-        return
-      }
       return new Promise((resolve) => {
         getSettlePoolBalance(stake.token_id)
           .then((balance) => {
-            console.log('查询到池子余额:', balance)
             stake.settlePoolBalance = weiToMbd(balance)
-            console.log('余额进表:', stake.settlePoolBalance)
             return resolve()
           })
           .catch((e) => {

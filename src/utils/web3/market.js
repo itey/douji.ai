@@ -101,3 +101,29 @@ export function swapOrder(orderId) {
   })
 
 }
+
+/** 奖励结算 */
+export function marketSettle(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const marketContract = getMarketContract()
+  if (!marketContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    marketContract.methods.settle(tokenId)
+      .send({ from: fromAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error)
+      })
+  })
+
+}
