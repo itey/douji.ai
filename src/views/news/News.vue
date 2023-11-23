@@ -1,10 +1,10 @@
 <template>
   <div class="news-container">
     <el-breadcrumb style="margin-top: 27px;" separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-      <el-breadcrumb-item>News</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">{{ $t('news.home') }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ $t('news.news') }}</el-breadcrumb-item>
     </el-breadcrumb>
-    <div class="text-color title">News</div>
+    <div class="text-color title">{{ $t('news.news') }}</div>
     <div class="content">
       <div class="list">
         <div v-for="(item,index) in list" :key="index" class="item">

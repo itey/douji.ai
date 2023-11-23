@@ -58,7 +58,7 @@
       <div class="settle-container">
         <div class="unit text-color">MBD</div>
         <div class="value text-color">{{ mbdSettleBalance.balance }}</div>
-        <div class="sub-value text-sub-color">≈${{ mbdSettleBalance.balance * $store.state.chain.mbdPrice || '0.0000' }}</div>
+        <div class="sub-value text-sub-color">≈${{ (mbdSettleBalance.balance * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
       </div>
       <div class="settle-container" style="margin-left: 32px;">
         <div class="unit text-color">BJXStar NFT</div>

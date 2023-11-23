@@ -1,27 +1,27 @@
 <template>
   <div class="market-container">
     <el-breadcrumb style="margin-top: 38px;" separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-      <el-breadcrumb-item>Marketplace</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">{{ $t('marketplace.home') }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ $t('marketplace.marketplace') }}</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="title-container">
-      <span class="text-color title">ALL DOUJI NFTs</span>
-      <span class="text-sub-color sub">28,308 result</span>
+      <span class="text-color title">{{ $t('marketplace.all_nft') }}</span>
+      <span class="text-sub-color sub">28,308 {{ $t('marketplace.result') }}</span>
     </div>
     <div class="search-container">
-      <el-select v-model="typeValue" @change="onTypeChange" clearable filterable placeholder="ALL Types">
+      <el-select v-model="typeValue" @change="onTypeChange" clearable filterable :placeholder="$t('marketplace.all_types')">
         <el-option class="select-time" v-for="item in typeOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
       </el-select>
-      <el-select v-model="categoryValue" @change="onCategoryChange" clearable filterable placeholder="ALL Category">
+      <el-select v-model="categoryValue" @change="onCategoryChange" clearable filterable :placeholder="$t('marketplace.all_category')">
         <el-option class="select-time" v-for="item in categoryOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
       </el-select>
-      <el-select v-model="platformValue" clearable filterable placeholder="ALL Platform">
+      <el-select v-model="platformValue" clearable filterable :placeholder="$t('marketplace.all_platform')">
         <el-option class="select-time" v-for="item in platformOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
       </el-select>
-      <el-select v-model="viewedValue" clearable filterable placeholder="Most viewed">
+      <el-select v-model="viewedValue" clearable filterable :placeholder="$t('marketplace.most_viewed')">
         <el-option class="select-time" v-for="item in viewedOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
-      <el-input style="width: 344px;" placeholder="Search by name or Token ID">
+      <el-input style="width: 344px;" :placeholder="$t('marketplace.search_tip')">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
     </div>
@@ -67,19 +67,19 @@ export default {
       platformValue: '',
       viewedOptions: [
         {
-          value: 'Late creation time',
+          value: this.$t('marketplace.sort_late_time'),
           label: 'Late creation time',
         },
         {
-          value: 'Early creation time',
+          value: this.$t('marketplace.sort_early_time'),
           label: 'Early creation time',
         },
         {
-          value: 'High price',
+          value: this.$t('marketplace.sort_high_price'),
           label: 'High price',
         },
         {
-          value: 'Low price',
+          value: this.$t('marketplace.sort_low_price'),
           label: 'Low price',
         },
       ],

@@ -42,33 +42,33 @@
                 <div class="icon">
                   <img style="width: 17px; height: 17px;" src="@/assets/images/menu-user.png" />
                 </div>
-                <span>User Center</span>
+                <span>{{ $t('common.user_center') }}</span>
               </div>
               <template v-if="isParticleProvider">
                 <div class="item" @click="openWalletModal()">
                   <div class="icon">
                     <img style="width: 17px; height: 17px;" src="@/assets/images/menu-wallet.png" />
                   </div>
-                  <span>Wallet</span>
+                  <span>{{ $t('common.wallet') }}</span>
                 </div>
                 <div class="item" @click="openBuyModal()">
                   <div class="icon">
                     <img style="width: 17px; height: 17px;" src="@/assets/images/menu-currency.png" />
                   </div>
-                  <span>Buy Crypto Currency</span>
+                  <span>{{ $t('common.buy_currency') }}</span>
                 </div>
               </template>
               <div class="item" @click="handleCopyAddress()">
                 <div class="icon">
                   <img style="width: 17px; height: 17px;" src="@/assets/images/menu-copy.png" />
                 </div>
-                <span>Copy Address</span>
+                <span>{{ $t('common.copy_address') }}</span>
               </div>
               <div class="item" @click="signOutClick()">
                 <div class="icon">
                   <img style="width: 17px; height: 17px;" src="@/assets/images/menu-exit.png" />
                 </div>
-                <span>Sign Out</span>
+                <span>{{ $t('common.sign_out') }}</span>
               </div>
             </div>
             <div slot="reference" class="user">
@@ -104,13 +104,11 @@
 </template>
 
 <script>
-import NewsTypes from '@/components/NewsTypes'
 import Particle from '@/components/react-app/particle'
 export default {
   name: 'nav-bar',
   components: {
     Particle,
-    NewsTypes,
   },
   computed: {
     isParticleProvider() {

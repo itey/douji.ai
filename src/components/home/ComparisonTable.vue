@@ -3,16 +3,15 @@
     <el-table
       class="comparison-table"
       :header-row-class-name="'table-header'"
-      :row-class-name="'table-row'"
       row-class-name="table-row"
       :data="tableData"
       border
       style="width: 1396px"
     >
-      <el-table-column prop="column0" label="Feature" width="296px"></el-table-column>
-      <el-table-column prop="column1" label="Web2 Creator economic platform" width="374px"></el-table-column>
-      <el-table-column prop="column2" label="Regular Web3 creator economic platform" width="380px"></el-table-column>
-      <el-table-column prop="column3" label="DOUJI.AI" width="338px"></el-table-column>
+      <el-table-column prop="column0" :label="$t('home.feature')" width="296px"></el-table-column>
+      <el-table-column prop="column1" :label="$t('home.web2_creator_platform')" width="374px"></el-table-column>
+      <el-table-column prop="column2" :label="$t('home.regular_web3_platform')" width="380px"></el-table-column>
+      <el-table-column prop="column3" :label="$t('home.douji_ai')" width="338px"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -24,52 +23,52 @@ export default {
     return {
       tableData: [
         {
-          column0: 'Creation Threshold',
-          column1: 'Low',
-          column2: 'Higher',
-          column3: 'Low',
+          column0: this.$t('home.tab_creation_threshold'),
+          column1: this.$t('home.tab_low'),
+          column2: this.$t('home.tab_higher'),
+          column3: this.$t('home.tab_low'),
         },
         {
-          column0: 'Content Data Ownership',
-          column1: 'None',
-          column2: 'Owned',
-          column3: 'Owned',
+          column0: this.$t('home.tab_data_ship'),
+          column1: this.$t('home.tab_none'),
+          column2: this.$t('home.tab_owned'),
+          column3: this.$t('home.tab_owned'),
         },
         {
-          column0: 'User Data Ownership',
-          column1: 'None',
-          column2: 'none',
-          column3: 'Owned and Customizable',
+          column0: this.$t('home.tab_user_data_ownership'),
+          column1: this.$t('home.tab_none'),
+          column2: this.$t('home.tab_none'),
+          column3: this.$t('home.tab_owned_customizable'),
         },
         {
-          column0: 'Revenue Distribution Rights',
-          column1: 'None,Depend on platform distribution',
-          column2: 'None,Depend on platform distribution',
-          column3: 'Owned, Planned and Controlled',
+          column0: this.$t('home.tab_revenue_rights'),
+          column1: this.$t('home.tab_none_distribution'),
+          column2: this.$t('home.tab_none_distribution'),
+          column3: this.$t('home.tab_owned_controlled'),
         },
         {
-          column0: 'Revenue Model',
-          column1: 'Mainly Advertising Sponsorship',
-          column2: 'limited',
-          column3: 'Diversified Revenue Models',
+          column0: this.$t('home.tab_revenue_model'),
+          column1: this.$t('home.tab_mainly_sponsorship'),
+          column2: this.$t('home.tab_limited'),
+          column3: this.$t('home.tab_diversified_models'),
         },
         {
-          column0: 'Content Co-Creation',
-          column1: 'Uncontrollable',
-          column2: 'None',
-          column3: 'Owned and Customizable',
+          column0: this.$t('home.tab_co_creation'),
+          column1: this.$t('home.tab_uncontrollable'),
+          column2: this.$t('home.tab_none'),
+          column3: this.$t('home.tab_owned_customizable'),
         },
         {
-          column0: 'Content Value Sharing',
-          column1: 'None',
-          column2: 'None',
-          column3: 'Owned and Customizable',
+          column0: this.$t('home.tab_content_sharing'),
+          column1: this.$t('home.tab_none'),
+          column2: this.$t('home.tab_none'),
+          column3: this.$t('home.tab_owned_customizable'),
         },
         {
-          column0: 'DAO Governance',
-          column1: 'None',
-          column2: 'None',
-          column3: 'Owned',
+          column0: this.$t('home.tab_dao_gov'),
+          column1: this.$t('home.tab_none'),
+          column2: this.$t('home.tab_none'),
+          column3: this.$t('home.tab_owned'),
         },
       ],
     }

@@ -25,12 +25,12 @@
       </div>
       <div class="news-tab-container">
         <el-tabs v-model="activeName" :stretch="true" @tab-click="newsTabChange">
-          <el-tab-pane label="Hot News" name="news">
+          <el-tab-pane :label="$t('home.hot_news')" name="news">
             <div class="news-list">
               <news-tab-item @onHover="onHover" :item="item" v-for="(item,index) in hotNewsList" :key="index"></news-tab-item>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="Featured" name="feature">
+          <el-tab-pane :label="$t('home.featured')" name="feature">
             <div class="news-list">
               <news-tab-item @onHover="onHover" :item="item" v-for="(item,index) in selectedList" :key="index"></news-tab-item>
             </div>
@@ -41,21 +41,21 @@
     <div class="info-container">
       <div class="left">
         <div class="item">
-          <div class="label">Creator</div>
+          <div class="label">{{ $t('home.creator') }}</div>
           <div class="value">238,820</div>
         </div>
         <div class="item">
-          <div class="label">User</div>
+          <div class="label">{{ $t('home.user') }}</div>
           <div class="value">238,820</div>
         </div>
         <div class="item">
-          <div class="label">Navigation Items</div>
+          <div class="label">{{ $t('home.navigation_items') }}</div>
           <div class="value">238,820</div>
         </div>
       </div>
       <div class="nft-info-container">
         <div class="nft-column">
-          <div class="title">ALL NFTs</div>
+          <div class="title">{{ $t('home.all_nft') }}</div>
           <div class="value-container">
             <span class="value">437,238,820</span>
             <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
@@ -63,7 +63,7 @@
           </div>
           <div class="attr-container">
             <div class="attr-item">
-              <div class="label">Market Cap</div>
+              <div class="label">{{ $t('home.market_cap') }}</div>
               <div>
                 <span class="value">$10,468,280</span>
                 <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
@@ -71,7 +71,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">NFT Volume</div>
+              <div class="label">{{ $t('home.nft_volume') }}</div>
               <div>
                 <span class="value">$10,468,280</span>
                 <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
@@ -79,7 +79,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">Transfers</div>
+              <div class="label">{{ $t('home.transfers') }}</div>
               <div>
                 <span class="value">$10,468,280</span>
                 <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
@@ -87,7 +87,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">Weekly Active Users</div>
+              <div class="label">{{ $t('home.weekly_active_users') }}</div>
               <div>
                 <span class="value">$10,468,280</span>
                 <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
@@ -97,7 +97,7 @@
           </div>
         </div>
         <div class="nft-column">
-          <div class="title">MBD Price</div>
+          <div class="title">{{ $t('home.mbd_price') }}</div>
           <div class="value-container">
             <span class="value">$0.00011887</span>
             <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
@@ -105,7 +105,7 @@
           </div>
           <div class="attr-container">
             <div class="attr-item">
-              <div class="label">MBD Circulation</div>
+              <div class="label">{{ $t('home.mbd_circulation') }}</div>
               <div>
                 <span class="value">10,468,280</span>
                 <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
@@ -113,7 +113,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">24h NFT Volume</div>
+              <div class="label">{{ $t('home.24h_nft_volume') }}</div>
               <div>
                 <span class="value">$10,468,280</span>
                 <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
@@ -121,7 +121,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">24h Transfers</div>
+              <div class="label">{{ $t('home.24h_transfers') }}</div>
               <div>
                 <span class="value">1468,280</span>
                 <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
@@ -129,7 +129,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">24hNFTs</div>
+              <div class="label">{{ $t('home.24h_nft') }}</div>
               <div>
                 <span class="value">8,280</span>
                 <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
@@ -141,7 +141,7 @@
       </div>
     </div>
     <div class="latest-news-container">
-      <div class="title">Latest News</div>
+      <div class="title">{{ $t('home.latest_news') }}</div>
       <div class="list-container">
         <NewsItem :item="item" class="item" v-for="(item,index) in latestNews" :key="index" />
       </div>
@@ -155,7 +155,7 @@
           <div class="top">
             <div class="title text-color">AI News</div>
             <div class="more">
-              <span>Read more</span>
+              <span>{{ $t('home.read_more') }}</span>
               <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
             </div>
           </div>
@@ -167,7 +167,7 @@
           <div class="top">
             <div class="title text-color">Web3 News</div>
             <div class="more">
-              <span>Read more</span>
+              <span>{{ $t('home.read_more') }}</span>
               <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
             </div>
           </div>
@@ -179,7 +179,7 @@
           <div class="top">
             <div class="title text-color">Crypto News</div>
             <div class="more">
-              <span>Read more</span>
+              <span>{{ $t('home.read_more') }}</span>
               <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
             </div>
           </div>
@@ -191,7 +191,7 @@
           <div class="top">
             <div class="title text-color">Metaverse News</div>
             <div class="more">
-              <span>Read more</span>
+              <span>{{ $t('home.read_more') }}</span>
               <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
             </div>
           </div>
@@ -207,9 +207,9 @@
 
     <div class="nft-list-container" v-if="promptsList.length">
       <div class="top">
-        <div class="title text-color">Featured Prompts NFT</div>
+        <div class="title text-color">{{ $t('home.featured_prompts_nft') }}</div>
         <div class="more" @click="$router.push({path:'/market', query: {type: 'Prompt'}})">
-          <span>Read more</span>
+          <span>{{ $t('home.read_more') }}</span>
           <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
         </div>
       </div>
@@ -219,9 +219,9 @@
     </div>
     <div class="nft-list-container" v-if="digitalList.length">
       <div class="top">
-        <div class="title text-color">Featured Digital Arts NFT</div>
+        <div class="title text-color">{{ $t('home.featured_digital_arts_nft') }}</div>
         <div class="more" @click="$router.push({path:'/market', query: {type: 'Digital Arts'}})">
-          <span>Read more</span>
+          <span>{{ $t('home.read_more') }}</span>
           <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
         </div>
       </div>
@@ -233,9 +233,9 @@
       <img style="width: 653px;height: 71px;" />
     </div>
     <div class="activity-container">
-      <div class="top">Activity</div>
-      <div class="title text-color">BJXStar NFT early bird pre-sale activity is in progress</div>
-      <div class="text-sub-color">What is the value of BJXStar NFT?</div>
+      <div class="top">{{ $t('home.activity') }}</div>
+      <div class="title text-color">{{ $t('home.bjx_pre_sale') }}</div>
+      <div class="text-sub-color" style="font-size: 20px">{{ $t('home.bjx_what_value') }}</div>
       <div class="activity-info" v-loading="bjx.buying" element-loading-background="rgba(0, 0, 0, 0.3)">
         <img style="width: 224px;height:224px;margin-top: 35px;" src="@/assets/images/home/activity-info.png" />
         <div class="info">
@@ -243,7 +243,7 @@
             <div class="title">BJXStar NFT</div>
             <div class="label">BJXStar NFT</div>
             <div class="value text-color">{{ (bjxInfoJson.currentSupply - 500000000) | toLocalString }} / 500,000,000 Sold</div>
-            <div class="label">Price</div>
+            <div class="label">{{ $t('home.price') }}</div>
             <div class="type-container">
               <div @click="bjx.priceType = '0'" class="item" :class="{ light:bjx.priceType == '0' }">
                 <div>{{ bjx.usdtPrice }} USDT</div>
@@ -255,7 +255,7 @@
                 <div>{{ bjx.mbdPrice }} MBD</div>
               </div>
             </div>
-            <div class="label">Quantity to buy</div>
+            <div class="label">{{ $t('home.buy_quantity') }}</div>
             <el-form ref="bjxForm" :rules="rules" :model="bjx">
               <el-form-item prop="count">
                 <el-input v-model="bjx.count" class="input" placeholder></el-input>
@@ -263,37 +263,27 @@
             </el-form>
           </div>
           <div class="text-sub-color tip">
-            After the early bird event ends, the price of Mint will return to the normal selling price of
+            {{ $t('home.after_early_bird') }}
             <span class="text-color">15 USDT</span>
           </div>
           <div style="margin-left: 127px;margin-top: 11px;">
-            <el-button :disabled="bjx.buying" @click="handleBuyBjx()" class="common-btn2">BUY</el-button>
+            <el-button :disabled="bjx.buying" @click="handleBuyBjx()" class="common-btn2">{{ $t('home.buy') }}</el-button>
           </div>
         </div>
       </div>
     </div>
     <div class="comparison-container">
       <div class="comparison-top">
-        <div class="top">Comparison</div>
-        <div class="title text-color">What is DOUJI.AI？</div>
-        <div class="tip text-sub-color">
-          DOUJI.AI is an AIGC&Web3 digital content creator economic ecosystem that reshapes digital content
-          production
-          and distribution methods and revenuedistribution rules for global content creators. With the support
-          of
-          artificial intelligence and blockchain technology, it makes content creation casier and more
-          collaborative.
-          Creation is more convenient, content copyright transactions are safer and faster, and profts are
-          more
-          lasting.
-        </div>
+        <div class="top">{{ $t('home.comparison') }}</div>
+        <div class="title text-color">{{ $t('home.what_is_douji') }}</div>
+        <div class="tip text-sub-color">{{ $t('home.comparison_tip') }}</div>
       </div>
       <comparison-table></comparison-table>
       <comparison-tab></comparison-tab>
     </div>
     <div class="video-container">
-      <div class="top">Video</div>
-      <div class="title text-color">How to use？</div>
+      <div class="top">{{ $t('home.video') }}</div>
+      <div class="title text-color">{{ $t('home.how_use') }}</div>
       <video style="width: 1440px;height: 674px;"></video>
     </div>
   </div>
@@ -617,7 +607,7 @@ export default {
           justify-content: space-between;
 
           .text-sub-color {
-            font-size: 12px;
+            font-size: 20px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #b2b9b9;

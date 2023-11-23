@@ -3,45 +3,39 @@
 		<div class="tab-header">
 			<div class="tab-header-item text-color" :class="{
 				select:currentIndex==0
-			}" @click="currentIndex = 0">Rich production tools and resources</div>
+			}" @click="currentIndex = 0">{{ $t('home.tab_rich_resources') }}</div>
 			<div class="tab-header-item text-color" :class="{
 				select:currentIndex==1
-			}" @click="currentIndex = 1">Creators have full rights</div>
+			}" @click="currentIndex = 1">{{ $t('home.tab_creators_rights') }}</div>
 			<div class="tab-header-item text-color" :class="{
 				select:currentIndex==2
-			}" @click="currentIndex = 2">Content NFT DAO Governance Model</div>
+			}" @click="currentIndex = 2">{{ $t('home.tab_content_model') }}</div>
 			<div class="tab-header-item text-color" :class="{
 				select:currentIndex==3
-			}" @click="currentIndex = 3">Diversifed Revenue Models</div>
+			}" @click="currentIndex = 3">{{ $t('home.tab_diversified_models') }}</div>
 			<div class="tab-header-item text-color" :class="{
 				select:currentIndex==4
-			}" @click="currentIndex = 4">Income is controllable and settlement is timely</div>
+			}" @click="currentIndex = 4">{{ $t('home.tab_income_timely') }}</div>
 			<div class="tab-header-item text-color" :class="{
 				select:currentIndex==5
-			}" @click="currentIndex = 5">Platform DAO governance model</div>
+			}" @click="currentIndex = 5">{{ $t('home.tab_platform_model') }}</div>
 		</div>
 		<div>
 			<div v-if="currentIndex==0" class="tab-item tab1">
 				<div class="tab-row">
 					<img style="width: 266px;height:165px;" src="@/assets/images/home/ai.png" />
 					<div class="tab-row-text">
-						<div class="title">Al-assisted Production Tools</div>
+						<div class="title">{{ $t('home.tab_ai_tools') }}</div>
 						<div class="desc">
-							The platform continues to introduce rich text.picture, audio, and video AGC
-							tools to assist a large base of interested users to complete contentproduction
-							and creation more effciently and quicklytransform them into new creators, and
-							improve thelcreative standards.
+							{{ $t('home.tab_the_platform_standards') }}
 						</div>
 					</div>
 				</div>
 				<div class="tab-row">
 					<div class="tab-row-text">
-						<div class="title">Content Production Resources</div>
+						<div class="title">{{ $t('home.tab_content_resources') }}</div>
 						<div class="desc">
-							The platform provides an Al Prompt copyright tradingmarket which collects a
-							large number of Promoresources provided by professional Al developersmaking it
-							convenient for intereusers to creatAlGC through Prompt, greatly reducing the
-							thresholfor content production and production
+							{{ $t('home.tab_the_platform_production') }}
 						</div>
 					</div>
 					<img style="width: 156px;height:170px;" src="@/assets/images/home/resource.png" />
@@ -50,169 +44,107 @@
 			<div v-if="currentIndex==1" class="tab-item tab2">
 				<div class="item">
 					<img style="width: 141px;height:143px;" src="@/assets/images/home/ownership.png" />
-					<div class="title">Content Data Ownership</div>
-					<div class="desc">
-						The content exists independently of the platform and is not subject to strong
-						constraints and restrictions by the platform. The works are based on standardized
-						NFT token issuance standards and can achievecross-platform circulation.
-					</div>
+					<div class="title">{{ $t('home.tab_content_ownership') }}</div>
+					<div class="desc">{{ $t('home.tab_content_circulation') }}</div>
 				</div>
 				<div class="item">
 					<img style="width: 131px;height:129px;" src="@/assets/images/home/ownershi.png" />
-					<div class="title">User data ownershi</div>
-					<div class="desc">
-						TThe result data of the interaction between creators and fans will become an integral
-						part of the value of the creator's works and wil not be distributed and distributed
-						centrally by theplatform.
-					</div>
+					<div class="title">{{ $t('home.tab_user_ownership') }}</div>
+					<div class="desc">{{ $t('home.tab_the_result_platform') }}</div>
 				</div>
 				<div class="item">
 					<img style="width: 129px;height:128px;" src="@/assets/images/home/ownershir.png" />
-					<div class="title">Income Distribution Ownershir</div>
-					<div class="desc">
-						The creator income model inot determined by the platform, nor does it depeno on
-						advertisers or sponsorsand can be diversifed anddefned by themselves. And the amount
-						of income can beplanned and controlled by the creator.
-					</div>
+					<div class="title">{{ $t('home.tab_income_ownership') }}</div>
+					<div class="desc">{{ $t('home.tab_the_creator_creator') }}</div>
 				</div>
 			</div>
 			<div v-if="currentIndex==2" class="tab-item tab3">
-				<div class="tab-tip">
-					The platform helps creators form an NFT DAO governance community centered on their works
-				</div>
+				<div class="tab-tip">>{{ $t('home.tab_the_platform_works') }}</div>
 				<div class="tab-bottom">
 					<div class="tab-row">
 						<img style="width: 175px;height:152px;" src="@/assets/images/home/creation.png" />
 						<div class="tab-row-text">
-							<div class="title">Co-creation</div>
+							<div class="title">{{ $t('home.tab_co_creation2') }}</div>
 							<div class="desc">
-								Creators can incorporate their fans or other creators into the closedNFT DAO
-								goverance modelloop of content productionv through theallowina them to become
-								co.creators of the work and cobenehciaries of future value.
+								{{ $t('home.tab_creator_value') }}
 							</div>
 						</div>
 					</div>
 					<div class="tab-row">
 						<div class="tab-row-text">
-							<div class="title">Content revenue and distribution governance</div>
-							<div class="desc">
-								Creators can incorporate their fans or other creators into the closecoop of
-								content production through the NFT DAO goverance modelllowing them to become co
-								creators of the work and co.benefciaries of future value.
-							</div>
+							<div class="title">{{ $t('home.tab_content_governance') }}</div>
+							<div class="desc">{{ $t('home.tab_creators_future_value') }}</div>
 						</div>
 						<img style="width: 152px;height:153px;" src="@/assets/images/home/governance.png" />
 					</div>
 				</div>
 			</div>
 			<div v-if="currentIndex==3" class="tab-item tab4">
-				<div class="tab-tip">
-					The platform helps creators form an NFT DAO governance community centered on their works
-				</div>
+				<div class="tab-tip">{{ $t('home.tab_platform_works') }}</div>
 				<div class="tab-bottom">
 					<div class="item">
 						<img style="width: 46px;height:35px;" src="@/assets/images/home/num1.png" />
 						<div class="tab-item-text">
-							<div class="title">Income from reading content</div>
-							<div class="desc">
-								Users who browse the reading platformcontent will be able to
-								obtaincorresponding reading benefts based on
-							</div>
+							<div class="title">{{ $t('home.tab_income_content') }}</div>
+							<div class="desc">{{ $t('home.tab_users_based_on') }}</div>
 						</div>
 					</div>
 					<div class="item">
 						<img style="width: 46px;height:35px;" src="@/assets/images/home/num2.png" />
 						<div class="tab-item-text">
-							<div class="title">Content value-added income</div>
-							<div class="desc">
-								UThe creator's content will increase in valuein the future as the
-								browsing time and faninteraction data increase so that thecreator can obtain
-								premium income fromthe copyright NFT held.
-							</div>
+							<div class="title">{{ $t('home.tab_content_income') }}</div>
+							<div class="desc">{{ $t('home.tab_the_creator_held') }}</div>
 						</div>
 					</div>
 					<div class="item">
 						<img style="width: 46px;height:35px;" src="@/assets/images/home/num3.png" />
 						<div class="tab-item-text">
-							<div class="title">Content copyright distribution income</div>
-							<div class="desc">
-								Creators can issue NFIT copyright certifcates baseoon a fxed total amount of
-								content, sell NFTcopyrights through the primary market, and obtain90% of the
-								revenue based on the actual transactior
-							</div>
+							<div class="title">{{ $t('home.tab_content_copyright_income') }}</div>
+							<div class="desc">{{ $t('home.tab_creators_transaction') }}</div>
 						</div>
 					</div>
 					<div class="item">
 						<img style="width: 46px;height:35px;" src="@/assets/images/home/num4.png" />
 						<div class="tab-item-text">
-							<div class="title">Content copyright transaction income</div>
-							<div class="desc">
-								As long as the NFT copyright of the content is tradecon the secondary market,
-								the creator and other NFTDAO members can obtain corresponding incomeaccording to
-								the proportion set by the NFT DAO.
-							</div>
+							<div class="title">{{ $t('home.tab_content_copyright_income') }}</div>
+							<div class="desc">{{ $t('home.tab_as_long_dao') }}</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div v-if="currentIndex==4" class="tab-item tab3">
-				<div class="tab-tip">
-					Based on the open and transparent algorithm of smart contracts, creators can fairly
-					participate in theprocess of obtaining income, and there is no problem of platform
-					blackbox operation and kol runningon creative income.
-				</div>
+				<div class="tab-tip">{{ $t('home.tab_based_income') }}</div>
 				<div class="tab-bottom">
 					<div class="tab-row">
 						<img style="width: 200px;height:149px;" src="@/assets/images/home/amount.png" />
 						<div class="tab-row-text">
-							<div class="title">The amount of income is controllable</div>
-							<div class="desc">
-								The creator's income from creation is only related to the incrementavalue of his
-								own work data. Creators only need to focus their timeand energy on creating more
-								and better works and communicatingwith fans. They do not need to worry about the
-								impact of platformtraffc and other factors on creative income.
-							</div>
+							<div class="title">{{ $t('home.tab_amount_controllable') }}</div>
+							<div class="desc">{{ $t('home.tab_creator_creative_income') }}</div>
 						</div>
 					</div>
 					<div class="tab-row">
 						<div class="tab-row-text">
-							<div class="title">Revenues can be settled in real time</div>
-							<div class="desc">
-								The income eamed by the creator is automatically calculated by thesmart
-								contract. The creator can settle the income at any time asneeded. After the
-								settlement is completed, the income will bedirectly credited to the account
-								without the need for approval fromothers or transfer.
-							</div>
+							<div class="title">{{ $t('home.tab_Revenues_time') }}</div>
+							<div class="desc">{{ $t('home.tab_income_transfer') }}</div>
 						</div>
 						<img style="width: 185px;height:149px;" src="@/assets/images/home/revenue.png" />
 					</div>
 				</div>
 			</div>
 			<div v-if="currentIndex==5" class="tab-item tab3">
-				<div class="tab-tip">
-					DOUJI.Al itself is a DAO. All participating roles in the ecosystem can obtain the
-					govemance rights anddividend rights of the platform DAO by staking the equity token MS
-					of the platform.
-				</div>
+				<div class="tab-tip">{{ $t('home.tab_douji_platform') }}</div>
 				<div class="tab-bottom">
 					<div class="tab-row">
 						<img style="width: 150px;height:149px;" src="@/assets/images/home/dao.png" />
 						<div class="tab-row-text">
-							<div class="title">Platform DAO governance rights</div>
-							<div class="desc">
-								DAO members will have the power to optimize andadjust the parameters of future
-								token issuance andrevenue distribution rules of smart contracts byinitiating
-								proposal bidding and voting.
-							</div>
+							<div class="title">{{ $t('home.tab_platform_rights') }}</div>
+							<div class="desc">{{ $t('home.tab_dao_voting') }}</div>
 						</div>
 					</div>
 					<div class="tab-row">
 						<div class="tab-row-text">
-							<div class="title">Platform dividend rights</div>
-							<div class="desc">
-								DAO members automatically become de factoshareholders of the platform, and every
-								income of theplatform will be closely related to the income of eachDAO member.
-							</div>
+							<div class="title">{{ $t('home.tab_platform_rights2') }}</div>
+							<div class="desc">{{ $t('home.tab_dao_members') }}</div>
 						</div>
 						<img style="width: 156px;height:129px;" src="@/assets/images/home/dividend.png" />
 					</div>

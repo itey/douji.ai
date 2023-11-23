@@ -15,10 +15,10 @@
 .common-btn2 {
 	width: 188px;
 	background: linear-gradient(-16deg, #4195F6, #17E7D6) !important;
-	border-radius: 7px;
-	color: #1A2127;
+	border-radius: 10px;
+	color: #1A2027;
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 16px !important;
 }
 
 .common-btn2:disabled {
