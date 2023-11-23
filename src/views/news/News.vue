@@ -87,7 +87,7 @@ export default {
     .list {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      //justify-content: space-between;
 
       .item {
         width: calc((100% - 72px) / 4);
