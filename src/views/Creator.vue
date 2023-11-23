@@ -27,7 +27,7 @@
         <div class="tag-container">
           <div class="tag-item" v-if="userInfo.location">
             <img :src="require(`@/assets/images/creator/location.png`)" />
-            <span>广州</span>
+            <span>{{ userInfo.location }}</span>
           </div>
           <div class="tag-item" @click="handleGoTo(userInfo.website)" v-if="userInfo.website">
             <img :src="require(`@/assets/images/creator/web.png`)" />
