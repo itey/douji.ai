@@ -188,3 +188,12 @@ export const formatSeconds = (value) => {
   }
   return ' ' + parseInt(minute) + ' Min'
 }
+
+/** 截取字符串前n位 */
+export const cutString = (str, len) => {
+  if (str.length > len) {
+    return str.substring(0, len) + '...'
+  } else {
+    return str
+  }
+}

@@ -27,7 +27,7 @@
         <div class="tag-container">
           <div class="tag-item" v-if="userInfo.location">
             <img :src="require(`@/assets/images/creator/location.png`)" />
-            <span>{{ userInfo.location }}</span>
+            <span>{{ userInfo.location | cutString(5) }}</span>
           </div>
           <div class="tag-item" @click="handleGoTo(userInfo.website)" v-if="userInfo.website">
             <img :src="require(`@/assets/images/creator/web.png`)" />
