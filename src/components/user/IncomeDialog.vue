@@ -99,6 +99,7 @@ export default {
           })
           .catch((e) => {
             this.$toast.error(e)
+            return resolve()
           })
       })
     },
@@ -112,6 +113,7 @@ export default {
           })
           .catch((e) => {
             this.$toast.error(e)
+            return resolve()
           })
       })
     },
@@ -123,11 +125,14 @@ export default {
       return new Promise((resolve) => {
         getSettlePoolBalance(stake.token_id)
           .then((balance) => {
+            console.log('查询到池子余额:', balance)
             stake.settlePoolBalance = weiToMbd(balance)
+            console.log('余额进表:', stake.settlePoolBalance)
             return resolve()
           })
           .catch((e) => {
             this.$toast.error(e)
+            return resolve()
           })
       })
     },
