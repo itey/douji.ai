@@ -99,7 +99,7 @@ export default {
         return null
       }
       var fee =
-        5 / this.$store.state.chain.mbdPrice +
+        0.5 / this.$store.state.chain.mbdPrice +
         this.mbdSettleBalance.balance * 0.003
       return fee.toFixed(8)
     },
