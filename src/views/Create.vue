@@ -180,6 +180,7 @@ export default {
         font-weight: bold;
         color: #4cc9ce;
         background: linear-gradient(-16deg, #4195f6 0%, #00f9e5 100%);
+        background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }

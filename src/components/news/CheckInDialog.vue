@@ -1,11 +1,26 @@
 <template>
   <div>
-    <el-dialog custom-class="check-in-dialog" top="0vh" :fullscreen="true" :show-close="false" :visible.sync="show" width="789px">
-      <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
+    <el-dialog
+      custom-class="check-in-dialog"
+      top="0vh"
+      :fullscreen="true"
+      :show-close="false"
+      :visible.sync="show"
+      width="789px"
+    >
+      <img
+        style="width: 789px; height: 800px"
+        src="@/assets/images/news/gift-bg.png"
+      />
       <div class="content">
-        <div class="title">Daily Check-in Gift</div>
-        <img style="width: 244px;height: 256px;" src="@/assets/images/news/gift-icon.png" />
-        <el-button @click="handleCheckIn()" class="common-btn2">Get it</el-button>
+        <div class="title">{{ $t('news-detail.daily_check_gift') }}</div>
+        <img
+          style="width: 244px; height: 256px"
+          src="@/assets/images/news/gift-icon.png"
+        />
+        <el-button @click="handleCheckIn()" class="common-btn2">{{
+          $t('news-detail.get_id')
+        }}</el-button>
       </div>
     </el-dialog>
     <CheckRewardDialog ref="rewardDialog" :amount="rewardAmount" />
@@ -52,7 +67,7 @@ export default {
         .finally(() => {
           loadingInstance.close()
         })
-    }
+    },
   },
 }
 </script>

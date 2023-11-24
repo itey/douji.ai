@@ -47,14 +47,14 @@
             style="width: 13px; height: 9px"
             src="@/assets/images/news/true.png"
           />
-          <span>Subscribe</span>
+          <span>{{ $t('news-detail.subscribe') }}</span>
         </div>
         <div class="subscription light" v-else @click="handleSub()">
           <img
             style="width: 9px; height: 9px"
             src="@/assets/images/news/add.png"
           />
-          <span>Subscribe</span>
+          <span>{{ $t('news-detail.subscribe') }}</span>
         </div>
       </template>
     </div>

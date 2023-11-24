@@ -1,39 +1,71 @@
 <template>
   <div class="proposal-container">
     <div class="proposal-left">
-      <div class="proposal-left-title text-color">NFT DAO Proposal</div>
-      <div class="proposal-left-sub">
-        <span class="text-color">{{ tokenOwner | omitAddress }}</span> has initiated a proposato modify the content and rules
-        of this NFT at
-        <span class="text-color">{{ tokenInfo.vote.startTime | stamp2Time}}</span>. Pleasereview the proposal
-        before
-        <span class="text-color">{{ (Number(tokenInfo.vote.startTime) + Number(voteKeepTime)) | stamp2Time}}</span>. It expires. After that, the proposal
-        will be invalidated.
+      <div class="proposal-left-title text-color">
+        {{ $t('news-detail.dao_proposal') }}
       </div>
-      <div class="proposal-left-link" @click="$refs['nftStakeDialog'].showDialog()">View the latest NFT infomation >></div>
+      <div class="proposal-left-sub">
+        <span class="text-color">{{ tokenOwner | omitAddress }}</span>
+        {{ $t('news-detail.dao_proposal_initiated') }}
+        <span class="text-color">{{
+          tokenInfo.vote.startTime | stamp2Time
+        }}</span
+        >. {{ $t('news-detail.dao_proposal_review') }}
+        <span class="text-color">{{
+          (Number(tokenInfo.vote.startTime) + Number(voteKeepTime)) | stamp2Time
+        }}</span
+        >. {{ $t('news-detail.dao_proposal_invalidated') }}
+      </div>
+      <div
+        class="proposal-left-link"
+        @click="$refs['nftStakeDialog'].showDialog()"
+      >
+        {{ $t('news-detail.dao_view_latest') }}
+      </div>
     </div>
     <div class="proposal-right">
-      <div class="proposal-right-title">{{tokenInfo.vote.count}}/{{ this.tokenInfo.maxSupply }}</div>
+      <div class="proposal-right-title">
+        {{ tokenInfo.vote.count }}/{{ this.tokenInfo.maxSupply }}
+      </div>
       <div class="proposal-right-sub">
-        Threshold:
+        {{ $t('news-detail.dao_you_threshold') }}:
         <span class="text-color">{{ tokenInfo.mVoteCount }}</span>
       </div>
       <div class="proposal-right-btn">
-        <el-button style="width: 118px;height: 42px;" class="common-btn2" @click="handleApprove()">Approve</el-button>
-        <el-button style="margin-left: 24px;width: 118px;height: 42px;" class="common-btn2" :disabled="!canExecute" @click="handleExecute()">Execute</el-button>
         <el-button
-          v-if="userAccount && tokenOwner.toLocaleLowerCase() == userAccount.toLocaleLowerCase()"
-          style="margin-left: 24px;width: 118px;height: 42px;"
+          style="width: 118px; height: 42px"
+          class="common-btn2"
+          @click="handleApprove()"
+          >{{ $t('news-detail.dao_approve') }}</el-button
+        >
+        <el-button
+          style="margin-left: 24px; width: 118px; height: 42px"
+          class="common-btn2"
+          :disabled="!canExecute"
+          @click="handleExecute()"
+          >{{ $t('news-detail.dao_execute') }}</el-button
+        >
+        <el-button
+          v-if="
+            userAccount &&
+            tokenOwner.toLocaleLowerCase() == userAccount.toLocaleLowerCase()
+          "
+          style="margin-left: 24px; width: 118px; height: 42px"
           class="common-btn2"
           @click="handleCancel()"
-        >Cancel</el-button>
+          >{{ $t('news-detail.dao_cancel') }}</el-button
+        >
       </div>
       <div class="proposal-right-tip" v-if="userAccount">
-        Your Voting:
+        {{ $t('news-detail.dao_voting') }}:
         <span class="text-color">{{ userVoteCount }}</span>
       </div>
     </div>
-    <NftUpdateInfoDialog ref="nftStakeDialog" :tokenOwner="tokenOwner" :tokenId="tokenId" />
+    <NftUpdateInfoDialog
+      ref="nftStakeDialog"
+      :tokenOwner="tokenOwner"
+      :tokenId="tokenId"
+    />
   </div>
 </template>
 

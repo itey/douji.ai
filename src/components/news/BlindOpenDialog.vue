@@ -12,7 +12,7 @@
       @close="handleClose"
       width="789px"
     >
-      <div class="title" slot="title">Open Blind Box</div>
+      <div class="title" slot="title">{{ $t('news-detail.open_box') }}</div>
       <img
         style="width: 789px; height: 800px"
         src="@/assets/images/news/gift-bg.png"
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="label">
-          Open the blind box and you will 100% get the following rewards
+          {{ $t('news-detail.open_rewards') }}
         </div>
         <div class="blind-list">
           <div
@@ -58,13 +58,15 @@
           </div>
         </div>
         <div class="btn-container">
-          <el-button @click="openClick" class="btn-open">Open</el-button>
-          <el-button @click="giveUpClick" class="btn-give-up"
-            >Give Up</el-button
-          >
+          <el-button @click="openClick" class="btn-open">{{
+            $t('news-detail.open')
+          }}</el-button>
+          <el-button @click="giveUpClick" class="btn-give-up">{{
+            $t('news-detail.give_up')
+          }}</el-button>
         </div>
         <div class="blind-tip">
-          Open Blind Box Fee:
+          {{ $t('news-detail.open_fee') }}
           <span style="color: #ffffff">500 MBD</span>
         </div>
       </div>

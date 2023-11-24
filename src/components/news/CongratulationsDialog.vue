@@ -1,16 +1,38 @@
 <template>
-  <el-dialog custom-class="congratulations-dialog" top="0vh" :fullscreen="true" @open="onOpen" :visible.sync="show" width="789px">
-    <div class="title" slot="title">Congratulations</div>
-    <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
+  <el-dialog
+    custom-class="congratulations-dialog"
+    top="0vh"
+    :fullscreen="true"
+    @open="onOpen"
+    :visible.sync="show"
+    width="789px"
+  >
+    <div class="title" slot="title">
+      {{ $t('news-detail.congratulations') }}
+    </div>
+    <img
+      style="width: 789px; height: 800px"
+      src="@/assets/images/news/gift-bg.png"
+    />
     <template v-if="boxPrizes">
       <div class="content" v-if="boxPrizes.coin == 'MBD'">
-        <div class="tip">Your gift will be transferred to your pending settlement account</div>
-        <img style="width: 102px;height: 102px;" src="@/assets/images/news/mbd-icon.png" />
+        <div class="tip">
+          {{ $t('news-detail.gift_account') }}
+        </div>
+        <img
+          style="width: 102px; height: 102px"
+          src="@/assets/images/news/mbd-icon.png"
+        />
         <div class="value">{{ boxPrizes.amount }} MBD</div>
       </div>
       <div class="content" v-else>
-        <div class="tip">Your gift will be transferred to your pending settlement account</div>
-        <img style="width: 102px;height: 102px;" src="@/assets/images/news/bi-icon.png" />
+        <div class="tip">
+          {{ $t('news-detail.gift_account') }}
+        </div>
+        <img
+          style="width: 102px; height: 102px"
+          src="@/assets/images/news/bi-icon.png"
+        />
         <div class="value">{{ boxPrizes.amount }} BJXStar NFT</div>
       </div>
     </template>
@@ -83,6 +105,7 @@ export default {
       #00f9e5 48.2421875%,
       #14e7a9 83.3251953125%
     );
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

@@ -1,33 +1,62 @@
 <template>
-  <el-dialog custom-class="list-your-item-dialog" :visible.sync="show" @open="getUserOwned()" width="946px">
-    <div class="list-your-item-header text-color" slot="title">List Your Item</div>
+  <el-dialog
+    custom-class="list-your-item-dialog"
+    :visible.sync="show"
+    @open="getUserOwned()"
+    width="946px"
+  >
+    <div class="list-your-item-header text-color" slot="title">
+      {{ $t('news-detail.list_item') }}
+    </div>
     <div class="list-your-item-content">
       <div class="item-input-container">
-        <div class="item-label text-color">NFT Sale Price</div>
+        <div class="item-label text-color">
+          {{ $t('news-detail.sale_price') }}
+        </div>
         <div class="item-value">
           <div class="item-input">
-            <el-input v-model="salePrice" class="input" placeholder style="width: 200px;"></el-input>
+            <el-input
+              v-model="salePrice"
+              class="input"
+              placeholder
+              style="width: 200px"
+            ></el-input>
             <div class="item-unit">MBD</div>
           </div>
-          <div class="error-tip" v-if="error.salePrice">{{ error.salePrice }}</div>
-          <div class="item-tip" v-else>The minimum selling price of NFT must be greater than 0 MBD</div>
+          <div class="error-tip" v-if="error.salePrice">
+            {{ error.salePrice }}
+          </div>
+          <div class="item-tip" v-else>
+            {{ $t('news-detail.min_price_tip') }}
+          </div>
         </div>
       </div>
       <div class="item-input-container">
-        <div class="item-label text-color">Item Quantity</div>
+        <div class="item-label text-color">
+          {{ $t('news-detail.item_quantity') }}
+        </div>
         <div class="item-value">
           <div class="item-input">
-            <el-input v-model="saleQuantity" class="input" placeholder style="width: 200px;"></el-input>
+            <el-input
+              v-model="saleQuantity"
+              class="input"
+              placeholder
+              style="width: 200px"
+            ></el-input>
           </div>
-          <div class="error-tip" v-if="error.saleQuantity">{{ error.saleQuantity }}</div>
+          <div class="error-tip" v-if="error.saleQuantity">
+            {{ error.saleQuantity }}
+          </div>
           <div class="item-tip" v-else>
-            TMaximum NFT sale quantity
+            {{ $t('news-detail.max_quantity') }}
             <span class="text-color">{{ userOwned }}</span>
           </div>
         </div>
       </div>
       <div class="btn-container">
-        <el-button @click="handleCreate()" class="common-btn2">Create Order</el-button>
+        <el-button @click="handleCreate()" class="common-btn2">{{
+          $t('news-detail.create_order')
+        }}</el-button>
       </div>
     </div>
   </el-dialog>

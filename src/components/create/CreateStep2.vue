@@ -1,23 +1,31 @@
 <template>
   <div class="create-step2">
-    <div class="title">{{edit?'Step 2 Update Content':'Step 2 Wrete Content'}}</div>
+    <div class="title">
+      {{ edit ? $t('create.update_mold_2') : $t('create.create_mold_2') }}
+    </div>
     <div class="form-container">
       <div class="form-item">
-        <div class="form-label">Title*</div>
-        <div class="form-value">
-          <div>
-            <el-input @input="val => form.title = charFilter(val)" v-model="form.title" @change="checkItem('title')" class="input" maxlength="100"></el-input>
-          </div>
-          <div v-if="error.title" class="tip-error">{{ error.title }}</div>
-          <div v-else class="tip">Name of your content name</div>
-        </div>
-      </div>
-      <div class="form-item">
-        <div class="form-label">Description*</div>
+        <div class="form-label">{{ $t('create.title') }}*</div>
         <div class="form-value">
           <div>
             <el-input
-              @input="val => form.description = charFilter(val)"
+              @input="(val) => (form.title = charFilter(val))"
+              v-model="form.title"
+              @change="checkItem('title')"
+              class="input"
+              maxlength="100"
+            ></el-input>
+          </div>
+          <div v-if="error.title" class="tip-error">{{ error.title }}</div>
+          <div v-else class="tip">{{ $t('create.name') }}</div>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-label">{{ $t('create.description') }}*</div>
+        <div class="form-value">
+          <div>
+            <el-input
+              @input="(val) => (form.description = charFilter(val))"
               v-model="form.description"
               @change="checkItem('description')"
               class="input"
@@ -26,85 +34,134 @@
               maxlength="300"
             ></el-input>
           </div>
-          <div v-if="error.description" class="tip-error">{{ error.description }}</div>
-          <div v-else class="tip">Write some details about your content</div>
+          <div v-if="error.description" class="tip-error">
+            {{ error.description }}
+          </div>
+          <div v-else class="tip">{{ $t('create.write_detail_content') }}</div>
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">Cover Image*</div>
+        <div class="form-label">{{ $t('create.cover_img') }}*</div>
         <div class="form-value">
-          <el-upload accept=".png, .jpeg, .jpg, .gif" :show-file-list="false" class="form-upload" :on-change="fileChange" :auto-upload="false" action="#">
+          <el-upload
+            accept=".png, .jpeg, .jpg, .gif"
+            :show-file-list="false"
+            class="form-upload"
+            :on-change="fileChange"
+            :auto-upload="false"
+            action="#"
+          >
             <div class="form-upload-img" v-if="imageUrl">
               <img class="file-img" :src="imageUrl" />
             </div>
             <div class="form-upload-empty" v-else>
               <div class="form-upload-icon">+</div>
-              <div class="form-upload-tip">Upload image,support png,gif,jpg,jpeg,webp files</div>
+              <div class="form-upload-tip">
+                {{ $t('create.upload_img_limit') }}
+              </div>
             </div>
           </el-upload>
           <div v-if="error.image" class="tip-error">{{ error.image }}</div>
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">Tags*</div>
+        <div class="form-label">>{{ $t('create.tag') }}*</div>
         <div class="form-value">
           <div>
-            <el-tag class="tag" :key="tag" v-for="tag in tags" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
+            <el-tag
+              class="tag"
+              :key="tag"
+              v-for="tag in tags"
+              closable
+              :disable-transitions="false"
+              @close="handleClose(tag)"
+              >{{ tag }}</el-tag
+            >
             <el-input
               class="input-new-tag"
               v-if="inputVisible"
               v-model="inputValue"
-              @input="val => inputValue = charFilter(val)"
+              @input="(val) => (inputValue = charFilter(val))"
               ref="saveTagInput"
               size="small"
               @keyup.enter.native="handleInputConfirm"
               @blur="handleInputConfirm"
             ></el-input>
-            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Add</el-button>
+            <el-button
+              v-else
+              class="button-new-tag"
+              size="small"
+              @click="showInput"
+              >+ >{{ $t('create.add') }}</el-button
+            >
           </div>
           <div v-if="error.keyword" class="tip-error">{{ error.keyword }}</div>
-          <div v-else class="tip">Write some keywords about your content</div>
+          <div v-else class="tip">>{{ $t('create.write_detail_content') }}</div>
         </div>
       </div>
       <div class="form-item">
         <div class="form-label">
-          <div>Article content*</div>
+          <div>{{ $t('create.article_content') }}*</div>
           <div class="form-label-sub">
-            <img style="width: 14px;height: 14px;" src="@/assets/images/create/website.png" />
-            <div class="form-label-sub-text">Open to Access</div>
+            <img
+              style="width: 14px; height: 14px"
+              src="@/assets/images/create/website.png"
+            />
+            <div class="form-label-sub-text">
+              {{ $t('create.open_access') }}
+            </div>
           </div>
         </div>
         <div class="form-value">
-          <div style="width: 756px;">
+          <div style="width: 756px">
             <PubVditor :id="'1'" ref="contentPub" :pdata="form.openContent" />
           </div>
-          <div v-if="error.contentUrl" class="tip-error">{{ error.contentUrl }}</div>
-          <div v-else class="tip">Write some details about your content</div>
+          <div v-if="error.contentUrl" class="tip-error">
+            {{ error.contentUrl }}
+          </div>
+          <div v-else class="tip">{{ $t('create.write_detail_content') }}</div>
         </div>
       </div>
       <div class="form-item">
         <div class="form-label">
-          <div>Article content</div>
+          <div>{{ $t('create.article_content') }}</div>
           <div class="form-label-sub">
-            <img style="width: 14px;height: 14px;" src="@/assets/images/create/protect.png" />
-            <div class="form-label-sub-text">Protected</div>
+            <img
+              style="width: 14px; height: 14px"
+              src="@/assets/images/create/protect.png"
+            />
+            <div class="form-label-sub-text">{{ $t('create.protected') }}</div>
           </div>
         </div>
         <div class="form-value">
-          <div style="width: 756px;">
-            <PrivateVditor :id="'2'" ref="contentPrivate" :pdata="form.protectedContent" />
+          <div style="width: 756px">
+            <PrivateVditor
+              :id="'2'"
+              ref="contentPrivate"
+              :pdata="form.protectedContent"
+            />
           </div>
-          <div class="tip">Write some details about your content</div>
+          <div class="tip">{{ $t('create.write_detail_content') }}</div>
         </div>
       </div>
       <div class="btn-container" v-if="edit">
-        <el-button class="common-btn2" @click="backClick">Back</el-button>
-        <el-button class="common-btn2" @click="updateClick">Update</el-button>
+        <el-button class="common-btn2" @click="backClick">{{
+          $t('create.back')
+        }}</el-button>
+        <el-button class="common-btn2" @click="updateClick">{{
+          $t('create.update')
+        }}</el-button>
       </div>
       <div class="btn-container" v-else>
-        <el-button class="common-btn2" @click="backClick">Back</el-button>
-        <el-button class="common-btn2" @click="saveClick">Save</el-button>
-        <el-button class="common-btn2" @click="nextClick">Next</el-button>
+        <el-button class="common-btn2" @click="backClick">{{
+          $t('create.back')
+        }}</el-button>
+        <el-button class="common-btn2" @click="saveClick">{{
+          $t('create.save')
+        }}</el-button>
+        <el-button class="common-btn2" @click="nextClick">{{
+          $t('create.next')
+        }}</el-button>
       </div>
     </div>
   </div>
@@ -421,7 +478,7 @@ export default {
       }
     },
     charFilter(val) {
-      return val.replace(/(\s*$)/g, "")
+      return val.replace(/(\s*$)/g, '')
     },
   },
 }

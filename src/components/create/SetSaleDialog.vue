@@ -1,60 +1,109 @@
 <template>
-  <el-dialog custom-class="set-sale-dialog" top="0vh" :visible.sync="show" @open="onOpen" width="800px">
-    <div class="set-sale-header text-color" slot="title">Set NFT Sales Promotion</div>
+  <el-dialog
+    custom-class="set-sale-dialog"
+    top="0vh"
+    :visible.sync="show"
+    @open="onOpen"
+    width="800px"
+  >
+    <div class="set-sale-header text-color" slot="title">
+      {{ $t('create.set_promotion') }}
+    </div>
     <div class="set-sale-top">
       <el-form ref="form" :rules="rules" :model="form" label-position="top">
         <el-form-item>
-          <div class="label text-color">Allows licensed tokens to be purchased at discounted prices for NFTs</div>
+          <div class="label text-color">
+            {{ $t('create.allow_nfts') }}
+          </div>
           <el-switch v-model="form.isOpen"></el-switch>
         </el-form-item>
         <div class="set-sale-form">
-          <div class="set-sale-title">Licensed tokens information</div>
+          <div class="set-sale-title">{{ $t('create.licensed_info') }}</div>
           <el-form-item>
-            <div class="set-sale-label text-color">BSC Chain token standard</div>
+            <div class="set-sale-label text-color">
+              {{ $t('create.bsc_standard') }}
+            </div>
             <div class="set-sale-value">
               <div
                 class="type-item"
-                :class="{ light:item.value == form.sptType}"
+                :class="{ light: item.value == form.sptType }"
                 v-for="item in typeList"
                 :key="item.value"
                 @click="form.sptType = item.value"
-              >{{item.label}}</div>
+              >
+                {{ item.label }}
+              </div>
             </div>
           </el-form-item>
-          <div class="set-sale-label text-color">BSC Chain token smart contract address</div>
+          <div class="set-sale-label text-color">
+            {{ $t('create.bsc_contract') }}
+          </div>
           <el-form-item class="set-sale-value" prop="cAddress">
-            <el-input v-model="form.cAddress" class="input" placeholder style="width: 80%;"></el-input>
+            <el-input
+              v-model="form.cAddress"
+              class="input"
+              placeholder
+              style="width: 80%"
+            ></el-input>
             <!-- <i class="el-icon-circle-check" style="color: #00F9E5;margin-left: 4px;" v-if="isVerify"></i> -->
             <!-- <i class="el-icon-delete" @click="clearContract" style="color: #87A2B7;margin-left: 12px;" v-if="form.contract"></i> -->
             <!-- <div class="verify">Verify</div> -->
             <div class="set-sale-tip">
-              Alows oken smart contraces that support
+              {{ $t('create.allow_support') }}
               <span class="text-color">
-                BEP-20, BEP-721, and BEP-1155
-                standards
+                {{ $t('create.bep_standards') }}
               </span>
             </div>
           </el-form-item>
-          <template v-if="form.sptType==2">
-            <div class="set-sale-label text-color">Token ID</div>
+          <template v-if="form.sptType == 2">
+            <div class="set-sale-label text-color">
+              {{ $t('create.token_id') }}
+            </div>
             <el-form-item class="set-sale-value" prop="tokenId">
-              <el-input v-model="form.tokenId" class="input" placeholder style="width: 376px;"></el-input>
+              <el-input
+                v-model="form.tokenId"
+                class="input"
+                placeholder
+                style="width: 376px"
+              ></el-input>
             </el-form-item>
           </template>
-          <div class="set-sale-label text-color">How many discounts can a user get by holding one Licensed token?</div>
+          <div class="set-sale-label text-color">
+            {{ $t('create.how_many_token') }}
+          </div>
           <el-form-item class="set-sale-value" prop="discounts">
-            <el-input v-model="form.discounts" class="input" placeholder style="width: 271px;"></el-input>
+            <el-input
+              v-model="form.discounts"
+              class="input"
+              placeholder
+              style="width: 271px"
+            ></el-input>
           </el-form-item>
-          <div class="set-sale-label text-color">Discounts for purchasing NFTs</div>
+          <div class="set-sale-label text-color">
+            {{ $t('create.discounts_nft') }}
+          </div>
           <el-form-item class="set-sale-value" prop="discountsFee">
-            <el-input v-model="form.discountsFee" @blur="handleInputFee" class="input" placeholder style="width: 150px; float: left;"></el-input>
-            <div class="set-sale-unit" style="float: left;">%</div>
+            <el-input
+              v-model="form.discountsFee"
+              @blur="handleInputFee"
+              class="input"
+              placeholder
+              style="width: 150px; float: left"
+            ></el-input>
+            <div class="set-sale-unit" style="float: left">%</div>
           </el-form-item>
         </div>
       </el-form>
       <div class="btn-container">
-        <el-button class="common-border-btn" plain @click="show = false">Cancel</el-button>
-        <el-button @click="handleSubmit()" class="common-btn2" style="margin-left: 82px;">Apply</el-button>
+        <el-button class="common-border-btn" plain @click="show = false">{{
+          $t('create.cancel')
+        }}</el-button>
+        <el-button
+          @click="handleSubmit()"
+          class="common-btn2"
+          style="margin-left: 82px"
+          >{{ $t('create.apply') }}</el-button
+        >
       </div>
     </div>
   </el-dialog>

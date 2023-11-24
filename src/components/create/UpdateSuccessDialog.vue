@@ -1,18 +1,29 @@
 <template>
-  <el-dialog custom-class="mint-success-dialog" :visible.sync="show" width="945px">
-    <img style="width: 104px;height: 104px;margin-top: 85px;" src="@/assets/images/create/mint-success.png" />
-    <div class="mint-success-title">Congratulations</div>
-    <div class="mint-success-label text-color">You have successfully initiated a vote to amend the NFT profile!</div>
+  <el-dialog
+    custom-class="mint-success-dialog"
+    :visible.sync="show"
+    width="945px"
+  >
+    <img
+      style="width: 104px; height: 104px; margin-top: 85px"
+      src="@/assets/images/create/mint-success.png"
+    />
+    <div class="mint-success-title">{{ $t('create.congratulations') }}</div>
+    <div class="mint-success-label text-color">
+      {{ $t('create.update_success') }}
+    </div>
     <div class="mint-success-info">
       <div class="info-label">
-        <div class="info-label-item">Transcantion ID</div>
+        <div class="info-label-item">{{ $t('create.tx_id') }}</div>
       </div>
       <div class="info-value" v-if="tx.events">
         <div class="info-value-item">{{ tx.transactionHash }}</div>
       </div>
     </div>
     <div class="btn-container">
-      <el-button @click="toViewNft()" class="common-btn2">View NFT</el-button>
+      <el-button @click="toViewNft()" class="common-btn2">{{
+        $t('create.view_nft')
+      }}</el-button>
     </div>
   </el-dialog>
 </template>

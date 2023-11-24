@@ -1,89 +1,141 @@
 <template>
   <div class="create-step3">
-    <div class="title text-color">Step 3 Mint NFT</div>
+    <div class="title text-color">{{ $t('create.step3_mint') }}</div>
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
           <div class="form-title text-color">{{ form.title }}</div>
-          <img style="width: 939px;height: 532px;margin-top:50px;" :src="form.image" />
+          <img
+            style="width: 939px; height: 532px; margin-top: 50px"
+            :src="form.image"
+          />
           <div class="form-desc">{{ form.description }}</div>
-          <div class="form-label-sub" style="margin-top: 22px;">
-            <img style="width: 28px;height: 28px;" src="@/assets/images/create/website.png" />
-            <div class="form-label-sub-text">Open to Access</div>
+          <div class="form-label-sub" style="margin-top: 22px">
+            <img
+              style="width: 28px; height: 28px"
+              src="@/assets/images/create/website.png"
+            />
+            <div class="form-label-sub-text">
+              {{ $t('create.open_access') }}
+            </div>
           </div>
           <div class="form-content text-color">
             <div class="md-reader" v-html="pubContent"></div>
           </div>
           <div class="form-label-sub" v-if="privateContent">
-            <img style="width: 28px;height: 28px;" src="@/assets/images/create/protect.png" />
-            <div class="form-label-sub-text">Protected</div>
+            <img
+              style="width: 28px; height: 28px"
+              src="@/assets/images/create/protect.png"
+            />
+            <div class="form-label-sub-text">{{ $t('create.protected') }}</div>
           </div>
           <div class="form-content text-color" v-if="privateContent">
             <div class="md-reader" v-html="privateContent"></div>
           </div>
           <div class="form-tag">
-            <div class="form-tag-label text-color">Tags:</div>
-            <div class="form-tag-item text-color" v-for="(item,index) in form.keyword" :key="index">{{ item }}</div>
+            <div class="form-tag-label text-color">{{ $t('create.tag') }}:</div>
+            <div
+              class="form-tag-item text-color"
+              v-for="(item, index) in form.keyword"
+              :key="index"
+            >
+              {{ item }}
+            </div>
           </div>
         </div>
         <div class="form-right">
           <div class="form-attr-container">
-            <div class="form-attr-title text-color">DOUJI NFT Attributes</div>
+            <div class="form-attr-title text-color">
+              {{ $t('create.attributes') }}
+            </div>
             <div class="form-attr-list">
               <div class="form-attr-item">
-                <div class="form-attr-label">Content Type</div>
+                <div class="form-attr-label">
+                  {{ $t('create.content_type') }}
+                </div>
                 <div class="form-attr-value">{{ form.contentType }}</div>
               </div>
               <div class="form-attr-item">
-                <div class="form-attr-label">Category</div>
+                <div class="form-attr-label">{{ $t('create.category') }}</div>
                 <div class="form-attr-value">{{ form.category }}</div>
               </div>
               <div class="form-attr-item" v-if="form.prompt">
-                <div class="form-attr-label">Platform</div>
+                <div class="form-attr-label">{{ $t('create.platform') }}</div>
                 <div class="form-attr-value">{{ form.prompt }}</div>
               </div>
               <div class="form-attr-item" v-if="form.language">
-                <div class="form-attr-label">Language</div>
+                <div class="form-attr-label">{{ $t('create.language') }}</div>
                 <div class="form-attr-value">{{ form.language }}</div>
               </div>
               <div class="form-attr-item">
-                <div class="form-attr-label">Max Supply</div>
-                <div class="form-attr-value">{{ form.maxSupply | toLocalString}}</div>
+                <div class="form-attr-label">{{ $t('create.max_supply') }}</div>
+                <div class="form-attr-value">
+                  {{ form.maxSupply | toLocalString }}
+                </div>
               </div>
               <div class="form-attr-item">
-                <div class="form-attr-label">Available Supply</div>
-                <div class="form-attr-value">{{ form.maxSupply | toLocalString }}</div>
+                <div class="form-attr-label">
+                  {{ $t('create.avail_supply') }}
+                </div>
+                <div class="form-attr-value">
+                  {{ form.maxSupply | toLocalString }}
+                </div>
               </div>
               <div class="form-attr-item">
-                <div class="form-attr-label">Initial Mint Quantity</div>
-                <div class="form-attr-value">{{ form.initialQuantity | toLocalString }}</div>
+                <div class="form-attr-label">
+                  {{ $t('create.initial_mint_qu') }}
+                </div>
+                <div class="form-attr-value">
+                  {{ form.initialQuantity | toLocalString }}
+                </div>
               </div>
             </div>
           </div>
           <div class="form-attr-container">
-            <div class="form-attr-title text-color">Primary Market</div>
+            <div class="form-attr-title text-color">
+              {{ $t('create.primary_market') }}
+            </div>
             <div class="form-attr-market">
               <div class="form-attr-available">
-                Available :
-                <span class="text-color">{{ form.maxSupply | toLocalString }}</span>
+                {{ $t('create.available') }} :
+                <span class="text-color">{{
+                  form.maxSupply | toLocalString
+                }}</span>
               </div>
               <div class="form-attr-mbd">
-                <div class="mbd-value text-color">{{ form.initialPrice }} MBD</div>
-                <div class="form-attr-mbd-value">≈${{ (form.initialPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
+                <div class="mbd-value text-color">
+                  {{ form.initialPrice }} MBD
+                </div>
+                <div class="form-attr-mbd-value">
+                  ≈${{
+                    (form.initialPrice * $store.state.chain.mbdPrice)
+                      | decimalPlace8
+                  }}
+                </div>
               </div>
-              <el-button disabled class="common-btn2 form-attr-mint">Mint</el-button>
+              <el-button disabled class="common-btn2 form-attr-mint">{{
+                $t('create.mint')
+              }}</el-button>
             </div>
           </div>
         </div>
       </div>
       <div class="form-add">
         <div class="btn-container" v-if="!txObject || !txObject.status">
-          <el-button class="common-btn2" @click="backClick">Back</el-button>
-          <el-button class="common-btn2" @click="mintClick">Mint</el-button>
+          <el-button class="common-btn2" @click="backClick">{{
+            $t('create.mint')
+          }}</el-button>
+          <el-button class="common-btn2" @click="mintClick">{{
+            $t('create.back')
+          }}</el-button>
         </div>
       </div>
     </div>
-    <mint-success-dialog ref="successDialog" @close="closeDialog()" :tx="txObject"></mint-success-dialog>
+    <mint-success-dialog
+      ref="successDialog"
+      @close="closeDialog()"
+      :tx="txObject"
+    ></mint-success-dialog>
   </div>
 </template>
 

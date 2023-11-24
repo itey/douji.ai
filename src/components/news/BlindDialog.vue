@@ -11,19 +11,32 @@
     @open="onOpen"
     width="789px"
   >
-    <div class="title" slot="title">Receive Blind Box</div>
-    <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
+    <div class="title" slot="title">{{ $t('news-detail.receive_box') }}</div>
+    <img
+      style="width: 789px; height: 800px"
+      src="@/assets/images/news/gift-bg.png"
+    />
     <div class="content">
       <div class="time-container">
-        <img style="width: 38px;height: 38px;" src="@/assets/images/news/blind-date.png" />
+        <img
+          style="width: 38px; height: 38px"
+          src="@/assets/images/news/blind-date.png"
+        />
         <div class="time">
           <countdown v-if="showTimer" :time="leftTime" @end="onFinished()">
-            <template slot-scope="{ totalSeconds }">{{ totalSeconds }}</template>
+            <template slot-scope="{ totalSeconds }">{{
+              totalSeconds
+            }}</template>
           </countdown>
         </div>
       </div>
-      <img style="width: 388px;height: 347px;" src="@/assets/images/news/blind-box-icon.png" />
-      <el-button @click="handleReceiveBox()" class="btn">Receive</el-button>
+      <img
+        style="width: 388px; height: 347px"
+        src="@/assets/images/news/blind-box-icon.png"
+      />
+      <el-button @click="handleReceiveBox()" class="btn">{{
+        $t('news-detail.receive')
+      }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -32,7 +45,7 @@
 import {
   getBlindBoxFlagCache,
   setBlindBoxCache,
-  setBlindBoxFlagState
+  setBlindBoxFlagState,
 } from '@/utils/common'
 import { getBoxContract } from '@/utils/web3/operator'
 import { getBlindBox, contractGetBox } from '@/utils/http'
@@ -58,7 +71,7 @@ export default {
     onOpen() {
       this.boxFlag = getBlindBoxFlagCache(this.$store.state.user.userId)
       const endTime = Number(this.boxFlag.time) + 120000
-      this.leftTime =  endTime - new Date().getTime()
+      this.leftTime = endTime - new Date().getTime()
       if (this.leftTime <= 0) {
         this.onFinished()
       } else {
@@ -70,28 +83,32 @@ export default {
       if (this.userInfo.isge8model) {
         // 合约接收
         var loadingInstance = this.$loading({
-            background: 'rgba(0, 0, 0, 0.8)',
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        getBoxContract(this.tokenId)
+          .then((txJson) => {
+            const txId = txJson.transactionHash
+            contractGetBox(txId)
+              .then((r) => {
+                if (r.code == 1) {
+                  setBlindBoxCache(this.$store.state.user.userId, 1)
+                  this.show = false
+                  this.$emit('handleReceive')
+                } else {
+                  console.log(r.message)
+                  this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
+                  loadingInstance.close()
+                }
+              })
+              .catch((e) => {
+                this.$toast.error(e)
+                loadingInstance.close()
+              })
           })
-        getBoxContract(this.tokenId).then(txJson => {
-          const txId = txJson.transactionHash
-          contractGetBox(txId).then((r) => {
-            if (r.code == 1) {
-              setBlindBoxCache(this.$store.state.user.userId, 1)
-              this.show = false
-              this.$emit('handleReceive')
-            } else {
-              console.log(r.message)
-              this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
-              loadingInstance.close()
-            }
-          }).catch(e => {
+          .catch((e) => {
             this.$toast.error(e)
             loadingInstance.close()
           })
-        }).catch(e => {
-          this.$toast.error(e)
-          loadingInstance.close()
-        })
       } else {
         getBlindBoxSign().then((signed) => {
           var loadingInstance = this.$loading({
@@ -118,7 +135,6 @@ export default {
             })
         })
       }
-      
     },
     showDialog() {
       if (!this.show) {
@@ -127,19 +143,13 @@ export default {
     },
     /** 倒计时结束 */
     onFinished() {
-      setBlindBoxFlagState(
-        this.$store.state.user.userId,
-        true
-      )
+      setBlindBoxFlagState(this.$store.state.user.userId, true)
       this.showTimer = false
       this.show = false
     },
     /** 用户关闭 */
     handleClose() {
-      setBlindBoxFlagState(
-        this.$store.state.user.userId,
-        true
-      )
+      setBlindBoxFlagState(this.$store.state.user.userId, true)
       this.show = false
     },
   },

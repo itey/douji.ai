@@ -1,31 +1,73 @@
 <template>
-  <div class="form-attr-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
+  <div
+    class="form-attr-container"
+    v-loading="loading"
+    element-loading-background="rgba(0, 0, 0, 0.3)"
+  >
     <div class="form-attr-title">
-      <div class="text-color">Secondary Market</div>
+      <div class="text-color">{{ $t('news-detail.secondary_market') }}</div>
       <div class="form-attr-action" @click="handleListOrder()">
-        + List Your
-        item
+        + {{ $t('news-detail.list_item') }}
       </div>
     </div>
     <div class="form-second-market">
-      <div class="second-market-column" style="width: 130px;">
-        <div class="second-market-header" style="padding-left: 14px;">From</div>
-        <div class="second-market-td" style="padding-left: 14px;" v-for="(item,index) in nftOrderList" :key="index">{{ item.owner | omitAddress }}</div>
+      <div class="second-market-column" style="width: 130px">
+        <div class="second-market-header" style="padding-left: 14px">
+          {{ $t('news-detail.from') }}
+        </div>
+        <div
+          class="second-market-td"
+          style="padding-left: 14px"
+          v-for="(item, index) in nftOrderList"
+          :key="index"
+        >
+          {{ item.owner | omitAddress }}
+        </div>
       </div>
-      <div class="second-market-column" style="text-align: right;width: 91px;">
-        <div class="second-market-header">Price(MBD)</div>
-        <div class="second-market-td" v-for="(item,index) in nftOrderList" :key="index">{{ item.price }}</div>
+      <div class="second-market-column" style="text-align: right; width: 91px">
+        <div class="second-market-header">{{ $t('news-detail.price') }}</div>
+        <div
+          class="second-market-td"
+          v-for="(item, index) in nftOrderList"
+          :key="index"
+        >
+          {{ item.price }}
+        </div>
       </div>
-      <div class="second-market-column" style="text-align: right;width: 104px;">
-        <div class="second-market-header" style="padding-right: 12px;">Available</div>
-        <div class="second-market-td" style="padding-right: 12px;" v-for="(item,index) in nftOrderList" :key="index">{{ item.tokenValue }}</div>
+      <div class="second-market-column" style="text-align: right; width: 104px">
+        <div class="second-market-header" style="padding-right: 12px">
+          {{ $t('news-detail.available') }}
+        </div>
+        <div
+          class="second-market-td"
+          style="padding-right: 12px"
+          v-for="(item, index) in nftOrderList"
+          :key="index"
+        >
+          {{ item.tokenValue }}
+        </div>
       </div>
-      <div class="second-market-column" style="width: 60px;">
+      <div class="second-market-column" style="width: 60px">
         <div class="second-market-header"></div>
-        <div class="second-market-td" style="font-size: 12px;" v-for="(item,index) in nftOrderList" :key="index">
+        <div
+          class="second-market-td"
+          style="font-size: 12px"
+          v-for="(item, index) in nftOrderList"
+          :key="index"
+        >
           <div class="second-btn">
-            <span v-if="item.owner != userAccount" style="color: #00F9E5;" @click="handleSwapOrder(item)">Buy</span>
-            <span v-else style="color: #92B5DE;" @click="handleCancelOrder(item.ordeId)">Cancel</span>
+            <span
+              v-if="item.owner != userAccount"
+              style="color: #00f9e5"
+              @click="handleSwapOrder(item)"
+              >{{ $t('news-detail.buy') }}</span
+            >
+            <span
+              v-else
+              style="color: #92b5de"
+              @click="handleCancelOrder(item.ordeId)"
+              >{{ $t('news-detail.cancel') }}</span
+            >
           </div>
         </div>
       </div>

@@ -1,33 +1,59 @@
 <template>
-  <el-dialog custom-class="set-dao-dialog" :visible.sync="show" width="800px" @open="onOpen()">
-    <div class="set-dao-header text-color" slot="title">Set NFT DAO Governance</div>
+  <el-dialog
+    custom-class="set-dao-dialog"
+    :visible.sync="show"
+    width="800px"
+    @open="onOpen()"
+  >
+    <div class="set-dao-header text-color" slot="title">
+      {{ $t('create.set_dao') }}
+    </div>
     <div class="set-dao-top">
       <el-form ref="form" :rules="rules" :model="form" label-position="top">
         <el-form-item prop="daoFee">
-          <div class="label text-color">NFT DAO Earnings</div>
-          <div class="set-dao-value" style="margin-left: 0;">
-            <el-input v-model="form.daoFee" @blur="handleInputFee" class="input" placeholder style="width: 72px;"></el-input>
+          <div class="label text-color">{{ $t('create.dao_earn') }}</div>
+          <div class="set-dao-value" style="margin-left: 0">
+            <el-input
+              v-model="form.daoFee"
+              @blur="handleInputFee"
+              class="input"
+              placeholder
+              style="width: 72px"
+            ></el-input>
             <div class="set-dao-unit">%</div>
           </div>
-          <div class="set-dao-tip" style="margin-left: 0;">
-            The NFT DAO members of this item will receive
-            <span class="text-color">{{form.daoFee}}%</span> for every sale
+          <div class="set-dao-tip" style="margin-left: 0">
+            {{ $t('create.dao_member_receive') }}
+            <span class="text-color">{{ form.daoFee }}%</span>
+            {{ $t('create.for_sale') }}
           </div>
         </el-form-item>
         <el-form-item prop="mVoteCount">
-          <div class="label text-color">NFT modify execution mVoteCount</div>
-          <div class="set-dao-value" style="margin-left: 0;">
-            <el-input v-model="form.mVoteCount" class="input" placeholder style="width: 105px;"></el-input>
+          <div class="label text-color">{{ $t('create.execution_vote') }}</div>
+          <div class="set-dao-value" style="margin-left: 0">
+            <el-input
+              v-model="form.mVoteCount"
+              class="input"
+              placeholder
+              style="width: 105px"
+            ></el-input>
           </div>
-          <div
-            class="set-dao-tip"
-            style="margin-left: 0;"
-          >Modification requests can only be executed when all voting weights of the NFT DAO are greater than or equal to the value.</div>
+          <div class="set-dao-tip" style="margin-left: 0">
+            {{ $t('create.modification_value') }}
+          </div>
         </el-form-item>
       </el-form>
       <div class="btn-container">
-        <el-button class="common-border-btn" plain @click="show = false">Cancel</el-button>
-        <el-button :disabled="!isModification" class="common-btn2" style="margin-left: 59px;" @click="handleSubmit()">Apply</el-button>
+        <el-button class="common-border-btn" plain @click="show = false">{{
+          $t('create.cancel')
+        }}</el-button>
+        <el-button
+          :disabled="!isModification"
+          class="common-btn2"
+          style="margin-left: 59px"
+          @click="handleSubmit()"
+          >{{ $t('create.apply') }}</el-button
+        >
       </div>
     </div>
   </el-dialog>

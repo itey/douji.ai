@@ -201,14 +201,59 @@ export default {
     "update": "Update",
     "save": "Save",
     "next": "Next",
-
-
+    "update_mold_2": "Step 2 Update Content",
+    "create_mold_2": "Step 2 Write Content",
+    "title": "Title",
+    "name": "Name of your content name",
+    "description": "Description",
+    "write_detail_content": "Write some details about your content",
+    "cover_img": "Cover Image",
+    "upload_img_limit": "Upload image,support png,gif,jpg,jpeg,webp files",
+    "tag": "Tags",
+    "add": "Add",
+    "write_content_tip": "Write some keywords about your content",
+    "article_content": "Article content",
+    "open_access": "Open to Access",
+    "protected": "Protected",
+    "step3_mint": "Step 3 Mint NFT",
+    "attributes": "DOUJI NFT Attributes",
+    "content_type": "Content Type",
+    "max_supply": "Max Supply",
+    "avail_supply": "Available Supply",
+    "initial_mint_qu": "Initial Mint Quantity",
+    "primary_market": "Primary Market",
+    "available": "Available",
+    "mint": "Mint",
+    "congratulations": "Congratulations",
+    "minted_success": "Your content NFT has been minted successfully!",
+    "tx_id": "Transaction ID",
+    "token_address": "Token Address",
+    "token_id": "Token ID",
+    "view_nft": "View NFT",
+    "set_dao": "Set NFT DAO Governance",
+    "dao_earn": "NFT DAO Earnings",
+    "dao_member_receive": "The NFT DAO members of this item will receive",
+    "for_sale": "for every sale",
+    "execution_vote-count": "NFT modify execution mVoteCount",
+    "modification_value": "Modification requests can only be executed when all voting weights of the NFT DAO are greater than or equal to the value.",
+    "cancel": "Cancel",
+    "apply": "Apply",
+    "set_promotion": "Set NFT Sales Promotion",
+    "allow_nfts": "Allows licensed tokens to be purchased at discounted prices for NFTs",
+    "licensed_info": "Licensed tokens information",
+    "bsc_standard": "BSC Chain token standard",
+    "bsc_contract": "BSC Chain token smart contract address",
+    "allow_support": "Allows token smart contracts that support",
+    "bep_standards": "BEP-20, BEP-721, and BEP-1155 standards",
+    "how_many_token": "How many discounts can a user get by holding one Licensed token?",
+    "discounts_nft": "Discounts for purchasing NFTs",
+    "update_success": "You have successfully initiated a vote to amend the NFT profile!",
 
 
   },
   "news": {
     "home": "Home",
-    "news": "News"
+    "news": "News",
   },
   "news-detail": {
     "have_no_nft":
@@ -267,6 +312,68 @@ export default {
     "like_success": "Thank you for liking it",
     "collect_success":
       "Collect successfully.",
+    "receive_box": "Receive Blind Box",
+    "receive": "Receive",
+    "open_box": "Open Blind Box",
+    "open_rewards": "Open the blind box and you will 100% get the following rewards",
+    "open": "Open",
+    "give_up": "Give Up",
+    "open_fee": "Open Blind Box Fee:",
+    "daily_check_gift": "Daily Check-in Gift",
+    "get_id": "Get it",
+    "congratulations": "Congratulations",
+    "gift_account": "Your gift will be transferred to your pending settlement account",
+    "list_item": "List Your Item",
+    "sale_price": "NFT Sale Price",
+    "min_price_tip": "The minimum selling price of NFT must be greater than 0 MBD",
+    "item_quantity": "Item Quantity",
+    "max_quantity": "Maximum NFT sale quantity",
+    "create_order": "Create Order",
+    "secondary_market": "Secondary Market",
+    "from": "From",
+    "price": "Price(MBD)",
+    "available": "Available",
+    "buy": "Buy",
+    "cancel": "Cancel",
+    "attributes": "DOUJI NFT Attributes",
+    "content_type": "Content Type",
+    "category": "Category",
+    "platform": "Platform",
+    "language": "Language",
+    "max_supply": "Max Supply",
+    "available_supply": "Available Supply",
+    "curr_supply": "Current Supply",
+    "subscribe": "Subscribe",
+    "dao_governance": "DOUJI NFT DAO Governance",
+    "dao_earn": "NFT DAO Earnings",
+    "dao_share_tx": "The amount of share NFT DAO receives for each NFT transaction",
+    "dao_gov": "NFT DAO Governance",
+    "dao_threshold": "Execution Threshold",
+    "dao_dividend_pool": "NFT Staker Bonus Dividend Pool",
+    "dao_balance": "Balance",
+    "dao_all_staked": "All members NFT Staked",
+    "dao_you_staked": "You NFT Staked",
+    "dao_retrieve_num": "Retrieve BSC Block Number",
+    "dao_curr_num": "Current BSC Block Number",
+    "dao_stake": "Stake",
+    "dao_retrieve": "Retrieve",
+    "dao_proposal": "NFT DAO Proposal",
+    "dao_proposal_initiated": "has initiated a proposal modify the content and rules of this NFT at",
+    "dao_proposal_review": "Please review the proposal before",
+    "dao_proposal_invalidated": "It expires. After that, the proposal will be invalidated.",
+    "dao_view_latest": "View the latest NFT information >>",
+    "dao_you_threshold": "Threshold",
+    "dao_approve": "Approve",
+    "dao_execute": "Execute",
+    "dao_cancel": "Cancel",
+    "dao_voting": "Your Voting",
+
+
+
+
+
+
+
   },
   "marketplace": {
     "home": "Home",
@@ -281,7 +388,15 @@ export default {
     "sort_late_time": "Late creation time",
     "sort_early_time": "Early creation time",
     "sort_high_price": "High price",
-    "sort_low_price": "Low price"
+    "sort_low_price": "Low price",
+
+
+
+
+
+
+
+
   },
   "user": {
     "profile_save_success": "Profile saved successfully.",

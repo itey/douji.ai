@@ -1,10 +1,27 @@
 <template>
-  <el-dialog custom-class="congratulations-dialog" :fullscreen="true" top="0vh" @open="onOpen" :visible.sync="show" width="789px">
-    <div class="title" slot="title">Congratulations</div>
-    <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
+  <el-dialog
+    custom-class="congratulations-dialog"
+    :fullscreen="true"
+    top="0vh"
+    @open="onOpen"
+    :visible.sync="show"
+    width="789px"
+  >
+    <div class="title" slot="title">
+      {{ $t('news-detail.congratulations') }}
+    </div>
+    <img
+      style="width: 789px; height: 800px"
+      src="@/assets/images/news/gift-bg.png"
+    />
     <div class="content">
-      <div class="tip">Your gift will be transferred to your pending settlement account</div>
-      <img style="width: 102px;height: 102px;" src="@/assets/images/news/mbd-icon.png" />
+      <div class="tip">
+        {{ $t('news-detail.gift_account') }}
+      </div>
+      <img
+        style="width: 102px; height: 102px"
+        src="@/assets/images/news/mbd-icon.png"
+      />
       <div class="value">{{ amount }} MBD</div>
     </div>
   </el-dialog>

@@ -1,34 +1,42 @@
 <template>
   <div class="form-attr-container">
-    <div class="form-attr-title text-color">DOUJI NFT Attributes</div>
+    <div class="form-attr-title text-color">
+      {{ $t('news-detail.attributes') }}
+    </div>
     <div class="form-attr-list">
       <div class="form-attr-item">
-        <div class="form-attr-label">Content Type</div>
+        <div class="form-attr-label">{{ $t('news-detail.content_type') }}</div>
         <div class="form-attr-value">{{ metadata.contentType }}</div>
       </div>
       <div class="form-attr-item">
-        <div class="form-attr-label">Category</div>
+        <div class="form-attr-label">{{ $t('news-detail.category') }}</div>
         <div class="form-attr-value">{{ metadata.category }}</div>
       </div>
       <div class="form-attr-item" v-if="metadata.prompt">
-        <div class="form-attr-label">Platform</div>
+        <div class="form-attr-label">{{ $t('news-detail.platform') }}</div>
         <div class="form-attr-value">{{ metadata.prompt }}</div>
       </div>
       <div class="form-attr-item" v-if="metadata.language">
-        <div class="form-attr-label">Language</div>
+        <div class="form-attr-label">{{ $t('news-detail.language') }}</div>
         <div class="form-attr-value">{{ metadata.language }}</div>
       </div>
       <div class="form-attr-item">
-        <div class="form-attr-label">Max Supply</div>
-        <div class="form-attr-value">{{ tokensInfo.maxSupply | toLocalString}}</div>
+        <div class="form-attr-label">{{ $t('news-detail.max_supply') }}</div>
+        <div class="form-attr-value">
+          {{ tokensInfo.maxSupply | toLocalString }}
+        </div>
       </div>
       <div class="form-attr-item">
-        <div class="form-attr-label">Available Supply</div>
+        <div class="form-attr-label">
+          {{ $t('news-detail.available_supply') }}
+        </div>
         <div class="form-attr-value">{{ availableSupply | toLocalString }}</div>
       </div>
       <div class="form-attr-item">
-        <div class="form-attr-label">Current Supply</div>
-        <div class="form-attr-value">{{ tokensInfo.currentSupply | toLocalString }}</div>
+        <div class="form-attr-label">{{ $t('news-detail.curr_supply') }}</div>
+        <div class="form-attr-value">
+          {{ tokensInfo.currentSupply | toLocalString }}
+        </div>
       </div>
     </div>
   </div>

@@ -1,50 +1,100 @@
 <template>
-  <div class="form-attr-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
-    <div class="form-attr-title text-color">DOUJI NFT DAO Governance</div>
+  <div
+    class="form-attr-container"
+    v-loading="loading"
+    element-loading-background="rgba(0, 0, 0, 0.3)"
+  >
+    <div class="form-attr-title text-color">
+      {{ $t('news-detail.dao_governance') }}
+    </div>
     <div class="form-dao">
-      <div class="dao-title text-color">NFT DAO Earnings</div>
-      <div class="dao-income-item" style="margin-top: 22px;">
-        <div class="dao-income-label">The amount of share NFT DAO receives for each NFT transaction</div>
-        <div class="dao-income-value text-color">{{ daoFeeShow | fee2Percent }}</div>
+      <div class="dao-title text-color">{{ $t('news-detail.dao_earn') }}</div>
+      <div class="dao-income-item" style="margin-top: 22px">
+        <div class="dao-income-label">{{ $t('news-detail.dao_share_tx') }}</div>
+        <div class="dao-income-value text-color">
+          {{ daoFeeShow | fee2Percent }}
+        </div>
       </div>
-      <div class="dao-title text-color" style="margin-top: 22px;">NFT DAO Governance</div>
-      <div class="dao-income-item" style="margin-top: 22px;">
-        <div class="dao-income-label">Execution Threshold</div>
+      <div class="dao-title text-color" style="margin-top: 22px">
+        {{ $t('news-detail.dao_gov') }}
+      </div>
+      <div class="dao-income-item" style="margin-top: 22px">
+        <div class="dao-income-label">
+          {{ $t('news-detail.dao_threshold') }}
+        </div>
         <div class="dao-income-value text-color">{{ thresholdCount }}</div>
       </div>
-      <div class="dao-title text-color" style="margin-top: 39px;">NFT Staker Bonus Dividend Pool</div>
+      <div class="dao-title text-color" style="margin-top: 39px">
+        {{ $t('news-detail.dao_dividend_pool') }}
+      </div>
       <div class="dividend-pool">
         <div class="dividend-pool-item">
-          <div class="dividend-pool-label">Balance</div>
-          <div class="dividend-pool-value text-color">{{ settlePoolBalance | toFixedString }} MBD</div>
+          <div class="dividend-pool-label">
+            {{ $t('news-detail.dao_balance') }}
+          </div>
+          <div class="dividend-pool-value text-color">
+            {{ settlePoolBalance | toFixedString }} MBD
+          </div>
         </div>
         <div class="dividend-pool-item">
-          <div class="dividend-pool-label">All members NFT Staked</div>
-          <div class="dividend-pool-value text-color">{{ totalStakeCount }}</div>
+          <div class="dividend-pool-label">
+            {{ $t('news-detail.dao_all_staked') }}
+          </div>
+          <div class="dividend-pool-value text-color">
+            {{ totalStakeCount }}
+          </div>
         </div>
         <template v-if="$store.state.user.account">
           <div class="dividend-pool-item">
-            <div class="dividend-pool-label">You NFT Staked</div>
-            <div class="dividend-pool-value text-color" v-if="userStakeInfo && userStakeInfo[0]">{{ userStakeInfo[0] }} ({{ stakePercent }})</div>
+            <div class="dividend-pool-label">
+              {{ $t('news-detail.dao_you_staked') }}
+            </div>
+            <div
+              class="dividend-pool-value text-color"
+              v-if="userStakeInfo && userStakeInfo[0]"
+            >
+              {{ userStakeInfo[0] }} ({{ stakePercent }})
+            </div>
             <div class="dividend-pool-value text-color" v-else>0 (0.00%)</div>
           </div>
           <div class="dividend-pool-item">
-            <div class="dividend-pool-label">Retrieve BSC Block Number</div>
-            <div class="dividend-pool-value text-color">{{ userStakeInfo[1] != '0' ? Number(userStakeInfo[1]) + Number(cycleLen) : 'No stake' }}</div>
+            <div class="dividend-pool-label">
+              {{ $t('news-detail.dao_retrieve_num') }}
+            </div>
+            <div class="dividend-pool-value text-color">
+              {{
+                userStakeInfo[1] != '0'
+                  ? Number(userStakeInfo[1]) + Number(cycleLen)
+                  : 'No stake'
+              }}
+            </div>
           </div>
           <div class="dividend-pool-item">
-            <div class="dividend-pool-label">Current BSC Block Number</div>
-            <div class="dividend-pool-value text-color">{{ currentHeight }}</div>
+            <div class="dividend-pool-label">
+              {{ $t('news-detail.dao_curr_num') }}
+            </div>
+            <div class="dividend-pool-value text-color">
+              {{ currentHeight }}
+            </div>
           </div>
         </template>
       </div>
       <div class="dao-btn-container" v-if="operable">
-        <div class="dao-btn" @click="handleOpenStake()">Stake</div>
-        <div class="dao-btn-border" @click="handleRetrieve()">Retrieve</div>
+        <div class="dao-btn" @click="handleOpenStake()">
+          {{ $t('news-detail.dao_stake') }}
+        </div>
+        <div class="dao-btn-border" @click="handleRetrieve()">
+          {{ $t('news-detail.dao_retrieve') }}
+        </div>
       </div>
     </div>
     <StakeDialog :tokenId="tokenId" :userOwned="userOwned" ref="stakeDialog" />
-    <RetrieveDialog :tokenId="tokenId" :blockHeight="currentHeight" :userStakeInfo="userStakeInfo" ref="retrieveDialog" />
+    <RetrieveDialog
+      :tokenId="tokenId"
+      :blockHeight="currentHeight"
+      :userStakeInfo="userStakeInfo"
+      ref="retrieveDialog"
+    />
   </div>
 </template>
 
