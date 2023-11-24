@@ -117,6 +117,8 @@ const user = {
                 }
                 return reject(r.message)
               }
+            }).catch(e => {
+              reject(e)
             })
           })
         } else {

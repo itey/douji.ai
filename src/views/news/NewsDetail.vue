@@ -929,9 +929,5 @@ export default {
 .md-reader a {
   color: #7ea4ea;
   text-decoration: none;
-  word-wrap: break-word;
-  word-break: normal;
 }
-
-
 </style>
