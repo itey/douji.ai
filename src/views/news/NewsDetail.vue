@@ -122,7 +122,7 @@
     <RevisionHistoryDialog :tokenId="tokenId" ref="revisionHistoryDialog" />
     <CheckInDialog @onCheckedIn="checkIn()" ref="checkInDialog" />
     <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" ref="blindDialog" />
-    <BlindOpenDialog @handleReload="dataLoad" :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
+    <BlindOpenDialog @handleReload="dataLoad" :tokenId="tokenId" ref="blindOpenDialog" />
     <SetSaleDialog @handleReload="dataLoad" :tokenInfo="tokenSupplyInfo" :tokenId="tokenId" ref="setSaleDialog" />
     <SetDaoDialog @handleReload="dataLoad" :tokenId="tokenId" ref="setDaoDialog" />
   </div>
@@ -252,7 +252,6 @@ export default {
       ifCheckedIn: false,
       blindBoxToday: {},
       blindBoxTimerTask: undefined,
-      blindBox: {},
       transactionHistory: [],
       timeTask: undefined,
     }
@@ -313,11 +312,10 @@ export default {
         if (blindBox && blindBox.time) {
           const timeGet = Number(blindBox.time)
           const nowTime = new Date().getTime()
-          if (nowTime - timeGet > 1000 * 120) {
+          if (nowTime - timeGet >= 1000 * 120) {
             setBlindBoxState(this.$store.state.user.userId, true)
             haveBox = false
           } else if (!blindBox.invalid) {
-            this.blindBox = blindBox
             haveBox = true
             this.$refs['blindOpenDialog'].showDialog()
             return
@@ -329,7 +327,7 @@ export default {
           if (flag && flag.time) {
             const timeGet = Number(flag.time)
             const nowTime = new Date().getTime()
-            if (nowTime - timeGet > 1000 * 120) {
+            if (nowTime - timeGet >= 1000 * 120) {
               setBlindBoxFlagState(
                 this.$store.state.user.userId,
                 true
@@ -396,7 +394,6 @@ export default {
     },
     /** 点击接收盲盒 */
     handleReceiveBox() {
-      this.blindBox = getBlindBoxCache(this.$store.state.user.userId)
       this.$refs['blindOpenDialog'].showDialog()
     },
     /** 加载数据 */

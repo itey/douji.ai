@@ -382,6 +382,7 @@ export function setBlindBoxFlagCache(userId, flag) {
 export function setBlindBoxFlagState(userId, invalid) {
   var cacheData = getBlindBoxFlagCache(userId)
   cacheData && (cacheData.invalid = invalid)
+  cache.local.setJSON('DOJI_BOX_FLAG_' + userId, cacheData)
 }
 
 /** 获取盲盒标志 */
@@ -403,6 +404,7 @@ export function setBlindBoxCache(userId, box) {
 export function setBlindBoxState(userId, invalid) {
   var cacheData = getBlindBoxCache(userId)
   cacheData && (cacheData.invalid = invalid)
+  cache.local.setJSON('DOJI_BOX_' + userId, cacheData)
 }
 /** 获取盲盒 */
 export function getBlindBoxCache(userId) {

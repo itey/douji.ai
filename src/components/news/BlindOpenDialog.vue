@@ -118,7 +118,7 @@ export default {
           contractOpenBox(txJson.transactionHash).then(r => {
             if (r.code == 1) {
               this.boxPrizes = r.data
-              this.show = false
+              this.onFinished()
               this.$refs['successDialog'].showDialog()
               this.$emit('handleReload')
             } else {
