@@ -77,7 +77,6 @@
 import CongratulationsDialog from '@/components/news/CongratulationsDialog'
 import { setBlindBoxState, getBlindBoxCache } from '@/utils/common'
 import { openBlindBox, contractOpenBox } from '@/utils/http'
-import { openBlindBoxSign } from '@/utils/web3/chain'
 import { transferMbd } from '@/utils/web3/mbd'
 import { openBoxContract } from '@/utils/web3/operator'
 export default {
@@ -166,38 +165,29 @@ export default {
             loadingInstance.close()
           })
       } else {
-        openBlindBoxSign()
-          .then((signed) => {
-            var loadingInstance = this.$loading({
-              background: 'rgba(0, 0, 0, 0.8)',
-            })
-            transferMbd(this.centerAddress, 500)
-              .then((txJson) => {
-                openBlindBox(signed, this.blindBox.box, txJson.transactionHash)
-                  .then((r) => {
-                    if (r.code == 1) {
-                      this.boxPrizes = r.data
-                      this.onFinished()
-                      this.$refs['successDialog'].showDialog()
-                      this.$emit('handleReload')
-                    } else {
-                      this.$toast.error(r.message)
-                    }
-                  })
-                  .catch((e) => {
-                    this.$toast.error(e)
-                  })
-                  .finally(() => {
-                    loadingInstance.close()
-                  })
+        transferMbd(this.centerAddress, 500)
+          .then((txJson) => {
+            openBlindBox(this.blindBox.box, txJson.transactionHash)
+              .then((r) => {
+                if (r.code == 1) {
+                  this.boxPrizes = r.data
+                  this.onFinished()
+                  this.$refs['successDialog'].showDialog()
+                  this.$emit('handleReload')
+                } else {
+                  this.$toast.error(r.message)
+                }
               })
               .catch((e) => {
                 this.$toast.error(e)
+              })
+              .finally(() => {
                 loadingInstance.close()
               })
           })
           .catch((e) => {
             this.$toast.error(e)
+            loadingInstance.close()
           })
       }
     },
@@ -281,6 +271,7 @@ export default {
       #00f9e5 48.2421875%,
       #14e7a9 83.3251953125%
     );
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

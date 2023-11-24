@@ -61,10 +61,10 @@ export function getBlindBox(signed, get_box_flag, tokenId) {
 }
 
 // 打开盲盒
-export function openBlindBox(signed, open_box_flag, hashTx) {
+export function openBlindBox(open_box_flag, hashTx) {
   return request({
     url: '/openBox',
-    params: { signed, open_box_flag, hashTx },
+    params: { open_box_flag, hashTx },
     method: 'post'
   })
 }
