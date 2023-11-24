@@ -2,14 +2,14 @@
   <div class="info-container">
     <div class="author-container">
       <img
-        @click="$router.push({path: '/creator', query: {address: creator}})"
-        style="width: 52px;height: 52px;border-radius: 26px; cursor: pointer;"
+        @click="$router.push({ path: '/creator', query: { address: creator } })"
+        style="width: 52px; height: 52px; border-radius: 26px; cursor: pointer"
         :src="creatorInfo.head_img"
         v-if="creatorInfo.head_img"
       />
       <img
-        @click="$router.push({path: '/creator', query: {address: creator}})"
-        style="width: 52px;height: 52px;border-radius: 26px; cursor: pointer;"
+        @click="$router.push({ path: '/creator', query: { address: creator } })"
+        style="width: 52px; height: 52px; border-radius: 26px; cursor: pointer"
         v-else
         src="@/assets/avatar.jpg"
       />
@@ -17,21 +17,43 @@
         <div class="author-name">
           by
           <span
-            @click="$router.push({path: '/creator', query: {address: creator}})"
-            style="color: #00F9E5;"
+            @click="
+              $router.push({ path: '/creator', query: { address: creator } })
+            "
+            style="color: #00f9e5"
             v-if="creatorInfo.nickname"
-          >{{ creatorInfo.nickname }}</span>
-          <span @click="$router.push({path: '/creator', query: {address: creator}})" style="color: #00F9E5;" v-else>{{ creator | omitAddress }}</span>
+            >{{ creatorInfo.nickname }}</span
+          >
+          <span
+            @click="
+              $router.push({ path: '/creator', query: { address: creator } })
+            "
+            style="color: #00f9e5"
+            v-else
+            >{{ creator | omitAddress }}</span
+          >
         </div>
         <div class="author-desc">{{ creatorInfo.short_description }}</div>
       </div>
-      <template v-if="userAccount && userAccount.toLowerCase() != creator.toLowerCase()">
-        <div class="subscription" v-if="creatorInfo.isfollow" @click="handleSubOut()">
-          <img style="width: 13px;height: 9px;" src="@/assets/images/news/true.png" />
+      <template
+        v-if="userAccount && userAccount.toLowerCase() != creator.toLowerCase()"
+      >
+        <div
+          class="subscription"
+          v-if="creatorInfo.isfollow"
+          @click="handleSubOut()"
+        >
+          <img
+            style="width: 13px; height: 9px"
+            src="@/assets/images/news/true.png"
+          />
           <span>Subscribe</span>
         </div>
         <div class="subscription light" v-else @click="handleSub()">
-          <img style="width: 9px;height: 9px;" src="@/assets/images/news/add.png" />
+          <img
+            style="width: 9px; height: 9px"
+            src="@/assets/images/news/add.png"
+          />
           <span>Subscribe</span>
         </div>
       </template>
@@ -50,7 +72,11 @@
       <div class="news-info-item">
         <div class="news-info-item-label">
           <img v-if="isPraise" src="@/assets/images/news/is_like.png" />
-          <img v-else src="@/assets/images/news/like.png" @click="handlePraise()" />
+          <img
+            v-else
+            src="@/assets/images/news/like.png"
+            @click="handlePraise()"
+          />
           <span>{{ nftInfo[1] }}</span>
         </div>
         <!-- <div class="news-info-item-value">
@@ -61,7 +87,11 @@
       <div class="news-info-item">
         <div class="news-info-item-label">
           <img v-if="isCollect" src="@/assets/images/news/is_star.png" />
-          <img v-else src="@/assets/images/news/star.png" @click="collectPraise()" />
+          <img
+            v-else
+            src="@/assets/images/news/star.png"
+            @click="collectPraise()"
+          />
           <span>{{ nftInfo[0] }}</span>
         </div>
         <!-- <div class="news-info-item-value">
@@ -81,7 +111,7 @@ import {
   nftCollect,
   nftPraise,
 } from '@/utils/web3/nft'
-import { getCPD  } from '@/utils/web3/open'
+import { getCPD } from '@/utils/web3/open'
 export default {
   name: 'nft-author-info',
   props: {
@@ -159,10 +189,9 @@ export default {
         })
     },
     infoInit() {
-      Promise.all([this.loadUserInfo(), this.loadNftInfo()])
-        .catch((e) => {
-          console.log(e)
-        })
+      Promise.all([this.loadUserInfo(), this.loadNftInfo()]).catch((e) => {
+        console.log(e)
+      })
     },
     /** 加载用户信息 */
     loadUserInfo() {
@@ -332,29 +361,29 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-left: 50px;
 
     .news-info-item {
       min-width: 120px;
-      height: 58px;
+      height: 50px;
       background: #252d36;
       border-radius: 8px;
       margin-left: 12px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: space-around;
+      justify-content: center; /* 水平居中 */
+      align-items: center; /* 垂直居中 */
 
       .news-info-item-label {
         display: flex;
         flex-direction: row;
-        align-items: center;
-        justify-content: center;
         font-size: 16px;
         font-family: Arial;
         font-weight: 400;
         color: #99b1c4;
         line-height: 19px;
-        margin-top: 11px;
+        justify-content: center; /* 水平居中 */
+        align-items: center; /* 垂直居中 */
 
         img {
           width: 18px;
