@@ -1,15 +1,22 @@
 <template>
   <div class="create-step0">
-    <div class="create-label">Create</div>
-    <div class="create-title">Create Your Conent DOUJI NFT Collection</div>
+    <div class="create-label">{{ $t('create.create') }}</div>
+    <div class="create-title">{{ $t('create.create_your_collection') }}</div>
     <div class="type-container" v-for="(arr, index) in typeList" :key="index">
-      <div class="type-item" v-for="(item, i) in arr" :key="i" @click="itemClick(item.e_name)">
+      <div
+        class="type-item"
+        v-for="(item, i) in arr"
+        :key="i"
+        @click="itemClick(item.e_name)"
+      >
         <!-- <img style="width: 72px;height: 67px;" src="@/assets/images/create/article.png" /> -->
-        <div :class="showClass(i)">{{$i18n.locale == 'en' ? item.e_name : item.c_name}}</div>
+        <div :class="showClass(i)">
+          {{ $i18n.locale == 'en' ? item.e_name : item.c_name }}
+        </div>
       </div>
     </div>
-    <div class="tip">The rest will be available soon</div>
-    <div class="question text-color">How to Create？</div>
+    <div class="tip">{{ $t('create.the_soon') }}</div>
+    <div class="question text-color">{{ $t('create.how_create') }}</div>
   </div>
 </template>
 

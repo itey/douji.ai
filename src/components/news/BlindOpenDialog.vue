@@ -13,32 +13,59 @@
       width="789px"
     >
       <div class="title" slot="title">Open Blind Box</div>
-      <img style="width: 789px;height: 800px;" src="@/assets/images/news/gift-bg.png" />
+      <img
+        style="width: 789px; height: 800px"
+        src="@/assets/images/news/gift-bg.png"
+      />
       <div class="content">
         <div class="time-container">
-          <img style="width: 38px;height: 38px;" src="@/assets/images/news/blind-date.png" />
+          <img
+            style="width: 38px; height: 38px"
+            src="@/assets/images/news/blind-date.png"
+          />
           <div class="time">
             <countdown v-if="showTimer" :time="leftTime" @end="onFinished()">
-              <template slot-scope="{ totalSeconds }">{{ totalSeconds }}</template>
+              <template slot-scope="{ totalSeconds }">{{
+                totalSeconds
+              }}</template>
             </countdown>
           </div>
         </div>
-        <div class="label">Open the blind box and you will 100% get the following rewards</div>
+        <div class="label">
+          Open the blind box and you will 100% get the following rewards
+        </div>
         <div class="blind-list">
-          <div v-for="(item,index) in rewardsOptions" class="blind-item" :key="index" :style="getStyle(index)">
-            <img v-if="item.coin=='NFT'" :src="require(`@/assets/images/news/bi-icon.png`)" style="width: 52px;height: 52px;" />
-            <img v-else :src="require(`@/assets/images/news/mbd-icon.png`)" style="width: 52px;height: 52px;" />
-            <div class="blind-label">{{ item.count }} {{ item.coin=='MBD' ? 'MBD' : 'BJXStar NFT' }}</div>
+          <div
+            v-for="(item, index) in rewardsOptions"
+            class="blind-item"
+            :key="index"
+            :style="getStyle(index)"
+          >
+            <img
+              v-if="item.coin == 'NFT'"
+              :src="require(`@/assets/images/news/bi-icon.png`)"
+              style="width: 52px; height: 52px"
+            />
+            <img
+              v-else
+              :src="require(`@/assets/images/news/mbd-icon.png`)"
+              style="width: 52px; height: 52px"
+            />
+            <div class="blind-label">
+              {{ item.count }} {{ item.coin == 'MBD' ? 'MBD' : 'BJXStar NFT' }}
+            </div>
             <div class="blind-value">{{ item.percent }}</div>
           </div>
         </div>
         <div class="btn-container">
           <el-button @click="openClick" class="btn-open">Open</el-button>
-          <el-button @click="giveUpClick" class="btn-give-up">Give Up</el-button>
+          <el-button @click="giveUpClick" class="btn-give-up"
+            >Give Up</el-button
+          >
         </div>
         <div class="blind-tip">
           Open Blind Box Fee:
-          <span style="color: #FFFFFF;">500 MBD</span>
+          <span style="color: #ffffff">500 MBD</span>
         </div>
       </div>
     </el-dialog>
@@ -64,38 +91,38 @@ export default {
       rewardsOptions: [
         {
           coin: 'MBD',
-          count: 100,
-          percent: '15%',
-        },
-        {
-          coin: 'MBD',
-          count: 200,
-          percent: '30%',
-        },
-        {
-          coin: 'MBD',
           count: 500,
-          percent: '25%',
-        },
-        {
-          coin: 'MBD',
-          count: 600,
-          percent: '15%',
+          percent: '40%',
         },
         {
           coin: 'MBD',
           count: 1000,
+          percent: '30%',
+        },
+        {
+          coin: 'MBD',
+          count: 3000,
+          percent: '15%',
+        },
+        {
+          coin: 'MBD',
+          count: 8000,
           percent: '10%',
         },
         {
           coin: 'MBD',
-          count: 2000,
+          count: 20000,
           percent: '4%',
         },
         {
+          coin: 'MBD',
+          count: 50000,
+          percent: '0.9%',
+        },
+        {
           coin: 'NFT',
-          count: 1,
-          percent: '1%',
+          count: 5,
+          percent: '0.1%',
         },
       ],
       userInfo: this.$store.state.user.userInfo,
@@ -109,71 +136,75 @@ export default {
   methods: {
     /** 打开盲盒 */
     openClick() {
-      if (this.userInfo.isge8model) { 
+      if (this.userInfo.isge8model) {
         // 合约调用
         var loadingInstance = this.$loading({
           background: 'rgba(0, 0, 0, 0.8)',
         })
-        openBoxContract().then(txJson => {
-          contractOpenBox(txJson.transactionHash).then(r => {
-            if (r.code == 1) {
-              this.boxPrizes = r.data
-              this.onFinished()
-              this.$refs['successDialog'].showDialog()
-              this.$emit('handleReload')
-            } else {
-              this.$toast.error(r.message)
-            }
-          }).catch((e) => {
-            this.$toast.error(e)
+        openBoxContract()
+          .then((txJson) => {
+            contractOpenBox(txJson.transactionHash)
+              .then((r) => {
+                if (r.code == 1) {
+                  this.boxPrizes = r.data
+                  this.onFinished()
+                  this.$refs['successDialog'].showDialog()
+                  this.$emit('handleReload')
+                } else {
+                  this.$toast.error(r.message)
+                }
+              })
+              .catch((e) => {
+                this.$toast.error(e)
+              })
+              .finally(() => {
+                loadingInstance.close()
+              })
           })
-          .finally(() => {
+          .catch((e) => {
+            this.$toast.error(e)
             loadingInstance.close()
           })
-        }).catch(e => {
-          this.$toast.error(e)
-          loadingInstance.close()
-        })
       } else {
         openBlindBoxSign()
-        .then((signed) => {
-          var loadingInstance = this.$loading({
-            background: 'rgba(0, 0, 0, 0.8)',
+          .then((signed) => {
+            var loadingInstance = this.$loading({
+              background: 'rgba(0, 0, 0, 0.8)',
+            })
+            transferMbd(this.centerAddress, 500)
+              .then((txJson) => {
+                openBlindBox(signed, this.blindBox.box, txJson.transactionHash)
+                  .then((r) => {
+                    if (r.code == 1) {
+                      this.boxPrizes = r.data
+                      this.onFinished()
+                      this.$refs['successDialog'].showDialog()
+                      this.$emit('handleReload')
+                    } else {
+                      this.$toast.error(r.message)
+                    }
+                  })
+                  .catch((e) => {
+                    this.$toast.error(e)
+                  })
+                  .finally(() => {
+                    loadingInstance.close()
+                  })
+              })
+              .catch((e) => {
+                this.$toast.error(e)
+                loadingInstance.close()
+              })
           })
-          transferMbd(this.centerAddress, 500)
-            .then((txJson) => {
-              openBlindBox(signed, this.blindBox.box, txJson.transactionHash)
-                .then((r) => {
-                  if (r.code == 1) {
-                    this.boxPrizes = r.data
-                    this.onFinished()
-                    this.$refs['successDialog'].showDialog()
-                    this.$emit('handleReload')
-                  } else {
-                    this.$toast.error(r.message)
-                  }
-                })
-                .catch((e) => {
-                  this.$toast.error(e)
-                })
-                .finally(() => {
-                  loadingInstance.close()
-                })
-            })
-            .catch((e) => {
-              this.$toast.error(e)
-              loadingInstance.close()
-            })
-        })
-        .catch((e) => {
-          this.$toast.error(e)
-        })
+          .catch((e) => {
+            this.$toast.error(e)
+          })
       }
     },
     onOpen() {
       this.blindBox = getBlindBoxCache(this.$store.state.user.userId)
       const endTime = Number(this.blindBox.time) + 120000
-      this.leftTime =  endTime - new Date().getTime()
+      this.leftTime = endTime - new Date().getTime()
       if (this.leftTime <= 0) {
         this.onFinished()
       } else {

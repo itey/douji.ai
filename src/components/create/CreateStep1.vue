@@ -1,107 +1,158 @@
 <template>
   <div class="create-step1">
-    <div class="title">{{edit?'Step 1 Update NFT Infomation':'Step 1 Set NFT Mint Infomation'}}</div>
+    <div class="title">
+      {{ edit ? $t('create.update_mold_1') : $t('create.create_mold_1') }}
+    </div>
     <div class="form-container">
-      <div class="label">Type*</div>
+      <div class="label">{{ $t('create.type') }}*</div>
       <div class="type-container" v-for="(arr, index) in typeList" :key="index">
-        <div v-for="(item, i) in arr" :key="i" class="item" :class="{
-					light:form.contentType == item.e_name
-				}" @click="choseType(item.e_name)">
+        <div
+          v-for="(item, i) in arr"
+          :key="i"
+          class="item"
+          :class="{
+            light: form.contentType == item.e_name,
+          }"
+          @click="choseType(item.e_name)"
+        >
           <div>{{ $i18n.locale == 'en' ? item.e_name : item.c_name }}</div>
         </div>
       </div>
       <template v-if="categoryList.length">
-        <div class="label">Category*</div>
+        <div class="label">{{ $t('create.category') }}*</div>
         <div class="category-container">
           <div
             class="item"
             :class="{
-					light:form.category == item.e_name
-				}"
+              light: form.category == item.e_name,
+            }"
             v-for="item in categoryList"
             :key="item.id"
             @click="choseCategory(item)"
-          >{{$i18n.locale == 'en' ? item.e_name : item.c_name}}</div>
+          >
+            {{ $i18n.locale == 'en' ? item.e_name : item.c_name }}
+          </div>
         </div>
       </template>
       <div v-if="error.category" class="tip-error">{{ error.category }}</div>
-      <div v-else class="tip">Not allowed to chage after mint.</div>
+      <div v-else class="tip">{{ $t('create.not_allow_change') }}</div>
 
       <template v-if="platformList.length">
-        <div class="label">Platform</div>
+        <div class="label">{{ $t('create.platform') }}</div>
         <div class="category-container">
           <div
             class="item"
             :class="{
-					light:form.prompt == item.e_name
-				}"
+              light: form.prompt == item.e_name,
+            }"
             v-for="(item, index) in platformList"
             :key="index"
             @click="chosePlatform(item)"
-          >{{$i18n.locale == 'en' ? item.e_name : item.c_name}}</div>
+          >
+            {{ $i18n.locale == 'en' ? item.e_name : item.c_name }}
+          </div>
         </div>
-        <div class="tip">Not allowed to chage after mint.</div>
+        <div class="tip">{{ $t('create.not_allow_change') }}</div>
       </template>
 
-      <div class="label">Language</div>
+      <div class="label">{{ $t('create.language') }}</div>
       <div class="category-container">
         <div
           class="item"
           :class="{
-					light:form.language == item.english
-				}"
+            light: form.language == item.english,
+          }"
           v-for="(item, index) in languageList"
           :key="index"
           @click="choseLanguage(item)"
-        >{{$i18n.locale == 'en' ? item.english : item.chinese}}</div>
+        >
+          {{ $i18n.locale == 'en' ? item.english : item.chinese }}
+        </div>
       </div>
-      <div class="tip">Not allowed to chage after mint.</div>
+      <div class="tip">{{ $t('create.not_allow_change') }}</div>
       <div class="label">NFT Max Supply*</div>
       <div class="input-container">
-        <el-input :disabled="edit" @change="checkItem('maxSupply')" v-model="form.maxSupply" class="input"></el-input>
+        <el-input
+          :disabled="edit"
+          @change="checkItem('maxSupply')"
+          v-model="form.maxSupply"
+          class="input"
+        ></el-input>
       </div>
       <div v-if="error.maxSupply" class="tip-error">{{ error.maxSupply }}</div>
       <div class="tip" v-if="form.maxSupply">
-        Not allowed to chage after mint.Defines the rarity level-
-        <span class="text-color">Legendary(1),Epic(1+),Common(1000+)</span>
+        {{ $t('create.not_allow_change') }}{{ $t('create.defines_level') }}
+        <span class="text-color">{{ $t('create.legendary') }}</span>
       </div>
       <template v-if="edit">
-        <div class="label">NFT Available Supply*</div>
+        <div class="label">{{ $t('create.available_supply') }}*</div>
         <div class="input-container">
-          <el-input @change="checkItem('availableSupply')" v-model="form.availableSupply" class="input"></el-input>
+          <el-input
+            @change="checkItem('availableSupply')"
+            v-model="form.availableSupply"
+            class="input"
+          ></el-input>
         </div>
-        <div v-if="error.availableSupply" class="tip-error">{{ error.availableSupply }}</div>
+        <div v-if="error.availableSupply" class="tip-error">
+          {{ error.availableSupply }}
+        </div>
         <div v-else class="tip">
-          NFT Maximum Available Supply Quantity
+          {{ $t('create.max_available') }}
           <span class="text-color">{{ currentAvailableSupply }}</span>
         </div>
       </template>
       <template v-if="!edit">
-        <div class="label">NFT Initial Mint Quantity*</div>
+        <div class="label">{{ $t('create.initial_quantity') }}*</div>
         <div class="input-container">
-          <el-input :disabled="edit" @change="checkItem('initialQuantity')" v-model="form.initialQuantity" class="input"></el-input>
+          <el-input
+            :disabled="edit"
+            @change="checkItem('initialQuantity')"
+            v-model="form.initialQuantity"
+            class="input"
+          ></el-input>
         </div>
-        <div v-if="error.initialQuantity" class="tip-error">{{ error.initialQuantity }}</div>
+        <div v-if="error.initialQuantity" class="tip-error">
+          {{ error.initialQuantity }}
+        </div>
         <div v-else class="tip">
-          Not allowed to change after mint.NFT Maximum Initial Mint Quantity
+          {{ $t('create.not_allow_change') }}{{ $t('create.max_initial') }}
           <span class="text-color">{{ availableInitialQuantity }}</span>
         </div>
       </template>
-      <div class="label">NFT Initial Mint Price*</div>
+      <div class="label">{{ $t('create.mint_price') }}*</div>
       <div class="input-container">
-        <el-input @change="checkItem('initialPrice')" v-model="form.initialPrice" class="input"></el-input>
+        <el-input
+          @change="checkItem('initialPrice')"
+          v-model="form.initialPrice"
+          class="input"
+        ></el-input>
         <div class="unit">MBD</div>
       </div>
-      <div v-if="error.initialPrice" class="tip-error">{{ error.initialPrice }}</div>
-      <div v-else class="tip">Allowed to change after mint.Price set to 0,anyone can mint for free,access protected content.</div>
+      <div v-if="error.initialPrice" class="tip-error">
+        {{ error.initialPrice }}
+      </div>
+      <div v-else class="tip">{{ $t('create.allowed_content') }}</div>
       <div class="btn-container" v-if="edit">
-        <el-button class="common-btn2" @click="backClick()">Back</el-button>
-        <el-button class="common-btn2" :disabled="!ifUpdate" @click="updateClick()">Update</el-button>
+        <el-button class="common-btn2" @click="backClick()">{{
+          $t('create.back')
+        }}</el-button>
+        <el-button
+          class="common-btn2"
+          :disabled="!ifUpdate"
+          @click="updateClick()"
+          >{{ $t('create.update') }}</el-button
+        >
       </div>
       <div class="btn-container" v-else>
-        <el-button class="common-btn2" @click="backClick()">Back</el-button>
-        <el-button class="common-btn2" @click="saveClick()">Save</el-button>
-        <el-button class="common-btn2" @click="nextClick()">Next</el-button>
+        <el-button class="common-btn2" @click="backClick()">{{
+          $t('create.back')
+        }}</el-button>
+        <el-button class="common-btn2" @click="saveClick()">{{
+          $t('create.save')
+        }}</el-button>
+        <el-button class="common-btn2" @click="nextClick()">{{
+          $t('create.next')
+        }}</el-button>
       </div>
     </div>
   </div>

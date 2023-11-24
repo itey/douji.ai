@@ -171,7 +171,40 @@ export default {
     "no_permission_update": "You do not have permission to update this NFT.",
     "data_not_modified":
       "The data you are trying to update is not modified.",
-    "nft_voting": "Cannot update a voting NFT."
+    "nft_voting": "Cannot update a voting NFT.",
+    "step_1": "Step1",
+    "step_2": "Step2",
+    "step_3": "Step3",
+    "set_information": "Set NFT Mint information",
+    "write_content": "Write Content",
+    "mint_nft": "Mint NFT",
+    "create": "Create",
+    "create_your_collection": "Create Your Content DOUJI NFT Collection",
+    "the_soon": "The rest will be available soon",
+    "how_create": "How to Create?",
+    "update_mold_1": "Step 1 Update NFT Information",
+    "create_mold_1": "Step 1 Set NFT Mint Information",
+    "type": "Type",
+    "category": "Category",
+    "not_allow_change": "Not allowed to change after mint.",
+    "platform": "Platform",
+    "language": "Language",
+    "defines_level": "Defines the rarity level-",
+    "legendary": "Legendary(1),Epic(1+),Common(1000+)",
+    "available_supply": "NFT Available Supply",
+    "max_available": "NFT Maximum Available Supply Quantity",
+    "initial_quantity": "NFT Initial Mint Quantity",
+    "max_initial": "NFT Maximum Initial Mint Quantity",
+    "mint_price": "NFT Initial Mint Price",
+    "allowed_content": "Allowed to change after mint.Price set to 0,anyone can mint for free,access protected content.",
+    "back": "Back",
+    "update": "Update",
+    "save": "Save",
+    "next": "Next",
+
+
+
+
   },
   "news": {
     "home": "Home",

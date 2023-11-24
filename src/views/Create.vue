@@ -1,38 +1,79 @@
 <template>
   <div class="create-container">
-    <div class="step-container" v-if="step>0">
-      <div class="step" :class="{
-				'step':step<1,
-				'step-light':step>=1
-			}">
-        <div class="step-title">Step1</div>
-        <div class="step-sub">Set NFT Mint infomation</div>
+    <div class="step-container" v-if="step > 0">
+      <div
+        class="step"
+        :class="{
+          step: step < 1,
+          'step-light': step >= 1,
+        }"
+      >
+        <div class="step-title">{{ $t('create.step_1') }}</div>
+        <div class="step-sub">{{ $t('create.set_information') }}</div>
       </div>
-      <div style="margin: 0 31px 0 36px;">
-        <img style="width: 39px;height: 6px" :src="require(`@/assets/images/create/arrow${step>=1?'-light':''}.png`)" />
+      <div style="margin: 0 31px 0 36px">
+        <img
+          style="width: 39px; height: 6px"
+          :src="
+            require(`@/assets/images/create/arrow${
+              step >= 1 ? '-light' : ''
+            }.png`)
+          "
+        />
       </div>
-      <div class="step" :class="{
-				'step':step<2,
-				'step-light':step>=2
-			}">
-        <div class="step-title">Step2</div>
-        <div class="step-sub">Write Content</div>
+      <div
+        class="step"
+        :class="{
+          step: step < 2,
+          'step-light': step >= 2,
+        }"
+      >
+        <div class="step-title">{{ $t('create.step_2') }}</div>
+        <div class="step-sub">{{ $t('create.write_content') }}</div>
       </div>
-      <div style="margin: 0 31px 0 36px;">
-        <img style="width: 39px;height: 6px" :src="require(`@/assets/images/create/arrow${step>=2?'-light':''}.png`)" />
+      <div style="margin: 0 31px 0 36px">
+        <img
+          style="width: 39px; height: 6px"
+          :src="
+            require(`@/assets/images/create/arrow${
+              step >= 2 ? '-light' : ''
+            }.png`)
+          "
+        />
       </div>
-      <div class="step" :class="{
-				'step':step<3,
-				'step-light':step>=3
-			}">
-        <div class="step-title">Step3</div>
-        <div class="step-sub">Mint NFT</div>
+      <div
+        class="step"
+        :class="{
+          step: step < 3,
+          'step-light': step >= 3,
+        }"
+      >
+        <div class="step-title">{{ $t('create.step_3') }}</div>
+        <div class="step-sub">{{ $t('create.mint_nft') }}</div>
       </div>
     </div>
-    <create-step0 v-if="step==0" @itemClick="itemClick"></create-step0>
-    <create-step1 v-if="step==1" :metadata="metadata" @saveClick="saveData" @backClick="backClick" @nextClick="nextClick"></create-step1>
-    <create-step2 v-if="step==2" :metadata="metadata" @saveClick="saveData" @backClick="backClick" @nextClick="nextClick"></create-step2>
-    <create-step3 v-if="step==3" :metadata="metadata" @saveClick="saveData" @backClick="backClick" @reload="pageReload"></create-step3>
+    <create-step0 v-if="step == 0" @itemClick="itemClick"></create-step0>
+    <create-step1
+      v-if="step == 1"
+      :metadata="metadata"
+      @saveClick="saveData"
+      @backClick="backClick"
+      @nextClick="nextClick"
+    ></create-step1>
+    <create-step2
+      v-if="step == 2"
+      :metadata="metadata"
+      @saveClick="saveData"
+      @backClick="backClick"
+      @nextClick="nextClick"
+    ></create-step2>
+    <create-step3
+      v-if="step == 3"
+      :metadata="metadata"
+      @saveClick="saveData"
+      @backClick="backClick"
+      @reload="pageReload"
+    ></create-step3>
   </div>
 </template>
 
@@ -97,7 +138,7 @@ export default {
     /** 刷新页面 */
     pageReload() {
       this.reload()
-    }
+    },
   },
 }
 </script>
