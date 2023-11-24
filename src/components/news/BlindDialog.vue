@@ -17,9 +17,9 @@
       <div class="time-container">
         <img style="width: 38px;height: 38px;" src="@/assets/images/news/blind-date.png" />
         <div class="time">
-          <vac :end-time="endTime" @finish="onFinished()">
-            <span slot="process" slot-scope="{ timeObj }">{{ timeObj.ceil.s }}</span>
-          </vac>
+          <countdown v-if="showTimer" :time="leftTime" @end="onFinished()">
+            <template slot-scope="{ totalSeconds }">{{ totalSeconds }}</template>
+          </countdown>
         </div>
       </div>
       <img style="width: 388px;height: 347px;" src="@/assets/images/news/blind-box-icon.png" />
@@ -30,12 +30,12 @@
 
 <script>
 import {
-  getBlindBoxCache,
   getBlindBoxFlagCache,
   setBlindBoxCache,
-  setBlindBoxFlagCache,
+  setBlindBoxFlagState
 } from '@/utils/common'
-import { getBlindBox } from '@/utils/http'
+import { getBoxContract } from '@/utils/web3/operator'
+import { getBlindBox, contractGetBox } from '@/utils/http'
 import { getBlindBoxSign } from '@/utils/web3/chain'
 export default {
   name: 'blind-dialog',
@@ -48,65 +48,96 @@ export default {
   data() {
     return {
       show: false,
-      endTime: undefined,
-      blindBox: {},
+      showTimer: false,
+      leftTime: undefined,
+      userInfo: this.$store.state.user.userInfo,
       boxFlag: {},
     }
   },
   methods: {
     onOpen() {
       this.boxFlag = getBlindBoxFlagCache(this.$store.state.user.userId)
-      this.endTime = Number(this.boxFlag.time) + 120000
-      const now = new Date().getTime()
-      if (now >= this.endTime) {
+      const endTime = Number(this.boxFlag.time) + 120000
+      this.leftTime =  endTime - new Date().getTime()
+      if (this.leftTime <= 0) {
         this.onFinished()
+      } else {
+        this.showTimer = true
       }
     },
     /** 接收盲盒 */
     handleReceiveBox() {
-      getBlindBoxSign().then((signed) => {
+      if (this.userInfo.isge8model) {
+        // 合约接收
         var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
-        getBlindBox(signed, this.boxFlag.flag, this.tokenId)
-          .then((r) => {
+            background: 'rgba(0, 0, 0, 0.8)',
+          })
+        getBoxContract(this.tokenId).then(txJson => {
+          const txId = txJson.transactionHash
+          contractGetBox(txId).then((r) => {
             if (r.code == 1) {
-              const openFlag = r.data.open_box_flag
-              setBlindBoxCache(this.$store.state.user.userId, openFlag, false)
-              this.blindBox = getBlindBoxCache(this.$store.state.user.userId)
+              setBlindBoxCache(this.$store.state.user.userId, 1)
               this.show = false
               this.$emit('handleReceive')
             } else {
               console.log(r.message)
               this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
+              loadingInstance.close()
             }
-          })
-          .catch((e) => {
-            console.log(e)
-            this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
-          })
-          .finally(() => {
+          }).catch(e => {
+            this.$toast.error(e)
             loadingInstance.close()
           })
-      })
+        }).catch(e => {
+          this.$toast.error(e)
+          loadingInstance.close()
+        })
+      } else {
+        getBlindBoxSign().then((signed) => {
+          var loadingInstance = this.$loading({
+            background: 'rgba(0, 0, 0, 0.8)',
+          })
+          getBlindBox(signed, this.boxFlag.flag, this.tokenId)
+            .then((r) => {
+              if (r.code == 1) {
+                const openFlag = r.data.open_box_flag
+                setBlindBoxCache(this.$store.state.user.userId, openFlag)
+                this.show = false
+                this.$emit('handleReceive')
+              } else {
+                console.log(r.message)
+                this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
+              }
+            })
+            .catch((e) => {
+              console.log(e)
+              this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
+            })
+            .finally(() => {
+              loadingInstance.close()
+            })
+        })
+      }
+      
     },
     showDialog() {
-      this.show = true
+      if (!this.show) {
+        this.show = true
+      }
     },
+    /** 倒计时结束 */
     onFinished() {
-      console.log('Time Over')
-      setBlindBoxFlagCache(
+      setBlindBoxFlagState(
         this.$store.state.user.userId,
-        this.boxFlag.flag,
         true
       )
+      this.showTimer = false
       this.show = false
     },
     /** 用户关闭 */
     handleClose() {
-      setBlindBoxFlagCache(
+      setBlindBoxFlagState(
         this.$store.state.user.userId,
-        this.boxFlag.flag,
         true
       )
       this.show = false

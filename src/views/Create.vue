@@ -32,7 +32,7 @@
     <create-step0 v-if="step==0" @itemClick="itemClick"></create-step0>
     <create-step1 v-if="step==1" :metadata="metadata" @saveClick="saveData" @backClick="backClick" @nextClick="nextClick"></create-step1>
     <create-step2 v-if="step==2" :metadata="metadata" @saveClick="saveData" @backClick="backClick" @nextClick="nextClick"></create-step2>
-    <create-step3 v-if="step==3" :metadata="metadata" @saveClick="saveData" @backClick="backClick"></create-step3>
+    <create-step3 v-if="step==3" :metadata="metadata" @saveClick="saveData" @backClick="backClick" @reload="pageReload"></create-step3>
   </div>
 </template>
 
@@ -50,6 +50,7 @@ export default {
     CreateStep2,
     CreateStep3,
   },
+  inject: ['reload'],
   data() {
     return {
       contractJson: {
@@ -93,6 +94,10 @@ export default {
     nextClick(val) {
       this.step = val
     },
+    /** 刷新页面 */
+    pageReload() {
+      this.reload()
+    }
   },
 }
 </script>

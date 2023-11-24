@@ -1,11 +1,11 @@
 <template>
-  <el-dialog custom-class="mint-success-dialog" top="0vh" :visible.sync="show" width="945px">
+  <el-dialog custom-class="mint-success-dialog" @closed="onClose()" top="0vh" :visible.sync="show" width="945px">
     <img style="width: 104px;height: 104px;margin-top: 85px;" src="@/assets/images/create/mint-success.png" />
     <div class="mint-success-title">Congratulations</div>
     <div class="mint-success-label text-color">Your content NFT has been minted successfully!</div>
     <div class="mint-success-info">
       <div class="info-label">
-        <div class="info-label-item">Transcantion ID</div>
+        <div class="info-label-item">Transaction ID</div>
         <div class="info-label-item">Token Address</div>
         <div class="info-label-item">Token ID</div>
       </div>
@@ -50,6 +50,9 @@ export default {
   methods: {
     showDialog() {
       this.show = true
+    },
+    onClose() { 
+      this.$emit('close')
     },
     toViewNft() {
       this.$router.replace({

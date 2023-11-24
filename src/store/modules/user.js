@@ -3,7 +3,8 @@ import router from '@/router'
 import store from '@/store'
 import cache from '@/utils/cache'
 import { eventBus } from '@/utils/event-bus'
-import { checkIn, login } from '@/utils/http'
+import { checkInContract } from '@/utils/web3/operator'
+import { checkIn, login, getUserInfo, contractSign } from '@/utils/http'
 import { beginEventBus, endEventBus } from '@/utils/task'
 import { checkInSign, loginWalletSign } from '@/utils/web3/chain'
 import { i18n } from 'element-ui/lib/locale'
@@ -15,7 +16,8 @@ const user = {
     userId: undefined,
     account: undefined,
     logout: false,
-    checkTime: undefined
+    checkTime: undefined,
+    userInfo: {}
   },
 
   mutations: {
@@ -33,6 +35,9 @@ const user = {
     },
     setCheckTime: (state, checkTime) => {
       state.checkTime = checkTime
+    },
+    setUserInfo: (state, userInfo) => {
+      state.userInfo = userInfo
     }
   },
 
@@ -60,7 +65,17 @@ const user = {
             commit('setChainAccount', payload.address)
             beginEventBus()
             eventBus.$emit('user_login')
-            return resolve()
+            getUserInfo().then(u => {
+              if (u.code == 1) {
+                commit('setUserInfo', u.data)
+                return resolve()
+              } else {
+                console.log(u.message)
+                endEventBus()
+                commit('setLogout', true)
+                Vue.$toast.warning(u.message)
+              }
+            })
           }).catch(error => {
             console.log(error)
             endEventBus()
@@ -86,31 +101,53 @@ const user = {
             return reject(i18n.t('common.already_check_in'))
           }
         }
-        checkInSign().then(signed => {
-          checkIn(signed).then((res) => {
-            if (res.code == 1) {
-              commit('setCheckTime', new Date().getTime())
-              cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
-              return resolve(res.data)
-            } else {
-              if (res.message.indexOf('已签过到') >= 0) {
+        if (store.state.user.userInfo.isge8model) {
+          // 合约签到
+          checkInContract().then(txJson => {
+            contractSign(txJson.transactionHash).then(r => {
+              if (r.code == 1) {
+                commit('setCheckTime', new Date().getTime())
+                cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
+                return resolve(r.data)
+              } else {
+                if (r.message.indexOf('已签过到') >= 0) {
+                  commit('setCheckTime', new Date().getTime())
+                  cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
+                  return resolve()
+                }
+                return reject(r.message)
+              }
+            })
+          })
+        } else {
+          // 本地签到
+          checkInSign().then(signed => {
+            checkIn(signed).then((res) => {
+              if (res.code == 1) {
+                commit('setCheckTime', new Date().getTime())
+                cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
+                return resolve(res.data)
+              } else {
+                if (res.message.indexOf('已签过到') >= 0) {
+                  commit('setCheckTime', new Date().getTime())
+                  cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
+                  return resolve()
+                }
+                return reject(res.message)
+              }
+            }).catch(e => {
+              console.log(e)
+              if (e && e.indexOf('已签过到') >= 0) {
                 commit('setCheckTime', new Date().getTime())
                 cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
                 return resolve()
               }
-              return reject(res.message)
-            }
+              return reject(e)
+            })
           }).catch(e => {
-            if (e.indexOf('已签过到') >= 0) {
-              commit('setCheckTime', new Date().getTime())
-              cache.local.set('DOJI_AI_CHECK_IN_TIME_' + store.state.user.userId, new Date().getTime())
-              return resolve()
-            }
             return reject(e)
           })
-        }).catch(e => {
-          return reject(e)
-        })
+        }
       })
     },
     // 退出登录

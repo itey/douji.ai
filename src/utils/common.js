@@ -369,53 +369,40 @@ export function boxCount2Time(count) {
 }
 
 /** 保存盲盒标志 */
-export function setBlindBoxFlagCache(userId, flag, invalid) {
-  var cacheData = getBlindBoxFlagCache(userId)
-  if (flag) {
-    if (!cacheData) {
-      cacheData = {
-        flag: flag,
-        time: new Date().getTime(),
-        invalid: invalid
-      }
-    } else {
-      cacheData.flag = flag
-      cacheData.invalid = invalid != undefined && invalid != null ? invalid : false
-      if (!invalid) {
-        cacheData.time = new Date().getTime()
-      }
-    }
-    cache.local.setJSON('DOJI_BOX_FLAG_' + userId, cacheData)
-  } else {
-    cache.local.remove('DOJI_BOX_FLAG_' + userId)
+export function setBlindBoxFlagCache(userId, flag) {
+  const cacheData = {
+    flag: flag,
+    time: new Date().getTime(),
+    invalid: false
   }
+  cache.local.setJSON('DOJI_BOX_FLAG_' + userId, cacheData)
 }
+
+/** 更新盲盒状态 */
+export function setBlindBoxFlagState(userId, invalid) {
+  var cacheData = getBlindBoxFlagCache(userId)
+  cacheData && (cacheData.invalid = invalid)
+}
+
 /** 获取盲盒标志 */
 export function getBlindBoxFlagCache(userId) {
   return cache.local.getJSON('DOJI_BOX_FLAG_' + userId)
 }
 
 /** 保存盲盒 */
-export function setBlindBoxCache(userId, box, invalid) {
-  var cacheData = getBlindBoxCache(userId)
-  if (box) {
-    if (!cacheData) {
-      cacheData = {
-        box: box,
-        time: new Date().getTime(),
-        invalid: invalid
-      }
-    } else {
-      cacheData.box = box
-      cacheData.invalid = invalid != undefined && invalid != null ? invalid : false
-      if (!invalid) {
-        cacheData.time = new Date().getTime()
-      }
-    }
-    cache.local.setJSON('DOJI_BOX_' + userId, cacheData)
-  } else {
-    cache.local.remove('DOJI_BOX_' + userId)
+export function setBlindBoxCache(userId, box) {
+  var cacheData = {
+    box: box,
+    time: new Date().getTime(),
+    invalid: false
   }
+  cache.local.setJSON('DOJI_BOX_' + userId, cacheData)
+}
+
+/** 更新盲盒 */
+export function setBlindBoxState(userId, invalid) {
+  var cacheData = getBlindBoxCache(userId)
+  cacheData && (cacheData.invalid = invalid)
 }
 /** 获取盲盒 */
 export function getBlindBoxCache(userId) {

@@ -83,7 +83,7 @@
         </div>
       </div>
     </div>
-    <mint-success-dialog ref="successDialog" :tx="txObject"></mint-success-dialog>
+    <mint-success-dialog ref="successDialog" @close="closeDialog()" :tx="txObject"></mint-success-dialog>
   </div>
 </template>
 
@@ -250,6 +250,10 @@ export default {
     /** 完成铸造后处理 */
     afterMinted() {
       cache.local.remove('NFT_MINT_CACHE')
+    },
+    /** 页面刷新 */
+    closeDialog() {
+      this.$emit('reload')
     },
   },
 }

@@ -52,7 +52,7 @@ export default {
         .finally(() => {
           loadingInstance.close()
         })
-    },
+    }
   },
 }
 </script>

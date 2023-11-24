@@ -18,9 +18,9 @@
         <div class="time-container">
           <img style="width: 38px;height: 38px;" src="@/assets/images/news/blind-date.png" />
           <div class="time">
-            <vac :end-time="endTime" @finish="onFinished()">
-              <span slot="process" slot-scope="{ timeObj }">{{ timeObj.ceil.s }}</span>
-            </vac>
+            <countdown v-if="showTimer" :time="leftTime" @end="onFinished()">
+              <template slot-scope="{ totalSeconds }">{{ totalSeconds }}</template>
+            </countdown>
           </div>
         </div>
         <div class="label">Open the blind box and you will 100% get the following rewards</div>
@@ -48,23 +48,19 @@
 
 <script>
 import CongratulationsDialog from '@/components/news/CongratulationsDialog'
-import { setBlindBoxCache } from '@/utils/common'
-import { openBlindBox } from '@/utils/http'
+import { setBlindBoxState, getBlindBoxCache } from '@/utils/common'
+import { openBlindBox, contractOpenBox } from '@/utils/http'
 import { openBlindBoxSign } from '@/utils/web3/chain'
 import { transferMbd } from '@/utils/web3/mbd'
+import { openBoxContract } from '@/utils/web3/operator'
 export default {
   name: 'blind-open-dialog',
-  props: {
-    blindBox: {
-      type: Object,
-      default: null,
-    },
-  },
   components: {
     CongratulationsDialog,
   },
   data() {
     return {
+      blindBox: {},
       rewardsOptions: [
         {
           coin: 'MBD',
@@ -102,16 +98,44 @@ export default {
           percent: '1%',
         },
       ],
+      userInfo: this.$store.state.user.userInfo,
       centerAddress: process.env.VUE_APP_RECEIVE_ADDR,
       show: false,
-      endTime: undefined,
+      showTimer: false,
+      leftTime: undefined,
       boxPrizes: {},
     }
   },
   methods: {
     /** 打开盲盒 */
     openClick() {
-      openBlindBoxSign()
+      if (this.userInfo.isge8model) { 
+        // 合约调用
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        openBoxContract().then(txJson => {
+          contractOpenBox(txJson.transactionHash).then(r => {
+            if (r.code == 1) {
+              this.boxPrizes = r.data
+              this.show = false
+              this.$refs['successDialog'].showDialog()
+              this.$emit('handleReload')
+            } else {
+              this.$toast.error(r.message)
+            }
+          }).catch((e) => {
+            this.$toast.error(e)
+          })
+          .finally(() => {
+            loadingInstance.close()
+          })
+        }).catch(e => {
+          this.$toast.error(e)
+          loadingInstance.close()
+        })
+      } else {
+        openBlindBoxSign()
         .then((signed) => {
           var loadingInstance = this.$loading({
             background: 'rgba(0, 0, 0, 0.8)',
@@ -144,32 +168,38 @@ export default {
         .catch((e) => {
           this.$toast.error(e)
         })
+      }
     },
     onOpen() {
-      this.endTime = Number(this.blindBox.time) + 120000
-      const now = new Date().getTime()
-      if (now >= this.endTime) {
+      this.blindBox = getBlindBoxCache(this.$store.state.user.userId)
+      const endTime = Number(this.blindBox.time) + 120000
+      this.leftTime =  endTime - new Date().getTime()
+      if (this.leftTime <= 0) {
         this.onFinished()
+      } else {
+        this.showTimer = true
       }
     },
     /** 倒计时结束 */
     onFinished() {
-      console.log('Time Over')
-      setBlindBoxCache(this.$store.state.user.userId, this.blindBox.box, true)
+      setBlindBoxState(this.$store.state.user.userId, true)
+      this.showTimer = false
       this.show = false
     },
     /** 放弃盲盒 */
     giveUpClick() {
-      setBlindBoxCache(this.$store.state.user.userId, this.blindBox.box, true)
+      setBlindBoxState(this.$store.state.user.userId, true)
       this.show = false
     },
     /** 点击关闭 */
     handleClose() {
-      setBlindBoxCache(this.$store.state.user.userId, this.blindBox.box, true)
+      setBlindBoxState(this.$store.state.user.userId, true)
       this.show = false
     },
     showDialog() {
-      this.show = true
+      if (!this.show) {
+        this.show = true
+      }
     },
     getStyle(index) {
       return {

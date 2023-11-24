@@ -10,7 +10,7 @@
           <img style="width: 653px;height: 71px;" />
         </div>
         <div class="app-content">
-          <router-view />
+          <router-view v-if="show"/>
         </div>
       </el-main>
       <el-footer style="height: auto;background: #1A2027;margin-top: 16px;">
@@ -31,9 +31,28 @@ export default {
     NavFooter,
     // Creator,
   },
+  data() {
+    return {
+      show: true
+    }
+  },
+  provide() { 
+    return {
+      reload: this.reload
+    }
+  },
   created() {
     this.$store.dispatch('LoadMbdPrice')
   },
+  methods: {
+    // 高阶组件定义刷新方法
+    reload() {
+      this.show = false
+      this.$nextTick(() => {
+        this.show = true
+      })
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

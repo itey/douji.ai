@@ -121,7 +121,7 @@
     </div>
     <RevisionHistoryDialog :tokenId="tokenId" ref="revisionHistoryDialog" />
     <CheckInDialog @onCheckedIn="checkIn()" ref="checkInDialog" />
-    <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" :boxFlag="boxFlagInfo" ref="blindDialog" />
+    <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" ref="blindDialog" />
     <BlindOpenDialog @handleReload="dataLoad" :tokenId="tokenId" :blindBox="blindBox" ref="blindOpenDialog" />
     <SetSaleDialog @handleReload="dataLoad" :tokenInfo="tokenSupplyInfo" :tokenId="tokenId" ref="setSaleDialog" />
     <SetDaoDialog @handleReload="dataLoad" :tokenId="tokenId" ref="setDaoDialog" />
@@ -150,9 +150,11 @@ import {
   getBlindBoxFlagCache,
   getBoxCountToday,
   ifCheckInToday,
-  setBlindBoxCache,
+  setBlindBoxState,
   setBlindBoxFlagCache,
+  setBlindBoxFlagState
 } from '@/utils/common'
+import { checkBoxContract } from '@/utils/web3/operator'
 import {
   checkBlindBox,
   getNftTransactions,
@@ -223,6 +225,7 @@ export default {
       nftContract: process.env.VUE_APP_NFT,
       voteKeepTime: process.env.VUE_APP_VOTE_TIME,
       nowTime: new Date().getTime(),
+      userInfo: this.$store.state.user.userInfo,
       tokenId: undefined,
       tokenOwner: undefined,
       tokenMetaUrl: undefined,
@@ -250,7 +253,6 @@ export default {
       blindBoxToday: {},
       blindBoxTimerTask: undefined,
       blindBox: {},
-      boxFlagInfo: {},
       transactionHistory: [],
       timeTask: undefined,
     }
@@ -312,7 +314,7 @@ export default {
           const timeGet = Number(blindBox.time)
           const nowTime = new Date().getTime()
           if (nowTime - timeGet > 1000 * 120) {
-            setBlindBoxCache(this.$store.state.user.userId, blindBox.box, true)
+            setBlindBoxState(this.$store.state.user.userId, true)
             haveBox = false
           } else if (!blindBox.invalid) {
             this.blindBox = blindBox
@@ -328,45 +330,58 @@ export default {
             const timeGet = Number(flag.time)
             const nowTime = new Date().getTime()
             if (nowTime - timeGet > 1000 * 120) {
-              setBlindBoxFlagCache(
+              setBlindBoxFlagState(
                 this.$store.state.user.userId,
-                flag.flag,
                 true
               )
               haveFlag = false
             } else if (!flag.invalid) {
-              this.boxFlagInfo = flag
               haveFlag = true
               this.$refs['blindDialog'].showDialog()
             }
           }
         }
         if (!haveFlag) {
-          checkBlindBox()
-            .then((r) => {
-              if (r.code == 1) {
-                const boxFlag = r.data.get_box_flag
-                if (boxFlag) {
-                  const currentFlag = getBlindBoxFlagCache(
-                    this.$store.state.user.userId
-                  )
-                  if (!currentFlag || currentFlag.flag != boxFlag) {
-                    setBlindBoxFlagCache(
-                      this.$store.state.user.userId,
-                      boxFlag,
-                      false
-                    )
-                    this.boxFlagInfo = getBlindBoxFlagCache(
-                      this.$store.state.user.userId
-                    )
-                    this.$refs['blindDialog'].showDialog()
-                  }
-                }
+          if (this.userInfo.isge8model) {
+            // 合约检查盲盒
+            checkBoxContract().then(r => {
+              /**
+               * [ checkBox method Response ]
+               *  bool :  false "是否有盒子 如果有盒子true则调用合约方法 openBox  去开盒子。如果没有盒子则调用 getBox 去获取合约"
+               *  uint8 :  0 "本周期领盒子数，如果数量>=12 则不在调用合约方法 getBox 去获取合约"
+               */
+              if (r[0] && r[1] < 12) {
+                setBlindBoxFlagCache(
+                  this.$store.state.user.userId,
+                  1
+                )
+                this.$refs['blindDialog'].showDialog()
               }
             })
-            .catch((e) => {
-              console.log(e)
-            })
+          } else {
+            // 中心检查盲盒
+            checkBlindBox()
+              .then((r) => {
+                if (r.code == 1) {
+                  const boxFlag = r.data.get_box_flag
+                  if (boxFlag) {
+                    const currentFlag = getBlindBoxFlagCache(
+                      this.$store.state.user.userId
+                    )
+                    if (!currentFlag || currentFlag.flag != boxFlag) {
+                      setBlindBoxFlagCache(
+                        this.$store.state.user.userId,
+                        boxFlag
+                      )
+                      this.$refs['blindDialog'].showDialog()
+                    }
+                  }
+                }
+              })
+              .catch((e) => {
+                console.log(e)
+              })
+          }
         }
       }
     },

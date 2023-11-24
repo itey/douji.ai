@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <div class="top-container" v-loading="loading['news']" element-loading-background="rgba(0, 0, 0, 0.3)">
-      <div class="news-img-container">
+      <div class="news-img-container" v-if="bannerNews">
         <img style="width: 934px;height: 526px;" :src="bannerNews.image" />
         <div class="news-text">
           <div class="title" @click="$router.push({path: '/news-detail', query: {tokenId: bannerNews.token_id}})">{{ bannerNews.title }}</div>

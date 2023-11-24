@@ -18,6 +18,14 @@ export function login({ address, signed, uuid }) {
   })
 }
 
+// 获取用户信息
+export function getUserInfo() {
+  return request({
+    url: '/getUserInfo',
+    method: 'post'
+  })
+}
+
 // 每日签到
 export function checkIn(signed) {
   return request({
@@ -152,14 +160,6 @@ export function updateUserInfo(data) {
   return request({
     url: '/updateUserInfo',
     params: data,
-    method: 'post'
-  })
-}
-
-// 获取用户信息
-export function getUserInfo() {
-  return request({
-    url: '/getUserInfo',
     method: 'post'
   })
 }
@@ -306,5 +306,32 @@ export function accountSettle(signed) {
     url: '/settle',
     method: 'post',
     params: { signed }
+  })
+}
+
+// 合约签到
+export function contractSign(txhash) {
+  return request({
+    url: '/checkInByTxhash',
+    method: 'post',
+    params: { txhash }
+  })
+}
+
+// 合约获取盲盒
+export function contractGetBox(txhash) {
+  return request({
+    url: '/getBoxByTxhash',
+    method: 'post',
+    params: { txhash }
+  })
+}
+
+// 合约打开盲盒
+export function contractOpenBox(txhash) {
+  return request({
+    url: '/openBoxByTxhash',
+    method: 'post',
+    params: { txhash }
   })
 }
