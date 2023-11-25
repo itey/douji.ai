@@ -128,7 +128,7 @@ body {
 .el-breadcrumb__item:last-child .el-breadcrumb__inner a,
 .el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover,
 .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
-	color: #FFFFFF;
+	color: #848F8F;
 }
 
 .el-input__inner {
@@ -162,7 +162,7 @@ body {
 
 .el-select-dropdown {
 	border: none;
-	background: #1A2027;
+	background: #bcd6d6;
 	box-shadow: 0px 5px 10px 0px rgba(9, 11, 12, 0.85);
 	border-radius: 5px;
 }
@@ -188,9 +188,9 @@ body {
 	font-family: Arial;
 	font-weight: bold;
 	color: #00F9E5;
-	box-shadow: 0px 6px 13px 0px rgba(9, 11, 12, 0.85);
+	box-shadow: 0px 6px 13px 0px rgba(9, 11, 12, 0.25);
 	border-radius: 6px;
-	background: #273037;
+	background: #99c3c3;
 	border-radius: 6px;
 	margin: 5px 5px;
 }
@@ -325,4 +325,33 @@ body {
 
 .comparison-tab .tab4 .tab-bottom .item .desc {
   color: #1A2027;
+}
+
+.home-container .info-container .left .item {
+  /* background: linear-gradient(-25deg, #090D0D, #0D1212); */
+  background: #FFFFFF;
+}
+
+.home-container .info-container .left .item .label {
+  color: #707981;
+}
+
+.home-container .info-container .nft-info-container .nft-column .title {
+  color: #707981;
+}
+
+.home-container .info-container .nft-info-container .nft-column .attr-container .attr-item {
+  color: #707981;
+}
+
+.home-container .info-container .nft-info-container .nft-column .value-container .rate {
+  color: #707981;
+}
+
+.home-container .info-container .nft-info-container .nft-column .attr-container .attr-item .rate {
+  color: #707981;
+}
+
+.market-container .search-container {
+  background: #bcd6d6;
 }

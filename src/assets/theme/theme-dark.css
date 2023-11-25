@@ -336,3 +336,38 @@ body {
 .comparison-tab .tab4 .tab-bottom .item .desc {
   color: #a1b5c6;
 }
+
+.home-container .info-container .left .item {
+  background: #1A2027;
+  background-image: url('@/assets/images/home/item-back1.png');
+}
+
+.home-container .info-container .left .item .label {
+  color: #BAD2D0;
+}
+
+.home-container .info-container .nft-info-container {
+  background-image: url('@/assets/images/home/item-back4.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.home-container .info-container .nft-info-container .nft-column .title {
+  color: #BAD2D0;
+}
+
+.home-container .info-container .nft-info-container .nft-column .attr-container .attr-item {
+  color: #BAD2D0 !important;
+}
+
+.home-container .info-container .nft-info-container .nft-column .value-container .rate {
+  color: #B2B9B9;
+}
+
+.home-container .info-container .nft-info-container .nft-column .attr-container .attr-item .rate {
+  color: #B2B9B9;
+}
+
+.market-container .search-container {
+  background-color: #1a2027;
+}

@@ -1,39 +1,101 @@
 <template>
   <div class="market-container">
-    <el-breadcrumb style="margin-top: 38px;" separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">{{ $t('marketplace.home') }}</el-breadcrumb-item>
-      <el-breadcrumb-item>{{ $t('marketplace.marketplace') }}</el-breadcrumb-item>
+    <el-breadcrumb
+      style="margin-top: 38px"
+      separator-class="el-icon-arrow-right"
+    >
+      <el-breadcrumb-item :to="{ path: '/' }">{{
+        $t('marketplace.home')
+      }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{
+        $t('marketplace.marketplace')
+      }}</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="title-container">
       <span class="text-color title">{{ $t('marketplace.all_nft') }}</span>
-      <span class="text-sub-color sub">28,308 {{ $t('marketplace.result') }}</span>
+      <span class="text-sub-color sub"
+        >28,308 {{ $t('marketplace.result') }}</span
+      >
     </div>
     <div class="search-container">
-      <el-select v-model="typeValue" @change="onTypeChange" clearable filterable :placeholder="$t('marketplace.all_types')">
-        <el-option class="select-time" v-for="item in typeOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
+      <el-select
+        v-model="typeValue"
+        @change="onTypeChange"
+        clearable
+        filterable
+        :placeholder="$t('marketplace.all_types')"
+      >
+        <el-option
+          class="select-time"
+          v-for="item in typeOptions"
+          :key="item.value"
+          :label="$i18n.locale == 'en' ? item.e_name : item.c_name"
+          :value="item.e_name"
+        ></el-option>
       </el-select>
-      <el-select v-model="categoryValue" @change="onCategoryChange" clearable filterable :placeholder="$t('marketplace.all_category')">
-        <el-option class="select-time" v-for="item in categoryOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
+      <el-select
+        v-model="categoryValue"
+        @change="onCategoryChange"
+        clearable
+        filterable
+        :placeholder="$t('marketplace.all_category')"
+      >
+        <el-option
+          class="select-time"
+          v-for="item in categoryOptions"
+          :key="item.value"
+          :label="$i18n.locale == 'en' ? item.e_name : item.c_name"
+          :value="item.e_name"
+        ></el-option>
       </el-select>
-      <el-select v-model="platformValue" clearable filterable :placeholder="$t('marketplace.all_platform')">
-        <el-option class="select-time" v-for="item in platformOptions" :key="item.value" :label="$i18n.locale == 'en' ? item.e_name : item.c_name" :value="item.e_name"></el-option>
+      <el-select
+        v-model="platformValue"
+        clearable
+        filterable
+        :placeholder="$t('marketplace.all_platform')"
+      >
+        <el-option
+          class="select-time"
+          v-for="item in platformOptions"
+          :key="item.value"
+          :label="$i18n.locale == 'en' ? item.e_name : item.c_name"
+          :value="item.e_name"
+        ></el-option>
       </el-select>
-      <el-select v-model="viewedValue" clearable filterable :placeholder="$t('marketplace.most_viewed')">
-        <el-option class="select-time" v-for="item in viewedOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+      <el-select
+        v-model="viewedValue"
+        clearable
+        filterable
+        :placeholder="$t('marketplace.most_viewed')"
+      >
+        <el-option
+          class="select-time"
+          v-for="item in viewedOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
       </el-select>
-      <el-input style="width: 344px;" :placeholder="$t('marketplace.search_tip')">
+      <el-input
+        style="width: 344px"
+        :placeholder="$t('marketplace.search_tip')"
+      >
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
     </div>
-    <div class="content" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <div
+      class="content"
+      v-loading="loading"
+      element-loading-background="rgba(0, 0, 0, 0.8)"
+    >
       <div class="list">
-        <div v-for="(item,index) in list" :key="index" class="item">
+        <div v-for="(item, index) in list" :key="index" class="item">
           <product-item :item="item"></product-item>
         </div>
       </div>
       <el-pagination
         @current-change="onPageChange"
-        style="width:100%;margin: 20px 0;"
+        style="width: 100%; margin: 20px 0"
         background
         layout="prev, pager, next"
         :page-size="pageSize"
@@ -92,8 +154,10 @@ export default {
   },
   created() {
     this.$route.query.type && (this.typeValue = this.$route.query.type)
-    this.$route.query.category && (this.categoryValue = this.$route.query.category)
-    this.$route.query.platform && (this.platformValue = this.$route.query.platform)
+    this.$route.query.category &&
+      (this.categoryValue = this.$route.query.category)
+    this.$route.query.platform &&
+      (this.platformValue = this.$route.query.platform)
     this.loadTypeList()
     this.loadPageList()
   },
@@ -219,9 +283,8 @@ export default {
 
   .search-container {
     height: 72px;
-    background: #1a2027;
     border-radius: 8px;
-    padding: 15px 16px;
+    padding: 10px 20px;
     margin: 21px 0 19px 0;
     display: flex;
     align-items: center;
@@ -256,4 +319,3 @@ export default {
   color: #17e7d6;
 }
 </style>
-

@@ -18,7 +18,7 @@
       :tokenInfo="tokenSupplyInfo"
       :tokenId="tokenId"
     />
-    <div class="form-container">
+    <div class="form-container theme-background-color">
       <div class="form-top">
         <div class="form-left">
           <div class="form-title text-color">{{ metadata.title }}</div>
@@ -747,7 +747,6 @@ export default {
 
   .form-container {
     margin-top: 28px;
-    background: #1a2027;
     border-radius: 6px;
     padding: 30px 20px;
 

@@ -82,22 +82,22 @@
     </div>
     <div class="info-container">
       <div class="left">
-        <div class="item theme-background-color">
-          <div class="label text-color">{{ $t('home.creator') }}</div>
+        <div class="item">
+          <div class="label">{{ $t('home.creator') }}</div>
           <div class="value text-color">238,820</div>
         </div>
         <div class="item theme-background-color">
-          <div class="label text-color">{{ $t('home.user') }}</div>
+          <div class="label">{{ $t('home.user') }}</div>
           <div class="value text-color">238,820</div>
         </div>
         <div class="item theme-background-color">
-          <div class="label text-color">{{ $t('home.navigation_items') }}</div>
+          <div class="label">{{ $t('home.navigation_items') }}</div>
           <div class="value text-color">238,820</div>
         </div>
       </div>
       <div class="nft-info-container theme-background-color">
         <div class="nft-column">
-          <div class="title text-color">{{ $t('home.all_nft') }}</div>
+          <div class="title">{{ $t('home.all_nft') }}</div>
           <div class="value-container">
             <span class="value text-color">437,238,820</span>
             <img
@@ -108,7 +108,7 @@
           </div>
           <div class="attr-container">
             <div class="attr-item">
-              <div class="label text-color">{{ $t('home.market_cap') }}</div>
+              <div class="label">{{ $t('home.market_cap') }}</div>
               <div>
                 <span class="value text-color">$10,468,280</span>
                 <img
@@ -119,7 +119,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label text-color">{{ $t('home.nft_volume') }}</div>
+              <div class="label">{{ $t('home.nft_volume') }}</div>
               <div>
                 <span class="value text-color">$10,468,280</span>
                 <img
@@ -130,7 +130,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label text-color">{{ $t('home.transfers') }}</div>
+              <div class="label">{{ $t('home.transfers') }}</div>
               <div>
                 <span class="value text-color">$10,468,280</span>
                 <img
@@ -141,7 +141,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label text-color">
+              <div class="label">
                 {{ $t('home.weekly_active_users') }}
               </div>
               <div>
@@ -156,7 +156,7 @@
           </div>
         </div>
         <div class="nft-column">
-          <div class="title text-color">{{ $t('home.mbd_price') }}</div>
+          <div class="title">{{ $t('home.mbd_price') }}</div>
           <div class="value-container">
             <span class="value text-color">$0.00011887</span>
             <img
@@ -167,7 +167,7 @@
           </div>
           <div class="attr-container">
             <div class="attr-item">
-              <div class="label text-color">
+              <div class="label">
                 {{ $t('home.mbd_circulation') }}
               </div>
               <div>
@@ -180,7 +180,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label text-color">
+              <div class="label">
                 {{ $t('home.24h_nft_volume') }}
               </div>
               <div>
@@ -193,7 +193,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label text-color">{{ $t('home.24h_transfers') }}</div>
+              <div class="label">{{ $t('home.24h_transfers') }}</div>
               <div>
                 <span class="value text-color">1468,280</span>
                 <img
@@ -204,7 +204,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label text-color">{{ $t('home.24h_nfts') }}</div>
+              <div class="label">{{ $t('home.24h_nfts') }}</div>
               <div>
                 <span class="value text-color">8,280</span>
                 <img
@@ -749,9 +749,16 @@ export default {
 
     .news-img-container {
       position: relative;
+      border-radius: 8px;
+
+      img {
+        border-radius: 8px;
+      }
 
       .news-text {
         position: absolute;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
         bottom: 0px;
         left: 0px;
         right: 0px;
@@ -801,7 +808,6 @@ export default {
     }
     .news-tab-container {
       padding: 0 35px;
-      // background-color: #1A2027;
       border-radius: 8px;
       flex: 1;
       height: 526px;
@@ -847,7 +853,6 @@ export default {
           line-height: 13px;
           font-family: Arial;
           font-weight: bold;
-          // color: #bad2d0;
         }
 
         .value {
@@ -855,7 +860,6 @@ export default {
           line-height: 34px;
           font-family: Source Han Sans CN;
           font-weight: 800;
-          // color: #ffffff;
           margin-top: 30px;
         }
       }
@@ -868,8 +872,6 @@ export default {
       text-align: left;
       display: flex;
       flex-direction: row;
-      // background: #1a2027;
-      // border: 1px solid #2c3638;
       border-radius: 8px;
 
       .nft-column {
@@ -883,7 +885,6 @@ export default {
           line-height: 12px;
           font-family: Arial;
           font-weight: bold;
-          // color: #bad2d0;
         }
 
         .value-container {
@@ -898,7 +899,6 @@ export default {
             line-height: 34px;
             font-family: Source Han Sans CN;
             font-weight: 800;
-            // color: #ffffff;
             margin-right: 15px;
           }
 
@@ -907,7 +907,6 @@ export default {
             line-height: 12px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            // color: #b2b9b9;
             margin-left: 4px;
           }
         }
@@ -928,14 +927,11 @@ export default {
               font-size: 16px;
               font-family: Arial;
               font-weight: bold;
-              // color: #bad2d0;
             }
-
             .value {
               font-size: 16px;
               font-family: Arial;
               font-weight: bold;
-              // color: #ffffff;
               margin-right: 13px;
             }
 
@@ -943,7 +939,6 @@ export default {
               font-size: 9px;
               font-family: Arial;
               font-weight: 400;
-              // color: #b2b9b9;
               margin-left: 4px;
             }
           }

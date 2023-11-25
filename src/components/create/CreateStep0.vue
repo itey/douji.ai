@@ -1,7 +1,9 @@
 <template>
   <div class="create-step0">
     <div class="create-label">{{ $t('create.create') }}</div>
-    <div class="create-title">{{ $t('create.create_your_collection') }}</div>
+    <div class="create-title text-color">
+      {{ $t('create.create_your_collection') }}
+    </div>
     <div class="type-container" v-for="(arr, index) in typeList" :key="index">
       <div
         class="type-item"
@@ -77,7 +79,6 @@ export default {
     font-size: 26px;
     font-family: Source Han Sans CN;
     font-weight: bold;
-    color: #ffffff;
   }
 
   .type-container {
@@ -91,12 +92,13 @@ export default {
       width: 454px;
       height: 140px;
       background: #1a2027;
+      background-image: url('@/assets/images/home/item-back2.png');
+      background-size: 100% 100%;
       border-radius: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #1a2027;
       border: 1px solid #2c3638;
       cursor: pointer;
     }
