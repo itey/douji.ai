@@ -1,21 +1,39 @@
 <template>
-  <div class="product-item" v-if="item && item.image">
-    <img style="width: 100%;height:194px;" :src="item.image" @click="$router.push({path: '/news-detail', query: {tokenId: item.token_id}})" />
+  <div class="product-item theme-background-color" v-if="item && item.image">
+    <img
+      style="width: 100%; height: 194px"
+      :src="item.image"
+      @click="
+        $router.push({
+          path: '/news-detail',
+          query: { tokenId: item.token_id },
+        })
+      "
+    />
     <span class="type" v-if="item.pltform">{{ item.pltform }}</span>
-    <div class="label text-color" @click="$router.push({path: '/news-detail', query: {tokenId: item.token_id}})">{{ item.title }}</div>
+    <div
+      class="label text-color"
+      @click="
+        $router.push({
+          path: '/news-detail',
+          query: { tokenId: item.token_id },
+        })
+      "
+    >
+      {{ item.title }}
+    </div>
     <div class="product-bottom">
       <div class="bottom-left">
         <span class="value text-color">2500 MBD</span>
         <span class="transform text-sub-color"> ≈ $0.57</span>
       </div>
       <div class="bottom-right">
-        <img style="width: 16px;height: 14px;" src="@/assets/images/star.png" />
+        <img style="width: 16px; height: 14px" src="@/assets/images/star.png" />
         <span class="star text-sub-color">{{ item.praise_count }}</span>
       </div>
     </div>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -32,8 +50,8 @@ export default {
 .product-item {
   position: relative;
   cursor: pointer;
-  background: #1a2027;
-  box-shadow: 0px 8px 18px 0px rgba(9, 11, 12, 0.85);
+  // background: #1a2027;
+  box-shadow: 0px 8px 18px 0px rgba(9, 11, 12, 0.25);
   border-radius: 8px;
 
   img {

@@ -1,38 +1,80 @@
 <template>
   <div class="home-container">
-    <div class="top-container" v-loading="loading['news']" element-loading-background="rgba(0, 0, 0, 0.3)">
+    <div
+      class="top-container"
+      v-loading="loading['news']"
+      element-loading-background="rgba(0, 0, 0, 0.3)"
+    >
       <div class="news-img-container" v-if="bannerNews">
-        <img style="width: 934px;height: 526px;" :src="bannerNews.image" />
+        <img style="width: 934px; height: 526px" :src="bannerNews.image" />
         <div class="news-text">
-          <div class="title" @click="$router.push({path: '/news-detail', query: {tokenId: bannerNews.token_id}})">{{ bannerNews.title }}</div>
+          <div
+            class="title"
+            @click="
+              $router.push({
+                path: '/news-detail',
+                query: { tokenId: bannerNews.token_id },
+              })
+            "
+          >
+            {{ bannerNews.title }}
+          </div>
           <div class="bottom">
             <div class="text-sub-color">
               by
               <span
-                @click="$router.push({path: '/creator', query: {address: bannerNews.owner_address}})"
+                @click="
+                  $router.push({
+                    path: '/creator',
+                    query: { address: bannerNews.owner_address },
+                  })
+                "
                 class="text-primary-color text-color"
                 v-if="bannerNews.nickname"
-              >{{ bannerNews.nickname }}</span>
+                >{{ bannerNews.nickname }}</span
+              >
               <span
-                @click="$router.push({path: '/creator', query: {address: bannerNews.owner_address}})"
+                @click="
+                  $router.push({
+                    path: '/creator',
+                    query: { address: bannerNews.owner_address },
+                  })
+                "
                 class="text-primary-color text-color"
                 v-else
-              >{{ bannerNews.owner_address | omitAddress }}</span>
+                >{{ bannerNews.owner_address | omitAddress }}</span
+              >
             </div>
-            <div class="text-sub-color">{{ bannerNews.create_time | localTimeFormat }}</div>
+            <div class="text-sub-color">
+              {{ bannerNews.create_time | localTimeFormat }}
+            </div>
           </div>
         </div>
       </div>
       <div class="news-tab-container">
-        <el-tabs v-model="activeName" :stretch="true" @tab-click="newsTabChange">
+        <el-tabs
+          v-model="activeName"
+          :stretch="true"
+          @tab-click="newsTabChange"
+        >
           <el-tab-pane :label="$t('home.hot_news')" name="news">
             <div class="news-list">
-              <news-tab-item @onHover="onHover" :item="item" v-for="(item,index) in hotNewsList" :key="index"></news-tab-item>
+              <news-tab-item
+                @onHover="onHover"
+                :item="item"
+                v-for="(item, index) in hotNewsList"
+                :key="index"
+              ></news-tab-item>
             </div>
           </el-tab-pane>
           <el-tab-pane :label="$t('home.featured')" name="feature">
             <div class="news-list">
-              <news-tab-item @onHover="onHover" :item="item" v-for="(item,index) in selectedList" :key="index"></news-tab-item>
+              <news-tab-item
+                @onHover="onHover"
+                :item="item"
+                v-for="(item, index) in selectedList"
+                :key="index"
+              ></news-tab-item>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -40,100 +82,136 @@
     </div>
     <div class="info-container">
       <div class="left">
-        <div class="item">
-          <div class="label">{{ $t('home.creator') }}</div>
-          <div class="value">238,820</div>
+        <div class="item theme-background-color">
+          <div class="label text-color">{{ $t('home.creator') }}</div>
+          <div class="value text-color">238,820</div>
         </div>
-        <div class="item">
-          <div class="label">{{ $t('home.user') }}</div>
-          <div class="value">238,820</div>
+        <div class="item theme-background-color">
+          <div class="label text-color">{{ $t('home.user') }}</div>
+          <div class="value text-color">238,820</div>
         </div>
-        <div class="item">
-          <div class="label">{{ $t('home.navigation_items') }}</div>
-          <div class="value">238,820</div>
+        <div class="item theme-background-color">
+          <div class="label text-color">{{ $t('home.navigation_items') }}</div>
+          <div class="value text-color">238,820</div>
         </div>
       </div>
-      <div class="nft-info-container">
+      <div class="nft-info-container theme-background-color">
         <div class="nft-column">
-          <div class="title">{{ $t('home.all_nft') }}</div>
+          <div class="title text-color">{{ $t('home.all_nft') }}</div>
           <div class="value-container">
-            <span class="value">437,238,820</span>
-            <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
-            <span class="rate">+2.85%</span>
+            <span class="value text-color">437,238,820</span>
+            <img
+              src="@/assets/images/home/up.png"
+              style="width: 6px; height: 4px"
+            />
+            <span class="rate text-color">+2.85%</span>
           </div>
           <div class="attr-container">
             <div class="attr-item">
-              <div class="label">{{ $t('home.market_cap') }}</div>
+              <div class="label text-color">{{ $t('home.market_cap') }}</div>
               <div>
-                <span class="value">$10,468,280</span>
-                <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
-                <span class="rate">+2.85%</span>
+                <span class="value text-color">$10,468,280</span>
+                <img
+                  src="@/assets/images/home/up.png"
+                  style="width: 6px; height: 4px"
+                />
+                <span class="rate text-color">+2.85%</span>
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.nft_volume') }}</div>
+              <div class="label text-color">{{ $t('home.nft_volume') }}</div>
               <div>
-                <span class="value">$10,468,280</span>
-                <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
-                <span class="rate">+2.85%</span>
+                <span class="value text-color">$10,468,280</span>
+                <img
+                  src="@/assets/images/home/up.png"
+                  style="width: 6px; height: 4px"
+                />
+                <span class="rate text-color">+2.85%</span>
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.transfers') }}</div>
+              <div class="label text-color">{{ $t('home.transfers') }}</div>
               <div>
-                <span class="value">$10,468,280</span>
-                <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
-                <span class="rate">+2.85%</span>
+                <span class="value text-color">$10,468,280</span>
+                <img
+                  src="@/assets/images/home/up.png"
+                  style="width: 6px; height: 4px"
+                />
+                <span class="rate text-color">+2.85%</span>
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.weekly_active_users') }}</div>
+              <div class="label text-color">
+                {{ $t('home.weekly_active_users') }}
+              </div>
               <div>
-                <span class="value">$10,468,280</span>
-                <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
-                <span class="rate">+2.85%</span>
+                <span class="value text-color">$10,468,280</span>
+                <img
+                  src="@/assets/images/home/up.png"
+                  style="width: 6px; height: 4px"
+                />
+                <span class="rate text-color">+2.85%</span>
               </div>
             </div>
           </div>
         </div>
         <div class="nft-column">
-          <div class="title">{{ $t('home.mbd_price') }}</div>
+          <div class="title text-color">{{ $t('home.mbd_price') }}</div>
           <div class="value-container">
-            <span class="value">$0.00011887</span>
-            <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
-            <span class="rate">+0.25%</span>
+            <span class="value text-color">$0.00011887</span>
+            <img
+              src="@/assets/images/home/up.png"
+              style="width: 6px; height: 4px"
+            />
+            <span class="rate text-color">+0.25%</span>
           </div>
           <div class="attr-container">
             <div class="attr-item">
-              <div class="label">{{ $t('home.mbd_circulation') }}</div>
+              <div class="label text-color">
+                {{ $t('home.mbd_circulation') }}
+              </div>
               <div>
-                <span class="value">10,468,280</span>
-                <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
-                <span class="rate">+2.85%</span>
+                <span class="value text-color">10,468,280</span>
+                <img
+                  src="@/assets/images/home/up.png"
+                  style="width: 6px; height: 4px"
+                />
+                <span class="rate text-color">+2.85%</span>
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.24h_nft_volume') }}</div>
+              <div class="label text-color">
+                {{ $t('home.24h_nft_volume') }}
+              </div>
               <div>
-                <span class="value">$10,468,280</span>
-                <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
-                <span class="rate">+2.85%</span>
+                <span class="value text-color">$10,468,280</span>
+                <img
+                  src="@/assets/images/home/up.png"
+                  style="width: 6px; height: 4px"
+                />
+                <span class="rate text-color">+2.85%</span>
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.24h_transfers') }}</div>
+              <div class="label text-color">{{ $t('home.24h_transfers') }}</div>
               <div>
-                <span class="value">1468,280</span>
-                <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
-                <span class="rate">+2.85%</span>
+                <span class="value text-color">1468,280</span>
+                <img
+                  src="@/assets/images/home/up.png"
+                  style="width: 6px; height: 4px"
+                />
+                <span class="rate text-color">+2.85%</span>
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.24h_nfts') }}</div>
+              <div class="label text-color">{{ $t('home.24h_nfts') }}</div>
               <div>
-                <span class="value">8,280</span>
-                <img src="@/assets/images/home/up.png" style="width: 6px;height: 4px;" />
-                <span class="rate">+2.85%</span>
+                <span class="value text-color">8,280</span>
+                <img
+                  src="@/assets/images/home/up.png"
+                  style="width: 6px; height: 4px"
+                />
+                <span class="rate text-color">+2.85%</span>
               </div>
             </div>
           </div>
@@ -141,13 +219,18 @@
       </div>
     </div>
     <div class="latest-news-container">
-      <div class="title">{{ $t('home.latest_news') }}</div>
+      <div class="title text-color">{{ $t('home.latest_news') }}</div>
       <div class="list-container">
-        <NewsItem :item="item" class="item" v-for="(item,index) in latestNews" :key="index" />
+        <NewsItem
+          :item="item"
+          class="item"
+          v-for="(item, index) in latestNews"
+          :key="index"
+        />
       </div>
     </div>
-    <div style="margin-top: 43px;">
-      <img style="width: 653px;height: 71px;" />
+    <div style="margin-top: 43px">
+      <img style="width: 653px; height: 71px" />
     </div>
     <template v-if="false">
       <div class="news-list-container">
@@ -156,11 +239,18 @@
             <div class="title text-color">AI News</div>
             <div class="more">
               <span>{{ $t('home.read_more') }}</span>
-              <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+              <img
+                style="width: 12px; height: 12px"
+                src="@/assets/images/home/more.png"
+              />
             </div>
           </div>
           <div class="news-item-list-container">
-            <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
+            <news-item
+              class="item"
+              v-for="(item, index) in 4"
+              :key="index"
+            ></news-item>
           </div>
         </div>
         <div class="news-item-container">
@@ -168,11 +258,18 @@
             <div class="title text-color">Web3 News</div>
             <div class="more">
               <span>{{ $t('home.read_more') }}</span>
-              <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+              <img
+                style="width: 12px; height: 12px"
+                src="@/assets/images/home/more.png"
+              />
             </div>
           </div>
           <div class="news-item-list-container">
-            <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
+            <news-item
+              class="item"
+              v-for="(item, index) in 4"
+              :key="index"
+            ></news-item>
           </div>
         </div>
         <div class="news-item-container">
@@ -180,11 +277,18 @@
             <div class="title text-color">Crypto News</div>
             <div class="more">
               <span>{{ $t('home.read_more') }}</span>
-              <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+              <img
+                style="width: 12px; height: 12px"
+                src="@/assets/images/home/more.png"
+              />
             </div>
           </div>
           <div class="news-item-list-container">
-            <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
+            <news-item
+              class="item"
+              v-for="(item, index) in 4"
+              :key="index"
+            ></news-item>
           </div>
         </div>
         <div class="news-item-container">
@@ -192,73 +296,136 @@
             <div class="title text-color">Metaverse News</div>
             <div class="more">
               <span>{{ $t('home.read_more') }}</span>
-              <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+              <img
+                style="width: 12px; height: 12px"
+                src="@/assets/images/home/more.png"
+              />
             </div>
           </div>
           <div class="news-item-list-container">
-            <news-item class="item" v-for="(item,index) in 4" :key="index"></news-item>
+            <news-item
+              class="item"
+              v-for="(item, index) in 4"
+              :key="index"
+            ></news-item>
           </div>
         </div>
       </div>
-      <div style="margin-top: 48px;">
-        <img style="width: 653px;height: 71px;" />
+      <div style="margin-top: 48px">
+        <img style="width: 653px; height: 71px" />
       </div>
     </template>
 
     <div class="nft-list-container" v-if="promptsList.length">
       <div class="top">
-        <div class="title text-color">{{ $t('home.featured_prompts_nft') }}</div>
-        <div class="more" @click="$router.push({path:'/market', query: {type: 'Prompt'}})">
+        <div class="title text-color">
+          {{ $t('home.featured_prompts_nft') }}
+        </div>
+        <div
+          class="more"
+          @click="$router.push({ path: '/market', query: { type: 'Prompt' } })"
+        >
           <span>{{ $t('home.read_more') }}</span>
-          <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+          <img
+            style="width: 12px; height: 12px"
+            src="@/assets/images/home/more.png"
+          />
         </div>
       </div>
       <div class="list-container">
-        <ProductItem class="item" :item="item" v-for="(item,index) in promptsList" :key="index" />
+        <ProductItem
+          class="item"
+          :item="item"
+          v-for="(item, index) in promptsList"
+          :key="index"
+        />
       </div>
     </div>
     <div class="nft-list-container" v-if="digitalList.length">
       <div class="top">
-        <div class="title text-color">{{ $t('home.featured_digital_arts_nft') }}</div>
-        <div class="more" @click="$router.push({path:'/market', query: {type: 'Digital Arts'}})">
+        <div class="title text-color">
+          {{ $t('home.featured_digital_arts_nft') }}
+        </div>
+        <div
+          class="more"
+          @click="
+            $router.push({ path: '/market', query: { type: 'Digital Arts' } })
+          "
+        >
           <span>{{ $t('home.read_more') }}</span>
-          <img style="width: 12px;height: 12px;" src="@/assets/images/home/more.png" />
+          <img
+            style="width: 12px; height: 12px"
+            src="@/assets/images/home/more.png"
+          />
         </div>
       </div>
       <div class="list-container">
-        <ProductItem class="item" :item="item" v-for="(item,index) in digitalList" :key="index" />
+        <ProductItem
+          class="item"
+          :item="item"
+          v-for="(item, index) in digitalList"
+          :key="index"
+        />
       </div>
     </div>
-    <div style="margin-top: 46px;">
-      <img style="width: 653px;height: 71px;" />
+    <div style="margin-top: 46px">
+      <img style="width: 653px; height: 71px" />
     </div>
     <div class="activity-container">
       <div class="top">{{ $t('home.activity') }}</div>
       <div class="title text-color">{{ $t('home.bjx_pre_sale') }}</div>
-      <div class="text-sub-color" style="font-size: 20px">{{ $t('home.bjx_what_value') }}</div>
-      <div class="activity-info" v-loading="bjx.buying" element-loading-background="rgba(0, 0, 0, 0.3)">
-        <img style="width: 224px;height:224px;margin-top: 35px;" src="@/assets/images/home/activity-info.png" />
+      <div class="text-sub-color" style="font-size: 20px">
+        {{ $t('home.bjx_what_value') }}
+      </div>
+      <div
+        class="activity-info theme-background-color"
+        v-loading="bjx.buying"
+        element-loading-background="rgba(0, 0, 0, 0.3)"
+      >
+        <img
+          style="width: 224px; height: 224px; margin-top: 35px"
+          src="@/assets/images/home/activity-info.png"
+        />
         <div class="info">
-          <div style="margin-left: 177px;">
+          <div style="margin-left: 177px">
             <div class="title">BJXStar NFT</div>
             <div class="label">BJXStar NFT</div>
-            <div class="value text-color">{{ (bjxInfoJson.currentSupply - 500000000) | toLocalString }} / 500,000,000 Sold</div>
+            <div class="value text-color">
+              {{ (bjxInfoJson.currentSupply - 500000000) | toLocalString }} /
+              500,000,000 Sold
+            </div>
             <div class="label">{{ $t('home.price') }}</div>
             <div class="type-container">
-              <div @click="bjx.priceType = '0'" class="item" :class="{ light:bjx.priceType == '0' }">
+              <div
+                @click="bjx.priceType = '0'"
+                class="item text-color theme-background-color"
+                :class="{ light: bjx.priceType == '0' }"
+              >
                 <div>{{ bjx.usdtPrice }} USDT</div>
               </div>
-              <div @click="bjx.priceType = '1'" class="item" :class="{ light:bjx.priceType == '1' }">
+              <div
+                @click="bjx.priceType = '1'"
+                class="item text-color theme-background-color"
+                :class="{ light: bjx.priceType == '1' }"
+              >
                 <div>{{ bjx.bnbPrice | decimalPlace2 }} BNB</div>
               </div>
-              <div @click="bjx.priceType = '2'" class="item" :class="{ light:bjx.priceType == '2' }">
+              <div
+                @click="bjx.priceType = '2'"
+                class="item text-color theme-background-color"
+                :class="{ light: bjx.priceType == '2' }"
+              >
                 <div>{{ bjx.mbdPrice }} MBD</div>
               </div>
             </div>
             <div class="label">{{ $t('home.buy_quantity') }}</div>
             <el-form ref="bjxForm" :rules="rules" :model="bjx">
               <el-form-item prop="count">
-                <el-input v-model="bjx.count" class="input" placeholder></el-input>
+                <el-input
+                  v-model="bjx.count"
+                  class="input text-color"
+                  placeholder
+                ></el-input>
               </el-form-item>
             </el-form>
           </div>
@@ -266,8 +433,13 @@
             {{ $t('home.after_early_bird') }}
             <span class="text-color">15 USDT</span>
           </div>
-          <div style="margin-left: 127px;margin-top: 11px;">
-            <el-button :disabled="bjx.buying" @click="handleBuyBjx()" class="common-btn2">{{ $t('home.buy') }}</el-button>
+          <div style="margin-left: 127px; margin-top: 11px">
+            <el-button
+              :disabled="bjx.buying"
+              @click="handleBuyBjx()"
+              class="common-btn2"
+              >{{ $t('home.buy') }}</el-button
+            >
           </div>
         </div>
       </div>
@@ -284,7 +456,7 @@
     <div class="video-container">
       <div class="top">{{ $t('home.video') }}</div>
       <div class="title text-color">{{ $t('home.how_use') }}</div>
-      <video style="width: 1440px;height: 674px;"></video>
+      <video style="width: 1440px; height: 674px"></video>
     </div>
   </div>
 </template>
@@ -583,7 +755,11 @@ export default {
         bottom: 0px;
         left: 0px;
         right: 0px;
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(0, 0, 0, 1));
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0),
+          rgba(0, 0, 0, 1)
+        );
         padding: 70px 34px 60px 34px;
 
         .title {
@@ -617,7 +793,7 @@ export default {
           .text-primary-color {
             cursor: pointer;
           }
-          .text-primary-color:hover{
+          .text-primary-color:hover {
             color: #00f9e5;
           }
         }
@@ -625,13 +801,12 @@ export default {
     }
     .news-tab-container {
       padding: 0 35px;
-      background-color: #1A2027;
+      // background-color: #1A2027;
       border-radius: 8px;
       flex: 1;
       height: 526px;
       margin-left: 11px;
       border-width: 1px;
-      border-color: #1A2027;
 
       .news-list {
         height: 478px;
@@ -662,8 +837,6 @@ export default {
         width: 380px;
         padding: 23px 33px 19px 33px;
         text-align: left;
-        background: #1a2027;
-        border: 1px solid #2c3638;
         border-radius: 8px;
         display: flex;
         flex-direction: column;
@@ -674,7 +847,7 @@ export default {
           line-height: 13px;
           font-family: Arial;
           font-weight: bold;
-          color: #bad2d0;
+          // color: #bad2d0;
         }
 
         .value {
@@ -682,7 +855,7 @@ export default {
           line-height: 34px;
           font-family: Source Han Sans CN;
           font-weight: 800;
-          color: #ffffff;
+          // color: #ffffff;
           margin-top: 30px;
         }
       }
@@ -695,8 +868,8 @@ export default {
       text-align: left;
       display: flex;
       flex-direction: row;
-      background: #1a2027;
-      border: 1px solid #2c3638;
+      // background: #1a2027;
+      // border: 1px solid #2c3638;
       border-radius: 8px;
 
       .nft-column {
@@ -710,7 +883,7 @@ export default {
           line-height: 12px;
           font-family: Arial;
           font-weight: bold;
-          color: #bad2d0;
+          // color: #bad2d0;
         }
 
         .value-container {
@@ -725,7 +898,7 @@ export default {
             line-height: 34px;
             font-family: Source Han Sans CN;
             font-weight: 800;
-            color: #ffffff;
+            // color: #ffffff;
             margin-right: 15px;
           }
 
@@ -734,7 +907,7 @@ export default {
             line-height: 12px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            color: #b2b9b9;
+            // color: #b2b9b9;
             margin-left: 4px;
           }
         }
@@ -755,14 +928,14 @@ export default {
               font-size: 16px;
               font-family: Arial;
               font-weight: bold;
-              color: #bad2d0;
+              // color: #bad2d0;
             }
 
             .value {
               font-size: 16px;
               font-family: Arial;
               font-weight: bold;
-              color: #ffffff;
+              // color: #ffffff;
               margin-right: 13px;
             }
 
@@ -770,7 +943,7 @@ export default {
               font-size: 9px;
               font-family: Arial;
               font-weight: 400;
-              color: #b2b9b9;
+              // color: #b2b9b9;
               margin-left: 4px;
             }
           }
@@ -784,7 +957,6 @@ export default {
       font-size: 26px;
       font-family: Source Han Sans CN;
       font-weight: 800;
-      color: #ffffff;
       text-align: left;
       margin: 90px 0 30px 0;
     }
@@ -884,7 +1056,6 @@ export default {
         font-size: 26px;
         font-family: Source Han Sans CN;
         font-weight: 800;
-        color: #ffffff;
         text-align: left;
         margin: 31px 0 40px 0;
       }
@@ -951,8 +1122,7 @@ export default {
     }
 
     .activity-info {
-      background: #1a2027;
-      border: 1px solid #2c3638;
+      // background: #1a2027;
       border-radius: 6px;
       padding: 58px 0 69px 274px;
       margin-top: 60px;
@@ -971,8 +1141,8 @@ export default {
           .item {
             width: 150px;
             height: 50px;
-            background: #0e161d;
-            border: 1px solid #313838;
+            // background: #0e161d;
+            border: 1px solid #828888;
             border-radius: 8px;
             display: flex;
             flex-direction: row;
@@ -982,11 +1152,11 @@ export default {
             font-size: 18px;
             font-family: Source Han Sans CN;
             font-weight: bold;
-            color: #fff;
+            // color: #fff;
             cursor: pointer;
 
             &.light {
-              background: #18252f;
+              // background: #18252f;
               border: 1px solid #2fc9bd;
 
               font-family: Arial;
@@ -1021,7 +1191,7 @@ export default {
           line-height: 30px;
           font-family: Arial;
           font-weight: bold;
-          color: #ffffff;
+          // color: #ffffff;
           margin-top: 15px;
         }
 
@@ -1032,7 +1202,7 @@ export default {
           line-height: 50px;
           font-family: Arial;
           font-weight: bold;
-          color: #ffffff;
+          // color: #ffffff;
           border-radius: 8px;
           margin-top: 16px;
         }

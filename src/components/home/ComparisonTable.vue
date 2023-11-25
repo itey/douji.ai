@@ -1,17 +1,32 @@
 <template>
-  <div class="comparison-content">
+  <div class="comparison-content theme-background-color">
     <el-table
       class="comparison-table"
       :header-row-class-name="'table-header'"
-      row-class-name="table-row"
       :data="tableData"
       border
       style="width: 1396px"
     >
-      <el-table-column prop="column0" :label="$t('home.feature')" width="296px"></el-table-column>
-      <el-table-column prop="column1" :label="$t('home.web2_creator_platform')" width="374px"></el-table-column>
-      <el-table-column prop="column2" :label="$t('home.regular_web3_platform')" width="380px"></el-table-column>
-      <el-table-column prop="column3" :label="$t('home.douji_ai')" width="338px"></el-table-column>
+      <el-table-column
+        prop="column0"
+        :label="$t('home.feature')"
+        width="296px"
+      ></el-table-column>
+      <el-table-column
+        prop="column1"
+        :label="$t('home.web2_creator_platform')"
+        width="374px"
+      ></el-table-column>
+      <el-table-column
+        prop="column2"
+        :label="$t('home.regular_web3_platform')"
+        width="380px"
+      ></el-table-column>
+      <el-table-column
+        prop="column3"
+        :label="$t('home.douji_ai')"
+        width="338px"
+      ></el-table-column>
     </el-table>
   </div>
 </template>
@@ -24,19 +39,19 @@ export default {
       if (val != od) {
         this.init()
       }
-    }
+    },
   },
   created() {
     this.init()
   },
   data() {
     return {
-      tableData: []
+      tableData: [],
     }
   },
   methods: {
-    init() { 
-      this.tableData =  [
+    init() {
+      this.tableData = [
         {
           column0: this.$t('home.tab_creation_threshold'),
           column1: this.$t('home.tab_low'),
@@ -86,8 +101,8 @@ export default {
           column3: this.$t('home.tab_owned'),
         },
       ]
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -95,20 +110,21 @@ export default {
 .comparison-content {
   width: 1440px;
   padding: 24px 23px 21px 21px;
-  background: #1a2027;
-  border: 1px solid #2c3638;
   border-radius: 8px;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+
+  .comparison-table {
+    display: inline-block;
+  }
 
   .el-table {
     background-color: transparent;
   }
 
-  .el-table th.el-table__cell {
-    background-color: #1a2027;
-  }
-
-  .el-table tr {
-    background-color: #1a2027;
+  .table-header {
+    color: #ffffff;
   }
 
   .el-table .el-table__cell {
@@ -116,7 +132,6 @@ export default {
     font-size: 16px;
     font-family: Arial;
     font-weight: bold;
-    color: #ffffff;
     padding: 0 0;
     text-align: center;
   }
@@ -129,29 +144,12 @@ export default {
     background-color: transparent;
   }
 
-  .el-table--border,
-  .el-table--group {
-    border: 1px solid #1f262e;
-  }
-
-  .el-table td.el-table__cell,
-  .el-table th.el-table__cell.is-leaf {
-    border-right: 1px solid #1f262e;
-    border-bottom: 1px solid #1f262e;
-  }
-
   .el-table th.el-table__cell.is-leaf {
     border-right: 0px solid #1f262e;
   }
 
   .el-table--scrollable-x .el-table__body-wrapper {
     overflow-x: initial;
-  }
-
-  .el-table--border::after,
-  .el-table--group::after,
-  .el-table::before {
-    background-color: transparent;
   }
 
   .el-table th.el-table__cell:first-child {

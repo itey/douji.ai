@@ -3,15 +3,30 @@
     <div class="balance">
       <div class="text-big text-color">Balances</div>
       <div class="balance-address-container">
-        <img style="width: 16px; height: 16px;" src="@/assets/images/user/user.png" />
-        <div class="balance-address">{{ $store.state.user.account | omitAddress }}</div>
-        <img style="width: 14px; height: 14px;" src="@/assets/images/user/copy.png" />
+        <img
+          style="width: 16px; height: 16px"
+          src="@/assets/images/user/user.png"
+        />
+        <div class="balance-address">
+          {{ $store.state.user.account | omitAddress }}
+        </div>
+        <img
+          style="width: 14px; height: 14px"
+          src="@/assets/images/user/copy.png"
+        />
       </div>
     </div>
     <div class="balance-value">
       <div class="item">
-        <div class="value text-color">{{ $store.state.chain.balanceMbd | decimalPlace4 }}</div>
-        <div class="sub-value text-sub-color">≈${{ $store.state.chain.balanceMbd * $store.state.chain.mbdPrice || '0.0000' }}</div>
+        <div class="value text-color">
+          {{ $store.state.chain.balanceMbd | decimalPlace4 }}
+        </div>
+        <div class="sub-value text-sub-color">
+          ≈${{
+            $store.state.chain.balanceMbd * $store.state.chain.mbdPrice ||
+            '0.0000' | decimalPlace4
+          }}
+        </div>
         <div class="unit text-color">MBD</div>
       </div>
       <div class="item">
@@ -50,7 +65,12 @@
       <div class="sub-value text-sub-color">≈$27.57</div>
     </div>-->
     <div class="settle-button">
-      <el-button @click="$refs['incomeDialog'].showDialog()" class="common-btn1" type="primary">Go Settlement</el-button>
+      <el-button
+        @click="$refs['incomeDialog'].showDialog()"
+        class="common-btn1"
+        type="primary"
+        >Go Settlement</el-button
+      >
     </div>
     <div class="divider"></div>
     <div class="text-middle text-color">Platform rewards to be settled</div>
@@ -58,23 +78,53 @@
       <div class="settle-container">
         <div class="unit text-color">MBD</div>
         <div class="value text-color">{{ mbdSettleBalance.balance }}</div>
-        <div class="sub-value text-sub-color">≈${{ (mbdSettleBalance.balance * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
+        <div class="sub-value text-sub-color">
+          ≈${{
+            (mbdSettleBalance.balance * $store.state.chain.mbdPrice)
+              | decimalPlace8
+          }}
+        </div>
       </div>
-      <div class="settle-container" style="margin-left: 32px;">
+      <div class="settle-container" style="margin-left: 32px">
         <div class="unit text-color">BJXStar NFT</div>
-        <div class="value text-color">{{ Number(bjxSettleBalance.balance) | toFixedString }}</div>
-        <div class="sub-value text-sub-color">≈${{ bjxUsdtPrice * bjxSettleBalance.balance }}</div>
+        <div class="value text-color">
+          {{ Number(bjxSettleBalance.balance) | toFixedString }}
+        </div>
+        <div class="sub-value text-sub-color">
+          ≈${{ bjxUsdtPrice * bjxSettleBalance.balance }}
+        </div>
       </div>
     </div>
     <div class="settle-button">
-      <el-button @click="$refs['settleConfirmDialog'].showDialog()" class="common-btn1" type="primary" :disabled="!settleFee || Number(settleFee) >= Number(mbdSettleBalance.balance)">Settlement</el-button>
+      <el-button
+        @click="$refs['settleConfirmDialog'].showDialog()"
+        class="common-btn1"
+        type="primary"
+        :disabled="
+          !settleFee || Number(settleFee) >= Number(mbdSettleBalance.balance)
+        "
+        >Settlement</el-button
+      >
     </div>
     <div class="text-color settle-label">
       Settlement Fee:
-      <span :style="{ color: Number(settleFee) >= Number(mbdSettleBalance.balance) ? 'red' : 'white' }">{{ settleFee }}</span> MBD
+      <span
+        :style="{
+          color:
+            Number(settleFee) >= Number(mbdSettleBalance.balance)
+              ? 'red'
+              : 'white',
+        }"
+        >{{ settleFee }}</span
+      >
+      MBD
     </div>
     <IncomeDialog ref="incomeDialog" />
-    <SettleConfirmDialog ref="settleConfirmDialog" :settleFee="settleFee" @confirm="handleSettle()"/>
+    <SettleConfirmDialog
+      ref="settleConfirmDialog"
+      :settleFee="settleFee"
+      @confirm="handleSettle()"
+    />
   </div>
 </template>
 
@@ -88,7 +138,7 @@ export default {
   name: 'balance-view',
   components: {
     IncomeDialog,
-    SettleConfirmDialog
+    SettleConfirmDialog,
   },
   computed: {
     userAccount() {
@@ -152,22 +202,27 @@ export default {
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',
       })
-      confirmSettleSign().then(signed => {
-        accountSettle(signed).then((r) => {
-          if (r.code == 1) {
-            this.$toast.success(this.$t('user.settle_success'))
-          } else {
-            this.$toast.error(r.message)
-          }
-        }).catch(e => {
+      confirmSettleSign()
+        .then((signed) => {
+          accountSettle(signed)
+            .then((r) => {
+              if (r.code == 1) {
+                this.$toast.success(this.$t('user.settle_success'))
+              } else {
+                this.$toast.error(r.message)
+              }
+            })
+            .catch((e) => {
+              this.$toast.error(e)
+            })
+            .finally(() => {
+              loadingInstance.close()
+            })
+        })
+        .catch((e) => {
           this.$toast.error(e)
-        }).finally(() => {
           loadingInstance.close()
         })
-      }).catch(e => {
-        this.$toast.error(e)
-        loadingInstance.close()
-      })
     },
   },
 }

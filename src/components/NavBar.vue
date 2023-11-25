@@ -1,14 +1,34 @@
 <template>
   <div>
     <div class="navbar-container">
-      <img @click="$router.push('/profile')" style="width: 120px; height: 27px;cursor: pointer;" src="@/assets/logo.png" />
+      <img
+        @click="$router.push('/profile')"
+        style="width: 120px; height: 27px; cursor: pointer"
+        src="@/assets/logo.png"
+      />
       <div class="navbar-divider"></div>
       <div class="navbar-menu">
-        <div class="navbar-menu-item text-color" @click="$router.push('/')">{{$t('common.home')}}</div>
-        <div class="navbar-menu-item text-color"  @click="$router.push('/news')">{{$t('common.news')}}</div>
-        <div class="navbar-menu-item text-color" @click="toNavigation()">{{$t('common.navigation')}}</div>
-        <div class="navbar-menu-item text-color" @click="$router.push('/market')">{{$t('common.marketplace')}}</div>
-        <div class="navbar-menu-item text-color" @click="$router.push('/create')">{{$t('common.create')}}</div>
+        <div class="navbar-menu-item text-color" @click="$router.push('/')">
+          {{ $t('common.home') }}
+        </div>
+        <div class="navbar-menu-item text-color" @click="$router.push('/news')">
+          {{ $t('common.news') }}
+        </div>
+        <div class="navbar-menu-item text-color" @click="toNavigation()">
+          {{ $t('common.navigation') }}
+        </div>
+        <div
+          class="navbar-menu-item text-color"
+          @click="$router.push('/market')"
+        >
+          {{ $t('common.marketplace') }}
+        </div>
+        <div
+          class="navbar-menu-item text-color"
+          @click="$router.push('/create')"
+        >
+          {{ $t('common.create') }}
+        </div>
       </div>
       <div v-show="!$store.state.user.token">
         <Particle
@@ -31,48 +51,81 @@
         <div @click="userMenuVisible = true">
           <el-popover :visible-arrow="false" v-model="userMenuVisible">
             <div class="menu-container">
-              <img @click="userMenuVisible = false" class="close" src="@/assets/images/menu-close.png" />
-              <div class="item" @click="menuClick({path:'/creator', query: {address:$store.state.user.account}})">
+              <img
+                @click="userMenuVisible = false"
+                class="close"
+                src="@/assets/images/menu-close.png"
+              />
+              <div
+                class="item"
+                @click="
+                  menuClick({
+                    path: '/creator',
+                    query: { address: $store.state.user.account },
+                  })
+                "
+              >
                 <div class="icon">
-                  <img style="width: 17px; height: 17px;" src="@/assets/images/user-icon.png" />
+                  <img
+                    style="width: 17px; height: 17px"
+                    src="@/assets/images/user-icon.png"
+                  />
                 </div>
                 <span>{{ $store.state.user.account | omitAddress }}</span>
               </div>
               <div class="item" @click="menuClick('/user')">
                 <div class="icon">
-                  <img style="width: 17px; height: 17px;" src="@/assets/images/menu-user.png" />
+                  <img
+                    style="width: 17px; height: 17px"
+                    src="@/assets/images/menu-user.png"
+                  />
                 </div>
                 <span>{{ $t('common.user_center') }}</span>
               </div>
               <template v-if="isParticleProvider">
                 <div class="item" @click="openWalletModal()">
                   <div class="icon">
-                    <img style="width: 17px; height: 17px;" src="@/assets/images/menu-wallet.png" />
+                    <img
+                      style="width: 17px; height: 17px"
+                      src="@/assets/images/menu-wallet.png"
+                    />
                   </div>
                   <span>{{ $t('common.wallet') }}</span>
                 </div>
                 <div class="item" @click="openBuyModal()">
                   <div class="icon">
-                    <img style="width: 17px; height: 17px;" src="@/assets/images/menu-currency.png" />
+                    <img
+                      style="width: 17px; height: 17px"
+                      src="@/assets/images/menu-currency.png"
+                    />
                   </div>
                   <span>{{ $t('common.buy_currency') }}</span>
                 </div>
               </template>
               <div class="item" @click="handleCopyAddress()">
                 <div class="icon">
-                  <img style="width: 17px; height: 17px;" src="@/assets/images/menu-copy.png" />
+                  <img
+                    style="width: 17px; height: 17px"
+                    src="@/assets/images/menu-copy.png"
+                  />
                 </div>
                 <span>{{ $t('common.copy_address') }}</span>
               </div>
               <div class="item" @click="signOutClick()">
                 <div class="icon">
-                  <img style="width: 17px; height: 17px;" src="@/assets/images/menu-exit.png" />
+                  <img
+                    style="width: 17px; height: 17px"
+                    src="@/assets/images/menu-exit.png"
+                  />
                 </div>
                 <span>{{ $t('common.sign_out') }}</span>
               </div>
             </div>
             <div slot="reference" class="user">
-              <img style="width: 17px; height: 17px;" src="@/assets/images/user-icon.png" />
+              <img
+                style="width: 17px; height: 17px"
+                src="@/assets/images/user-icon.png"
+              />
               <span class="text">
                 {{ $store.state.user.account | omitAddress }}
                 <i class="el-icon-caret-bottom el-icon--right"></i>
@@ -82,22 +135,67 @@
         </div>
       </div>
       <div class="navbar-language" @click="languageVisible = true">
-        <el-popover placement="bottom" width="79px" height="79px" :visible-arrow="false" v-model="languageVisible">
+        <el-popover
+          placement="bottom"
+          width="79px"
+          height="79px"
+          :visible-arrow="false"
+          v-model="languageVisible"
+        >
           <div class="language-select">
-            <div @click="languageClick('en')" class="select" :class="$store.state.common.language=='en'?'select-light':''">English</div>
-            <div @click="languageClick('zh_hant')" class="select" :class="$store.state.common.language=='zh_hant'?'select-light':''">繁體中文</div>
+            <div
+              @click="languageClick('en')"
+              class="select"
+              :class="
+                $store.state.common.language == 'en' ? 'select-light' : ''
+              "
+            >
+              English
+            </div>
+            <div
+              @click="languageClick('zh_hant')"
+              class="select"
+              :class="
+                $store.state.common.language == 'zh_hant' ? 'select-light' : ''
+              "
+            >
+              繁體中文
+            </div>
           </div>
-          <img slot="reference" style="width: 16px; height: 16px;padding: 4px 4px;" src="@/assets/images/language.png" />
+          <img
+            slot="reference"
+            style="width: 16px; height: 16px; padding: 4px 4px"
+            src="@/assets/images/language.png"
+          />
         </el-popover>
       </div>
-      <div v-if="$store.state.common.theme=='light'" style="margin-right:14px;cursor: pointer;" @click="themeClick('dark')">
-        <img style="width: 18px; height: 17px;" src="@/assets/images/theme-light.png" />
+      <div
+        v-if="$store.state.common.theme == 'light'"
+        style="margin-right: 14px; cursor: pointer"
+        @click="themeClick('dark')"
+      >
+        <img
+          style="width: 18px; height: 17px"
+          src="@/assets/images/theme-light.png"
+        />
       </div>
-      <div v-else style="margin-right:14px;cursor: pointer;" @click="themeClick('light')">
-        <img style="width: 13px; height: 13px;padding: 2.5px 2.5px;" src="@/assets/images/theme-dark.png" />
+      <div
+        v-else
+        style="margin-right: 14px; cursor: pointer"
+        @click="themeClick('light')"
+      >
+        <img
+          style="width: 13px; height: 13px; padding: 2.5px 2.5px"
+          src="@/assets/images/theme-dark.png"
+        />
       </div>
     </div>
-    <div class="news-types-container" v-if="menuSubVisible" @mouseover="menuToggle(true)" @mouseout="menuToggle(false)">
+    <div
+      class="news-types-container"
+      v-if="menuSubVisible"
+      @mouseover="menuToggle(true)"
+      @mouseout="menuToggle(false)"
+    >
       <news-types></news-types>
     </div>
   </div>
@@ -126,6 +224,19 @@ export default {
   methods: {
     themeClick(theme) {
       this.$store.commit('setTheme', theme)
+      const head = document.head || document.getElementsByTagName('head')[0]
+      const oldLink = document.getElementById('theme-style')
+
+      if (oldLink) {
+        head.removeChild(oldLink)
+      }
+      let link = document.createElement('link')
+      link.type = 'text/css'
+      link.id = 'theme-style'
+      link.rel = 'stylesheet'
+      link.href = require(`@/assets/theme/theme-${theme}.css`)
+      document.getElementsByTagName('head')[0].appendChild(link)
+      location.reload()
     },
     languageClick(locale) {
       this.languageVisible = false

@@ -7,6 +7,26 @@ body {
   background-size: 100%, 100%;
 }
 
+.theme-background-color {
+  background: #1a2027;
+}
+
+.el-table--border::after,
+.el-table--group::after,
+.el-table::before {
+  background-color: transparent;
+}
+
+.el-table--border,
+.el-table--group {
+  border-left: 1px solid #1f262e;
+  border-top: 1px solid #1f262e;
+}
+
+.news-tab-container {
+  background-color: #1A2027;
+}
+
 .el-menu {
 	border-right: none;
 	background-color: transparent;
@@ -260,9 +280,59 @@ body {
 	font-size: 12px;
 	font-family: Arial;
 	font-weight: 400;
-	color: #ACBCC9;
+	/* color: #ACBCC9; */
 }
 .el-table__row {
 	color: #FFFFFF;
 	font-size: 14px;
+}
+
+.el-table th.el-table__cell {
+  background-color: #1a2027;
+}
+
+.el-table tr {
+  background-color: #1a2027;
+}
+
+.el-table td.el-table__cell,
+.el-table th.el-table__cell.is-leaf {
+  border-right: 1px solid #1f262e;
+  border-bottom: 1px solid #1f262e;
+}
+
+.tab-header-item.select {
+  color: #FFFFFF!important;
+}
+
+.comparison-tab .tab1 .tab-row .tab-row-text .desc{
+  color: #a1b5c6!important;
+}
+
+.comparison-tab .tab2 .item {
+  border: 1px solid #2c3638!important;
+}
+
+.comparison-tab .tab2 .item .desc {
+  color: #a1b5c6;
+}
+
+.comparison-tab .tab3 .tab-tip {
+  background: #2a343f!important;
+}
+
+.comparison-tab .tab3 .tab-bottom .tab-row .tab-row-text .desc {
+  color: #a1b5c6;
+}
+
+.comparison-tab .tab4 .tab-tip {
+  background: #2a343f;
+}
+
+.comparison-tab .tab4 .tab-bottom .item {
+  border: 1px solid #2c3638;
+}
+
+.comparison-tab .tab4 .tab-bottom .item .desc {
+  color: #a1b5c6;
 }

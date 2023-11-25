@@ -1,19 +1,19 @@
 <template>
   <el-container id="app" class="theme-container">
-    <el-header style="height: auto;">
+    <el-header style="height: auto">
       <NavBar />
     </el-header>
     <!-- <creator v-if="$route.path == '/creator'"></creator> -->
     <el-container>
       <el-main>
         <div class="banner">
-          <img style="width: 653px;height: 71px;" />
+          <img style="width: 653px; height: 71px" />
         </div>
         <div class="app-content">
-          <router-view v-if="show"/>
+          <router-view v-if="show" />
         </div>
       </el-main>
-      <el-footer style="height: auto;background: #1A2027;margin-top: 16px;">
+      <el-footer style="height: auto; background: #1a2027; margin-top: 16px">
         <div class="app-content">
           <NavFooter />
         </div>
@@ -22,27 +22,38 @@
   </el-container>
 </template>
 <script>
-// import Creator from '@/components/Creator'
+import moment from 'moment'
 import NavBar from '@/components/NavBar'
 import NavFooter from '@/components/NavFooter'
 export default {
   components: {
     NavBar,
     NavFooter,
-    // Creator,
   },
   data() {
     return {
-      show: true
+      show: true,
     }
   },
-  provide() { 
+  provide() {
     return {
-      reload: this.reload
+      reload: this.reload,
     }
   },
   created() {
     this.$store.dispatch('LoadMbdPrice')
+  },
+  mounted() {
+    // const hours = moment().hours()
+    // if (hours >= 18 || hours <= 6) {
+    //   this.loadCss('dark')
+    // } else {
+    //   this.loadCss('light')
+    // }
+    // this.loadCss('dark')
+    if (this.$store.state.common.theme) {
+      this.loadCss(this.$store.state.common.theme)
+    }
   },
   methods: {
     // 高阶组件定义刷新方法
@@ -51,8 +62,23 @@ export default {
       this.$nextTick(() => {
         this.show = true
       })
-    }
-  }
+    },
+    // 加载样式css文件
+    loadCss(theme) {
+      const head = document.head || document.getElementsByTagName('head')[0]
+      const oldLink = document.getElementById('theme-style')
+
+      if (oldLink) {
+        head.removeChild(oldLink)
+      }
+      let link = document.createElement('link')
+      link.type = 'text/css'
+      link.id = 'theme-style'
+      link.rel = 'stylesheet'
+      link.href = require(`@/assets/theme/theme-${theme}.css`)
+      document.getElementsByTagName('head')[0].appendChild(link)
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -61,7 +87,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-
 
   .el-header {
     display: flex;
