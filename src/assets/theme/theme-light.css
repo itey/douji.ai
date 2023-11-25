@@ -1,12 +1,11 @@
-body {
+.theme-container {
   background: #F6F8F9;
 }
 
-.theme-container {
+.el-main {
   background-image: url('@/assets/images/page-background.png');
   background-repeat: no-repeat;
   background-size: 100%;
-  
 }
 
 .theme-background-color {
