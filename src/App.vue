@@ -44,15 +44,15 @@ export default {
     this.$store.dispatch('LoadMbdPrice')
   },
   mounted() {
-    // const hours = moment().hours()
-    // if (hours >= 18 || hours <= 6) {
-    //   this.loadCss('dark')
-    // } else {
-    //   this.loadCss('light')
-    // }
-    // this.loadCss('dark')
     if (this.$store.state.common.theme) {
       this.loadCss(this.$store.state.common.theme)
+    } else {
+      const hours = moment().hours()
+      if (hours >= 18 || hours <= 6) {
+        this.loadCss('dark')
+      } else {
+        this.loadCss('light')
+      }
     }
   },
   methods: {

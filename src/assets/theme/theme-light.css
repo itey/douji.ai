@@ -330,10 +330,17 @@ body {
 .home-container .info-container .left .item {
   /* background: linear-gradient(-25deg, #090D0D, #0D1212); */
   background: #FFFFFF;
+  background-image: url('@/assets/images/home/item-back1.png');
 }
 
 .home-container .info-container .left .item .label {
   color: #707981;
+}
+
+.home-container .info-container .nft-info-container {
+  background-image: url('@/assets/images/home/item-back4.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .home-container .info-container .nft-info-container .nft-column .title {
