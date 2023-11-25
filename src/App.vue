@@ -1,10 +1,10 @@
 <template>
-  <el-container id="app" class="theme-container">
+  <el-container id="app" :class="currentTheme">
     <el-header style="height: auto">
       <NavBar />
     </el-header>
     <!-- <creator v-if="$route.path == '/creator'"></creator> -->
-    <el-container>
+    <el-container class="body-container">
       <el-main>
         <div class="banner">
           <img style="width: 653px; height: 71px" />
@@ -22,7 +22,6 @@
   </el-container>
 </template>
 <script>
-import moment from 'moment'
 import NavBar from '@/components/NavBar'
 import NavFooter from '@/components/NavFooter'
 export default {
@@ -35,6 +34,16 @@ export default {
       show: true,
     }
   },
+  computed: {
+    /** 当前主题 */
+    currentTheme() {
+      if (this.$store.state.common.theme) {
+        return 'theme-' + this.$store.state.common.theme
+      } else {
+        return 'theme-dark'
+      }
+    },
+  },
   provide() {
     return {
       reload: this.reload,
@@ -43,18 +52,6 @@ export default {
   created() {
     this.$store.dispatch('LoadMbdPrice')
   },
-  mounted() {
-    if (this.$store.state.common.theme) {
-      this.loadCss(this.$store.state.common.theme)
-    } else {
-      const hours = moment().hours()
-      if (hours >= 18 || hours <= 6) {
-        this.loadCss('dark')
-      } else {
-        this.loadCss('light')
-      }
-    }
-  },
   methods: {
     // 高阶组件定义刷新方法
     reload() {
@@ -62,21 +59,6 @@ export default {
       this.$nextTick(() => {
         this.show = true
       })
-    },
-    // 加载样式css文件
-    loadCss(theme) {
-      const head = document.head || document.getElementsByTagName('head')[0]
-      const oldLink = document.getElementById('theme-style')
-
-      if (oldLink) {
-        head.removeChild(oldLink)
-      }
-      let link = document.createElement('link')
-      link.type = 'text/css'
-      link.id = 'theme-style'
-      link.rel = 'stylesheet'
-      link.href = require(`@/assets/theme/theme-${theme}.css`)
-      document.getElementsByTagName('head')[0].appendChild(link)
     },
   },
 }

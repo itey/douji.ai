@@ -224,18 +224,6 @@ export default {
   methods: {
     themeClick(theme) {
       this.$store.commit('setTheme', theme)
-      const head = document.head || document.getElementsByTagName('head')[0]
-      const oldLink = document.getElementById('theme-style')
-
-      if (oldLink) {
-        head.removeChild(oldLink)
-      }
-      let link = document.createElement('link')
-      link.type = 'text/css'
-      link.id = 'theme-style'
-      link.rel = 'stylesheet'
-      link.href = require(`@/assets/theme/theme-${theme}.css`)
-      document.getElementsByTagName('head')[0].appendChild(link)
       location.reload()
     },
     languageClick(locale) {
