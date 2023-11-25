@@ -123,10 +123,10 @@
       <div class="form-add">
         <div class="btn-container" v-if="!txObject || !txObject.status">
           <el-button class="common-btn2" @click="backClick">{{
-            $t('create.mint')
+            $t('create.back')
           }}</el-button>
           <el-button class="common-btn2" @click="mintClick">{{
-            $t('create.back')
+            $t('create.mint')
           }}</el-button>
         </div>
       </div>

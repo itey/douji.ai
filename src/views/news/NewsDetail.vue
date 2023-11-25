@@ -1,9 +1,14 @@
 <template>
   <div class="news-container">
-    <el-breadcrumb style="margin-top: 27px;" separator-class="el-icon-arrow-right">
+    <el-breadcrumb
+      style="margin-top: 27px"
+      separator-class="el-icon-arrow-right"
+    >
       <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/news' }">News</el-breadcrumb-item>
-      <el-breadcrumb-item v-if="metadata.title">{{ metadata.title }}</el-breadcrumb-item>
+      <el-breadcrumb-item v-if="metadata.title">{{
+        metadata.title
+      }}</el-breadcrumb-item>
     </el-breadcrumb>
 
     <NftDaoVote
@@ -17,11 +22,21 @@
       <div class="form-top">
         <div class="form-left">
           <div class="form-title text-color">{{ metadata.title }}</div>
-          <NftAuthorInfo v-if="tokenOwner" :tokenId="tokenId" :creator="tokenOwner" />
-          <img style="width: 940px;height: 532px;margin-top:36px;" :src="metadata.image" />
+          <NftAuthorInfo
+            v-if="tokenOwner"
+            :tokenId="tokenId"
+            :creator="tokenOwner"
+          />
+          <img
+            style="width: 940px; height: 532px; margin-top: 36px"
+            :src="metadata.image"
+          />
           <div class="form-desc">{{ metadata.description }}</div>
-          <div class="form-label-sub" style="margin-top: 16px;">
-            <img style="width: 14px;height: 14px;" src="@/assets/images/create/website.png" />
+          <div class="form-label-sub" style="margin-top: 16px">
+            <img
+              style="width: 14px; height: 14px"
+              src="@/assets/images/create/website.png"
+            />
             <div class="form-label-sub-text">Open to Access</div>
           </div>
           <div class="form-content text-color">
@@ -29,43 +44,86 @@
           </div>
           <template v-if="metadata.protected">
             <div class="form-label-sub">
-              <img style="width: 14px;height: 14px;" src="@/assets/images/create/protect.png" />
+              <img
+                style="width: 14px; height: 14px"
+                src="@/assets/images/create/protect.png"
+              />
               <div class="form-label-sub-text">Protected</div>
             </div>
-            <div class="form-content text-color" v-if="metadata.protectedContent">
+            <div
+              class="form-content text-color"
+              v-if="metadata.protectedContent"
+            >
               <div class="md-reader" v-html="metadata.protectedContent"></div>
             </div>
-            <div style="display: flex;flex-direction: column;align-items: center; margin-top: 20px;" v-else>
-              <div class="text-color" style="font-size: 14px;">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 20px;
+              "
+              v-else
+            >
+              <div class="text-color" style="font-size: 14px">
                 Owning At Least 1 DOUJ NFT (
-                <span style="color: #00F9E5;">Token ID: {{ tokenId }}</span>) And Clicking
-                “
-                <span style="color: #00F9E5;">Unlock</span>”
+                <span style="color: #00f9e5">Token ID: {{ tokenId }}</span
+                >) And Clicking “ <span style="color: #00f9e5">Unlock</span>”
               </div>
-              <el-button @click="handleUnlock()" class="common-btn2" style="border-radius: 25px;margin-top: 29px;">Unlock</el-button>
+              <el-button
+                @click="handleUnlock()"
+                class="common-btn2"
+                style="border-radius: 25px; margin-top: 29px"
+                >Unlock</el-button
+              >
             </div>
           </template>
 
-          <div class="form-tag" v-if="metadata.keyword && metadata.keyword.length">
+          <div
+            class="form-tag"
+            v-if="metadata.keyword && metadata.keyword.length"
+          >
             <div class="form-tag-label text-color">Tags:</div>
-            <div class="form-tag-item text-color" v-for="(item,index) in metadata.keyword" :key="index">{{ item }}</div>
+            <div
+              class="form-tag-item text-color"
+              v-for="(item, index) in metadata.keyword"
+              :key="index"
+            >
+              {{ item }}
+            </div>
           </div>
           <div class="dao-container" v-if="userAccount && userOwned > 0">
             <div class="dao-title text-color">NFT DAO Governance</div>
             <div class="dao-set">
-              <div class="dao-set-item" style="width: 158px;" @click="handleUpdate(1)">
+              <div
+                class="dao-set-item"
+                style="width: 158px"
+                @click="handleUpdate(1)"
+              >
                 <div class="dao-set-item-label">Update NFT Attributes</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
-              <div class="dao-set-item" style="width: 158px;" @click="handleUpdate(2)">
+              <div
+                class="dao-set-item"
+                style="width: 158px"
+                @click="handleUpdate(2)"
+              >
                 <div class="dao-set-item-label">Update Content</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
-              <div class="dao-set-item" style="width: 178px;" @click="handleUpdateSale()">
+              <div
+                class="dao-set-item"
+                style="width: 178px"
+                @click="handleUpdateSale()"
+              >
                 <div class="dao-set-item-label">Set NFT Sales Promotion</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
-              <div class="dao-set-item" style="width: 190px;" @click="handleUpdateDao()">
+              <div
+                class="dao-set-item"
+                style="width: 190px"
+                @click="handleUpdateDao()"
+              >
                 <div class="dao-set-item-label">Set NFT DAO Governance</div>
                 <i class="el-icon-arrow-right"></i>
               </div>
@@ -74,9 +132,10 @@
               Last Edited : September 21, 2023, 22:18:07
               <span
                 class="text-color"
-                style="cursor: pointer;"
+                style="cursor: pointer"
                 @click="$refs['revisionHistoryDialog'].showDialog()"
-              >View History</span>
+                >View History</span
+              >
             </div>
           </div>
           <div class="transactions-container">
@@ -91,11 +150,23 @@
               <div class="transactions-column">Amount</div>
             </div>
             <template v-if="transactionHistory.length">
-              <div class="transactions-item" v-for="(item,index) in transactionHistory" :key="index">
-                <div class="transactions-column text-color">{{ item.hash | omitTxHash }}</div>
-                <div class="transactions-column text-color">{{ item.from | omitAddress }}</div>
-                <div class="transactions-column text-color">{{ item.to | omitAddress }}</div>
-                <div class="transactions-column text-color">{{ item.amount }}</div>
+              <div
+                class="transactions-item"
+                v-for="(item, index) in transactionHistory"
+                :key="index"
+              >
+                <div class="transactions-column text-color">
+                  {{ item.hash | omitTxHash }}
+                </div>
+                <div class="transactions-column text-color">
+                  {{ item.from | omitAddress }}
+                </div>
+                <div class="transactions-column text-color">
+                  {{ item.to | omitAddress }}
+                </div>
+                <div class="transactions-column text-color">
+                  {{ item.amount }}
+                </div>
               </div>
             </template>
             <div class="no-transactions" v-else>No transactions</div>
@@ -103,7 +174,7 @@
           <div class="more-container">
             <div class="more-title text-color">More from this creator</div>
             <div class="more-list">
-              <div v-for="(item,index) in 6" :key="index" class="more-item">
+              <div v-for="(item, index) in 6" :key="index" class="more-item">
                 <news-item></news-item>
               </div>
             </div>
@@ -111,20 +182,51 @@
         </div>
         <div class="form-right">
           <NftAttributes :metadata="metadata" :tokensInfo="tokenSupplyInfo" />
-          <NftPrimaryMarket @handleReload="dataLoad" :tokenId="tokenId" :metadata="metadata" :tokensInfo="tokenSupplyInfo" :userOwned="userOwned" />
+          <NftPrimaryMarket
+            @handleReload="dataLoad"
+            :tokenId="tokenId"
+            :metadata="metadata"
+            :tokensInfo="tokenSupplyInfo"
+            :userOwned="userOwned"
+          />
           <MarketOrderList :tokenId="tokenId" />
-          <NftDaoGovernance :userOwned="userOwned" :tokenId="tokenId" :operable="true" />
-          <NftInformation :metadata="metadata" :tokenOwner="tokenOwner" :tokenId="tokenId" />
+          <NftDaoGovernance
+            :userOwned="userOwned"
+            :tokenId="tokenId"
+            :operable="true"
+          />
+          <NftInformation
+            :metadata="metadata"
+            :tokenOwner="tokenOwner"
+            :tokenId="tokenId"
+          />
           <ReadingReward v-if="ifCheckedIn" />
         </div>
       </div>
     </div>
     <RevisionHistoryDialog :tokenId="tokenId" ref="revisionHistoryDialog" />
     <CheckInDialog @onCheckedIn="checkIn()" ref="checkInDialog" />
-    <BlindDialog @handleReceive="handleReceiveBox" :tokenId="tokenId" ref="blindDialog" />
-    <BlindOpenDialog @handleReload="dataLoad" :tokenId="tokenId" ref="blindOpenDialog" />
-    <SetSaleDialog @handleReload="dataLoad" :tokenInfo="tokenSupplyInfo" :tokenId="tokenId" ref="setSaleDialog" />
-    <SetDaoDialog @handleReload="dataLoad" :tokenId="tokenId" ref="setDaoDialog" />
+    <BlindDialog
+      @handleReceive="handleReceiveBox"
+      :tokenId="tokenId"
+      ref="blindDialog"
+    />
+    <BlindOpenDialog
+      @handleReload="dataLoad"
+      :tokenId="tokenId"
+      ref="blindOpenDialog"
+    />
+    <SetSaleDialog
+      @handleReload="dataLoad"
+      :tokenInfo="tokenSupplyInfo"
+      :tokenId="tokenId"
+      ref="setSaleDialog"
+    />
+    <SetDaoDialog
+      @handleReload="dataLoad"
+      :tokenId="tokenId"
+      ref="setDaoDialog"
+    />
   </div>
 </template>
 
@@ -152,7 +254,7 @@ import {
   ifCheckInToday,
   setBlindBoxState,
   setBlindBoxFlagCache,
-  setBlindBoxFlagState
+  setBlindBoxFlagState,
 } from '@/utils/common'
 import { checkBoxContract } from '@/utils/web3/operator'
 import {
@@ -328,10 +430,7 @@ export default {
             const timeGet = Number(flag.time)
             const nowTime = new Date().getTime()
             if (nowTime - timeGet >= 1000 * 120) {
-              setBlindBoxFlagState(
-                this.$store.state.user.userId,
-                true
-              )
+              setBlindBoxFlagState(this.$store.state.user.userId, true)
               haveFlag = false
             } else if (!flag.invalid) {
               haveFlag = true
@@ -342,17 +441,14 @@ export default {
         if (!haveFlag) {
           if (this.userInfo.isge8model) {
             // 合约检查盲盒
-            checkBoxContract().then(r => {
+            checkBoxContract().then((r) => {
               /**
                * [ checkBox method Response ]
                *  bool :  false "是否有盒子 如果有盒子true则调用合约方法 openBox  去开盒子。如果没有盒子则调用 getBox 去获取合约"
                *  uint8 :  0 "本周期领盒子数，如果数量>=12 则不在调用合约方法 getBox 去获取合约"
                */
               if (r[0] && r[1] < 12) {
-                setBlindBoxFlagCache(
-                  this.$store.state.user.userId,
-                  1
-                )
+                setBlindBoxFlagCache(this.$store.state.user.userId, 1)
                 this.$refs['blindDialog'].showDialog()
               }
             })
@@ -827,10 +923,10 @@ export default {
             }
           }
 
-          .no-transactions{
+          .no-transactions {
             text-align: center;
             width: 100%;
-            color:#999fa5;
+            color: #999fa5;
             margin-top: 30px;
           }
 
