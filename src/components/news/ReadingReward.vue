@@ -1,16 +1,35 @@
 <template>
-  <div class="reward-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
-    <div class="reward-top-title">Reading Reward</div>
-    <div class="reward-value text-color" style="margin-top: 31px;">{{ readReward.duration_sum | readSecondsFormat }}</div>
-    <div class="reward-tip">Total reading time today</div>
-    <div class="reward-value text-color" style="margin-top: 58px;">{{readReward.reads_count | zeroPadding2}}/12</div>
-    <div class="reward-tip">Receive blind box mission today</div>
-    <div class="reward-mbd">
-      <div class="reward-mbd-value">{{ readReward.income_sum | decimalPlace4 }} MBD</div>
-      <div class="reward-mbd-transform">≈${{ (readReward.income_sum * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
+  <div
+    class="reward-container"
+    v-loading="loading"
+    element-loading-background="rgba(0, 0, 0, 0.3)"
+  >
+    <div class="reward-top-title">{{ $t('news-detail.rew_title') }}</div>
+    <div class="reward-value text-color" style="margin-top: 31px">
+      {{ readReward.duration_sum | readSecondsFormat }}
     </div>
-    <div class="reward-tip">Estimated reading income today</div>
-    <el-button @click="$router.push('/balance')" class="common-btn2" style="width: 338px;margin: 31px 0 48px 0;">Settlement</el-button>
+    <div class="reward-tip">{{ $t('news-detail.rew_time') }}</div>
+    <div class="reward-value text-color" style="margin-top: 58px">
+      {{ readReward.reads_count | zeroPadding2 }}/12
+    </div>
+    <div class="reward-tip">{{ $t('news-detail.rew_mission') }}</div>
+    <div class="reward-mbd">
+      <div class="reward-mbd-value">
+        {{ readReward.income_sum | decimalPlace4 }} MBD
+      </div>
+      <div class="reward-mbd-transform">
+        ≈${{
+          (readReward.income_sum * $store.state.chain.mbdPrice) | decimalPlace8
+        }}
+      </div>
+    </div>
+    <div class="reward-tip">{{ $t('news-detail.rew_income') }}</div>
+    <el-button
+      @click="$router.push('/balance')"
+      class="common-btn2"
+      style="width: 338px; margin: 31px 0 48px 0"
+      >{{ $t('news-detail.rew_settle') }}</el-button
+    >
   </div>
 </template>
 

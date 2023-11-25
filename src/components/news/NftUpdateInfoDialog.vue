@@ -1,58 +1,124 @@
 <template>
-  <el-dialog custom-class="nft-stake-dialog" @open="pageLoad" :visible.sync="show" width="1440px">
-    <div class="nft-stake-header text-color" slot="title">View the latest NFT information</div>
+  <el-dialog
+    custom-class="nft-stake-dialog"
+    @open="pageLoad"
+    :visible.sync="show"
+    width="1440px"
+  >
+    <div class="nft-stake-header text-color" slot="title">
+      {{ $t('news-detail.latest_title') }}
+    </div>
     <div class="nft-stake-content">
       <div class="nft-stake-container">
         <div class="nft-stake-top">
           <div class="nft-stake-left">
             <div class="nft-stake-title text-color">{{ metadata.title }}</div>
-            <img style="width: 939px;height: 532px;margin-top:50px;" :src="metadata.image" />
-            <div class="nft-stake-desc text-color">{{ metadata.description }}</div>
-            <div class="nft-stake-label-sub" style="margin-top: 16px;">
-              <img style="width: 14px;height: 14px;" src="@/assets/images/create/website.png" />
-              <div class="nft-stake-label-sub-text">Open to Access</div>
+            <img
+              style="width: 939px; height: 532px; margin-top: 50px"
+              :src="metadata.image"
+            />
+            <div class="nft-stake-desc text-color">
+              {{ metadata.description }}
+            </div>
+            <div class="nft-stake-label-sub" style="margin-top: 16px">
+              <img
+                style="width: 14px; height: 14px"
+                src="@/assets/images/create/website.png"
+              />
+              <div class="nft-stake-label-sub-text">
+                {{ $t('news-detail.latest_open') }}
+              </div>
             </div>
             <div class="form-content text-color">
               <div class="md-reader" v-html="metadata.openContent"></div>
             </div>
             <template v-if="metadata.protected">
-              <div class="nft-stake-label-sub" style="margin-bottom: 10px;">
-                <img style="width: 14px;height: 14px;" src="@/assets/images/create/protect.png" />
-                <div class="nft-stake-label-sub-text">Protected</div>
+              <div class="nft-stake-label-sub" style="margin-bottom: 10px">
+                <img
+                  style="width: 14px; height: 14px"
+                  src="@/assets/images/create/protect.png"
+                />
+                <div class="nft-stake-label-sub-text">
+                  {{ $t('news-detail.latest_pro') }}
+                </div>
               </div>
-              <div class="form-content text-color" v-if="metadata.protectedContent">
+              <div
+                class="form-content text-color"
+                v-if="metadata.protectedContent"
+              >
                 <div class="md-reader" v-html="metadata.protectedContent"></div>
               </div>
-              <div style="display: flex;flex-direction: column;align-items: center; margin-top: 20px;" v-else>
-                <div class="text-color" style="font-size: 12px;">
-                  Owning At Least 1 DOUJ NFT (
-                  <span style="color: #00F9E5;">Token ID: {{ tokenId }}</span>) And Clicking
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  margin-top: 20px;
+                "
+                v-else
+              >
+                <div class="text-color" style="font-size: 12px">
+                  {{ $t('news-detail.latest_least') }}
+                  <span style="color: #00f9e5"
+                    >{{ $t('news-detail.latest_id') }}: {{ tokenId }}</span
+                  >) {{ $t('news-detail.latest_click') }}
                   “
-                  <span style="color: #00F9E5;">Unlock</span>”
+                  <span style="color: #00f9e5">{{
+                    $t('news-detail.latest_unlock')
+                  }}</span
+                  >”
                 </div>
-                <el-button @click="handleUnlock()" class="common-btn2" style="border-radius: 25px;margin-top: 29px; margin-bottom: 50px;">Unlock</el-button>
+                <el-button
+                  @click="handleUnlock()"
+                  class="common-btn2"
+                  style="
+                    border-radius: 25px;
+                    margin-top: 29px;
+                    margin-bottom: 50px;
+                  "
+                  >{{ $t('news-detail.latest_unlock') }}</el-button
+                >
               </div>
             </template>
             <div class="nft-stake-tag">
-              <div class="nft-stake-tag-label text-color">Tags:</div>
-              <div class="nft-stake-tag-item text-color" v-for="(item,index) in metadata.keyword" :key="index">{{ item }}</div>
+              <div class="nft-stake-tag-label text-color">
+                {{ $t('news-detail.latest_tag') }}:
+              </div>
+              <div
+                class="nft-stake-tag-item text-color"
+                v-for="(item, index) in metadata.keyword"
+                :key="index"
+              >
+                {{ item }}
+              </div>
             </div>
           </div>
           <div class="nft-stake-right">
-            <NftAttributes :metadata="metadata" :tokensInfo="tokenSupplyInfo" :editShow="true" />
-            <NftPrimaryMarket @handleReload="pageLoad" :editShow="true" :metadata="metadata" :tokensInfo="tokenSupplyInfo" :userOwned="userOwned" />
+            <NftAttributes
+              :metadata="metadata"
+              :tokensInfo="tokenSupplyInfo"
+              :editShow="true"
+            />
+            <NftPrimaryMarket
+              @handleReload="pageLoad"
+              :editShow="true"
+              :metadata="metadata"
+              :tokensInfo="tokenSupplyInfo"
+              :userOwned="userOwned"
+            />
             <NftDaoGovernance :tokenId="tokenId" :showRevision="true" />
           </div>
         </div>
         <div class="btn-container">
-          <el-button class="common-btn2" @click="show = false">Close</el-button>
+          <el-button class="common-btn2" @click="show = false">{{
+            $t('news-detail.latest_close')
+          }}</el-button>
         </div>
       </div>
     </div>
   </el-dialog>
 </template>
 
- 
 <script>
 import NftAttributes from '@/components/news/NftAttributes'
 import NftDaoGovernance from '@/components/news/NftDaoGovernance'

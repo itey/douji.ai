@@ -1,12 +1,26 @@
 <template>
   <el-dialog custom-class="income-dialog" :visible.sync="show" width="1100px">
-    <div class="income-header text-color" slot="title">Platform Rewards Settlement</div>
-    <div class="desc-content">
-      The fee of <span class="color-word">{{ settleFee }} MBD</span> will be deducted from this settlement, and the MBD and BJXStar after settlement will be transferred to your wallet address within 24 hours. The first settlement will receive BNB rewards worth <span class="color-word">$3.00 USD</span>.
+    <div class="income-header text-color" slot="title">
+      {{ $t('user.plat_d_title') }}
     </div>
+    <div
+      class="desc-content"
+      v-html="$t('user.plat_d_desc', { settleFee })"
+    ></div>
+    <!-- <div class="desc-content">
+      The fee of <span class="color-word">{{ settleFee }} MBD</span> will be
+      deducted from this settlement, and the MBD and BJXStar after settlement
+      will be transferred to your wallet address within 24 hours. The first
+      settlement will receive BNB rewards worth
+      <span class="color-word">$3.00 USD</span>.
+    </div> -->
     <div class="confirm">
-      <el-button class="confirm-btn" @click="handleConfirm()">Settlement</el-button>
-      <el-button class="cancel-btn" @click="show = false">Cancel</el-button>
+      <el-button class="confirm-btn" @click="handleConfirm()">{{
+        $t('user.settlement')
+      }}</el-button>
+      <el-button class="cancel-btn" @click="show = false">{{
+        $t('user.cancel')
+      }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -50,21 +64,21 @@ export default {
     font-weight: bold;
     margin-left: 35px;
     margin-top: 30px;
-    color:#00f9e5;
+    color: #00f9e5;
   }
 
   .desc-content {
     border: 1px solid #1f272f;
     padding: 30px 52px 0 52px;
     text-align: left;
-    color:white;
+    color: white;
     line-height: 30px;
     word-wrap: break-word;
     word-break: keep-all;
 
     .color-word {
       font-weight: bold;
-      color:#00f9e5;
+      color: #00f9e5;
     }
   }
 
@@ -73,12 +87,12 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content:center;
+    justify-content: center;
 
     .confirm-btn {
       width: 188px;
       height: 50px;
-      background: linear-gradient(-16deg, #4195F6, #17E7D6) !important;
+      background: linear-gradient(-16deg, #4195f6, #17e7d6) !important;
       border-radius: 25px;
       cursor: pointer;
       color: black;

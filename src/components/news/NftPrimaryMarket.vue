@@ -1,47 +1,95 @@
 <template>
-  <div class="form-attr-container" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.3)">
-    <div class="form-attr-title text-color">Primary Market</div>
+  <div
+    class="form-attr-container"
+    v-loading="loading"
+    element-loading-background="rgba(0, 0, 0, 0.3)"
+  >
+    <div class="form-attr-title text-color">
+      {{ $t('news-detail.pri_title') }}
+    </div>
     <div class="form-attr-market">
       <div class="form-attr-market-top">
         <div class="form-attr-available">
-          Available :
+          {{ $t('news-detail.pri_ava') }} :
           <span class="text-color">{{ availableSupply | toLocalString }}</span>
         </div>
         <div class="form-attr-available" v-if="$store.state.user.account">
-          You owned :
+          {{ $t('news-detail.pri_own') }} :
           <span class="text-color">{{ userOwned }}</span>
         </div>
       </div>
-      <template v-if="$store.state.user.account && discountPrice && discountPrice != currentPrice">
+      <template
+        v-if="
+          $store.state.user.account &&
+          discountPrice &&
+          discountPrice != currentPrice
+        "
+      >
         <div class="form-attr-mbd">
-          <div class="mbd-value text-color">{{ discountPrice | decimalPlace4 }} MBD</div>
-          <div class="mbd-transform">≈${{ (discountPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
+          <div class="mbd-value text-color">
+            {{ discountPrice | decimalPlace4 }} MBD
+          </div>
+          <div class="mbd-transform">
+            ≈${{
+              (discountPrice * $store.state.chain.mbdPrice) | decimalPlace8
+            }}
+          </div>
         </div>
-        <div class="form-attr-discount">Original Price: {{ currentPrice | decimalPlace4 }} MBD</div>
+        <div class="form-attr-discount">
+          {{ $t('news-detail.pri_ori') }}:
+          {{ currentPrice | decimalPlace4 }} MBD
+        </div>
       </template>
       <template v-else>
         <div class="form-attr-mbd">
-          <div class="mbd-value text-color">{{ currentPrice | decimalPlace4 }} MBD</div>
-          <div class="mbd-transform">≈${{ (currentPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}</div>
+          <div class="mbd-value text-color">
+            {{ currentPrice | decimalPlace4 }} MBD
+          </div>
+          <div class="mbd-transform">
+            ≈${{ (currentPrice * $store.state.chain.mbdPrice) | decimalPlace8 }}
+          </div>
         </div>
       </template>
-      <el-button @click="handleMint()" :disabled="editShow || availableSupply <= 0" class="common-btn2 form-attr-mint">Mint</el-button>
+      <el-button
+        @click="handleMint()"
+        :disabled="editShow || availableSupply <= 0"
+        class="common-btn2 form-attr-mint"
+        >{{ $t('news-detail.pri_mint') }}</el-button
+      >
       <div class="form-attr-tip" v-if="discountJson && discountJson.isOpen">
         <div>
-          Owning
-          <span class="text-color">{{ discountJson.discounts }}</span> Token(s) To Get
-          <span class="text-color">{{ discountJson.discountsFee | fee2Percent }}</span> discount
+          {{ $t('news-detail.pri_owning') }}
+          <span class="text-color">{{ discountJson.discounts }}</span>
+          {{ $t('news-detail.pri_to_get') }}
+          <span class="text-color">{{
+            discountJson.discountsFee | fee2Percent
+          }}</span>
+          {{ $t('news-detail.pri_dis') }}
         </div>
         <div>
-          Token Contract:
-          <span class="text-color contract-address" @click="toBnbScan(discountJson.cAddress)">{{ discountJson.cAddress | omitAddress }}</span>
+          {{ $t('news-detail.pri_contract') }}:
+          <span
+            class="text-color contract-address"
+            @click="toBnbScan(discountJson.cAddress)"
+            >{{ discountJson.cAddress | omitAddress }}</span
+          >
           ({{ discountJson.sptType | sptType2Name }})
-          <span v-if="discountJson.tokenId">TokenId:{{ discountJson.tokenId }}</span>
+          <span v-if="discountJson.tokenId"
+            >{{ $t('news-detail.pri_token_id') }}:{{
+              discountJson.tokenId
+            }}</span
+          >
         </div>
-        <div v-if="$store.state.user.account && discountJson && discountJson.isOpen">
-          Token owned:
-          <span class="text-color">{{disTokenOwned}}</span>
-          <span v-if="disTokenOwned > 0">({{unusedCount || '0'}} unused)</span>
+        <div
+          v-if="
+            $store.state.user.account && discountJson && discountJson.isOpen
+          "
+        >
+          {{ $t('news-detail.pri_token_own') }}:
+          <span class="text-color">{{ disTokenOwned }}</span>
+          <span v-if="disTokenOwned > 0"
+            >({{ unusedCount || '0' }} {{ $t('news-detail.pri_unused') }})</span
+          >
         </div>
       </div>
     </div>

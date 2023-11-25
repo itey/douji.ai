@@ -1,6 +1,13 @@
 <template>
-  <el-dialog custom-class="history-dialog" :visible.sync="show" @open="onOpen()" width="946px">
-    <div class="history-header text-color" slot="title">Revision history</div>
+  <el-dialog
+    custom-class="history-dialog"
+    :visible.sync="show"
+    @open="onOpen()"
+    width="946px"
+  >
+    <div class="history-header text-color" slot="title">
+      {{ $t('news-detail.revision_hist') }}
+    </div>
     <div class="history-content">
       <el-table ref="multipleTable" :data="tableData" style="width: 850px">
         <el-table-column label="Timestamp" width="390px">
@@ -8,11 +15,19 @@
         </el-table-column>
         <el-table-column prop="name" label="IPFS hash address" width="460px">
           <template slot-scope="scope">
-            <a style="color:azure;" :href="scope.row.uri" target="_bank">{{ scope.row.uri | ipfsUri }}</a>
+            <a style="color: azure" :href="scope.row.uri" target="_bank">{{
+              scope.row.uri | ipfsUri
+            }}</a>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination style="width:100%;margin: 20px 0;" background layout="prev,pager,next" :page-size="20" :total="totalCount"></el-pagination>
+      <el-pagination
+        style="width: 100%; margin: 20px 0"
+        background
+        layout="prev,pager,next"
+        :page-size="20"
+        :total="totalCount"
+      ></el-pagination>
     </div>
   </el-dialog>
 </template>

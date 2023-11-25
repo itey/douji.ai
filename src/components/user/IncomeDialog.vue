@@ -1,27 +1,67 @@
 <template>
-  <el-dialog custom-class="income-dialog" @open="onOpen()" :visible.sync="show" width="1100px">
-    <div class="income-header text-color" slot="title">Set NFT DAO Governance</div>
+  <el-dialog
+    custom-class="income-dialog"
+    @open="onOpen()"
+    :visible.sync="show"
+    width="1100px"
+  >
+    <div class="income-header text-color" slot="title">
+      {{ $t('user.inc_d_title') }}
+    </div>
     <div class="income-content">
-      <el-table ref="multipleTable" :data="tableData" style="width: 1000px" @selection-change="handleSelectionChange">
+      <el-table
+        ref="multipleTable"
+        :data="tableData"
+        style="width: 1000px"
+        @selection-change="handleSelectionChange"
+      >
         <el-table-column type="selection" width="47px"></el-table-column>
-        <el-table-column label="Token ID" prop="token_id" width="119px"></el-table-column>
-        <el-table-column prop="name" label="NFT name" width="211px"></el-table-column>
-        <el-table-column prop="settlePoolBalance" label="Bonus Dividend Pool BalancelMBD)" width="249px"></el-table-column>
+        <el-table-column
+          label="Token ID"
+          prop="token_id"
+          width="119px"
+        ></el-table-column>
+        <el-table-column
+          prop="name"
+          label="NFT name"
+          width="211px"
+        ></el-table-column>
+        <el-table-column
+          prop="settlePoolBalance"
+          label="Bonus Dividend Pool BalancelMBD)"
+          width="249px"
+        ></el-table-column>
         <el-table-column label="Your NFTs / Members NFTs" width="209px">
           <template slot-scope="scope">
-            <span>{{scope.row.userStake}} / {{scope.row.totalStakeCount}}</span>
+            <span
+              >{{ scope.row.userStake }} / {{ scope.row.totalStakeCount }}</span
+            >
           </template>
         </el-table-column>
-        <el-table-column prop="userStake" label="Stake NFT Income(MBD)" width="165px">
+        <el-table-column
+          prop="userStake"
+          label="Stake NFT Income(MBD)"
+          width="165px"
+        >
           <template slot-scope="scope">
-            <span>{{ (scope.row.settlePoolBalance * 0.2 * scope.row.userStake / scope.row.totalStakeCount) | decimalPlace8 }}</span>
+            <span>{{
+              ((scope.row.settlePoolBalance * 0.2 * scope.row.userStake) /
+                scope.row.totalStakeCount)
+                | decimalPlace8
+            }}</span>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination style="width:100%;margin: 20px 0;" background layout="prev,pager,next" :total="totalCount" :page-size="20"></el-pagination>
+      <el-pagination
+        style="width: 100%; margin: 20px 0"
+        background
+        layout="prev,pager,next"
+        :total="totalCount"
+        :page-size="20"
+      ></el-pagination>
     </div>
     <div class="income-btn">
-      <el-button class="common-btn2">Settlement</el-button>
+      <el-button class="common-btn2">{{ $t('user.settlement') }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -40,7 +80,7 @@ export default {
       pageSize: 20,
       totalCount: 0,
       tableData: [],
-      multipleSelection: []
+      multipleSelection: [],
     }
   },
   methods: {
@@ -77,7 +117,6 @@ export default {
       } finally {
         loadingInstance.close()
       }
-      
     },
     /** 批量请求查询质押信息 */
     async batchQueryStakeInfo(stakeList) {

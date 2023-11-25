@@ -367,6 +367,50 @@ export default {
     "dao_execute": "Execute",
     "dao_cancel": "Cancel",
     "dao_voting": "Your Voting",
+    "inf_title": "DOUJI NFT Information",
+    "inf_address": "Token Address",
+    "inf_token": "Token ID",
+    "inf_standard": "Token Standard",
+    "inf_creator": "Creator",
+    "inf_create_time": "Created At",
+    "inf_update_time": "Updated At",
+    "pri_title": "Primary Market",
+    "pri_ava": "Available",
+    "pri_own": "You owned",
+    "pri_ori": "Original Price",
+    "pri_mint": "Mint",
+    "pri_owning": "Owning",
+    "pri_to_get": "Token(s) To Get",
+    "pri_dis": "discount",
+    "pri_contract": "Token Contract",
+    "pri_token_id": "TokenId",
+    "pri_token_own": "Token owned",
+    "pri_unused": "unused",
+    "latest_title": "View the latest NFT information",
+    "latest_open": "Open to Access",
+    "latest_pro": "Protected",
+    "latest_least": "Owning At Least 1 DOUJ NFT (",
+    "latest_id": "Token ID",
+    "latest_click": "And Clicking",
+    "latest_unlock": "Unlock",
+    "latest_tag": "Tags",
+    "latest_close": "Close",
+    "rew_title": "Reading Reward",
+    "rew_time": "Total reading time today",
+    "rew_mission": "Receive blind box mission today",
+    "rew_income": "Estimated reading income today",
+    "rew_settle": "Settlement",
+    "ret_title": "Retrieve Your staked NFTs",
+    "ret_desc": "Retrieving staked NFTs will not affect the cumulative staking time.",
+    "ret_quantity": "Retrieve Staked NFT Quantity",
+    "ret_tip": "Maximum Retrieve Staked NFT quantity",
+    "ret_btn": "Retrieve",
+    "revision_hist": "Revision history",
+    "stk_title": "Stake Your NFTs",
+    "stk_desc": "By staking your NFT, you can settle the NFT DAO dividend bonus once a week.Each time you stake NFT, your staking time will restart.NFTs that have been staked cannot be sold, but protected content can continue to be unlockedThe number of NFTs that have been staked is the number of your voting rights.",
+    "stk_quantity": "Stake NFT Quantity",
+    "stk_tip": "Maximum NFT Stake quantity",
+    "stk_btn": "Stake",
 
 
 
@@ -389,17 +433,22 @@ export default {
     "sort_early_time": "Early creation time",
     "sort_high_price": "High price",
     "sort_low_price": "Low price",
-
-
-
-
-
-
-
-
   },
   "user": {
+    "settlement": "Settlement",
+    "cancel": "Cancel",
     "profile_save_success": "Profile saved successfully.",
-    "settle_success": "Settlement application submitted successfully."
+    "settle_success": "Settlement application submitted successfully.",
+    "inc_d_title": "Set NFT DAO Governance",
+    "plat_d_title": "Platform Rewards Settlement",
+    "plat_d_desc": "The fee of <span class='color-word'>{ settleFee } MBD</span> will be deducted from this settlement, and the MBD and BJXStar after settlement will be transferred to your wallet address within 24 hours. The first settlement will receive BNB rewards worth <span class='color-word'>$3.00 USD</span>."
+
+
+
+
+
+
+
+
   }
 }

@@ -1,20 +1,37 @@
 <template>
   <el-dialog custom-class="retrieve-dialog" :visible.sync="show" width="946px">
-    <div class="retrieve-header text-color" slot="title">Retrieve Your staked NFTs</div>
+    <div class="retrieve-header text-color" slot="title">
+      {{ $t('news-detail.ret_title') }}
+    </div>
     <div class="retrieve-content">
-      <div class="retrieve-desc">Retrieving staked NFTs will not affect the cumulative staking time.</div>
-      <div class="retrieve-label text-color">Rerieve Staked NFT Quantity</div>
+      <div class="retrieve-desc">
+        {{ $t('news-detail.ret_desc') }}
+      </div>
+      <div class="retrieve-label text-color">
+        {{ $t('news-detail.ret_quantity') }}
+      </div>
       <div class="retrieve-input">
-        <el-input v-model="unStakeCount" @change="checkInput()" class="input" placeholder style="width: 640px;"></el-input>
+        <el-input
+          v-model="unStakeCount"
+          @change="checkInput()"
+          class="input"
+          placeholder
+          style="width: 640px"
+        ></el-input>
       </div>
       <div class="error-tip" v-if="error">{{ error }}</div>
       <div class="retrieve-tip" v-else-if="userStakeInfo && userStakeInfo[0]">
-        Maximum Rerieve Staked NFT quantity
+        {{ $t('news-detail.ret_tip') }}
         <span class="text-color">{{ userStakeInfo[0] }}</span>
       </div>
     </div>
     <div class="btn-container">
-      <el-button :disabled="!retrieveUseable" @click="handleRetrieve()" class="common-btn2">Retrieve</el-button>
+      <el-button
+        :disabled="!retrieveUseable"
+        @click="handleRetrieve()"
+        class="common-btn2"
+        >{{ $t('news-detail.ret_btn') }}</el-button
+      >
     </div>
   </el-dialog>
 </template>

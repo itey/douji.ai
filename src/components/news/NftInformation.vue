@@ -1,30 +1,40 @@
 <template>
   <div class="form-attr-container">
-    <div class="form-attr-title text-color">DOUJI NFT Information</div>
+    <div class="form-attr-title text-color">
+      {{ $t('news-detail.inf_title') }}
+    </div>
     <div class="form-attr-list">
       <div class="form-attr-item">
-        <div class="form-attr-label">Token Address</div>
+        <div class="form-attr-label">{{ $t('news-detail.inf_address') }}</div>
         <div class="form-attr-value">{{ nftContract | omitAddress }}</div>
       </div>
       <div class="form-attr-item">
-        <div class="form-attr-label">Token ID</div>
+        <div class="form-attr-label">{{ $t('news-detail.inf_token') }}</div>
         <div class="form-attr-value">{{ tokenId }}</div>
       </div>
       <div class="form-attr-item">
-        <div class="form-attr-label">Token Standard</div>
+        <div class="form-attr-label">{{ $t('news-detail.inf_standard') }}</div>
         <div class="form-attr-value">BEP-1155</div>
       </div>
       <div class="form-attr-item">
-        <div class="form-attr-label">Creator</div>
-        <div class="form-attr-value">{{ tokenOwner | omitAddress}}</div>
+        <div class="form-attr-label">{{ $t('news-detail.inf_creator') }}</div>
+        <div class="form-attr-value">{{ tokenOwner | omitAddress }}</div>
       </div>
       <div class="form-attr-item" v-if="metadata.Birthday">
-        <div class="form-attr-label">Created At</div>
-        <div class="form-attr-value">{{ metadata.Birthday/1000 | stamp2Time }}</div>
+        <div class="form-attr-label">
+          {{ $t('news-detail.inf_create_time') }}
+        </div>
+        <div class="form-attr-value">
+          {{ (metadata.Birthday / 1000) | stamp2Time }}
+        </div>
       </div>
       <div class="form-attr-item" v-if="metadata.UpdateDay">
-        <div class="form-attr-label">Updated At</div>
-        <div class="form-attr-value">{{ metadata.UpdateDay/1000 | stamp2Time}}</div>
+        <div class="form-attr-label">
+          {{ $t('news-detail.inf_update_time') }}
+        </div>
+        <div class="form-attr-value">
+          {{ (metadata.UpdateDay / 1000) | stamp2Time }}
+        </div>
       </div>
     </div>
   </div>

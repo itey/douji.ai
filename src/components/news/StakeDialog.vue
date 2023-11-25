@@ -1,24 +1,33 @@
 <template>
   <el-dialog custom-class="stake-dialog" :visible.sync="show" width="946px">
-    <div class="stake-header text-color" slot="title">Stake Your NFTs</div>
+    <div class="stake-header text-color" slot="title">
+      {{ $t('news-detail.stk_title') }}
+    </div>
     <div class="stake-content">
       <div class="stake-desc">
-        By staking your NFT, you can settle the NFT DAO dividend bonus once a week.Each time you stake NFT, your
-        staking time will restart.NFTs that have been staked cannot be sold, but protected content can continue
-        to be unlockedThe number of NFTs that have been staked is the number of your voting rights.
+        {{ $t('news-detail.stk_desc') }}
       </div>
-      <div class="stake-label text-color">Stake NFT Quantity</div>
+      <div class="stake-label text-color">
+        {{ $t('news-detail.stk_quantity') }}
+      </div>
       <div class="stake-input">
-        <el-input v-model="stakeCount" class="input" placeholder style="width: 640px;"></el-input>
+        <el-input
+          v-model="stakeCount"
+          class="input"
+          placeholder
+          style="width: 640px"
+        ></el-input>
       </div>
       <div class="error-tip" v-if="error">{{ error }}</div>
       <div class="stake-tip" v-else>
-        Maximum NFT Stake quantity
+        {{ $t('news-detail.stk_tip') }}
         <span class="text-color">{{ userOwned }}</span>
       </div>
     </div>
     <div class="btn-container">
-      <el-button @click="handleStake()" class="common-btn2">Stake</el-button>
+      <el-button @click="handleStake()" class="common-btn2">{{
+        $t('news-detail.stk_btn')
+      }}</el-button>
     </div>
   </el-dialog>
 </template>

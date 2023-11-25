@@ -2,91 +2,185 @@
   <div class="creator-container">
     <div class="content-container">
       <div class="creator-img">
-        <img style="width: 118px;height: 118px" :src="userInfo.head_img" v-if="userInfo.head_img" />
-        <img style="width: 118px;height: 118px" v-else src="@/assets/avatar.jpg" />
+        <img
+          style="width: 118px; height: 118px"
+          :src="userInfo.head_img"
+          v-if="userInfo.head_img"
+        />
+        <img
+          style="width: 118px; height: 118px"
+          v-else
+          src="@/assets/avatar.jpg"
+        />
       </div>
       <div class="creator-info">
         <div class="creator-info-top">
-          <div class="user text-color" v-if="userInfo.nickname">{{ userInfo.nickname }}</div>
+          <div class="user text-color" v-if="userInfo.nickname">
+            {{ userInfo.nickname }}
+          </div>
           <div class="balance-address-container">
             <div class="balance-address">{{ address | omitAddress }}</div>
-            <img style="width: 10px; height: 10px;" src="@/assets/images/user/copy.png" @click="handleCopyAddress()" />
+            <img
+              style="width: 10px; height: 10px"
+              src="@/assets/images/user/copy.png"
+              @click="handleCopyAddress()"
+            />
           </div>
         </div>
         <div class="text-sub-color desc">{{ userInfo.short_description }}</div>
-        <template v-if="userAccount && userAccount.toLowerCase() != address.toLowerCase()">
-          <div class="subscription" v-if="userInfo.isfollow" @click="handleSubOut()">
-            <img style="width: 13px;height: 9px; margin-right: 5px" src="@/assets/images/news/true.png" />
+        <template
+          v-if="
+            userAccount && userAccount.toLowerCase() != address.toLowerCase()
+          "
+        >
+          <div
+            class="subscription"
+            v-if="userInfo.isfollow"
+            @click="handleSubOut()"
+          >
+            <img
+              style="width: 13px; height: 9px; margin-right: 5px"
+              src="@/assets/images/news/true.png"
+            />
             <span>Subscribe</span>
           </div>
           <div class="subscription light" v-else @click="handleSub()">
-            <img style="width: 9px;height: 9px; margin-right: 5px" src="@/assets/images/news/add.png" />
+            <img
+              style="width: 9px; height: 9px; margin-right: 5px"
+              src="@/assets/images/news/add.png"
+            />
             <span>Subscribe</span>
           </div>
         </template>
         <div class="tag-container">
-          <div class="tag-item" style="cursor: none;" v-if="userInfo.location">
+          <div
+            class="tag-item"
+            style="cursor: default"
+            v-if="userInfo.location"
+          >
             <img :src="require(`@/assets/images/creator/location.png`)" />
             <span>{{ userInfo.location | cutString(20) }}</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.website)" v-if="userInfo.website">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.website)"
+            v-if="userInfo.website"
+          >
             <img :src="require(`@/assets/images/creator/web.png`)" />
             <span>Website</span>
           </div>
 
-          <div class="tag-item" @click="handleGoTo(userInfo.twitter)" v-if="userInfo.twitter">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.twitter)"
+            v-if="userInfo.twitter"
+          >
             <img :src="require(`@/assets/images/creator/twitter.png`)" />
             <span>Twitter</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.instagram)" v-if="userInfo.instagram">
-            <img :src="require(`@/assets/images/creator/instagram.png`)"/>
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.instagram)"
+            v-if="userInfo.instagram"
+          >
+            <img :src="require(`@/assets/images/creator/instagram.png`)" />
             <span>Instagram</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.youtube)" v-if="userInfo.youtube">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.youtube)"
+            v-if="userInfo.youtube"
+          >
             <img :src="require(`@/assets/images/creator/youtube.png`)" />
             <span>Youtube</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.facebook)" v-if="userInfo.facebook">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.facebook)"
+            v-if="userInfo.facebook"
+          >
             <img :src="require(`@/assets/images/creator/facebook.png`)" />
             <span>Facebook</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.tiktok)" v-if="userInfo.tiktok">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.tiktok)"
+            v-if="userInfo.tiktok"
+          >
             <img :src="require(`@/assets/images/creator/tiktok.png`)" />
             <span>Tiktok</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.github)" v-if="userInfo.github">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.github)"
+            v-if="userInfo.github"
+          >
             <img :src="require(`@/assets/images/creator/github.png`)" />
             <span>Github</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.linkedin)" v-if="userInfo.linkedin">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.linkedin)"
+            v-if="userInfo.linkedin"
+          >
             <img :src="require(`@/assets/images/creator/linkedin.png`)" />
             <span>Linkedin</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.discord)" v-if="userInfo.discord">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.discord)"
+            v-if="userInfo.discord"
+          >
             <img :src="require(`@/assets/images/creator/discord.png`)" />
             <span>Discord</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.line)" v-if="userInfo.line">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.line)"
+            v-if="userInfo.line"
+          >
             <img :src="require(`@/assets/images/creator/line.png`)" />
             <span>Line</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.medium)" v-if="userInfo.medium">
-            <img :src="require(`@/assets/images/creator/medium-circle-fill.png`)" />
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.medium)"
+            v-if="userInfo.medium"
+          >
+            <img
+              :src="require(`@/assets/images/creator/medium-circle-fill.png`)"
+            />
             <span>Medium</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.telegram)" v-if="userInfo.telegram">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.telegram)"
+            v-if="userInfo.telegram"
+          >
             <img :src="require(`@/assets/images/creator/telegram.png`)" />
             <span>Telegram</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.wechat)" v-if="userInfo.wechat">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.wechat)"
+            v-if="userInfo.wechat"
+          >
             <img :src="require(`@/assets/images/creator/wechat.png`)" />
             <span>Wechat</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.whatsapp)" v-if="userInfo.whatsapp">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.whatsapp)"
+            v-if="userInfo.whatsapp"
+          >
             <img :src="require(`@/assets/images/creator/whatsapp.png`)" />
             <span>Whatsapp</span>
           </div>
-          <div class="tag-item" @click="handleGoTo(userInfo.bilibili)" v-if="userInfo.whatsapp">
+          <div
+            class="tag-item"
+            @click="handleGoTo(userInfo.bilibili)"
+            v-if="userInfo.whatsapp"
+          >
             <img :src="require(`@/assets/images/creator/bilibili.png`)" />
             <span>Bilibili</span>
           </div>
@@ -100,11 +194,17 @@
       </div>
       <div class="content">
         <div class="list">
-          <div v-for="(item,index) in 20" :key="index" class="item">
+          <div v-for="(item, index) in 20" :key="index" class="item">
             <product-item></product-item>
           </div>
         </div>
-        <el-pagination style="width:100%;margin: 20px 0;" background layout="prev,pager,next" :page-count="4" :total="1000"></el-pagination>
+        <el-pagination
+          style="width: 100%; margin: 20px 0"
+          background
+          layout="prev,pager,next"
+          :page-count="4"
+          :total="1000"
+        ></el-pagination>
       </div>
     </div>
   </div>
@@ -203,7 +303,7 @@ export default {
       if (!url) {
         return
       }
-      window.open(url,'_blank')
+      window.open(url, '_blank')
     },
   },
 }
