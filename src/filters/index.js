@@ -1,5 +1,5 @@
 import store from '@/store'
-import moment, { lang } from "moment"
+import moment from "moment"
 
 // Wallet address thumbnail display
 export const omitAddress = (val) => {
