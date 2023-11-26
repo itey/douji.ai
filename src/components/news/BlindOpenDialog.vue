@@ -139,11 +139,11 @@ export default {
     /** 打开盲盒 */
     openClick() {
       this.show = false
+      // 合约调用
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
       if (this.userInfo.isge8model) {
-        // 合约调用
-        var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
         openBoxContract()
           .then((txJson) => {
             contractOpenBox(txJson.transactionHash, this.blindBox.box)
