@@ -2,8 +2,8 @@
   <div class="container">
     <div class="top">
       <div>
-        <span class="text-big text-color">My DOUJI NFTs</span>
-        <span class="sub-value">308 Items</span>
+        <span class="text-big text-color">{{ $t('user.my_nft') }}</span>
+        <span class="sub-value">308 {{ $t('user.items') }}</span>
       </div>
       <div class="search">
         <el-input placeholder="Search by name or Token ID">
@@ -13,7 +13,7 @@
     </div>
     <div class="content">
       <div class="list">
-        <div v-for="(item,index) in list" :key="index" class="item">
+        <div v-for="(item, index) in list" :key="index" class="item">
           <ProductItem :item="item" />
         </div>
       </div>

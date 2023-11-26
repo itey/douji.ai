@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="balance">
-      <div class="text-big text-color">Balances</div>
+      <div class="text-big text-color">{{ $t('user.balance') }}</div>
       <div class="balance-address-container">
         <img
           style="width: 16px; height: 16px"
@@ -47,18 +47,20 @@
     </div>
     <div class="divider"></div>
     <template v-if="false">
-      <div class="text-middle text-color">Distributes income to be settled</div>
+      <div class="text-middle text-color">{{ $t('user.ba_dist') }}</div>
       <div class="settle-container">
         <div class="unit text-color">MBD</div>
         <div class="value text-color">0.0000</div>
         <div class="sub-value text-sub-color">≈$0.0000</div>
       </div>
       <div class="settle-button">
-        <el-button class="common-btn1" type="primary">Settlement</el-button>
+        <el-button class="common-btn1" type="primary">{{
+          $t('user.settlement')
+        }}</el-button>
       </div>
     </template>
     <div class="divider"></div>
-    <div class="text-middle text-color">NFT Stake income settlement</div>
+    <div class="text-middle text-color">{{ $t('user.ba_st_in') }}</div>
     <!-- <div class="settle-container">
       <div class="unit text-color">MBD</div>
       <div class="value text-color">68415.5684</div>
@@ -69,11 +71,11 @@
         @click="$refs['incomeDialog'].showDialog()"
         class="common-btn1"
         type="primary"
-        >Go Settlement</el-button
+        >{{ $t('user.ba_go_sett') }}</el-button
       >
     </div>
     <div class="divider"></div>
-    <div class="text-middle text-color">Platform rewards to be settled</div>
+    <div class="text-middle text-color">{{ $t('user.ba_plat_rew') }}</div>
     <div class="settle-containers">
       <div class="settle-container">
         <div class="unit text-color">MBD</div>
@@ -103,11 +105,11 @@
         :disabled="
           !settleFee || Number(settleFee) >= Number(mbdSettleBalance.balance)
         "
-        >Settlement</el-button
+        >{{ $t('user.settlement') }}</el-button
       >
     </div>
     <div class="text-color settle-label">
-      Settlement Fee:
+      {{ $t('user.ba_sett_fee') }}:
       <span
         :style="{
           color:

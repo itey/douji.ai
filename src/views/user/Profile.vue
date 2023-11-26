@@ -1,14 +1,24 @@
 <template>
   <div class="profile-container">
-    <div class="profile-title text-color">Profile</div>
+    <div class="profile-title text-color">{{ $t('user.profile') }}</div>
     <div class="form-container">
       <div class="form-item">
-        <div class="form-label">Cover Image</div>
+        <div class="form-label">{{ $t('user.co_im') }}</div>
         <div class="form-value">
-          <el-upload accept=".png, .jpeg, .jpg, .gif" :show-file-list="false" class="form-upload" :on-change="fileChange" :auto-upload="false" action="#">
+          <el-upload
+            accept=".png, .jpeg, .jpg, .gif"
+            :show-file-list="false"
+            class="form-upload"
+            :on-change="fileChange"
+            :auto-upload="false"
+            action="#"
+          >
             <div class="form-upload-img" v-if="imageUrl">
               <img class="file-img" :src="imageUrl" />
-              <img class="file-img-icon" src="@/assets/images/user/camera.png" />
+              <img
+                class="file-img-icon"
+                src="@/assets/images/user/camera.png"
+              />
             </div>
             <div class="form-upload-empty" v-else>
               <div class="form-upload-icon">+</div>
@@ -17,27 +27,42 @@
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">Aias</div>
+        <div class="form-label">{{ $t('user.alias') }}</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.nickname = val.replace(/(\s*$)/g, '')" v-model="userInfo.nickname"></el-input>
-          <div class="form-tip">Alias to be displayed on the public profle page</div>
+          <el-input
+            @input="(val) => (userInfo.nickname = val.replace(/(\s*$)/g, ''))"
+            v-model="userInfo.nickname"
+          ></el-input>
+          <div class="form-tip">
+            {{ $t('user.alias_tip') }}
+          </div>
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">Short Description</div>
+        <div class="form-label">{{ $t('user.short_desc') }}</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.short_description = val.replace(/(\s*$)/g, '')" v-model="userInfo.short_description"></el-input>
-          <div class="form-tip">Short bio to be displayed on the public prohle page</div>
+          <el-input
+            @input="
+              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            "
+            v-model="userInfo.short_description"
+          ></el-input>
+          <div class="form-tip">
+            {{ $t('user.short_tip') }}
+          </div>
         </div>
       </div>
     </div>
-    <div style="height: 1px;background: #1E252D;"></div>
-    <div class="profile-sub-title text-color">Social accounts</div>
+    <div style="height: 1px; background: #1e252d"></div>
+    <div class="profile-sub-title text-color">{{ $t('user.social') }}</div>
     <div class="form-container">
       <div class="form-item">
-        <div class="form-label">Locaition</div>
+        <div class="form-label">{{ $t('user.loc') }}</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.location = val.replace(/(\s*$)/g, '')" v-model="userInfo.location"></el-input>
+          <el-input
+            @input="(val) => (userInfo.location = val.replace(/(\s*$)/g, ''))"
+            v-model="userInfo.location"
+          ></el-input>
         </div>
       </div>
     </div>
@@ -45,7 +70,10 @@
       <div class="form-item">
         <div class="form-label">Twitter</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.twitter = charFilter(val)" v-model="userInfo.twitter"></el-input>
+          <el-input
+            @input="(val) => (userInfo.twitter = charFilter(val))"
+            v-model="userInfo.twitter"
+          ></el-input>
         </div>
       </div>
     </div>
@@ -53,7 +81,10 @@
       <div class="form-item">
         <div class="form-label">Telegram</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.telegram = charFilter(val)" v-model="userInfo.telegram"></el-input>
+          <el-input
+            @input="(val) => (userInfo.telegram = charFilter(val))"
+            v-model="userInfo.telegram"
+          ></el-input>
         </div>
       </div>
     </div>
@@ -61,7 +92,10 @@
       <div class="form-item">
         <div class="form-label">Facebook</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.facebook = charFilter(val)" v-model="userInfo.facebook"></el-input>
+          <el-input
+            @input="(val) => (userInfo.facebook = charFilter(val))"
+            v-model="userInfo.facebook"
+          ></el-input>
         </div>
       </div>
     </div>
@@ -69,7 +103,10 @@
       <div class="form-item">
         <div class="form-label">Tiktok</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.tiktok = charFilter(val)" v-model="userInfo.tiktok"></el-input>
+          <el-input
+            @input="(val) => (userInfo.tiktok = charFilter(val))"
+            v-model="userInfo.tiktok"
+          ></el-input>
         </div>
       </div>
     </div>
@@ -77,7 +114,10 @@
       <div class="form-item">
         <div class="form-label">Website</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.website = charFilter(val)" v-model="userInfo.website"></el-input>
+          <el-input
+            @input="(val) => (userInfo.website = charFilter(val))"
+            v-model="userInfo.website"
+          ></el-input>
         </div>
       </div>
     </div>
@@ -85,15 +125,21 @@
       <div class="form-item">
         <div class="form-label">Instagram</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.instagram = charFilter(val)" v-model="userInfo.instagram"></el-input>
+          <el-input
+            @input="(val) => (userInfo.instagram = charFilter(val))"
+            v-model="userInfo.instagram"
+          ></el-input>
         </div>
       </div>
     </div>
     <div class="form-container">
       <div class="form-item">
-        <div class="form-label">youtube</div>
+        <div class="form-label">Youtube</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.youtube = charFilter(val)" v-model="userInfo.youtube"></el-input>
+          <el-input
+            @input="(val) => (userInfo.youtube = charFilter(val))"
+            v-model="userInfo.youtube"
+          ></el-input>
         </div>
       </div>
     </div>
@@ -101,7 +147,10 @@
       <div class="form-item">
         <div class="form-label">Github</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.github = charFilter(val)" v-model="userInfo.github"></el-input>
+          <el-input
+            @input="(val) => (userInfo.github = charFilter(val))"
+            v-model="userInfo.github"
+          ></el-input>
         </div>
       </div>
     </div>
@@ -109,7 +158,10 @@
       <div class="form-item">
         <div class="form-label">Wechat</div>
         <div class="form-value">
-          <el-input @input="val => userInfo.wechat = charFilter(val)" v-model="userInfo.wechat"></el-input>
+          <el-input
+            @input="(val) => (userInfo.wechat = charFilter(val))"
+            v-model="userInfo.wechat"
+          ></el-input>
         </div>
       </div>
     </div>

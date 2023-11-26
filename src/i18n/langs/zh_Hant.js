@@ -442,7 +442,7 @@ export default {
     "settle_success": "結算申請已提交！平台審核通過後，獎勵將與24小時內轉入您的錢包地址！",
     "inc_d_title": "NFT 質押收益結算",
     "plat_d_title": "平台獎勵結算",
-    "plat_d_desc": "本次結算將收取 <span class='color-word'>{ settleFee } MBD</span> 的手續費。結算後的 MBD 和 BJXStar 將於24小時內轉入您的錢包地址。首次結算您將獲得價值 <span class='color-word'>$3.00 USD</span> BNB 的獎勵。"
+    "plat_d_desc": "本次結算將收取 <span class='color-word'>{0} MBD</span> 的手續費。結算後的 MBD 和 BJXStar 將於24小時內轉入您的錢包地址。首次結算您將獲得價值 <span class='color-word'>$3.00 USD</span> BNB 的獎勵。"
 
 
 

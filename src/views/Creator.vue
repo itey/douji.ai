@@ -42,14 +42,14 @@
               style="width: 13px; height: 9px; margin-right: 5px"
               src="@/assets/images/news/true.png"
             />
-            <span>Subscribe</span>
+            <span>{{ $t('creator.subscribe') }}</span>
           </div>
           <div class="subscription light" v-else @click="handleSub()">
             <img
               style="width: 9px; height: 9px; margin-right: 5px"
               src="@/assets/images/news/add.png"
             />
-            <span>Subscribe</span>
+            <span>{{ $t('creator.subscribe') }}</span>
           </div>
         </template>
         <div class="tag-container">
@@ -189,7 +189,7 @@
     </div>
     <div class="list-container">
       <div class="title-container">
-        <span class="text-color title">Collected</span>
+        <span class="text-color title">{{ $t('creator.collect') }}</span>
         <span class="text-sub-color sub">28</span>
       </div>
       <div class="content">

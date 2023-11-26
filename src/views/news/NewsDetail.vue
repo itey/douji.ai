@@ -4,8 +4,12 @@
       style="margin-top: 27px"
       separator-class="el-icon-arrow-right"
     >
-      <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/news' }">News</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">{{
+        $t('news-detail.home')
+      }}</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/news' }">{{
+        $t('news-detail.news')
+      }}</el-breadcrumb-item>
       <el-breadcrumb-item v-if="metadata.title">{{
         metadata.title
       }}</el-breadcrumb-item>
@@ -37,7 +41,9 @@
               style="width: 14px; height: 14px"
               src="@/assets/images/create/website.png"
             />
-            <div class="form-label-sub-text">Open to Access</div>
+            <div class="form-label-sub-text">
+              {{ $t('news-detail.latest_open') }}
+            </div>
           </div>
           <div class="form-content text-color">
             <div class="md-reader" v-html="metadata.openContent"></div>
@@ -48,7 +54,9 @@
                 style="width: 14px; height: 14px"
                 src="@/assets/images/create/protect.png"
               />
-              <div class="form-label-sub-text">Protected</div>
+              <div class="form-label-sub-text">
+                {{ $t('news-detail.latest_pro') }}
+              </div>
             </div>
             <div
               class="form-content text-color"
@@ -66,15 +74,20 @@
               v-else
             >
               <div class="text-color" style="font-size: 14px">
-                Owning At Least 1 DOUJ NFT (
-                <span style="color: #00f9e5">Token ID: {{ tokenId }}</span
-                >) And Clicking “ <span style="color: #00f9e5">Unlock</span>”
+                {{ $t('news-detail.latest_least') }}
+                <span style="color: #00f9e5"
+                  >{{ $t('news-detail.latest_id') }}: {{ tokenId }}</span
+                >) {{ $t('news-detail.latest_click') }}
+                <span style="color: #00f9e5">{{
+                  $t('news-detail.latest_unlock')
+                }}</span
+                >”
               </div>
               <el-button
                 @click="handleUnlock()"
                 class="common-btn2"
                 style="border-radius: 25px; margin-top: 29px"
-                >Unlock</el-button
+                >{{ $t('news-detail.latest_unlock') }}</el-button
               >
             </div>
           </template>
@@ -83,7 +96,9 @@
             class="form-tag"
             v-if="metadata.keyword && metadata.keyword.length"
           >
-            <div class="form-tag-label text-color">Tags:</div>
+            <div class="form-tag-label text-color">
+              {{ $t('news-detail.latest_tag') }}:
+            </div>
             <div
               class="form-tag-item text-color"
               v-for="(item, index) in metadata.keyword"
@@ -93,14 +108,18 @@
             </div>
           </div>
           <div class="dao-container" v-if="userAccount && userOwned > 0">
-            <div class="dao-title text-color">NFT DAO Governance</div>
+            <div class="dao-title text-color">
+              {{ $t('news-detail.dao_gov') }}
+            </div>
             <div class="dao-set">
               <div
                 class="dao-set-item"
                 style="width: 158px"
                 @click="handleUpdate(1)"
               >
-                <div class="dao-set-item-label">Update NFT Attributes</div>
+                <div class="dao-set-item-label">
+                  {{ $t('news-detail.dao_update_att') }}
+                </div>
                 <i class="el-icon-arrow-right"></i>
               </div>
               <div
@@ -108,7 +127,9 @@
                 style="width: 158px"
                 @click="handleUpdate(2)"
               >
-                <div class="dao-set-item-label">Update Content</div>
+                <div class="dao-set-item-label">
+                  {{ $t('news-detail.dao_update_con') }}
+                </div>
                 <i class="el-icon-arrow-right"></i>
               </div>
               <div
@@ -116,7 +137,9 @@
                 style="width: 178px"
                 @click="handleUpdateSale()"
               >
-                <div class="dao-set-item-label">Set NFT Sales Promotion</div>
+                <div class="dao-set-item-label">
+                  {{ $t('news-detail.dao_sale_pro') }}
+                </div>
                 <i class="el-icon-arrow-right"></i>
               </div>
               <div
@@ -124,30 +147,38 @@
                 style="width: 190px"
                 @click="handleUpdateDao()"
               >
-                <div class="dao-set-item-label">Set NFT DAO Governance</div>
+                <div class="dao-set-item-label">
+                  {{ $t('news-detail.dao_set_gov') }}
+                </div>
                 <i class="el-icon-arrow-right"></i>
               </div>
             </div>
             <div class="dao-set-tip">
-              Last Edited : September 21, 2023, 22:18:07
+              {{ $t('news-detail.last_edit') }} : September 21, 2023, 22:18:07
               <span
                 class="text-color"
                 style="cursor: pointer"
                 @click="$refs['revisionHistoryDialog'].showDialog()"
-                >View History</span
+                >{{ $t('news-detail.view_hist') }}</span
               >
             </div>
           </div>
           <div class="transactions-container">
             <div class="transactions-title text-color">
-              <span>Latest Transactions</span>
+              <span>{{ $t('news-detail.latest_tran') }}</span>
               <!-- <span style="font-size: 16px;color: #ACBCC9;">(3)</span> -->
             </div>
             <div class="transactions-head">
-              <div class="transactions-column">Transactions ID</div>
-              <div class="transactions-column">From</div>
-              <div class="transactions-column">To</div>
-              <div class="transactions-column">Amount</div>
+              <div class="transactions-column">
+                {{ $t('news-detail.tx_id') }}
+              </div>
+              <div class="transactions-column">
+                {{ $t('news-detail.from') }}
+              </div>
+              <div class="transactions-column">{{ $t('news-detail.to') }}</div>
+              <div class="transactions-column">
+                {{ $t('news-detail.amount') }}
+              </div>
             </div>
             <template v-if="transactionHistory.length">
               <div
@@ -169,10 +200,14 @@
                 </div>
               </div>
             </template>
-            <div class="no-transactions" v-else>No transactions</div>
+            <div class="no-transactions" v-else>
+              {{ $t('news-detail.no_tx') }}
+            </div>
           </div>
           <div class="more-container">
-            <div class="more-title text-color">More from this creator</div>
+            <div class="more-title text-color">
+              {{ $t('news-detail.more_creator') }}
+            </div>
             <div class="more-list">
               <div v-for="(item, index) in 6" :key="index" class="more-item">
                 <news-item></news-item>

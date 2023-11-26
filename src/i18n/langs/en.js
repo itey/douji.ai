@@ -412,12 +412,20 @@ export default {
     "stk_quantity": "Stake NFT Quantity",
     "stk_tip": "Maximum NFT Stake quantity",
     "stk_btn": "Stake",
-
-
-
-
-
-
+    "home": "Home",
+    "news": "News",
+    "dao_update_att": "Update NFT Attributes",
+    "dao_update_con": "Update Content",
+    "dao_sale_pro": "Set NFT Sales Promotion",
+    "dao_set_gov": "Set NFT DAO Governance",
+    "last_edit": "Last Edited",
+    "view_hist": "View History",
+    "latest_tran": "Latest Transactions",
+    "tx_id": "Transactions ID",
+    "to": "To",
+    "amount": "Amount",
+    "no_tx": "No transactions",
+    "more_creator": "More from this creator",
 
   },
   "marketplace": {
@@ -442,14 +450,26 @@ export default {
     "settle_success": "Settlement application submitted successfully.",
     "inc_d_title": "Set NFT DAO Governance",
     "plat_d_title": "Platform Rewards Settlement",
-    "plat_d_desc": "The fee of <span class='color-word'>{0} MBD</span> will be deducted from this settlement, and the MBD and BJXStar after settlement will be transferred to your wallet address within 24 hours. The first settlement will receive BNB rewards worth <span class='color-word'>$3.00 USD</span>."
-
-
-
-
-
-
-
-
+    "plat_d_desc": "The fee of <span class='color-word'>{0} MBD</span> will be deducted from this settlement, and the MBD and BJXStar after settlement will be transferred to your wallet address within 24 hours. The first settlement will receive BNB rewards worth <span class='color-word'>$3.00 USD</span>.",
+    "balance": "Balance",
+    "ba_dist": "Distributes income to be settled",
+    "ba_st_in": "NFT Stake income settlement",
+    "ba_go_sett": "Go Settlement",
+    "ba_plat_rew": "Platform rewards to be settled",
+    "ba_sett_fee": "Settlement Fee",
+    "my_nft": "My DOUJI NFTs",
+    "items": "Items",
+    "profile": "Profile",
+    "co_im": "Cover Image",
+    "alias": "Alias",
+    "alias_tip": "Alias to be displayed on the public profile page",
+    "short_desc": "Short Description",
+    "short_tip": "Short bio to be displayed on the public profile page",
+    "social": "Social accounts",
+    "loc": "Location",
+  },
+  "creator": {
+    "subscribe": "Subscribe",
+    "collect": "Collected"
   }
 }
