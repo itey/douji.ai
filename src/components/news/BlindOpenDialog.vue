@@ -138,6 +138,7 @@ export default {
   methods: {
     /** 打开盲盒 */
     openClick() {
+      this.show = false
       if (this.userInfo.isge8model) {
         // 合约调用
         var loadingInstance = this.$loading({

@@ -386,7 +386,12 @@ export default {
 }
 
 .el-popover {
-  background: #3a4a5c;
+  min-width: 79px;
+  background: #2a3543;
+  box-shadow: 0px 11px 16px 0px #0d1115;
+  border-radius: 10px;
+  border: none;
+  padding: 0;
 
   .language-select {
     margin: 9px 7px;
