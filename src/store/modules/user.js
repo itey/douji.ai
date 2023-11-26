@@ -120,6 +120,8 @@ const user = {
             }).catch(e => {
               reject(e)
             })
+          }).catch(e => {
+            reject(e)
           })
         } else {
           // 本地签到

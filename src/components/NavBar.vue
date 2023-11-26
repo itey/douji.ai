@@ -141,6 +141,13 @@
           height="79px"
           :visible-arrow="false"
           v-model="languageVisible"
+          :append-to-body="false"
+          :popper-options="{
+            boundariesElement: 'body',
+            gpuAcceleration: true,
+            positionFixed: true,
+            preventOverflow: true,
+          }"
         >
           <div class="language-select">
             <div
@@ -379,6 +386,8 @@ export default {
 }
 
 .el-popover {
+  background: #3a4a5c;
+
   .language-select {
     margin: 9px 7px;
 
