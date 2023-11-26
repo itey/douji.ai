@@ -448,8 +448,7 @@ export default {
                  *  bool :  false "是否有盒子 如果有盒子true则调用合约方法 openBox  去开盒子。如果没有盒子则调用 getBox 去获取合约"
                  *  uint8 :  0 "本周期领盒子数，如果数量>=12 则不在调用合约方法 getBox 去获取合约"
                  */
-                console.log(r)
-                if (r[0] && r[1] < 12) {
+                if (r[0] && r[1] <= 12) {
                   setBlindBoxFlagCache(this.$store.state.user.userId, 1)
                   this.$refs['blindDialog'].showDialog()
                 }

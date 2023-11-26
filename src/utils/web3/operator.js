@@ -49,9 +49,10 @@ export function checkInContract() {
 /** 检查盲盒 */
 export function checkBoxContract() {
   const operatorContract = getOperatorContract()
+  const fromAddress = store.state.chain.account
   return new Promise((resolve, reject) => {
     operatorContract.methods.checkBox()
-      .call()
+      .call({ from: fromAddress })
       .then(r => {
         resolve(r)
       })
