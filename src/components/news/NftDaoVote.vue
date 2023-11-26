@@ -237,8 +237,6 @@ export default {
 .proposal-container {
   display: flex;
   flex-direction: row;
-  background: #37434d;
-  border: 1px solid #74939e;
   border-radius: 10px;
   margin-top: 29px;
 
@@ -264,7 +262,6 @@ export default {
       line-height: 17px;
       font-family: Arial;
       font-weight: bold;
-      color: #acbcc9;
     }
 
     .proposal-left-link {
@@ -286,7 +283,6 @@ export default {
       line-height: 23px;
       font-family: Arial;
       font-weight: bold;
-      color: #ffffff;
     }
 
     .proposal-right-sub {
@@ -295,7 +291,6 @@ export default {
       line-height: 10px;
       font-family: Arial;
       font-weight: 400;
-      color: #acbcc9;
     }
 
     .proposal-right-btn {
@@ -312,7 +307,6 @@ export default {
       line-height: 10px;
       font-family: Source Han Sans CN;
       font-weight: 400;
-      color: #acbcc9;
       text-align: left;
     }
   }

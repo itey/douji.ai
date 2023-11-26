@@ -32,7 +32,12 @@
             :creator="tokenOwner"
           />
           <img
-            style="width: 940px; height: 532px; margin-top: 36px"
+            style="
+              width: 940px;
+              height: 532px;
+              margin-top: 36px;
+              border-radius: 8px;
+            "
             :src="metadata.image"
           />
           <div class="form-desc">{{ metadata.description }}</div>
@@ -808,10 +813,9 @@ export default {
 
         .form-desc {
           padding-left: 14px;
-          font-size: 14px;
+          font-size: 16px;
           font-family: Source Han Sans CN;
           font-weight: 400;
-          color: #ffffff;
           line-height: 22px;
           border-left: 2px solid;
           border-image: linear-gradient(0deg, #50ced5, #46d1af) 1;
@@ -864,17 +868,14 @@ export default {
             font-family: Source Han Sans CN;
             font-weight: 400;
             height: 17px;
-            background: #434d56;
             border-radius: 4px;
-            padding: 2px 8px;
-            // min-width: 36px;
+            padding: 4px 8px;
             margin-left: 9px;
             text-align: center;
           }
         }
 
         .dao-container {
-          background: #252d36;
           border-radius: 8px;
           margin-top: 42px;
           width: 940px;
@@ -884,7 +885,6 @@ export default {
             font-family: Source Han Sans CN;
             font-weight: bold;
             padding: 26px 0 16px 23px;
-            border-bottom: 1px solid #2b353f;
           }
 
           .dao-set {
@@ -897,8 +897,6 @@ export default {
               cursor: pointer;
               height: 42px;
               padding: 0 20px 0 22px;
-              background: #1d242b;
-              border: 1px solid #313838;
               border-radius: 8px;
               display: flex;
               flex-direction: row;
@@ -923,7 +921,6 @@ export default {
             font-size: 14px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            color: #acbcc9;
             padding: 0 0 22px 24px;
           }
         }
@@ -971,7 +968,6 @@ export default {
           .transactions-head {
             height: 42px;
             line-height: 42px;
-            background: #252d36;
             font-size: 14px;
             font-family: Arial;
             font-weight: 400;

@@ -189,7 +189,7 @@ export default {
       font-size: 13px;
       font-family: Arial;
       font-weight: bold;
-      color: #4b5760;
+      color: #1a2027;
       width: 100%;
     }
 

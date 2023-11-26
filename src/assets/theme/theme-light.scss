@@ -79,7 +79,7 @@
   .el-button--primary.is-disabled:active,
   .el-button--primary.is-disabled:focus,
   .el-button--primary.is-disabled:hover {
-    color: #4B5760;
+    color: #1a2027;
   }
 
   .el-button--primary:disabled {
@@ -89,7 +89,7 @@
     font-size: 12px;
     font-family: Source Han Sans CN;
     font-weight: bold;
-    color: #4B5760;
+    color: #1a2027;
   }
 
   .text-color {
@@ -353,7 +353,185 @@
   }
 
   .market-container .search-container {
-    background: #bcd6d6;
+    background: #ECF0F2;
+  }
+
+  .create-step0 .type-container .type-item {
+    background: #FFFFFF; 
+    border: 1px solid;
+    box-shadow: 0px 10px 13px 5px #E8EFF0;
+    border-image: linear-gradient(0deg, #E2E5E7, #F6F8F9) 10 10;
+  }
+
+  .proposal-container {
+    background: #ECF0F2;
+    border: 1px solid #D8DDDF;
+
+    .proposal-left {
+      .proposal-left-sub {
+        color: #36404B;
+      }
+    }
+
+    .proposal-right {
+
+      .proposal-right-title {
+        color: #1A2027;
+      }
+
+      .proposal-right-tip {
+        color: #636B72;
+      }
+
+    }
+    .proposal-right-sub {
+      color: #636B72;
+    }
+  }
+
+  .info-container .author-container .subscription.light {
+    color: #00f9e5;
+    border: 1px solid #00f9e5;
+  }
+
+  .info-container .author-container .subscription {
+    background: #F7F9FA;
+    border: 1px solid #EAEDEF;
+  }
+
+  .info-container .news-info .news-info-item {
+    background: transparent;
+    border: 1px solid #EAEDEF;
+
+    .news-info-item-label {
+
+      span {
+        color: #36404B;
+      }
+    }
+    
+  }
+
+  .news-container .form-container .form-top .form-left .form-desc {
+    color: #1A2027;
+  }
+
+  .news-container .form-container .form-top .form-left .form-tag {
+
+    .form-tag-label {
+      color: #636B72;
+    }
+
+    .form-tag-item {
+      background: #F7F9FA;
+      color: #36404B;
+    }
+    
+  }
+
+  .news-container .form-container .form-top .form-left .dao-container {
+
+    background: #F7F9FA;
+
+    .dao-title {
+      border-bottom: 1px solid #E6EDF5;
+    }
+
+    .dao-set-tip {
+      color: #636B72;
+    }
+    
+  }
+
+  .news-container .form-container .form-top .form-left .dao-container .dao-set .dao-set-item {
+    background: #E6EDF5;
+    border: 1px solid #E6EDF5;
+  }
+
+  .news-container .form-container .form-top .form-left .transactions-container .transactions-head {
+    background: #F7F9FA;
+  }
+
+  .form-attr-container {
+    border: 1px solid #EAEEF0;
+
+    .form-attr-title {
+      background: #F7F9FA;
+      color: #1A2027;
+    }
+
+    .form-attr-list {
+
+      .form-attr-item {
+        background: #F7F9FA;
+
+        .form-attr-label {
+          color: #636B72;
+        }
+  
+        .form-attr-value {
+          color: #36404B;
+        }
+
+
+      }
+
+    }
+  }
+
+  .form-attr-container .form-attr-market .form-attr-market-top .form-attr-available {
+    background: #F7F9FA;
+    color: #85949F;
+  }
+
+  .form-attr-container .form-attr-market .form-attr-mbd .mbd-transform {
+    color: #636B72;
+  }
+  
+  .form-attr-container .form-attr-market .form-attr-tip {
+    color: #636B72;
+  }
+
+  .form-attr-container .form-second-market .second-market-header {
+    background: #F7F9FA;
+  }
+
+  .form-attr-container .form-second-market .second-market-td {
+    border-bottom: 1px solid #EFF5FB;
+    color: #36404B;
+
+    .second-btn {
+      background: linear-gradient(-16deg, #848D98, #97A8A7);
+      span {
+        color: #36404B;
+      }
+
+      .buy {
+        color: #00F9E5;
+      }
+    }
+  }
+
+  .form-attr-container .form-dao .dao-title {
+    color: #36404B;
+  }
+
+  .form-attr-container .form-dao .dao-income-item .dao-income-value {
+    color: #1A2027;
+  }
+
+  .form-attr-container .form-dao .dividend-pool .dividend-pool-item {
+    border-bottom: 1px solid #EFF5FB;
+  }
+
+  .reward-container {
+    .reward-tip {
+      color: #636B72;
+    }
+
+    .reward-mbd .reward-mbd-transform {
+      color: #636B72;
+    }
   }
 
 }

@@ -231,7 +231,7 @@ export default {
   methods: {
     themeClick(theme) {
       this.$store.commit('setTheme', theme)
-      location.reload()
+      // location.reload()
     },
     languageClick(locale) {
       this.languageVisible = false

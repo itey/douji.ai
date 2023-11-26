@@ -24,12 +24,9 @@
       </div>
     </div>
     <div class="reward-tip">{{ $t('news-detail.rew_income') }}</div>
-    <el-button
-      @click="$router.push('/balance')"
-      class="common-btn2"
-      style="width: 338px; margin: 31px 0 48px 0"
-      >{{ $t('news-detail.rew_settle') }}</el-button
-    >
+    <el-button @click="$router.push('/balance')" class="sett-btn">{{
+      $t('news-detail.rew_settle')
+    }}</el-button>
   </div>
 </template>
 
@@ -90,6 +87,9 @@ export default {
   border-radius: 8px;
   height: auto;
   text-align: center;
+  background-image: url('@/assets/images/news/reward_bg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 
   .reward-top-title {
     height: 66px;
@@ -139,6 +139,18 @@ export default {
       font-weight: 400;
       color: #88a2b8;
     }
+  }
+
+  .sett-btn {
+    width: 338px;
+    height: 50px;
+    background: linear-gradient(-16deg, #4195f6, #17e7d6);
+    border-radius: 25px;
+    color: #1a2027;
+    font-size: 18px;
+    font-family: Arial;
+    font-weight: bold;
+    margin: 40px 0px;
   }
 }
 </style>

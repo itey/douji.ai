@@ -332,24 +332,17 @@ export default {
 
     .subscription {
       margin-left: 14px;
-      height: 34px;
+      width: 118px;
+      height: 40px;
       font-size: 12px;
       font-family: Arial;
       font-weight: bold;
-      width: 112px;
-      color: #acbcc9;
-      background: #37434d;
       border-radius: 17px;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-
-      &.light {
-        color: #00f9e5;
-        background: #1d383b;
-      }
 
       span {
         margin-left: 6px;
@@ -367,7 +360,6 @@ export default {
     .news-info-item {
       min-width: 120px;
       height: 50px;
-      background: #252d36;
       border-radius: 8px;
       margin-left: 12px;
       display: flex;

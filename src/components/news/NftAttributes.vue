@@ -1,6 +1,6 @@
 <template>
   <div class="form-attr-container">
-    <div class="form-attr-title text-color">
+    <div class="form-attr-title">
       {{ $t('news-detail.attributes') }}
     </div>
     <div class="form-attr-list">
@@ -80,7 +80,6 @@ export default {
 
 <style lang="scss">
 .form-attr-container {
-  border: 1px solid #363e3e;
   border-radius: 6px;
   margin-bottom: 22px;
   height: auto;
@@ -89,7 +88,6 @@ export default {
     height: 66px;
     line-height: 66px;
     padding: 0 23px;
-    background: #37434d;
     font-size: 18px;
     font-family: Arial;
     font-weight: bold;
@@ -119,7 +117,6 @@ export default {
     .form-attr-item {
       width: 170px;
       padding: 14px 0;
-      background: #1e252d;
       border-radius: 6px;
       margin-bottom: 18px;
 
@@ -127,7 +124,6 @@ export default {
         font-size: 14px;
         font-family: Source Han Sans CN;
         font-weight: 400;
-        color: #88a2b8;
         margin-left: 12px;
       }
 
@@ -135,7 +131,6 @@ export default {
         font-size: 16px;
         font-family: Source Han Sans CN;
         font-weight: bold;
-        color: #ffffff;
         margin-top: 14px;
         margin-left: 12px;
       }
@@ -202,7 +197,7 @@ export default {
       font-size: 13px;
       font-family: Arial;
       font-weight: bold;
-      color: #4b5760;
+      color: #1a2027;
       width: 100%;
     }
 

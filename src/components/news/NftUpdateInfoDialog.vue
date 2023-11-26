@@ -532,7 +532,7 @@ export default {
                 font-size: 18px;
                 font-family: Arial;
                 font-weight: bold;
-                color: #4b5760;
+                color: #1a2027;
                 width: 100%;
               }
 

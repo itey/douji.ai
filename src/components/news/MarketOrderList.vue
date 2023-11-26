@@ -58,16 +58,13 @@
           <div class="second-btn">
             <span
               v-if="item.owner != userAccount"
-              style="color: #00f9e5"
+              class="buy"
               @click="handleSwapOrder(item)"
               >{{ $t('news-detail.buy') }}</span
             >
-            <span
-              v-else
-              style="color: #92b5de"
-              @click="handleCancelOrder(item.ordeId)"
-              >{{ $t('news-detail.cancel') }}</span
-            >
+            <span v-else @click="handleCancelOrder(item.ordeId)">{{
+              $t('news-detail.cancel')
+            }}</span>
           </div>
         </div>
       </div>
@@ -327,7 +324,7 @@ export default {
       font-size: 13px;
       font-family: Arial;
       font-weight: bold;
-      color: #4b5760;
+      color: #1a2027;
       width: 100%;
     }
 
@@ -356,16 +353,13 @@ export default {
       height: 34px;
       font-size: 12px;
       line-height: 34px;
-      background: #252d36;
     }
 
     .second-market-td {
       font-size: 12px;
       font-family: Arial;
       font-weight: 400;
-      color: #ffffff;
       line-height: 46px;
-      border-bottom: 1px solid #252d36;
 
       .second-btn {
         margin: 8px 0;
@@ -373,7 +367,6 @@ export default {
         height: 30px;
         line-height: 30px;
         text-align: center;
-        background: linear-gradient(-16deg, #848d98, #97a8a7);
         border-radius: 15px;
         cursor: pointer;
       }

@@ -89,7 +89,7 @@
   .el-button--primary.is-disabled:active,
   .el-button--primary.is-disabled:focus,
   .el-button--primary.is-disabled:hover {
-    color: #4B5760;
+    color: #1a2027;
   }
 
   .el-button--primary:disabled {
@@ -99,7 +99,7 @@
     font-size: 12px;
     font-family: Source Han Sans CN;
     font-weight: bold;
-    color: #4B5760;
+    color: #1a2027;
   }
 
 
@@ -371,4 +371,136 @@
   .market-container .search-container {
     background-color: #1a2027;
   }
+
+  .create-step0 .type-container .type-item {
+    background: #1a2027; 
+    border: 1px solid #2C3638;
+  }
+
+  .proposal-container {
+    background: #37434D;
+    border: 1px solid #74939E;
+
+    .proposal-left {
+      .proposal-left-sub {
+        color: #acbcc9;
+      }
+    }
+
+    .proposal-right {
+
+      .proposal-right-title {
+        color: #FFFFFF;
+      }
+
+      .proposal-right-tip {
+        color: #acbcc9;
+      }
+
+    }
+
+    .proposal-right-sub {
+      color: #acbcc9;
+    }
+  }
+
+  .info-container .author-container .subscription.light {
+    color: #00f9e5;
+    background: #1d383b;
+  }
+
+  .info-container .author-container .subscription {
+    color: #36404B;
+    background: #37434d;
+  }
+
+  .info-container .news-info .news-info-item {
+    background: #252d36;
+  }
+
+  .news-container .form-container .form-top .form-left .form-desc {
+    color: #ffffff;
+  }
+
+  .news-container .form-container .form-top .form-left .form-tag .form-tag-item {
+    background: #434d56;
+  }
+
+  .news-container .form-container .form-top .form-left .dao-container {
+    background: #252d36;
+
+    .dao-title {
+      border-bottom: 1px solid #2b353f;
+    }
+
+    .dao-set-tip {
+      color: #acbcc9;
+    }
+  }
+
+  .news-container .form-container .form-top .form-left .dao-container .dao-set .dao-set-item {
+    background: #1d242b;
+    border: 1px solid #313838;
+  }
+
+  .news-container .form-container .form-top .form-left .transactions-container .transactions-head {
+    background: #252d36;
+  }
+
+  .form-attr-container {
+    border: 1px solid #363e3e;
+
+    .form-attr-title {
+      background: #37434d;
+      color: #FFFFFF;
+    }
+
+    .form-attr-list {
+
+      .form-attr-item {
+        background: #1e252d;
+
+        .form-attr-label {
+          color: #88A2B8;
+        }
+  
+        .form-attr-value {
+          color: #FFFFFF;
+        }
+
+      }
+
+    }
+  }
+
+  .form-attr-container .form-attr-market .form-attr-market-top .form-attr-available {
+    background: #1E252D;
+  }
+
+  .form-attr-container .form-attr-market .form-attr-tip {
+    color: #88a2b8;
+  }
+
+  .form-attr-container .form-second-market .second-market-header {
+    background: #252d36;
+  }
+
+  .form-attr-container .form-second-market .second-market-td {
+    border-bottom: 1px solid #252d36;
+    color: #ffffff;
+
+    .second-btn {
+      background: linear-gradient(-16deg, #848D98, #97A8A7);
+      color: #92B5DE;
+
+      .buy {
+        color: #00F9E5;
+      }
+    }
+  }
+
+  .form-attr-container .form-dao .dao-title {
+    color: #ffffff;
+  }
+
 }

@@ -473,7 +473,7 @@ export default {
       font-size: 15px;
       font-family: Arial;
       font-weight: bold;
-      color: #1e252d;
+      color: #1a2027;
       width: 100%;
     }
 
@@ -481,7 +481,6 @@ export default {
       font-size: 12px !important;
       font-family: Arial;
       font-weight: 400;
-      color: #88a2b8;
     }
 
     .contract-address {

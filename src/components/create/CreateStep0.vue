@@ -91,7 +91,6 @@ export default {
     .type-item {
       width: 454px;
       height: 140px;
-      background: #1a2027;
       background-image: url('@/assets/images/home/item-back2.png');
       background-size: 100% 100%;
       border-radius: 20px;
@@ -99,7 +98,6 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border: 1px solid #2c3638;
       cursor: pointer;
     }
 
@@ -110,6 +108,7 @@ export default {
       font-weight: bold;
       color: #ffffff;
       background: linear-gradient(-73deg, #00abf1 0%, #01eeff 100%);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -121,6 +120,7 @@ export default {
       font-weight: bold;
       color: #ffffff;
       background: linear-gradient(-73deg, #3874fc 0%, #8a8dff 100%);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -132,6 +132,7 @@ export default {
       font-weight: bold;
       color: #ffffff;
       background: linear-gradient(-73deg, #00d487 0%, #00dafd 100%);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
