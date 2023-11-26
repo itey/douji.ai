@@ -154,10 +154,10 @@
 }
 
 .el-popover {
-  min-width: 79px;
+  min-width: 79px !important;
   background: #2A3543!important;
-  box-shadow: 0px 11px 16px 0px #0D1115;
-  border-radius: 10px;
-  border: none;
-  padding: 0;
+  box-shadow: 0px 11px 16px 0px #0D1115 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 0 !important;
 }
