@@ -441,7 +441,7 @@ export default {
     "settle_success": "Settlement application submitted successfully.",
     "inc_d_title": "Set NFT DAO Governance",
     "plat_d_title": "Platform Rewards Settlement",
-    "plat_d_desc": "The fee of <span class='color-word'>{ settleFee } MBD</span> will be deducted from this settlement, and the MBD and BJXStar after settlement will be transferred to your wallet address within 24 hours. The first settlement will receive BNB rewards worth <span class='color-word'>$3.00 USD</span>."
+    "plat_d_desc": "The fee of <span class='color-word'>{0} MBD</span> will be deducted from this settlement, and the MBD and BJXStar after settlement will be transferred to your wallet address within 24 hours. The first settlement will receive BNB rewards worth <span class='color-word'>$3.00 USD</span>."
 
 
 

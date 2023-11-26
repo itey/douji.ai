@@ -5,7 +5,7 @@
     </div>
     <div
       class="desc-content"
-      v-html="$t('user.plat_d_desc', { settleFee })"
+      v-html="$t('user.plat_d_desc', [settleFee])"
     ></div>
     <!-- <div class="desc-content">
       The fee of <span class="color-word">{{ settleFee }} MBD</span> will be
