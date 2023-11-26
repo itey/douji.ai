@@ -3,7 +3,7 @@
     <div
       class="top-container"
       v-loading="loading['news']"
-      element-loading-background="rgba(0, 0, 0, 0.3)"
+      :element-loading-background="$store.state.common.theme | maskByTheme"
     >
       <div class="news-img-container" v-if="bannerNews">
         <img style="width: 934px; height: 526px" :src="bannerNews.image" />
@@ -380,7 +380,7 @@
       <div
         class="activity-info theme-background-color"
         v-loading="bjx.buying"
-        element-loading-background="rgba(0, 0, 0, 0.3)"
+        :element-loading-background="$store.state.common.theme | maskByTheme"
       >
         <img
           style="width: 224px; height: 224px; margin-top: 35px"

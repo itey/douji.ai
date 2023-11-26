@@ -2,7 +2,7 @@
   <div
     class="form-attr-container"
     v-loading="loading"
-    element-loading-background="rgba(0, 0, 0, 0.3)"
+    :element-loading-background="$store.state.common.theme | maskByTheme"
   >
     <div class="form-attr-title text-color">
       {{ $t('news-detail.dao_governance') }}

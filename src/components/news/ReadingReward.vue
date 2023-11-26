@@ -2,7 +2,7 @@
   <div
     class="reward-container"
     v-loading="loading"
-    element-loading-background="rgba(0, 0, 0, 0.3)"
+    :element-loading-background="$store.state.common.theme | maskByTheme"
   >
     <div class="reward-top-title">{{ $t('news-detail.rew_title') }}</div>
     <div class="reward-value text-color" style="margin-top: 31px">

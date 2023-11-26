@@ -1,5 +1,5 @@
 import store from '@/store'
-import moment from "moment"
+import moment, { lang } from "moment"
 
 // Wallet address thumbnail display
 export const omitAddress = (val) => {
@@ -195,5 +195,14 @@ export const cutString = (str, len) => {
     return str.substring(0, len) + '...'
   } else {
     return str
+  }
+}
+
+/** 根据语言返回不同的遮罩背景 */
+export const maskByTheme = (theme) => {
+  if (theme == 'dark') {
+    return 'rgba(0, 0, 0, 0.3)'
+  } else {
+    return 'rgba(0, 0, 0, 0.1)'
   }
 }

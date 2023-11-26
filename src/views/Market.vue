@@ -86,7 +86,7 @@
     <div
       class="content"
       v-loading="loading"
-      element-loading-background="rgba(0, 0, 0, 0.8)"
+      :element-loading-background="$store.state.common.theme | maskByTheme"
     >
       <div class="list">
         <div v-for="(item, index) in list" :key="index" class="item">

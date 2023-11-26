@@ -2,7 +2,7 @@
   <div
     class="form-attr-container"
     v-loading="loading"
-    element-loading-background="rgba(0, 0, 0, 0.3)"
+    :element-loading-background="$store.state.common.theme | maskByTheme"
   >
     <div class="form-attr-title">
       <div class="text-color">{{ $t('news-detail.secondary_market') }}</div>
