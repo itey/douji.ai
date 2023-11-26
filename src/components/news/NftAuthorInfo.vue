@@ -59,7 +59,7 @@
       </template>
     </div>
     <div class="news-info">
-      <div class="news-info-item">
+      <div class="news-info-item" style="padding: 0 10px">
         <div class="news-info-item-label">
           <img src="@/assets/images/news/date.png" />
           <span>{{ nftInfo[2] | formatSeconds }}</span>
@@ -215,6 +215,7 @@ export default {
       return new Promise((resolve, reject) => {
         getCPD(this.tokenId)
           .then((r) => {
+            console.log(r)
             this.nftInfo = r
             resolve(r)
           })

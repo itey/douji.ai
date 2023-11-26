@@ -184,7 +184,7 @@ export const formatSeconds = (value) => {
     }
   }
   if (hour > 0) {
-    return ' ' + parseInt(hour) + ' Hour'
+    return ' ' + parseInt(hour) + ' Hour' + (minute > 0 ? ' ' + parseInt(minute) + ' Min' : '')
   }
   return ' ' + parseInt(minute) + ' Min'
 }
