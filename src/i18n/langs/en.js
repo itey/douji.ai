@@ -234,6 +234,7 @@ export default {
     "dao_earn": "NFT DAO Earnings",
     "dao_member_receive": "The NFT DAO members of this item will receive",
     "for_sale": "for every sale",
+    "execution_vote": "NFT modify execution threshold",
     "execution_vote-count": "NFT modify execution mVoteCount",
     "modification_value": "Modification requests can only be executed when all voting weights of the NFT DAO are greater than or equal to the value.",
     "cancel": "Cancel",

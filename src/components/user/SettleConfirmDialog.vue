@@ -7,13 +7,6 @@
       class="desc-content"
       v-html="$t('user.plat_d_desc', [settleFee])"
     ></div>
-    <!-- <div class="desc-content">
-      The fee of <span class="color-word">{{ settleFee }} MBD</span> will be
-      deducted from this settlement, and the MBD and BJXStar after settlement
-      will be transferred to your wallet address within 24 hours. The first
-      settlement will receive BNB rewards worth
-      <span class="color-word">$3.00 USD</span>.
-    </div> -->
     <div class="confirm">
       <el-button class="confirm-btn" @click="handleConfirm()">{{
         $t('user.settlement')
