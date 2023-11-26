@@ -7,6 +7,7 @@
       :destroy-on-close="true"
       :close-on-press-escape="false"
       :close-on-click-modal="false"
+      :modal-append-to-body="false"
       :visible.sync="show"
       @open="onOpen"
       @close="handleClose"
@@ -144,7 +145,7 @@ export default {
         })
         openBoxContract()
           .then((txJson) => {
-            contractOpenBox(txJson.transactionHash)
+            contractOpenBox(txJson.transactionHash, this.blindBox.box)
               .then((r) => {
                 if (r.code == 1) {
                   this.boxPrizes = r.data

@@ -328,10 +328,10 @@ export function contractGetBox(txhash) {
 }
 
 // 合约打开盲盒
-export function contractOpenBox(txhash) {
+export function contractOpenBox(txhash, open_box_flag) {
   return request({
     url: '/openBoxByTxhash',
     method: 'post',
-    params: { txhash }
+    params: { txhash, open_box_flag }
   })
 }

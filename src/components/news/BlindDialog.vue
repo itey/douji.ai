@@ -7,6 +7,7 @@
     :close-on-press-escape="false"
     :close-on-click-modal="false"
     :visible.sync="show"
+    :modal-append-to-body="false"
     @close="handleClose"
     @open="onOpen"
     width="789px"
@@ -91,7 +92,8 @@ export default {
             contractGetBox(txId)
               .then((r) => {
                 if (r.code == 1) {
-                  setBlindBoxCache(this.$store.state.user.userId, 1)
+                  const openFlag = r.data.open_box_flag
+                  setBlindBoxCache(this.$store.state.user.userId, openFlag)
                   this.show = false
                   this.$emit('handleReceive')
                 } else {
