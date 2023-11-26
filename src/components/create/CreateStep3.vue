@@ -6,7 +6,12 @@
         <div class="form-left">
           <div class="form-title text-color">{{ form.title }}</div>
           <img
-            style="width: 939px; height: 532px; margin-top: 50px"
+            style="
+              width: 939px;
+              height: 532px;
+              margin-top: 50px;
+              border-radius: 8px;
+            "
             :src="form.image"
           />
           <div class="form-desc">{{ form.description }}</div>
@@ -323,7 +328,6 @@ export default {
   }
 
   .form-container {
-    background: #1a2027;
     border-radius: 8px;
     padding: 45px 29px;
 
@@ -348,7 +352,6 @@ export default {
           font-size: 16px;
           font-family: Source Han Sans CN;
           font-weight: 400;
-          color: #ffffff;
           line-height: 30px;
           border-left: 2px solid;
           border-image: linear-gradient(0deg, #50ced5, #46d1af) 1;
@@ -400,7 +403,6 @@ export default {
             font-family: Source Han Sans CN;
             font-weight: 400;
             height: 24px;
-            background: #434d56;
             border-radius: 5px;
             padding: 0 15px;
             min-width: 50px;
@@ -414,7 +416,6 @@ export default {
         width: 385px;
 
         .form-attr-container {
-          border: 1px solid #363e3e;
           border-radius: 8px;
           margin-bottom: 30px;
           height: auto;
@@ -423,11 +424,9 @@ export default {
             height: 66px;
             line-height: 66px;
             padding: 0 23px;
-            background: #37434d;
             font-size: 18px;
             font-family: Arial;
             font-weight: bold;
-            color: #ffffff;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -453,7 +452,6 @@ export default {
             .form-attr-item {
               width: 170px;
               padding: 20px 0;
-              background: #1e252d;
               border-radius: 6px;
               margin-bottom: 18px;
 
@@ -469,7 +467,6 @@ export default {
                 font-size: 16px;
                 font-family: Source Han Sans CN;
                 font-weight: bold;
-                color: #ffffff;
                 margin-top: 10px;
                 margin-left: 12px;
               }
@@ -484,14 +481,12 @@ export default {
             text-align: center;
 
             .form-attr-available {
-              background: #1e252d;
               border-radius: 5px;
               height: 34px;
               line-height: 34px;
               font-size: 14px;
               font-family: Source Han Sans CN;
               font-weight: bold;
-              color: #acbcc9;
               min-width: 170px;
               text-align: center;
               padding: 0 13px;
@@ -507,7 +502,6 @@ export default {
                 font-size: 14px;
                 font-family: Arial;
                 font-weight: 400;
-                color: #88a2b8;
               }
             }
 

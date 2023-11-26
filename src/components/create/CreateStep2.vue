@@ -65,7 +65,7 @@
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">>{{ $t('create.tag') }}*</div>
+        <div class="form-label">{{ $t('create.tag') }}*</div>
         <div class="form-value">
           <div>
             <el-tag
@@ -92,7 +92,7 @@
               class="button-new-tag"
               size="small"
               @click="showInput"
-              >+ >{{ $t('create.add') }}</el-button
+              >+ {{ $t('create.add') }}</el-button
             >
           </div>
           <div v-if="error.keyword" class="tip-error">{{ error.keyword }}</div>
@@ -492,12 +492,10 @@ export default {
     font-size: 14px;
     font-family: Source Han Sans CN;
     font-weight: bold;
-    color: #ffffff;
     text-align: left;
   }
 
   .form-container {
-    background: #1a2027;
     border-radius: 6px;
     padding: 58px 0 58px 227px;
 

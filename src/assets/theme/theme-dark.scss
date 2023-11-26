@@ -503,4 +503,65 @@
     color: #ffffff;
   }
 
+  .create-step3 .form-container {
+    background: #1a2027;
+  }
+
+  .create-step3 .form-container .form-top .form-left .form-desc {
+    color: #ffffff;
+  }
+
+  .create-step3 .form-container .form-top .form-left .form-tag .form-tag-item {
+    background: #434d56;
+  }
+
+  .create-step3 .form-container .form-top .form-right .form-attr-container {
+    border: 1px solid #363e3e;
+
+    .form-attr-title {
+      background: #37434d;
+      color: #FFFFFF;
+    }
+
+    .form-attr-list .form-attr-item {
+      background: #1e252d;
+
+      .form-attr-value {
+        color: #FFFFFF;
+      }
+    }
+  }
+
+  .create-step3 .form-container .form-top .form-right .form-attr-container .form-attr-market {
+    .form-attr-available {
+      background: #1e252d;
+      color: #acbcc9;
+    }
+
+    .form-attr-mbd {
+  
+      .mbd-value {
+        font-size: 36px;
+        font-family: Arial;
+        font-weight: bold;
+        line-height: 30px;
+      }
+
+      .form-attr-mbd-value {
+        color: #88a2b8;
+      }
+      
+    }
+  }
+
+  .create-step2 .title {
+    color:#FFFFFF;
+  }
+
+  .create-step2 .form-container {
+    background: #1a2027;
+  }
+  
+  
+
 }

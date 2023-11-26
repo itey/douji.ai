@@ -534,4 +534,72 @@
     }
   }
 
+  .create-step3 .form-container {
+    background: #FFFFFF;
+  }
+
+  .create-step3 .form-container .form-top .form-left .form-desc {
+    color: #1A2027;
+  }
+
+  .create-step3 .form-container .form-top .form-left .form-tag {
+
+    .form-tag-label {
+      color: #636B72;
+    }
+
+    .form-tag-item {
+      background: #F7F9FA;
+      color: #36404B;
+    }
+    
+  }
+
+  .create-step3 .form-container .form-top .form-right .form-attr-container {
+    border: 1px solid #EAEEF0;
+
+    .form-attr-title {
+      background: #F7F9FA;
+      color: #1A2027;
+    }
+
+    .form-attr-list .form-attr-item {
+      background: #F7F9FA;
+
+      .form-attr-value {
+        color: #1A2027;
+      }
+    }
+  }
+
+  .create-step3 .form-container .form-top .form-right .form-attr-container .form-attr-market {
+    .form-attr-available {
+      background: #F7F9FA;
+      color: #85949F;
+    }
+
+    .form-attr-mbd {
+
+      .mbd-value {
+        font-size: 36px;
+        font-family: Arial;
+        font-weight: bold;
+        line-height: 30px;
+      }
+
+      .form-attr-mbd-value {
+        color: #636B72;
+      }
+      
+    }
+  }
+  
+  .create-step2 .title {
+    color:#1A2027;
+  }
+
+  .create-step2 .form-container {
+    background: #FFFFFF;
+  }
+
 }
