@@ -353,7 +353,7 @@
   }
 
   .market-container .search-container {
-    background: #ECF0F2;
+    background: #FFFFFF;
   }
 
   .create-step0 .type-container .type-item {
@@ -600,6 +600,61 @@
 
   .create-step2 .form-container {
     background: #FFFFFF;
+  }
+
+  .user-container .el-aside {
+    background: #FFFFFF;
+
+    .menu-item-content.select {
+
+      background: #F7F9FA;
+
+      .menu-text {
+        color:#36404B;
+      }
+      
+    }
+  }
+
+  .user-container .el-main {
+    background: #FFFFFF;
+  }
+
+  .container .balance .balance-address-container {
+    background: #F7F9FA;
+  }
+
+  .container .balance-value .item {
+    border: 1px solid #EAEDEF;
+
+    .sub-value {
+      color:#636B72;
+    }
+
+    .unit {
+      color: #636B72;
+    }
+  }
+
+  .container .settle-container {
+    background: #F7F9FA;
+
+    .unit {
+      color: #636B72;
+    }
+
+    .sub-value {
+      color: #636B72;
+    }
+  }
+
+  .settle-label {
+    color: #636B72;
+  }
+
+  .profile-container .form-container .form-item .form-value .form-upload {
+    background: #F7F9FA;
+    border: 1px solid #F7F9FA;
   }
 
 }

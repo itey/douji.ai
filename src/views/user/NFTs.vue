@@ -86,11 +86,13 @@ export default {
       font-family: Source Han Sans CN;
       font-weight: 400;
       color: #a9b7c3;
+      margin-left: 10px;
     }
   }
 
   .content {
     flex: 1;
+    padding-bottom: 50px;
 
     .list {
       display: flex;

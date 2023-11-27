@@ -90,7 +90,7 @@
         </div>
       </div>
       <div class="settle-container" style="margin-left: 32px">
-        <div class="unit text-color">BJXStar NFT</div>
+        <div class="unit">BJXStar NFT</div>
         <div class="value text-color">
           {{ Number(bjxSettleBalance.balance) | toFixedString }}
         </div>
@@ -253,7 +253,6 @@ export default {
     line-height: 24px;
     font-family: Arial;
     font-weight: bold;
-    color: #ffffff;
   }
 
   .balance {
@@ -266,7 +265,6 @@ export default {
       flex-direction: row;
       align-items: center;
       height: 24px;
-      background: #232a32;
       border-radius: 5px;
       padding: 0 9px;
       cursor: pointer;
@@ -290,7 +288,6 @@ export default {
 
     .item {
       min-width: 150px;
-      border: 1px solid #28313c;
       border-radius: 8px;
       padding: 28px 27px 31px 27px;
       flex: 1;
@@ -306,7 +303,6 @@ export default {
         font-size: 24px;
         font-family: Source Han Sans CN;
         font-weight: bold;
-        color: #ffffff;
       }
 
       .sub-value {
@@ -314,7 +310,6 @@ export default {
         font-size: 14px;
         font-family: Source Han Sans CN;
         font-weight: 400;
-        color: #a9b7c3;
       }
 
       .unit {
@@ -322,7 +317,6 @@ export default {
         font-size: 16px;
         font-family: Source Han Sans CN;
         font-weight: bold;
-        color: #00f9e5;
       }
     }
   }
@@ -344,7 +338,6 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     width: 416px;
-    background: #212932;
     border-radius: 8px;
     margin-top: 39px;
 
@@ -353,7 +346,6 @@ export default {
       font-size: 16px;
       font-family: Arial;
       font-weight: bold;
-      color: #87a2b7;
     }
 
     .value {
@@ -361,7 +353,6 @@ export default {
       font-size: 24px;
       font-family: Source Han Sans CN;
       font-weight: bold;
-      color: #ffffff;
       margin-top: 20px;
     }
 
@@ -386,7 +377,6 @@ export default {
     font-size: 12px;
     font-family: Arial;
     font-weight: 400;
-    color: #ffffff;
     margin: 12px 0 44px 0;
   }
   .common-btn1 {

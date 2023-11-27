@@ -53,7 +53,6 @@
         </div>
       </div>
     </div>
-    <div style="height: 1px; background: #1e252d"></div>
     <div class="profile-sub-title text-color">{{ $t('user.social') }}</div>
     <div class="form-container">
       <div class="form-item">
@@ -331,8 +330,6 @@ export default {
         .form-upload {
           width: 300px;
           height: 182px;
-          background: #0e161d;
-          border: 1px solid #313838;
           border-radius: 8px;
           display: flex;
           align-items: center;

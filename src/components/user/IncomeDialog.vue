@@ -99,7 +99,7 @@ export default {
     },
     /** 选择的数据发生变化 */
     handleSelectionChange(val) {
-      console.log(val)
+      this.multipleSelection = val
     },
     /** 加载数据 */
     async pageLoad() {

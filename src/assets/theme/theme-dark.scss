@@ -562,6 +562,56 @@
     background: #1a2027;
   }
   
+
+  .user-container .el-aside {
+    background: #1A2027;
+
+    .menu-item-content.select {
+
+      background: #37434d;
+
+      .menu-text {
+        color:#00f9e5;;
+      }
+      
+    }
+  }
+
+  .user-container .el-main {
+    background: #1A2027;
+  }
+
+  .container .balance .balance-address-container {
+    background: #232a32;
+  }
   
+  .container .balance-value .item {
+    border: 1px solid #28313c;
+
+    .sub-value {
+      color:#a9b7c3;
+    }
+
+    .unit {
+      color: #00f9e5;
+    }
+  }
+
+  .container .settle-container {
+    background: #212932;
+
+    .unit {
+      color: #87a2b7;
+    }
+
+    .sub-value {
+      color: #A9B7C3;
+    }
+  }
+
+  .profile-container .form-container .form-item .form-value .form-upload {
+    background: #0e161d;
+    border: 1px solid #313838;
+  }
 
 }
