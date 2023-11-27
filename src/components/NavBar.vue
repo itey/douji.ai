@@ -2,7 +2,7 @@
   <div>
     <div class="navbar-container">
       <img
-        @click="$router.push('/profile')"
+        @click="$router.push('/')"
         style="width: 120px; height: 27px; cursor: pointer"
         src="@/assets/logo.png"
       />
