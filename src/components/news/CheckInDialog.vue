@@ -88,12 +88,13 @@ export default {
 
   .content {
     position: absolute;
-    top: 0;
+    top: 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 789px;
+    padding-top: 200px;
     .title {
       margin-top: 150px;
       font-size: 30px;
@@ -107,6 +108,7 @@ export default {
         #00f9e5 48.2421875%,
         #14e7a9 83.3251953125%
       );
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 120px;

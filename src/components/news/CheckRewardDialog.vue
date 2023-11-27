@@ -2,7 +2,6 @@
   <el-dialog
     custom-class="congratulations-dialog"
     :fullscreen="true"
-    top="0vh"
     @open="onOpen"
     :visible.sync="show"
     width="789px"
@@ -10,10 +9,7 @@
     <div class="title" slot="title">
       {{ $t('news-detail.congratulations') }}
     </div>
-    <img
-      style="width: 789px; height: 800px"
-      src="@/assets/images/news/gift-bg.png"
-    />
+    <img class="gift-bg" src="@/assets/images/news/gift-bg.png" />
     <div class="content">
       <div class="tip">
         {{ $t('news-detail.gift_account') }}
@@ -67,6 +63,11 @@ export default {
     background-color: black;
     opacity: 0.8;
     border: none;
+  }
+
+  .gift-bg {
+    width: 789px;
+    height: 800px;
   }
 
   .el-dialog__header {

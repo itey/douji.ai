@@ -61,7 +61,12 @@
       ></el-pagination>
     </div>
     <div class="income-btn">
-      <el-button class="common-btn2">{{ $t('user.settlement') }}</el-button>
+      <el-button
+        :disabled="!multipleSelection || !multipleSelection.length"
+        class="common-btn2"
+        @click="handleSubmit()"
+        >{{ $t('user.settlement') }}</el-button
+      >
     </div>
   </el-dialog>
 </template>
@@ -71,6 +76,7 @@ import { pledgeSettleList } from '@/utils/http'
 import { userPledgeCount } from '@/utils/web3/nft'
 import { weiToMbd } from '@/utils/common'
 import { totalPledgeCount, getSettlePoolBalance } from '@/utils/web3/open'
+import { marketSettleBatch } from '@/utils/web3/market'
 export default {
   name: 'income-dialog',
   data() {
@@ -173,6 +179,32 @@ export default {
             return resolve()
           })
       })
+    },
+    /** 点击结算按钮 */
+    handleSubmit() {
+      if (!this.multipleSelection || !this.multipleSelection.length) {
+        return
+      }
+      const tokenArr = this._.map(this.multipleSelection, 'token_id')
+      this.executeProcess(tokenArr)
+    },
+    /** 执行结算 */
+    executeProcess(arr) {
+      var loadingInstance = this.$loading({
+        background: 'rgba(0, 0, 0, 0.8)',
+      })
+      marketSettleBatch(arr)
+        .then(() => {
+          this.$toast.success(this.$t('user.settle_success'))
+        })
+        .catch((e) => {
+          this.$toast.error(e)
+        })
+        .finally(() => {
+          this.multipleSelection = []
+          this.onOpen()
+          loadingInstance.close()
+        })
     },
   },
 }

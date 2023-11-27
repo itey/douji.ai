@@ -102,8 +102,8 @@ export function swapOrder(orderId) {
 
 }
 
-/** 奖励结算 */
-export function marketSettle(tokenId) {
+/** 批量结算 */
+export function marketSettleBatch(tokenIdArr) {
   if (!checkAccount()) {
     return
   }
@@ -113,7 +113,7 @@ export function marketSettle(tokenId) {
   }
   const fromAddress = store.state.chain.account
   return new Promise((resolve, reject) => {
-    marketContract.methods.settle(tokenId)
+    marketContract.methods.settles(tokenIdArr)
       .send({ from: fromAddress })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)

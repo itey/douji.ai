@@ -369,7 +369,7 @@
       </div>
     </div>
     <div style="margin-top: 46px">
-      <img style="width: 653px; height: 71px" />
+      <img style="width: 1209px; height: 94px" />
     </div>
     <div class="activity-container">
       <div class="top">{{ $t('home.activity') }}</div>

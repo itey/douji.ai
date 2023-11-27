@@ -36,13 +36,15 @@
       </div>
       <div class="item">
         <div class="value text-color">{{ bjxBalance }}</div>
-        <div class="sub-value text-color">&nbsp;</div>
-        <div class="unit text-color">BJX NFT</div>
+        <div class="sub-value text-color">
+          ≈${{ (bjxBalance * bjxUsdtPrice) | decimalPlace4 }}
+        </div>
+        <div class="unit text-color">BJXStar NFT</div>
       </div>
       <div class="item">
         <div class="value text-color">0</div>
         <div class="sub-value text-color">&nbsp;</div>
-        <div class="unit text-color">DJPlanate</div>
+        <div class="unit text-color">DJPlanet NFT</div>
       </div>
     </div>
     <div class="divider"></div>
