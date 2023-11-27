@@ -2,7 +2,7 @@
   <div class="container">
     <div class="balance">
       <div class="text-big text-color">{{ $t('user.balance') }}</div>
-      <div class="balance-address-container">
+      <div class="balance-address-container" @click="handleCopyAddress()">
         <img
           style="width: 16px; height: 16px"
           src="@/assets/images/user/user.png"
@@ -173,6 +173,17 @@ export default {
     this.getBjxPrice()
   },
   methods: {
+    /** 点击复制地址 */
+    handleCopyAddress() {
+      this.$copyText(this.$store.state.user.account).then(
+        () => {
+          this.$toast.success(this.$t('common.copied_success'))
+        },
+        () => {
+          this.$toast.error(this.$t('copied_failed'))
+        }
+      )
+    },
     /** BJX余额 */
     async getBjxBalance() {
       this.bjxBalance = await getBjxBalanceOf(this.userAccount)
