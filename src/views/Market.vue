@@ -118,6 +118,13 @@ export default {
   components: {
     ProductItem,
   },
+  watch: {
+    '$store.state.common.language': function (val, od) {
+      if (val != od) {
+        this.initOptions()
+      }
+    },
+  },
   data() {
     return {
       loading: false,
@@ -127,24 +134,7 @@ export default {
       categoryValue: '',
       platformOptions: [],
       platformValue: '',
-      viewedOptions: [
-        {
-          value: this.$t('marketplace.sort_late_time'),
-          label: 'Late creation time',
-        },
-        {
-          value: this.$t('marketplace.sort_early_time'),
-          label: 'Early creation time',
-        },
-        {
-          value: this.$t('marketplace.sort_high_price'),
-          label: 'High price',
-        },
-        {
-          value: this.$t('marketplace.sort_low_price'),
-          label: 'Low price',
-        },
-      ],
+      viewedOptions: [],
       viewedValue: 'Late creation time',
       list: [],
       pageNo: 1,
@@ -160,8 +150,29 @@ export default {
       (this.platformValue = this.$route.query.platform)
     this.loadTypeList()
     this.loadPageList()
+    this.initOptions()
   },
   methods: {
+    initOptions() {
+      this.viewedOptions = [
+        {
+          value: 'Late creation time',
+          label: this.$t('marketplace.sort_late_time'),
+        },
+        {
+          value: 'Early creation time',
+          label: this.$t('marketplace.sort_early_time'),
+        },
+        {
+          value: 'High price',
+          label: this.$t('marketplace.sort_high_price'),
+        },
+        {
+          value: 'Low price',
+          label: this.$t('marketplace.sort_low_price'),
+        },
+      ]
+    },
     /** 页码变化 */
     onPageChange(page) {
       this.pageNo = page
