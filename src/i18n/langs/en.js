@@ -30,7 +30,12 @@ export default {
     "follow_success":
       "Successfully followed",
     "un_follow_success":
-      "Successfully unfollowed",
+      "Successfully unFollowed",
+    "reminder": "Important Reminder",
+    "reminder_content": "The amount of BNB in your current account is less than <span class='color-word'>0.01BNB</span>, which may prevent you from completing this operation. Please add BNB to your wallet address as soon as possible. ",
+    "reminder_how": "How to get BNB?",
+    "reminder_get": "Get BNB",
+    "reminder_cont": "Continue",
   },
   "home": {
     "bjx_buy_success":

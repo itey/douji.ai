@@ -31,6 +31,11 @@ export default {
       "關注成功！",
     "un_follow_success":
       "取消關注成功！",
+    "reminder": "重要提醒",
+    "reminder_content": "您當前賬戶中的BNB數量已不足<span class='color-word'>0.01BNB</span>，可能導致您無法繼續完成本次操作，請盡快補充BNB到您的錢包地址。",
+    "reminder_how": "如何獲得BNB？",
+    "reminder_get": "獲得BNB",
+    "reminder_cont": "繼續",
   },
   "home": {
     "bjx_buy_success":

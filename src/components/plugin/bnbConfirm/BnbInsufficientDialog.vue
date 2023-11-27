@@ -1,18 +1,17 @@
 <template>
-  <el-dialog custom-class="settle-confirm" :visible.sync="show" width="1100px">
+  <el-dialog custom-class="bnb-dialog" :visible.sync="show" width="800px">
     <div class="income-header text-color" slot="title">
-      {{ $t('user.plat_d_title') }}
+      {{ title }}
     </div>
-    <div
-      class="desc-content"
-      v-html="$t('user.plat_d_desc', [settleFee])"
-    ></div>
+    <div class="desc-content" v-html="content"></div>
+    <br />
+    <span class="how-to" @click="goBuyNbn()">{{ howTo }}</span>
     <div class="confirm">
-      <el-button class="confirm-btn" @click="handleConfirm()">{{
-        $t('user.settlement')
+      <el-button class="confirm-btn" @click="goBuyNbn()">{{
+        getBnb
       }}</el-button>
-      <el-button class="cancel-btn" @click="show = false">{{
-        $t('user.cancel')
+      <el-button class="cancel-btn" @click="handleConfirm()">{{
+        continueGo
       }}</el-button>
     </div>
   </el-dialog>
@@ -20,16 +19,54 @@
 
 <script>
 export default {
-  name: 'settle-confirm',
+  name: 'bnb-dialog',
   props: {
-    settleFee: {
+    lang: {
       type: String,
-      default: '0.0000',
+      default: 'en',
+    },
+    onConfirm: Function,
+  },
+  computed: {
+    title() {
+      if (this.lang == 'en') {
+        return 'Important Reminder'
+      } else {
+        return '重要提醒'
+      }
+    },
+    content() {
+      if (this.lang == 'en') {
+        return "The amount of BNB in your current account is less than <span class='color-word'>0.01BNB</span>, which may prevent you from completing this operation. Please add BNB to your wallet address as soon as possible."
+      } else {
+        return "您當前賬戶中的BNB數量已不足<span class='color-word'>0.01BNB</span>，可能導致您無法繼續完成本次操作，請盡快補充BNB到您的錢包地址。"
+      }
+    },
+    howTo() {
+      if (this.lang == 'en') {
+        return 'How to get BNB?'
+      } else {
+        return '如何獲得BNB'
+      }
+    },
+    getBnb() {
+      if (this.lang == 'en') {
+        return 'Get BNB'
+      } else {
+        return '獲取BNB'
+      }
+    },
+    continueGo() {
+      if (this.lang == 'en') {
+        return 'Continue'
+      } else {
+        return '繼續'
+      }
     },
   },
   data() {
     return {
-      show: false,
+      show: true,
     }
   },
   methods: {
@@ -37,25 +74,35 @@ export default {
       this.show = true
     },
     handleConfirm() {
-      this.$emit('confirm')
+      this.onConfirm()
       this.show = false
+      this.$nextTick(() => {
+        this.$destroy() // 手动销毁组件实例
+        this.$el.parentNode.removeChild(this.$el) // 从 DOM 中移除元素
+      })
+    },
+    goBuyNbn() {
+      window.open(
+        'https://docs.douji.ai/getting-started/how-to-get-bnb',
+        '_blank'
+      )
     },
   },
 }
 </script>
 
 <style lang="scss">
-.settle-confirm {
+.bnb-dialog {
   background: #1a2027;
   border: 1px solid #2c3638;
   border-radius: 12px 6px 6px 6px;
 
   .income-header {
     text-align: left;
-    font-size: 17px;
+    font-size: 20px;
     font-family: Arial;
     font-weight: bold;
-    margin-left: 35px;
+    margin-left: 10px;
     margin-top: 30px;
     color: #00f9e5;
   }
@@ -73,6 +120,18 @@ export default {
       font-weight: bold;
       color: #00f9e5;
     }
+  }
+
+  .how-to {
+    font-size: 18px;
+    padding: 10px 52px 0 52px;
+    color: rgb(27, 164, 153);
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .how-to:hover {
+    color: #00f9e5;
   }
 
   .confirm {

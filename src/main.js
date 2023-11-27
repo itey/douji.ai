@@ -17,6 +17,9 @@ import VueCountdown from '@chenfengyuan/vue-countdown'
 import VueClipBoard from 'vue-clipboard2'
 import Toast from "vue-toastification"
 import "vue-toastification/dist/index.css"
+import { openDialog } from '@/components/plugin/bnbConfirm'
+
+Vue.prototype.$bnbConfirm = openDialog
 
 Vue.prototype._ = _
 

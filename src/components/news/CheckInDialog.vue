@@ -2,16 +2,11 @@
   <div>
     <el-dialog
       custom-class="check-in-dialog"
-      top="0vh"
       :fullscreen="true"
       :show-close="false"
       :visible.sync="show"
       width="789px"
     >
-      <img
-        style="width: 789px; height: 800px"
-        src="@/assets/images/news/gift-bg.png"
-      />
       <div class="content">
         <div class="title">{{ $t('news-detail.daily_check_gift') }}</div>
         <img
@@ -87,16 +82,17 @@ export default {
   }
 
   .content {
-    position: absolute;
-    top: 0px;
+    background-image: url('@/assets/images/news/gift-bg.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    top: 10%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 789px;
-    padding-top: 200px;
     .title {
-      margin-top: 150px;
+      margin-top: 20px;
       font-size: 30px;
       font-family: Arial;
       font-weight: bold;
@@ -111,7 +107,7 @@ export default {
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 120px;
+      margin-bottom: 100px;
     }
     .common-btn2 {
       margin-top: 69px;

@@ -1,9 +1,25 @@
 <template>
   <div class="create-container">
     <template v-if="loadComplete">
-      <create-step1 v-if="step==1" :edit="true" :metadata="metadata" @handleUpdate="handleUpdate1" @backClick="backClick"></create-step1>
-      <create-step2 v-if="step==2" :edit="true" :metadata="metadata" @handleUpdate="handleUpdate2" @backClick="backClick"></create-step2>
-      <UpdateSuccess :tokenId="tokenId" ref="successDialog" :tx="updateTxJson" />
+      <create-step1
+        v-if="step == 1"
+        :edit="true"
+        :metadata="metadata"
+        @handleUpdate="handleUpdate1"
+        @backClick="backClick"
+      ></create-step1>
+      <create-step2
+        v-if="step == 2"
+        :edit="true"
+        :metadata="metadata"
+        @handleUpdate="handleUpdate2"
+        @backClick="backClick"
+      ></create-step2>
+      <UpdateSuccess
+        :tokenId="tokenId"
+        ref="successDialog"
+        :tx="updateTxJson"
+      />
     </template>
   </div>
 </template>

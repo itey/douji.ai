@@ -221,6 +221,17 @@ export default {
       if (!c) {
         return
       }
+
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          this.mintExecute()
+        })
+        return
+      }
+      this.mintExecute()
+    },
+    /** 执行mint */
+    async mintExecute() {
       var loadingInstance = this.$loading({
         background: 'rgba(0, 0, 0, 0.8)',
       })
