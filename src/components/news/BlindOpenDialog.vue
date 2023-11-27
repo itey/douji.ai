@@ -80,7 +80,7 @@
 import CongratulationsDialog from '@/components/news/CongratulationsDialog'
 import { setBlindBoxState, getBlindBoxCache } from '@/utils/common'
 import { openBlindBox, contractOpenBox } from '@/utils/http'
-import { transferMbd } from '@/utils/web3/mbd'
+import { transferMbd, approveMbd } from '@/utils/web3/mbd'
 import { openBoxContract } from '@/utils/web3/operator'
 export default {
   name: 'blind-open-dialog',
@@ -129,6 +129,7 @@ export default {
       ],
       userInfo: this.$store.state.user.userInfo,
       centerAddress: process.env.VUE_APP_RECEIVE_ADDR,
+      operatorAddress: process.env.VUE_APP_OPERATOR,
       show: false,
       showTimer: false,
       leftTime: undefined,
@@ -144,23 +145,30 @@ export default {
         background: 'rgba(0, 0, 0, 0.8)',
       })
       if (this.userInfo.isge8model) {
-        openBoxContract()
-          .then((txJson) => {
-            contractOpenBox(txJson.transactionHash, this.blindBox.box)
-              .then((r) => {
-                if (r.code == 1) {
-                  this.boxPrizes = r.data
-                  this.onFinished()
-                  this.$refs['successDialog'].showDialog()
-                  this.$emit('handleReload')
-                } else {
-                  this.$toast.error(r.message)
-                }
+        approveMbd(this.operatorAddress, 500)
+          .then(() => {
+            openBoxContract()
+              .then((txJson) => {
+                contractOpenBox(txJson.transactionHash, this.blindBox.box)
+                  .then((r) => {
+                    if (r.code == 1) {
+                      this.boxPrizes = r.data
+                      this.onFinished()
+                      this.$refs['successDialog'].showDialog()
+                      this.$emit('handleReload')
+                    } else {
+                      this.$toast.error(r.message)
+                    }
+                  })
+                  .catch((e) => {
+                    this.$toast.error(e)
+                  })
+                  .finally(() => {
+                    loadingInstance.close()
+                  })
               })
               .catch((e) => {
                 this.$toast.error(e)
-              })
-              .finally(() => {
                 loadingInstance.close()
               })
           })
