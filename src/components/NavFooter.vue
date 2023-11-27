@@ -1,12 +1,17 @@
 <template>
   <div class="footer-container">
-    <div style="width: 230px;">
-      <img style="width: 120px; height: 27px;cursor: pointer;" src="@/assets/logo.png" />
-      <div class="label1 text-color" style="margin: 19px 0 15px 0;">{{ $t('footer.ai_ecology') }}</div>
-      <div class="label2 text-color">Copyright @ 2023 ALL Rights Roserved.</div>
+    <div style="width: 230px">
+      <img
+        style="width: 120px; height: 27px; cursor: pointer"
+        src="@/assets/logo.png"
+      />
+      <div class="label1" style="margin: 19px 0 15px 0">
+        {{ $t('footer.ai_ecology') }}
+      </div>
+      <div class="label2">Copyright @ 2023 ALL Rights Roserved.</div>
     </div>
     <div class="footer-column">
-      <div class="title text-color">{{ $t('footer.video') }}</div>
+      <div class="title">{{ $t('footer.video') }}</div>
       <el-menu>
         <el-menu-item>{{ $t('footer.about') }}</el-menu-item>
         <el-menu-item>{{ $t('footer.contact') }}</el-menu-item>
@@ -17,7 +22,7 @@
       </el-menu>
     </div>
     <div class="footer-column">
-      <div class="title text-color">{{ $t('footer.legal') }}</div>
+      <div class="title">{{ $t('footer.legal') }}</div>
       <el-menu>
         <el-menu-item>{{ $t('footer.about') }}</el-menu-item>
         <el-menu-item>{{ $t('footer.contact') }}</el-menu-item>
@@ -28,7 +33,7 @@
       </el-menu>
     </div>
     <div class="footer-column">
-      <div class="title text-color">{{ $t('footer.about_us') }}</div>
+      <div class="title">{{ $t('footer.about_us') }}</div>
       <el-menu>
         <el-menu-item>{{ $t('footer.about') }}</el-menu-item>
         <el-menu-item>{{ $t('footer.contact') }}</el-menu-item>
@@ -40,7 +45,7 @@
     </div>
     <div>
       <div>
-        <div class="title text-color">{{ $t('footer.follow_us') }}</div>
+        <div class="title">{{ $t('footer.follow_us') }}</div>
         <div class="follow-ico">
           <img src="@/assets/images/twitter.png" alt />
           <img src="@/assets/images/youtube.png" alt />
@@ -50,7 +55,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 export default {

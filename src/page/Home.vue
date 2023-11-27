@@ -456,7 +456,9 @@
     <div class="video-container">
       <div class="top">{{ $t('home.video') }}</div>
       <div class="title text-color">{{ $t('home.how_use') }}</div>
-      <video style="width: 1440px; height: 674px"></video>
+      <div class="video-box">
+        <LazyYoutubeVideo :src="videoSrc" />
+      </div>
     </div>
   </div>
 </template>
@@ -467,6 +469,7 @@ import ProductItem from '@/components/ProductItem'
 import ComparisonTab from '@/components/home/ComparisonTab'
 import ComparisonTable from '@/components/home/ComparisonTable'
 import NewsTabItem from '@/components/home/NewsTabItem'
+import LazyYoutubeVideo from 'vue-lazy-youtube-video'
 import { weiToEth } from '@/utils/common'
 import { hotNewsList, nftListPage, selectedList } from '@/utils/http'
 import { erc20Approve, mintByBnb, mintByErc20 } from '@/utils/web3/bjx'
@@ -483,6 +486,15 @@ export default {
     NewsItem,
     ComparisonTab,
     ComparisonTable,
+    LazyYoutubeVideo,
+  },
+  computed: {
+    /** 视频地址 */
+    videoSrc() {
+      return this.$store.state.common.language == 'en'
+        ? 'https://www.youtube.com/embed/gYO1uk7vIcc?si=qhbJM-yMR-ahsdAA'
+        : 'https://www.youtube.com/embed/OYAyuESW5xk?si=WYcoj3r0LJ6PI52W'
+    },
   },
   data() {
     var reg = /^\+?[1-9][0-9]*$/
@@ -1254,6 +1266,13 @@ export default {
       font-size: 48px;
       font-family: Source Han Sans CN;
       font-weight: 800;
+    }
+
+    .video-box {
+      margin-top: 57px;
+      margin-bottom: 411px;
+      width: 1440px;
+      height: 674px;
     }
   }
 }
