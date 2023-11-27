@@ -195,14 +195,13 @@ export default {
       })
       marketSettleBatch(arr)
         .then(() => {
-          this.$toast.success(this.$t('user.settle_success'))
+          this.$toast.success(this.$t('user.settle_success_1'))
+          this.multipleSelection = []
+          this.onOpen()
+          loadingInstance.close()
         })
         .catch((e) => {
           this.$toast.error(e)
-        })
-        .finally(() => {
-          this.multipleSelection = []
-          this.onOpen()
           loadingInstance.close()
         })
     },

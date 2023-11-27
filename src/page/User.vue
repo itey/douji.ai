@@ -43,21 +43,36 @@ export default {
   name: 'user-view',
   data() {
     return {
-      menuList: [
+      menuList: [],
+    }
+  },
+  watch: {
+    '$store.state.common.language': function (val, od) {
+      if (val != od) {
+        this.loadMenuList()
+      }
+    },
+  },
+  mounted() {
+    this.loadMenuList()
+  },
+  methods: {
+    loadMenuList() {
+      this.menuList = [
         {
           path: 'balance',
-          text: 'Balance',
+          text: this.$t('user.menu_balance'),
         },
         {
           path: 'nfts',
-          text: 'NFTs',
+          text: this.$t('user.menu_nfts'),
         },
         {
           path: 'profile',
-          text: 'Profile',
+          text: this.$t('user.menu_profile'),
         },
-      ],
-    }
+      ]
+    },
   },
 }
 </script>
