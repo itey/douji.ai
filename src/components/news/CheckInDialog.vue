@@ -41,25 +41,24 @@ export default {
     },
     /** 点击签到 */
     handleCheckIn() {
-      const self = this
       const executeProcess = () => {
-        var loadingInstance = self.$loading({
+        var loadingInstance = this.$loading({
           background: 'rgba(0, 0, 0, 0.8)',
         })
-        self.$store
+        this.$store
           .dispatch('CheckInDaily')
           .then((r) => {
-            self.$toast.success(self.$t('common.check_in_success'))
-            self.$emit('onCheckedIn')
+            this.$toast.success(this.$t('common.check_in_success'))
+            this.$emit('onCheckedIn')
             if (r && r.amount) {
-              self.rewardAmount = r.amount
-              self.$refs['rewardDialog'].showDialog()
+              this.rewardAmount = r.amount
+              this.$refs['rewardDialog'].showDialog()
             }
-            self.show = false
+            this.show = false
           })
           .catch((e) => {
             console.log(e)
-            self.$toast.error(self.$t('common.check_in_failed'))
+            this.$toast.error(this.$t('common.check_in_failed'))
           })
           .finally(() => {
             loadingInstance.close()

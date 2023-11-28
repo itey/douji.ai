@@ -81,15 +81,6 @@ export default {
     },
     /** 接收盲盒 */
     handleReceiveBox() {
-      if (this.$store.state.chain.balanceBnb < 0.01) {
-        this.$bnbConfirm(this.$store.state.common.language, () => {
-          executeProcess()
-        })
-        return
-      }
-
-      executeProcess()
-
       const executeProcess = () => {
         if (this.userInfo.isge8model) {
           // 合约接收
@@ -150,6 +141,14 @@ export default {
           })
         }
       }
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          executeProcess()
+        })
+        return
+      }
+
+      executeProcess()
     },
     showDialog() {
       if (!this.show) {
