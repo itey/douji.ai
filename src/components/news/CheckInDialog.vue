@@ -42,14 +42,6 @@ export default {
     /** 点击签到 */
     handleCheckIn() {
       const self = this
-      if (this.$store.state.chain.balanceBnb < 0.01) {
-        this.$bnbConfirm(this.$store.state.common.language, () => {
-          executeProcess(self)
-        })
-        return
-      }
-      executeProcess(self)
-
       const executeProcess = (self) => {
         var loadingInstance = self.$loading({
           background: 'rgba(0, 0, 0, 0.8)',
@@ -73,6 +65,13 @@ export default {
             loadingInstance.close()
           })
       }
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          executeProcess(self)
+        })
+        return
+      }
+      executeProcess(self)
     },
   },
 }
