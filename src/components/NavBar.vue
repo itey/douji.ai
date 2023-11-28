@@ -182,7 +182,7 @@
         @click="themeClick('dark')"
       >
         <img
-          style="width: 18px; height: 17px"
+          style="width: 16px; height: 16px"
           src="@/assets/images/theme-light.png"
         />
       </div>
@@ -192,7 +192,7 @@
         @click="themeClick('light')"
       >
         <img
-          style="width: 13px; height: 13px; padding: 2.5px 2.5px"
+          style="width: 16px; height: 16px"
           src="@/assets/images/theme-dark.png"
         />
       </div>
@@ -313,15 +313,22 @@ export default {
       color: #ffffff;
       cursor: pointer;
     }
+
+    .navbar-menu-item:hover {
+      color: #17e7d6;
+    }
   }
 
   .navbar-language {
     width: 24px;
     height: 24px;
-    background: #2a333e;
     border-radius: 5px;
     cursor: pointer;
     margin: 0 18px;
+  }
+
+  .navbar-language:hover {
+    background: #2a333e;
   }
 
   .user-container {

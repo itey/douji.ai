@@ -71,6 +71,7 @@ export default {
   text-align: center;
 
   .el-header {
+    height: 77px;
     display: flex;
     flex-direction: column;
     align-items: center;
