@@ -274,7 +274,6 @@ export default {
         return
       }
       const bepType = this.discountJson.sptType
-      this.loading = true
       this.disTOkenUsed = await this.getUserAlreadyDiscounts()
       if (bepType == '0') {
         // erc20
@@ -298,7 +297,6 @@ export default {
           this.discountJson.tokenId
         )
       }
-      this.loading = false
       if (this.disTokenOwned == 0) {
         return
       }
