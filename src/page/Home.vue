@@ -640,16 +640,29 @@ export default {
     },
     /** 查询BJX的信息 */
     getBjxData() {
-      getBjxTokenInfo().then((res) => {
-        this.bjxInfoJson = res
-        this.bjx.bnbPrice = weiToEth(res.bnbPrice)
-      })
-      getBjxUsdtPrice().then((r) => {
-        this.bjx.usdtPrice = r
-      })
-      getBjxMbdPrice().then((r) => {
-        this.bjx.mbdPrice = r
-      })
+      getBjxTokenInfo()
+        .then((res) => {
+          this.bjxInfoJson = res
+          this.bjx.bnbPrice = weiToEth(res.bnbPrice)
+        })
+        .catch((e) => {
+          console.log(e)
+          this.$toast.warning('Network error')
+        })
+      getBjxUsdtPrice()
+        .then((r) => {
+          this.bjx.usdtPrice = r
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+      getBjxMbdPrice()
+        .then((r) => {
+          this.bjx.mbdPrice = r
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     },
     /** 所有内容初始化 */
     newsInit() {

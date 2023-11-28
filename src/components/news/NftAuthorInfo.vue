@@ -243,49 +243,67 @@ export default {
     },
     /** 点赞NFT */
     handlePraise() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
-        if (!c) {
-          return
-        }
-        var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          executeProcess()
         })
-        nftPraise(this.tokenId)
-          .then(() => {
-            this.$toast.success(this.$t('news-detail.like_success'))
+        return
+      }
+      executeProcess()
+      const executeProcess = () => {
+        this.$store.dispatch('CheckLogin', true).then((c) => {
+          if (!c) {
+            return
+          }
+          var loadingInstance = this.$loading({
+            background: 'rgba(0, 0, 0, 0.8)',
           })
-          .catch((e) => {
-            this.$toast.error(e)
-          })
-          .finally(() => {
-            loadingInstance.close()
-            this.loadNftInfo()
-            this.checkIfPraiseCollect()
-          })
-      })
+          nftPraise(this.tokenId)
+            .then(() => {
+              this.$toast.success(this.$t('news-detail.like_success'))
+            })
+            .catch((e) => {
+              this.$toast.error(e)
+            })
+            .finally(() => {
+              loadingInstance.close()
+              this.loadNftInfo()
+              this.checkIfPraiseCollect()
+            })
+        })
+      }
     },
     /** 收藏NFT */
     collectPraise() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
-        if (!c) {
-          return
-        }
-        var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          executeProcess()
         })
-        nftCollect(this.tokenId)
-          .then(() => {
-            this.$toast.success(this.$t('news-detail.collect_success'))
+        return
+      }
+      executeProcess()
+      const executeProcess = () => {
+        this.$store.dispatch('CheckLogin', true).then((c) => {
+          if (!c) {
+            return
+          }
+          var loadingInstance = this.$loading({
+            background: 'rgba(0, 0, 0, 0.8)',
           })
-          .catch((e) => {
-            this.$toast.error(e)
-          })
-          .finally(() => {
-            loadingInstance.close()
-            this.loadNftInfo()
-            this.checkIfPraiseCollect()
-          })
-      })
+          nftCollect(this.tokenId)
+            .then(() => {
+              this.$toast.success(this.$t('news-detail.collect_success'))
+            })
+            .catch((e) => {
+              this.$toast.error(e)
+            })
+            .finally(() => {
+              loadingInstance.close()
+              this.loadNftInfo()
+              this.checkIfPraiseCollect()
+            })
+        })
+      }
     },
   },
 }

@@ -609,6 +609,7 @@ export default {
         if (!c) {
           return
         }
+
         if (!this.canUpdate) {
           this.$toast.info(this.$t('news-detail.update_unable'))
           return
@@ -617,6 +618,17 @@ export default {
           this.$toast.info(this.$t('create.nft_voting'))
           return
         }
+
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            this.$router.push({
+              path: '/update',
+              query: { tokenId: this.tokenId, step: step },
+            })
+          })
+          return
+        }
+
         this.$router.push({
           path: '/update',
           query: { tokenId: this.tokenId, step: step },
@@ -637,6 +649,12 @@ export default {
           this.$toast.info(this.$t('create.nft_voting'))
           return
         }
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            this.$refs['setSaleDialog'].showDialog()
+          })
+          return
+        }
         this.$refs['setSaleDialog'].showDialog()
       })
     },
@@ -652,6 +670,12 @@ export default {
         }
         if (this.tokenSupplyInfo.isVoting && !this.voteOverTime) {
           this.$toast.info(this.$t('create.nft_voting'))
+          return
+        }
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            this.$refs['setDaoDialog'].showDialog()
+          })
           return
         }
         this.$refs['setDaoDialog'].showDialog()

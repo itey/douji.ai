@@ -238,6 +238,12 @@ export default {
         if (!c) {
           return
         }
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            this.$refs['stakeDialog'].showDialog()
+          })
+          return
+        }
         this.$refs['stakeDialog'].showDialog()
       })
     },
@@ -354,6 +360,12 @@ export default {
         }
         if (!this.retrieveUseable) {
           this.$toast.info(this.$t('news-detail.retrieve_unable'))
+          return
+        }
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            this.$refs['retrieveDialog'].showDialog()
+          })
           return
         }
         this.$refs['retrieveDialog'].showDialog()

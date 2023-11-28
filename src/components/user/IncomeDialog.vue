@@ -186,6 +186,12 @@ export default {
         return
       }
       const tokenArr = this._.map(this.multipleSelection, 'token_id')
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          this.executeProcess(tokenArr)
+        })
+        return
+      }
       this.executeProcess(tokenArr)
     },
     /** 执行结算 */

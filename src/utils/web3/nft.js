@@ -122,6 +122,31 @@ export function voteByBallot(tokenId) {
   })
 }
 
+/** 取消投票 */
+export function cancelVote(tokenId) {
+  if (!checkAccount()) {
+    return
+  }
+  const nftContract = getNFTContract()
+  if (!nftContract) {
+    return
+  }
+  const userAccount = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    nftContract.methods.cancelVote(tokenId)
+      .send({ from: userAccount })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error.message)
+      })
+  })
+}
+
 /** update-step1 */
 export function startSetTokenPrice(tokenId, price, availableSupply) {
   if (!checkAccount()) {

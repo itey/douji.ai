@@ -41,27 +41,37 @@ export default {
     },
     /** 点击签到 */
     handleCheckIn() {
-      var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
-      this.$store
-        .dispatch('CheckInDaily')
-        .then((r) => {
-          this.$toast.success(this.$t('common.check_in_success'))
-          this.$emit('onCheckedIn')
-          if (r && r.amount) {
-            this.rewardAmount = r.amount
-            this.$refs['rewardDialog'].showDialog()
-          }
-          this.show = false
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          executeProcess()
         })
-        .catch((e) => {
-          console.log(e)
-          this.$toast.error(this.$t('common.check_in_failed'))
+        return
+      }
+      executeProcess()
+
+      const executeProcess = () => {
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
         })
-        .finally(() => {
-          loadingInstance.close()
-        })
+        this.$store
+          .dispatch('CheckInDaily')
+          .then((r) => {
+            this.$toast.success(this.$t('common.check_in_success'))
+            this.$emit('onCheckedIn')
+            if (r && r.amount) {
+              this.rewardAmount = r.amount
+              this.$refs['rewardDialog'].showDialog()
+            }
+            this.show = false
+          })
+          .catch((e) => {
+            console.log(e)
+            this.$toast.error(this.$t('common.check_in_failed'))
+          })
+          .finally(() => {
+            loadingInstance.close()
+          })
+      }
     },
   },
 }

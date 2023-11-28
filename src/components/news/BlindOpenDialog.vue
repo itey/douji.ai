@@ -139,68 +139,79 @@ export default {
   methods: {
     /** 打开盲盒 */
     openClick() {
-      this.show = false
-      // 合约调用
-      var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
-      if (this.userInfo.isge8model) {
-        approveMbd(this.operatorAddress, 500)
-          .then(() => {
-            openBoxContract()
-              .then((txJson) => {
-                contractOpenBox(txJson.transactionHash, this.blindBox.box)
-                  .then((r) => {
-                    if (r.code == 1) {
-                      this.boxPrizes = r.data
-                      this.onFinished()
-                      this.$refs['successDialog'].showDialog()
-                      this.$emit('handleReload')
-                    } else {
-                      this.$toast.error(r.message)
-                    }
-                  })
-                  .catch((e) => {
-                    this.$toast.error(e)
-                  })
-                  .finally(() => {
-                    loadingInstance.close()
-                  })
-              })
-              .catch((e) => {
-                this.$toast.error(e)
-                loadingInstance.close()
-              })
-          })
-          .catch((e) => {
-            this.$toast.error(e)
-            loadingInstance.close()
-          })
-      } else {
-        transferMbd(this.centerAddress, 500)
-          .then((txJson) => {
-            openBlindBox(this.blindBox.box, txJson.transactionHash)
-              .then((r) => {
-                if (r.code == 1) {
-                  this.boxPrizes = r.data
-                  this.onFinished()
-                  this.$refs['successDialog'].showDialog()
-                  this.$emit('handleReload')
-                } else {
-                  this.$toast.error(r.message)
-                }
-              })
-              .catch((e) => {
-                this.$toast.error(e)
-              })
-              .finally(() => {
-                loadingInstance.close()
-              })
-          })
-          .catch((e) => {
-            this.$toast.error(e)
-            loadingInstance.close()
-          })
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          executeProcess()
+        })
+        return
+      }
+
+      executeProcess()
+
+      const executeProcess = () => {
+        this.show = false
+        // 合约调用
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        if (this.userInfo.isge8model) {
+          approveMbd(this.operatorAddress, 500)
+            .then(() => {
+              openBoxContract()
+                .then((txJson) => {
+                  contractOpenBox(txJson.transactionHash, this.blindBox.box)
+                    .then((r) => {
+                      if (r.code == 1) {
+                        this.boxPrizes = r.data
+                        this.onFinished()
+                        this.$refs['successDialog'].showDialog()
+                        this.$emit('handleReload')
+                      } else {
+                        this.$toast.error(r.message)
+                      }
+                    })
+                    .catch((e) => {
+                      this.$toast.error(e)
+                    })
+                    .finally(() => {
+                      loadingInstance.close()
+                    })
+                })
+                .catch((e) => {
+                  this.$toast.error(e)
+                  loadingInstance.close()
+                })
+            })
+            .catch((e) => {
+              this.$toast.error(e)
+              loadingInstance.close()
+            })
+        } else {
+          transferMbd(this.centerAddress, 500)
+            .then((txJson) => {
+              openBlindBox(this.blindBox.box, txJson.transactionHash)
+                .then((r) => {
+                  if (r.code == 1) {
+                    this.boxPrizes = r.data
+                    this.onFinished()
+                    this.$refs['successDialog'].showDialog()
+                    this.$emit('handleReload')
+                  } else {
+                    this.$toast.error(r.message)
+                  }
+                })
+                .catch((e) => {
+                  this.$toast.error(e)
+                })
+                .finally(() => {
+                  loadingInstance.close()
+                })
+            })
+            .catch((e) => {
+              this.$toast.error(e)
+              loadingInstance.close()
+            })
+        }
       }
     },
     onOpen() {

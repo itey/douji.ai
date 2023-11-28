@@ -313,6 +313,7 @@ export default {
       "Vote successfully.",
     "execute_success":
       "Execute successfully.",
+    "cancel_success": "Cancel vote successfully",
     "vote_already":
       "You have already voted.",
     "like_success": "Thank you for liking it",

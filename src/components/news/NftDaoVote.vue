@@ -80,6 +80,7 @@ import {
   setTokenURIDao,
   userPledgeCount,
   voteByBallot,
+  cancelVote,
 } from '@/utils/web3/nft'
 export default {
   name: 'nft-dao-vote',
@@ -157,6 +158,16 @@ export default {
         if (!c) {
           return
         }
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            execute()
+          })
+          return
+        }
+        execute()
+      })
+
+      function execute() {
         var loadingInstance = this.$loading({
           background: 'rgba(0, 0, 0, 0.8)',
         })
@@ -184,7 +195,7 @@ export default {
             this.$toast.error(e)
             loadingInstance.close()
           })
-      })
+      }
     },
     /** 点击执行 */
     async handleExecute() {
@@ -192,34 +203,79 @@ export default {
       if (!c) {
         return
       }
-      var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
-      try {
-        const voteType = this.tokenInfo.vote.voteType
-        if (voteType == '0') {
-          await setTokenURIDao(this.tokenId)
+
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          execute()
+        })
+        return
+      }
+
+      execute()
+
+      async function execute() {
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        try {
+          const voteType = this.tokenInfo.vote.voteType
+          if (voteType == '0') {
+            await setTokenURIDao(this.tokenId)
+          }
+          if (voteType == '1') {
+            await setDaoRuleDao(this.tokenId)
+          }
+          if (voteType == '2') {
+            await setTokenPriceDao(this.tokenId)
+          }
+          if (voteType == '3') {
+            await setNspDao(this.tokenId)
+          }
+          this.$toast.success(this.$t('news-detail.execute_success'))
+        } catch (error) {
+          this.$toast.error(error)
+        } finally {
+          loadingInstance.close()
+          this.$emit('handleReload')
+          eventBus.$emit('refresh_stake_info')
         }
-        if (voteType == '1') {
-          await setDaoRuleDao(this.tokenId)
-        }
-        if (voteType == '2') {
-          await setTokenPriceDao(this.tokenId)
-        }
-        if (voteType == '3') {
-          await setNspDao(this.tokenId)
-        }
-        this.$toast.success(this.$t('news-detail.execute_success'))
-      } catch (error) {
-        this.$toast.error(error)
-      } finally {
-        loadingInstance.close()
-        this.$emit('handleReload')
-        eventBus.$emit('refresh_stake_info')
       }
     },
     /** 点击取消 */
-    handleCancel() {},
+    async handleCancel() {
+      const c = await this.$store.dispatch('CheckLogin', true)
+      if (!c) {
+        return
+      }
+
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          execute()
+        })
+        return
+      }
+
+      execute()
+
+      function execute() {
+        // 取消方法
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        cancelVote(this.tokenId)
+          .then((tx) => {
+            console.log(tx)
+            this.$toast.success(this.$t('news-detail.cancel_success'))
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+          })
+          .finally(() => {
+            loadingInstance.close()
+            this.$emit('handleReload')
+          })
+      }
+    },
     /** 获取我的质押数量 */
     getUserPledgeCount() {
       if (!this.userAccount) {

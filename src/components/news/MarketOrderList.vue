@@ -119,6 +119,12 @@ export default {
         if (!c) {
           return
         }
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            this.$refs['listItemDialog'].showDialog()
+          })
+          return
+        }
         this.$refs['listItemDialog'].showDialog()
       })
     },
@@ -144,23 +150,34 @@ export default {
         if (!c) {
           return
         }
-        var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
-        cancelSaleOrder(ordeId)
-          .then((tx) => {
-            console.log(tx)
-            this.$toast.success(this.$t('news-detail.order_cancel_success'))
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            execute()
           })
-          .catch((e) => {
-            this.$toast.error(e)
+          return
+        }
+
+        execute()
+
+        function execute() {
+          var loadingInstance = this.$loading({
+            background: 'rgba(0, 0, 0, 0.8)',
           })
-          .finally(() => {
-            notifyUpdateOrder(this.tokenId).finally(() => {
-              this.loadNftOrderList()
-              loadingInstance.close()
+          cancelSaleOrder(ordeId)
+            .then((tx) => {
+              console.log(tx)
+              this.$toast.success(this.$t('news-detail.order_cancel_success'))
             })
-          })
+            .catch((e) => {
+              this.$toast.error(e)
+            })
+            .finally(() => {
+              notifyUpdateOrder(this.tokenId).finally(() => {
+                this.loadNftOrderList()
+                loadingInstance.close()
+              })
+            })
+        }
       })
     },
     /** 交易下单 */
@@ -170,30 +187,41 @@ export default {
           return
         }
 
-        var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
-        approveMbd(this.marketAddress, order.price)
-          .then(() => {
-            swapOrder(order.ordeId)
-              .then((tx) => {
-                console.log(tx)
-                this.$toast.success(this.$t('news-detail.swap_success'))
-              })
-              .catch((e) => {
-                this.$toast.error(e)
-              })
-              .finally(() => {
-                notifyUpdateOrder(this.tokenId).finally(() => {
-                  this.loadNftOrderList()
-                  loadingInstance.close()
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            execute()
+          })
+          return
+        }
+
+        execute()
+
+        function execute() {
+          var loadingInstance = this.$loading({
+            background: 'rgba(0, 0, 0, 0.8)',
+          })
+          approveMbd(this.marketAddress, order.price)
+            .then(() => {
+              swapOrder(order.ordeId)
+                .then((tx) => {
+                  console.log(tx)
+                  this.$toast.success(this.$t('news-detail.swap_success'))
                 })
-              })
-          })
-          .catch((e) => {
-            this.$toast.error(e)
-            loadingInstance.close()
-          })
+                .catch((e) => {
+                  this.$toast.error(e)
+                })
+                .finally(() => {
+                  notifyUpdateOrder(this.tokenId).finally(() => {
+                    this.loadNftOrderList()
+                    loadingInstance.close()
+                  })
+                })
+            })
+            .catch((e) => {
+              this.$toast.error(e)
+              loadingInstance.close()
+            })
+        }
       })
     },
   },
