@@ -111,7 +111,7 @@ import {
   nftCollect,
   nftPraise,
 } from '@/utils/web3/nft'
-import { getCPD } from '@/utils/web3/open'
+import { getCPD, isFollow } from '@/utils/web3/open'
 export default {
   name: 'nft-author-info',
   props: {

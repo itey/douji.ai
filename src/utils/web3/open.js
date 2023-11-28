@@ -256,6 +256,25 @@ function getOperatorContract() {
 }
 
 
+/** 查询我是否关注了 */
+export function isFollow(account) {
+  const operatorContract = getOperatorContract()
+  if (!operatorContract) {
+    return
+  }
+  return new Promise((resolve, reject) => {
+    operatorContract.methods.checkFollow(account)
+      .call()
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+
+        reject(e)
+      })
+  })
+}
+
 
 ///////////////////NFT///////////////////
 /** 获取NFT合约 */
