@@ -38,11 +38,7 @@
       <template
         v-if="userAccount && userAccount.toLowerCase() != creator.toLowerCase()"
       >
-        <div
-          class="subscription"
-          v-if="creatorInfo.isfollow"
-          @click="handleSubOut()"
-        >
+        <div class="subscription" v-if="subscription" @click="handleSubOut()">
           <img
             style="width: 13px; height: 9px"
             src="@/assets/images/news/true.png"
@@ -112,6 +108,7 @@ import {
   nftPraise,
 } from '@/utils/web3/nft'
 import { getCPD, isFollow } from '@/utils/web3/open'
+import { subscribeAuthorContract } from '@/utils/web3/operator'
 export default {
   name: 'nft-author-info',
   props: {
@@ -156,40 +153,34 @@ export default {
   methods: {
     /** 点击关注 */
     handleSub() {
-      follow(this.creatorInfo.uid)
-        .then((r) => {
-          if (r.code == 1) {
-            this.$toast.success(this.$t('common.follow_success'))
-          } else {
-            this.$toast.error(r.message)
-          }
+      subscribeAuthorContract(this.creator)
+        .then(() => {
+          this.$toast.success(this.$t('common.follow_success'))
+          this.checkIfFollow()
         })
         .catch((e) => {
           this.$toast.error(e)
-        })
-        .finally(() => {
-          this.loadUserInfo()
+          this.checkIfFollow()
         })
     },
     /** 点击取消关注 */
     handleSubOut() {
-      unfollow(this.creatorInfo.uid)
-        .then((r) => {
-          if (r.code == 1) {
-            this.$toast.success(this.$t('common.un_follow_success'))
-          } else {
-            this.$toast.error(r.message)
-          }
+      subscribeAuthorContract(this.creator)
+        .then(() => {
+          this.$toast.success(this.$t('common.un_follow_success'))
+          this.checkIfFollow()
         })
         .catch((e) => {
           this.$toast.error(e)
-        })
-        .finally(() => {
-          this.loadUserInfo()
+          this.checkIfFollow()
         })
     },
     infoInit() {
-      Promise.all([this.loadUserInfo(), this.loadNftInfo()]).catch((e) => {
+      Promise.all([
+        this.loadUserInfo(),
+        this.loadNftInfo(),
+        this.checkIfFollow(),
+      ]).catch((e) => {
         console.log(e)
       })
     },
@@ -220,6 +211,20 @@ export default {
             resolve(r)
           })
           .catch((e) => {
+            return reject(e)
+          })
+      })
+    },
+    /** 查询是否已关注创作者 */
+    checkIfFollow() {
+      return new Promise((resolve, reject) => {
+        isFollow(this.creator)
+          .then((r) => {
+            this.subscription = r
+            return resolve(r)
+          })
+          .catch((e) => {
+            console.log(e)
             return reject(e)
           })
       })
