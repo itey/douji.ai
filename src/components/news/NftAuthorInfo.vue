@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { follow, getOtUserInfo, unfollow } from '@/utils/http'
+import { getOtUserInfo } from '@/utils/http'
 import {
   isAlreadyCollect,
   isAlreadyPraise,
