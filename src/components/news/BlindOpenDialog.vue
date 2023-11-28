@@ -139,15 +139,6 @@ export default {
   methods: {
     /** 打开盲盒 */
     openClick() {
-      if (this.$store.state.chain.balanceBnb < 0.01) {
-        this.$bnbConfirm(this.$store.state.common.language, () => {
-          executeProcess()
-        })
-        return
-      }
-
-      executeProcess()
-
       const executeProcess = () => {
         this.show = false
         // 合约调用
@@ -213,6 +204,15 @@ export default {
             })
         }
       }
+
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          executeProcess()
+        })
+        return
+      }
+
+      executeProcess()
     },
     onOpen() {
       this.blindBox = getBlindBoxCache(this.$store.state.user.userId)

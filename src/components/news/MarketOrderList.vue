@@ -146,6 +146,25 @@ export default {
     },
     /** 取消订单 */
     handleCancelOrder(ordeId) {
+      const execute = () => {
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        cancelSaleOrder(ordeId)
+          .then((tx) => {
+            console.log(tx)
+            this.$toast.success(this.$t('news-detail.order_cancel_success'))
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+          })
+          .finally(() => {
+            notifyUpdateOrder(this.tokenId).finally(() => {
+              this.loadNftOrderList()
+              loadingInstance.close()
+            })
+          })
+      }
       this.$store.dispatch('CheckLogin', true).then((c) => {
         if (!c) {
           return
@@ -156,32 +175,38 @@ export default {
           })
           return
         }
-
         execute()
-
-        const execute = () => {
-          var loadingInstance = this.$loading({
-            background: 'rgba(0, 0, 0, 0.8)',
-          })
-          cancelSaleOrder(ordeId)
-            .then((tx) => {
-              console.log(tx)
-              this.$toast.success(this.$t('news-detail.order_cancel_success'))
-            })
-            .catch((e) => {
-              this.$toast.error(e)
-            })
-            .finally(() => {
-              notifyUpdateOrder(this.tokenId).finally(() => {
-                this.loadNftOrderList()
-                loadingInstance.close()
-              })
-            })
-        }
       })
     },
     /** 交易下单 */
     handleSwapOrder(order) {
+      const execute = () => {
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        approveMbd(this.marketAddress, order.price)
+          .then(() => {
+            swapOrder(order.ordeId)
+              .then((tx) => {
+                console.log(tx)
+                this.$toast.success(this.$t('news-detail.swap_success'))
+              })
+              .catch((e) => {
+                this.$toast.error(e)
+              })
+              .finally(() => {
+                notifyUpdateOrder(this.tokenId).finally(() => {
+                  this.loadNftOrderList()
+                  loadingInstance.close()
+                })
+              })
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+            loadingInstance.close()
+          })
+      }
+
       this.$store.dispatch('CheckLogin', true).then((c) => {
         if (!c) {
           return
@@ -195,33 +220,6 @@ export default {
         }
 
         execute()
-
-        const execute = () => {
-          var loadingInstance = this.$loading({
-            background: 'rgba(0, 0, 0, 0.8)',
-          })
-          approveMbd(this.marketAddress, order.price)
-            .then(() => {
-              swapOrder(order.ordeId)
-                .then((tx) => {
-                  console.log(tx)
-                  this.$toast.success(this.$t('news-detail.swap_success'))
-                })
-                .catch((e) => {
-                  this.$toast.error(e)
-                })
-                .finally(() => {
-                  notifyUpdateOrder(this.tokenId).finally(() => {
-                    this.loadNftOrderList()
-                    loadingInstance.close()
-                  })
-                })
-            })
-            .catch((e) => {
-              this.$toast.error(e)
-              loadingInstance.close()
-            })
-        }
       })
     },
   },

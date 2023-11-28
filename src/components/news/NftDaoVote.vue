@@ -154,19 +154,6 @@ export default {
   methods: {
     /** 点击投票 */
     handleApprove() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
-        if (!c) {
-          return
-        }
-        if (this.$store.state.chain.balanceBnb < 0.01) {
-          this.$bnbConfirm(this.$store.state.common.language, () => {
-            execute()
-          })
-          return
-        }
-        execute()
-      })
-
       const execute = () => {
         var loadingInstance = this.$loading({
           background: 'rgba(0, 0, 0, 0.8)',
@@ -196,23 +183,21 @@ export default {
             loadingInstance.close()
           })
       }
+      this.$store.dispatch('CheckLogin', true).then((c) => {
+        if (!c) {
+          return
+        }
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            execute()
+          })
+          return
+        }
+        execute()
+      })
     },
     /** 点击执行 */
     async handleExecute() {
-      const c = await this.$store.dispatch('CheckLogin', true)
-      if (!c) {
-        return
-      }
-
-      if (this.$store.state.chain.balanceBnb < 0.01) {
-        this.$bnbConfirm(this.$store.state.common.language, () => {
-          execute()
-        })
-        return
-      }
-
-      execute()
-
       const execute = async () => {
         var loadingInstance = this.$loading({
           background: 'rgba(0, 0, 0, 0.8)',
@@ -240,9 +225,6 @@ export default {
           eventBus.$emit('refresh_stake_info')
         }
       }
-    },
-    /** 点击取消 */
-    async handleCancel() {
       const c = await this.$store.dispatch('CheckLogin', true)
       if (!c) {
         return
@@ -254,9 +236,10 @@ export default {
         })
         return
       }
-
       execute()
-
+    },
+    /** 点击取消 */
+    async handleCancel() {
       const execute = () => {
         // 取消方法
         var loadingInstance = this.$loading({
@@ -275,6 +258,18 @@ export default {
             this.$emit('handleReload')
           })
       }
+      const c = await this.$store.dispatch('CheckLogin', true)
+      if (!c) {
+        return
+      }
+
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          execute()
+        })
+        return
+      }
+      execute()
     },
     /** 获取我的质押数量 */
     getUserPledgeCount() {

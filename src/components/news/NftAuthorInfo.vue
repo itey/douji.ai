@@ -243,13 +243,6 @@ export default {
     },
     /** 点赞NFT */
     handlePraise() {
-      if (this.$store.state.chain.balanceBnb < 0.01) {
-        this.$bnbConfirm(this.$store.state.common.language, () => {
-          executeProcess()
-        })
-        return
-      }
-      executeProcess()
       const executeProcess = () => {
         this.$store.dispatch('CheckLogin', true).then((c) => {
           if (!c) {
@@ -272,9 +265,6 @@ export default {
             })
         })
       }
-    },
-    /** 收藏NFT */
-    collectPraise() {
       if (this.$store.state.chain.balanceBnb < 0.01) {
         this.$bnbConfirm(this.$store.state.common.language, () => {
           executeProcess()
@@ -282,6 +272,9 @@ export default {
         return
       }
       executeProcess()
+    },
+    /** 收藏NFT */
+    collectPraise() {
       const executeProcess = () => {
         this.$store.dispatch('CheckLogin', true).then((c) => {
           if (!c) {
@@ -304,6 +297,13 @@ export default {
             })
         })
       }
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          executeProcess()
+        })
+        return
+      }
+      executeProcess()
     },
   },
 }
