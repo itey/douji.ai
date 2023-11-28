@@ -167,7 +167,7 @@ export default {
         execute()
       })
 
-      function execute() {
+      const execute = () => {
         var loadingInstance = this.$loading({
           background: 'rgba(0, 0, 0, 0.8)',
         })
@@ -213,7 +213,7 @@ export default {
 
       execute()
 
-      async function execute() {
+      const execute = async () => {
         var loadingInstance = this.$loading({
           background: 'rgba(0, 0, 0, 0.8)',
         })
@@ -257,7 +257,7 @@ export default {
 
       execute()
 
-      function execute() {
+      const execute = () => {
         // 取消方法
         var loadingInstance = this.$loading({
           background: 'rgba(0, 0, 0, 0.8)',

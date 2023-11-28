@@ -159,7 +159,7 @@ export default {
 
         execute()
 
-        function execute() {
+        const execute = () => {
           var loadingInstance = this.$loading({
             background: 'rgba(0, 0, 0, 0.8)',
           })
@@ -196,7 +196,7 @@ export default {
 
         execute()
 
-        function execute() {
+        const execute = () => {
           var loadingInstance = this.$loading({
             background: 'rgba(0, 0, 0, 0.8)',
           })
