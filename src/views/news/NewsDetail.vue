@@ -303,7 +303,7 @@ import {
   loadFromUrl,
   unlockContent,
 } from '@/utils/http'
-import { balanceOf } from '@/utils/web3/nft'
+import { balanceOf, userPledgeCount } from '@/utils/web3/nft'
 import { getTokenOwner, tokenURI, tokensData } from '@/utils/web3/open'
 var md = require('markdown-it')({
   html: true,
@@ -334,7 +334,7 @@ export default {
     canUpdate() {
       if (
         this.userAccount &&
-        this.tokenOwner.toLowerCase() == this.userAccount.toLowerCase()
+        (this.userOwned > 0 || this.userStakeInfo[0] > 0)
       ) {
         return true
       }
@@ -396,6 +396,7 @@ export default {
       blindBoxTimerTask: undefined,
       transactionHistory: [],
       timeTask: undefined,
+      userStakeInfo: [],
     }
   },
   created() {
@@ -555,6 +556,23 @@ export default {
       } finally {
         loadingInstance.close()
       }
+    },
+    /** 获取用户质押信息 */
+    getUserStakeCount() {
+      if (!this.tokenId || !this.$store.state.user.account) {
+        return
+      }
+      return new Promise((resolve) => {
+        userPledgeCount(this.tokenId)
+          .then((data) => {
+            this.userStakeInfo[0] = data[0]
+            this.userStakeInfo[1] = data[1]
+            return resolve()
+          })
+          .catch((e) => {
+            this.$toast.error(e)
+          })
+      })
     },
     /** 获取用户拥有数量 */
     getUserOwned() {

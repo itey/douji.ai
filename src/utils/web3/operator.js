@@ -111,3 +111,28 @@ export function openBoxContract() {
       })
   })
 }
+
+/** 关注创作者 */
+export function subscribeAuthorContract(address) {
+  if (!checkAccount()) {
+    return
+  }
+  const operatorContract = getOperatorContract()
+  if (!operatorContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    operatorContract.methods.followUser(address)
+      .send({ from: fromAddress })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash:', hash)
+      })
+      .on('receipt', (receipt) => {
+        resolve(receipt)
+      })
+      .on('error', (error) => {
+        reject(error)
+      })
+  })
+}

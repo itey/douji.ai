@@ -79,14 +79,6 @@ export default {
             this.$router.back()
             return
           }
-          if (
-            this.tokenOwner.toLowerCase() !=
-            this.$store.state.user.account.toLowerCase()
-          ) {
-            this.$toast.warning(this.$t('create.no_permission_update'))
-            this.$router.back()
-            return
-          }
           this.metadata.maxSupply = this.tokenSupplyInfo.maxSupply
           this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply
           this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply

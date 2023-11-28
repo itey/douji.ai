@@ -6,6 +6,7 @@ import marketJson from './abi/market'
 import mbd from './abi/mbd'
 import nft from './abi/nft'
 import pairJson from './abi/pair'
+import operator from './abi/operator'
 
 import { weiToEth, weiToMbd } from '@/utils/common'
 
@@ -247,6 +248,13 @@ export function getSettlePoolBalance(tokenId) {
       })
   })
 }
+
+///////////////////运营///////////////////
+/** 获取运营合约 */
+function getOperatorContract() {
+  return new web3.eth.Contract(operator.abi, process.env.VUE_APP_OPERATOR)
+}
+
 
 
 ///////////////////NFT///////////////////
