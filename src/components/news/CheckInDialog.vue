@@ -41,32 +41,33 @@ export default {
     },
     /** 点击签到 */
     handleCheckIn() {
+      const self = this
       if (this.$store.state.chain.balanceBnb < 0.01) {
         this.$bnbConfirm(this.$store.state.common.language, () => {
-          executeProcess()
+          executeProcess(self)
         })
         return
       }
-      executeProcess()
+      executeProcess(self)
 
-      const executeProcess = () => {
-        var loadingInstance = this.$loading({
+      const executeProcess = (self) => {
+        var loadingInstance = self.$loading({
           background: 'rgba(0, 0, 0, 0.8)',
         })
-        this.$store
+        self.$store
           .dispatch('CheckInDaily')
           .then((r) => {
-            this.$toast.success(this.$t('common.check_in_success'))
-            this.$emit('onCheckedIn')
+            self.$toast.success(self.$t('common.check_in_success'))
+            self.$emit('onCheckedIn')
             if (r && r.amount) {
-              this.rewardAmount = r.amount
-              this.$refs['rewardDialog'].showDialog()
+              self.rewardAmount = r.amount
+              self.$refs['rewardDialog'].showDialog()
             }
-            this.show = false
+            self.show = false
           })
           .catch((e) => {
             console.log(e)
-            this.$toast.error(this.$t('common.check_in_failed'))
+            self.$toast.error(self.$t('common.check_in_failed'))
           })
           .finally(() => {
             loadingInstance.close()
