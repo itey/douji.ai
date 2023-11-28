@@ -60,7 +60,7 @@ const chain = {
     // 获取Mbd价格
     LoadMbdPrice({ commit }) {
       getMbdPrice().then(res => {
-        const price = weiToEth(res[1]) / weiToMbd(res[0])
+        const price = weiToEth(res[0]) / weiToMbd(res[1])
         commit('setMbdPrice', price.toFixed(8))
       })
     },
