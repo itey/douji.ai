@@ -140,11 +140,6 @@
 	border: 1px solid #00F9E5;
 	border-radius: 6px;
 }
-
-.el-menu-item:focus,
-.el-menu-item:hover {
-	background-color: transparent;
-}
 .el-breadcrumb {
 	font-size: 12px;
 }

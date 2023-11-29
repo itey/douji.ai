@@ -206,7 +206,6 @@ export default {
       return new Promise((resolve, reject) => {
         getCPD(this.tokenId)
           .then((r) => {
-            console.log(r)
             this.nftInfo = r
             resolve(r)
           })
