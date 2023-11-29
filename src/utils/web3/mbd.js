@@ -27,7 +27,7 @@ export function approveMbd(spender, count) {
   }
   const userAccount = store.state.chain.account
   return new Promise((resolve, reject) => {
-    mbdContract.methods.approve(spender, mbdToWei(count) + '')
+    mbdContract.methods.approve(spender, count + '')
       .send({ from: userAccount })
       .on('transactionHash', (hash) => {
         console.log('transactionHash:', hash)
