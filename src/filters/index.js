@@ -1,6 +1,13 @@
 import store from '@/store'
 import moment from "moment"
 
+export const weiToMbd = (wei) => {
+  if (!wei) {
+    return wei
+  }
+  return Number(wei) / Math.pow(10, 8)
+}
+
 // Wallet address thumbnail display
 export const omitAddress = (val) => {
   if (!val) {

@@ -31,7 +31,7 @@
           v-for="(item, index) in nftOrderList"
           :key="index"
         >
-          {{ item.price }}
+          {{ item.price | weiToMbd }}
         </div>
       </div>
       <div class="second-market-column" style="text-align: right; width: 104px">
