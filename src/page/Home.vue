@@ -589,7 +589,7 @@ export default {
               )
             })
             .catch((e) => {
-              this.$toast.error(e)
+              this.$toast.error(e && e.message ? e.message : e)
             })
             .finally(() => {
               this.getBjxData()
@@ -623,7 +623,7 @@ export default {
                   )
                 })
                 .catch((e) => {
-                  this.$toast.error(e)
+                  this.$toast.error(e && e.message ? e.message : e)
                 })
                 .finally(() => {
                   this.bjx.buying = false
@@ -632,7 +632,7 @@ export default {
                 })
             })
             .catch((e) => {
-              this.$toast.error(e)
+              this.$toast.error(e && e.message ? e.message : e)
               this.bjx.buying = false
             })
         }

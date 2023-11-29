@@ -207,7 +207,7 @@ export default {
         )
         await this.getUserOwned()
       } catch (e) {
-        this.$toast.error(e)
+        this.$toast.error(e && e.message ? e.message : e)
         loadingInstance.close()
       } finally {
         loadingInstance.close()

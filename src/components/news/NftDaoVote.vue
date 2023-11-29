@@ -171,7 +171,7 @@ export default {
                 this.$toast.success(this.$t('news-detail.vote_success'))
               })
               .catch((e) => {
-                this.$toast.error(e)
+                this.$toast.error(e && e.message ? e.message : e)
               })
               .finally(() => {
                 loadingInstance.close()
@@ -179,7 +179,7 @@ export default {
               })
           })
           .catch((e) => {
-            this.$toast.error(e)
+            this.$toast.error(e && e.message ? e.message : e)
             loadingInstance.close()
           })
       }
@@ -251,7 +251,7 @@ export default {
             this.$toast.success(this.$t('news-detail.cancel_success'))
           })
           .catch((e) => {
-            this.$toast.error(e)
+            this.$toast.error(e && e.message ? e.message : e)
           })
           .finally(() => {
             loadingInstance.close()

@@ -244,7 +244,7 @@ export default {
           await approveMbd(this.nftContract, mintPrice)
         } catch (e) {
           console.log(e)
-          this.$toast.error(e)
+          this.$toast.error(e && e.message ? e.message : e)
           loadingInstance.close()
           return
         }

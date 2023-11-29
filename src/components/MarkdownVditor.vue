@@ -64,7 +64,7 @@ export default {
               .replace('/\\s/g', '')
           },
           error(e) {
-            this.$toast.error(e)
+            this.$toast.error(e && e.message ? e.message : e)
           },
         },
         height: 360,

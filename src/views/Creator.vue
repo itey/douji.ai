@@ -275,7 +275,7 @@ export default {
           }
         })
         .catch((e) => {
-          this.$toast.error(e)
+          this.$toast.error(e && e.message ? e.message : e)
         })
         .finally(() => {
           this.userInfoGet()
@@ -292,7 +292,7 @@ export default {
           }
         })
         .catch((e) => {
-          this.$toast.error(e)
+          this.$toast.error(e && e.message ? e.message : e)
         })
         .finally(() => {
           this.userInfoGet()

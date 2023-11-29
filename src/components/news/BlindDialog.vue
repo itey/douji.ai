@@ -82,44 +82,14 @@ export default {
     /** 接收盲盒 */
     handleReceiveBox() {
       const executeProcess = () => {
-        if (this.userInfo.isge8model) {
-          // 合约接收
-          var loadingInstance = this.$loading({
-            background: 'rgba(0, 0, 0, 0.8)',
-          })
-          getBoxContract(this.tokenId)
-            .then((txJson) => {
-              const txId = txJson.transactionHash
-              contractGetBox(txId)
-                .then((r) => {
-                  if (r.code == 1) {
-                    const openFlag = r.data.open_box_flag
-                    setBlindBoxCache(this.$store.state.user.userId, openFlag)
-                    this.show = false
-                    this.$emit('handleReceive')
-                  } else {
-                    console.log(r.message)
-                    this.$toast.error(
-                      this.$t('news-detail.get_blind_box_failed')
-                    )
-                    loadingInstance.close()
-                  }
-                })
-                .catch((e) => {
-                  this.$toast.error(e)
-                  loadingInstance.close()
-                })
-            })
-            .catch((e) => {
-              this.$toast.error(e)
-              loadingInstance.close()
-            })
-        } else {
-          getBlindBoxSign().then((signed) => {
-            var loadingInstance = this.$loading({
-              background: 'rgba(0, 0, 0, 0.8)',
-            })
-            getBlindBox(signed, this.boxFlag.flag, this.tokenId)
+        // 合约接收
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
+        })
+        getBoxContract(this.tokenId)
+          .then((txJson) => {
+            const txId = txJson.transactionHash
+            contractGetBox(txId)
               .then((r) => {
                 if (r.code == 1) {
                   const openFlag = r.data.open_box_flag
@@ -129,26 +99,53 @@ export default {
                 } else {
                   console.log(r.message)
                   this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
+                  loadingInstance.close()
                 }
               })
               .catch((e) => {
-                console.log(e)
-                this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
-              })
-              .finally(() => {
+                this.$toast.error(e && e.message ? e.message : e)
                 loadingInstance.close()
               })
           })
+          .catch((e) => {
+            this.$toast.error(e && e.message ? e.message : e)
+            loadingInstance.close()
+          })
+      }
+      if (this.userInfo.isge8model) {
+        if (this.$store.state.chain.balanceBnb < 0.01) {
+          this.$bnbConfirm(this.$store.state.common.language, () => {
+            executeProcess()
+          })
+          return
         }
-      }
-      if (this.$store.state.chain.balanceBnb < 0.01) {
-        this.$bnbConfirm(this.$store.state.common.language, () => {
-          executeProcess()
+        executeProcess()
+      } else {
+        getBlindBoxSign().then((signed) => {
+          var loadingInstance = this.$loading({
+            background: 'rgba(0, 0, 0, 0.8)',
+          })
+          getBlindBox(signed, this.boxFlag.flag, this.tokenId)
+            .then((r) => {
+              if (r.code == 1) {
+                const openFlag = r.data.open_box_flag
+                setBlindBoxCache(this.$store.state.user.userId, openFlag)
+                this.show = false
+                this.$emit('handleReceive')
+              } else {
+                console.log(r.message)
+                this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
+              }
+            })
+            .catch((e) => {
+              console.log(e)
+              this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
+            })
+            .finally(() => {
+              loadingInstance.close()
+            })
         })
-        return
       }
-
-      executeProcess()
     },
     showDialog() {
       if (!this.show) {

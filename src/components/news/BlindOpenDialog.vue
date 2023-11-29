@@ -162,19 +162,19 @@ export default {
                       }
                     })
                     .catch((e) => {
-                      this.$toast.error(e)
+                      this.$toast.error(e && e.message ? e.message : e)
                     })
                     .finally(() => {
                       loadingInstance.close()
                     })
                 })
                 .catch((e) => {
-                  this.$toast.error(e)
+                  this.$toast.error(e && e.message ? e.message : e)
                   loadingInstance.close()
                 })
             })
             .catch((e) => {
-              this.$toast.error(e)
+              this.$toast.error(e && e.message ? e.message : e)
               loadingInstance.close()
             })
         } else {
@@ -192,14 +192,14 @@ export default {
                   }
                 })
                 .catch((e) => {
-                  this.$toast.error(e)
+                  this.$toast.error(e && e.message ? e.message : e)
                 })
                 .finally(() => {
                   loadingInstance.close()
                 })
             })
             .catch((e) => {
-              this.$toast.error(e)
+              this.$toast.error(e && e.message ? e.message : e)
               loadingInstance.close()
             })
         }

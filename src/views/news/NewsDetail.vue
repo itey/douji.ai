@@ -570,7 +570,7 @@ export default {
             return resolve()
           })
           .catch((e) => {
-            this.$toast.error(e)
+            this.$toast.error(e && e.message ? e.message : e)
           })
       })
     },

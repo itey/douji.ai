@@ -19,7 +19,7 @@
       </div>
       <div class="reward-mbd-transform">
         ≈${{
-          (readReward.income_sum * $store.state.chain.mbdPrice) | decimalPlace8
+          (readReward.income_sum * $store.state.chain.mbdPrice) | decimalPlace4
         }}
       </div>
     </div>

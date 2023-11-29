@@ -119,7 +119,7 @@ export default {
           this.$toast.error(r.message)
         }
       } catch (e) {
-        this.$toast.error(e)
+        this.$toast.error(e && e.message ? e.message : e)
       } finally {
         loadingInstance.close()
       }
@@ -147,7 +147,7 @@ export default {
             return resolve()
           })
           .catch((e) => {
-            this.$toast.error(e)
+            this.$toast.error(e && e.message ? e.message : e)
             return resolve()
           })
       })
@@ -161,7 +161,7 @@ export default {
             return resolve()
           })
           .catch((e) => {
-            this.$toast.error(e)
+            this.$toast.error(e && e.message ? e.message : e)
             return resolve()
           })
       })
@@ -175,7 +175,7 @@ export default {
             return resolve()
           })
           .catch((e) => {
-            this.$toast.error(e)
+            this.$toast.error(e && e.message ? e.message : e)
             return resolve()
           })
       })
@@ -207,7 +207,7 @@ export default {
           loadingInstance.close()
         })
         .catch((e) => {
-          this.$toast.error(e)
+          this.$toast.error(e && e.message ? e.message : e)
           loadingInstance.close()
         })
     },

@@ -254,7 +254,7 @@ export default {
               this.show = false
             })
             .catch((e) => {
-              this.$toast.error(e)
+              this.$toast.error(e && e.message ? e.message : e)
             })
             .finally(() => {
               loadingInstance.close()

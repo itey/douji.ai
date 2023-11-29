@@ -156,7 +156,7 @@ export default {
             this.$toast.success(this.$t('news-detail.order_cancel_success'))
           })
           .catch((e) => {
-            this.$toast.error(e)
+            this.$toast.error(e && e.message ? e.message : e)
           })
           .finally(() => {
             notifyUpdateOrder(this.tokenId).finally(() => {
@@ -192,7 +192,7 @@ export default {
                 this.$toast.success(this.$t('news-detail.swap_success'))
               })
               .catch((e) => {
-                this.$toast.error(e)
+                this.$toast.error(e && e.message ? e.message : e)
               })
               .finally(() => {
                 notifyUpdateOrder(this.tokenId).finally(() => {
@@ -202,7 +202,7 @@ export default {
               })
           })
           .catch((e) => {
-            this.$toast.error(e)
+            this.$toast.error(e && e.message ? e.message : e)
             loadingInstance.close()
           })
       }

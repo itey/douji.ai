@@ -203,7 +203,7 @@ export default {
           }
         })
         .catch((e) => {
-          this.$toast.error(e)
+          this.$toast.error(e && e.message ? e.message : e)
         })
     },
     /** BJX的USDT价格 */
@@ -228,14 +228,14 @@ export default {
               }
             })
             .catch((e) => {
-              this.$toast.error(e)
+              this.$toast.error(e && e.message ? e.message : e)
             })
             .finally(() => {
               loadingInstance.close()
             })
         })
         .catch((e) => {
-          this.$toast.error(e)
+          this.$toast.error(e && e.message ? e.message : e)
           loadingInstance.close()
         })
     },

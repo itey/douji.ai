@@ -157,27 +157,55 @@ export default {
   methods: {
     /** 点击关注 */
     handleSub() {
-      subscribeAuthorContract(this.creator)
-        .then(() => {
-          this.$toast.success(this.$t('common.follow_success'))
-          this.checkIfFollow()
+      const executeProcess = () => {
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
         })
-        .catch((e) => {
-          this.$toast.error(e)
-          this.checkIfFollow()
+        subscribeAuthorContract(this.creator)
+          .then(() => {
+            this.$toast.success(this.$t('common.follow_success'))
+            this.checkIfFollow()
+            loadingInstance.close()
+          })
+          .catch((e) => {
+            this.$toast.error(e && e.message ? e.message : e)
+            this.checkIfFollow()
+            loadingInstance.close()
+          })
+      }
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          executeProcess()
         })
+        return
+      }
+      executeProcess()
     },
     /** 点击取消关注 */
     handleSubOut() {
-      subscribeAuthorContract(this.creator)
-        .then(() => {
-          this.$toast.success(this.$t('common.un_follow_success'))
-          this.checkIfFollow()
+      const executeProcess = () => {
+        var loadingInstance = this.$loading({
+          background: 'rgba(0, 0, 0, 0.8)',
         })
-        .catch((e) => {
-          this.$toast.error(e)
-          this.checkIfFollow()
+        subscribeAuthorContract(this.creator)
+          .then(() => {
+            this.$toast.success(this.$t('common.un_follow_success'))
+            this.checkIfFollow()
+            loadingInstance.close()
+          })
+          .catch((e) => {
+            this.$toast.error(e && e.message ? e.message : e)
+            this.checkIfFollow()
+            loadingInstance.close()
+          })
+      }
+      if (this.$store.state.chain.balanceBnb < 0.01) {
+        this.$bnbConfirm(this.$store.state.common.language, () => {
+          executeProcess()
         })
+        return
+      }
+      executeProcess()
     },
     infoInit() {
       Promise.all([
@@ -267,7 +295,7 @@ export default {
               this.$toast.success(this.$t('news-detail.like_success'))
             })
             .catch((e) => {
-              this.$toast.error(e)
+              this.$toast.error(e && e.message ? e.message : e)
             })
             .finally(() => {
               loadingInstance.close()
@@ -299,7 +327,7 @@ export default {
               this.$toast.success(this.$t('news-detail.collect_success'))
             })
             .catch((e) => {
-              this.$toast.error(e)
+              this.$toast.error(e && e.message ? e.message : e)
             })
             .finally(() => {
               loadingInstance.close()
@@ -415,6 +443,10 @@ export default {
 
         span {
           margin-left: 5px;
+        }
+
+        &:first-child {
+          min-width: 125px;
         }
       }
 
