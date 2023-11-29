@@ -26,13 +26,13 @@ export default {
       "您今天已經登錄過了！",
     "check_in_success": "登錄成功！",
     "img_upload_error":
-      "上傳圖片時發生錯誤，請稍後再試。”",
+      "上傳圖片時發生錯誤，請稍後再試。",
     "follow_success":
       "關注成功！",
     "un_follow_success":
       "取消關注成功！",
     "reminder": "重要提醒",
-    "reminder_content": "您當前賬戶中的BNB數量已不足<span class='color-word'>0.01BNB</span>，可能導致您無法繼續完成本次操作，請盡快補充BNB到您的錢包地址。",
+    "reminder_content": "您當前賬戶中的BNB數量已不足<span class='color-word'>0.01 BNB</span>，可能導致您無法繼續完成本次操作，請盡快補充BNB到您的錢包地址。",
     "reminder_how": "如何獲得BNB？",
     "reminder_get": "獲得BNB",
     "reminder_cont": "繼續",
@@ -49,11 +49,11 @@ export default {
     "mbd_price": "MBD 價格",
     "market_cap": "總市值",
     "nft_volume": "NFT 交易額",
-    "transfers": "NFT 交易次數",
+    "transfers": "NFT 交易數",
     "weekly_active_users": "活躍用戶",
     "mbd_circulation": "MBD 流通量",
     "24h_nft_volume": "24h NFT 交易額",
-    "24h_transfers": "24h NFT 交易次數",
+    "24h_transfers": "24h NFT 交易數",
     "24h_nfts": "24h NFTs 創建數量",
     "latest_news": "最新資訊",
     "featured_prompts_nft": "Prompts NFTs",
@@ -64,7 +64,7 @@ export default {
     "bjx_what_value": "BJXStar NFT 有什麼价值？",
     "price": "價格",
     "buy_quantity": "購買數量",
-    "after_early_bird": "早鸟預售活動結束後，價格將恢復為15 USDT",
+    "after_early_bird": "早鸟預售活動結束後，價格將恢復為15 ",
     "buy": "購買",
     "comparison": "比較",
     "what_is_douji": "什麼是DOUJI.AI？",
@@ -313,6 +313,7 @@ export default {
       "提案批准成功！",
     "execute_success":
       "提案執行成功！",
+      "cancel_success": "取消提案成功！",
     "vote_already":
       "您已經投票過了",
     "like_success": "點讚成功！",
@@ -348,7 +349,7 @@ export default {
     "language": "語言",
     "max_supply": "最大供應量",
     "available_supply": "可供應量",
-    "curr_supply": "已發行數量",
+    "curr_supply": "已發行量",
     "subscribe": "關注",
     "un_subscribe": "取消關注",
     "dao_governance": "DOUJI NFT DAO 治理",
@@ -418,12 +419,20 @@ export default {
     "stk_quantity": "質押NFT的數量",
     "stk_tip": "最大質押NFT數量",
     "stk_btn": "質押",
-
-
-
-
-
-
+    "home": "首頁",
+    "news": "資訊",
+    "dao_update_att": "修改 NFT 屬性信息",
+    "dao_update_con": "修改作品內容",
+    "dao_sale_pro": "設置 NFT 銷售策略",
+    "dao_set_gov": "設置 NFT DAO 治理策略",
+    "last_edit": "最後修改",
+    "view_hist": "查看修訂歷史記錄",
+    "latest_tran": "最新交易",
+    "tx_id": "交易 ID",
+    "to": "到",
+    "amount": "數量",
+    "no_tx": "沒有交易信息",
+    "more_creator": "其他創作者作品",
 
   },
   "marketplace": {
@@ -435,28 +444,43 @@ export default {
     "all_category": "全部分類",
     "all_platform": "全部平台",
     "most_viewed": "最多觀看",
-    "search_tip": "按名稱和Token id搜索",
+    "search_tip": "按名稱和Token ID搜索",
     "sort_late_time": "更晚創建",
     "sort_early_time": "更早創建",
     "sort_high_price": "更高價格",
     "sort_low_price": "更低價格"
   },
   "user": {
+    "menu_balance": "賬戶",
+    "menu_nfts": "NFTs",
+    "menu_profile": "個人資料",
     "settlement": "結算",
     "cancel": "取消",
     "profile_save_success": "個人資料保存成功！",
     "settle_success": "結算申請已提交！平台審核通過後，獎勵將與24小時內轉入您的錢包地址！",
     "settle_success_1": "結算成功！ 結算後的資金已轉入您的錢包。",
-    "inc_d_title": "NFT 質押收益結算",
+    "inc_d_title": "NFT質押收益結算",
     "plat_d_title": "平台獎勵結算",
-    "plat_d_desc": "本次結算將收取 <span class='color-word'>{0} MBD</span> 的手續費。結算後的 MBD 和 BJXStar 將於24小時內轉入您的錢包地址。首次結算您將獲得價值 <span class='color-word'>$3.00 USD</span> BNB 的獎勵。"
-
-
-
-
-
-
-
-
+    "plat_d_desc": "本次結算將收取 <span class='color-word'>{0} MBD</span> 的手續費。結算後的 MBD 和 BJXStar 將於24小時內轉入您的錢包地址。首次結算您將獲得價值 <span class='color-word'>$3.00 USD</span> BNB 的獎勵。",
+    "balance": "賬戶",
+    "ba_dist": "創作者收益結算",
+    "ba_st_in": "NFT質押收益結算",
+    "ba_go_sett": "前往結算",
+    "ba_plat_rew": "平台獎勵結算",
+    "ba_sett_fee": "手續費",
+    "my_nft": "我的 DOUJI NFTs",
+    "items": "條記錄",
+    "profile": "個人資料",
+    "co_im": "頭像",
+    "alias": "暱稱",
+    "alias_tip": "暱稱會顯示在公開的個人資料上",
+    "short_desc": "簡短個人介紹",
+    "short_tip": "個人介紹會顯示在公開的個人資料上",
+    "social": "社交賬號",
+    "loc": "地區",
+  },
+  "creator": {
+    "subscribe": "關注",
+    "collect": "收藏"
   }
 }
