@@ -408,7 +408,7 @@
                 class="item text-color theme-background-color"
                 :class="{ light: bjx.priceType == '1' }"
               >
-                <div>{{ bjx.bnbPrice | decimalPlace2 }} BNB</div>
+                <div>{{ bjx.bnbPrice }} BNB</div>
               </div>
               <div
                 @click="bjx.priceType = '2'"
