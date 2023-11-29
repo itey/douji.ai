@@ -6,7 +6,7 @@ import marketJson from './abi/market'
 import mbd from './abi/mbd'
 import nft from './abi/nft'
 import pairJson from './abi/pair'
-import operator from './abi/operator'
+// import operator from './abi/operator'
 
 import { weiToEth, weiToMbd } from '@/utils/common'
 
@@ -251,29 +251,11 @@ export function getSettlePoolBalance(tokenId) {
 
 ///////////////////运营///////////////////
 /** 获取运营合约 */
-function getOperatorContract() {
-  return new web3.eth.Contract(operator.abi, process.env.VUE_APP_OPERATOR)
-}
+// function getOperatorContract() {
+//   return new web3.eth.Contract(operator.abi, process.env.VUE_APP_OPERATOR)
+// }
 
 
-/** 查询我是否关注了 */
-export function isFollow(account) {
-  const operatorContract = getOperatorContract()
-  if (!operatorContract) {
-    return
-  }
-  return new Promise((resolve, reject) => {
-    operatorContract.methods.checkFollow(account)
-      .call()
-      .then(res => {
-        resolve(res)
-      })
-      .catch(e => {
-
-        reject(e)
-      })
-  })
-}
 
 
 ///////////////////NFT///////////////////

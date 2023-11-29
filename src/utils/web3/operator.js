@@ -136,3 +136,24 @@ export function subscribeAuthorContract(address) {
       })
   })
 }
+
+
+/** 查询我是否关注了 */
+export function isFollow(account) {
+  const operatorContract = getOperatorContract()
+  if (!operatorContract) {
+    return
+  }
+  const fromAddress = store.state.chain.account
+  return new Promise((resolve, reject) => {
+    operatorContract.methods.checkFollow(account)
+      .call({ from: fromAddress })
+      .then(res => {
+        resolve(res)
+      })
+      .catch(e => {
+
+        reject(e)
+      })
+  })
+}

@@ -107,8 +107,8 @@ import {
   nftCollect,
   nftPraise,
 } from '@/utils/web3/nft'
-import { getCPD, isFollow } from '@/utils/web3/open'
-import { subscribeAuthorContract } from '@/utils/web3/operator'
+import { getCPD } from '@/utils/web3/open'
+import { subscribeAuthorContract, isFollow } from '@/utils/web3/operator'
 export default {
   name: 'nft-author-info',
   props: {
@@ -217,6 +217,9 @@ export default {
     },
     /** 查询是否已关注创作者 */
     checkIfFollow() {
+      if (!this.userAccount) {
+        return
+      }
       return new Promise((resolve, reject) => {
         isFollow(this.creator)
           .then((r) => {
