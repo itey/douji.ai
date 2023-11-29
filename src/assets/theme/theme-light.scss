@@ -416,6 +416,15 @@
     border: 1px solid #EAEDEF;
   }
 
+  .info-container .author-container .subscription.unsubscribe {
+    background: #FFFFFF;
+    color: #36404B;
+  }
+
+  .info-container .author-container .subscription.unsubscribe:hover {
+    background: #F7F9FA;
+  }
+
   .info-container .news-info .news-info-item {
     background: transparent;
     border: 1px solid #EAEDEF;

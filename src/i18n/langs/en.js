@@ -351,6 +351,7 @@ export default {
     "available_supply": "Available Supply",
     "curr_supply": "Current Supply",
     "subscribe": "Subscribe",
+    "un_subscribe": "Unsubscribe",
     "dao_governance": "DOUJI NFT DAO Governance",
     "dao_earn": "NFT DAO Earnings",
     "dao_share_tx": "The amount of share NFT DAO receives for each NFT transaction",

@@ -429,7 +429,16 @@
 
   .info-container .author-container .subscription {
     color: #36404B;
-    background: #37434d;
+    background: #1D383B;
+  }
+
+  .info-container .author-container .subscription.unsubscribe {
+    background: #37434D;
+    color: #E8EFF5;
+  }
+
+  .info-container .author-container .subscription.unsubscribe:hover {
+    background: #1D383B;
   }
 
   .info-container .news-info .news-info-item {

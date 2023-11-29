@@ -350,6 +350,7 @@ export default {
     "available_supply": "可供應量",
     "curr_supply": "已發行數量",
     "subscribe": "關注",
+    "un_subscribe": "取消關注",
     "dao_governance": "DOUJI NFT DAO 治理",
     "dao_earn": "NFT DAO 收益比例",
     "dao_share_tx": "每筆 NFT 交易發生時，NFT DAO的收益比例",

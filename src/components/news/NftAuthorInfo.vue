@@ -38,12 +38,16 @@
       <template
         v-if="userAccount && userAccount.toLowerCase() != creator.toLowerCase()"
       >
-        <div class="subscription" v-if="subscription" @click="handleSubOut()">
-          <img
+        <div
+          class="subscription unsubscribe"
+          v-if="subscription"
+          @click="handleSubOut()"
+        >
+          <!-- <img
             style="width: 13px; height: 9px"
             src="@/assets/images/news/true.png"
-          />
-          <span>{{ $t('news-detail.subscribe') }}</span>
+          /> -->
+          <span>{{ $t('news-detail.un_subscribe') }}</span>
         </div>
         <div class="subscription light" v-else @click="handleSub()">
           <img
@@ -369,8 +373,8 @@ export default {
       justify-content: center;
       cursor: pointer;
 
-      span {
-        margin-left: 6px;
+      img {
+        margin-right: 6px;
       }
     }
   }
