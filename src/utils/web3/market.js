@@ -33,6 +33,7 @@ export function createSaleOrder(tokenId, count, price) {
   }
   const fromAddress = store.state.chain.account
   return new Promise((resolve, reject) => {
+    console.log(price, mbdToWei(price) + '')
     // nftType 0-721 1-1155
     marketContract.methods.create(process.env.VUE_APP_NFT, tokenId + '', count + '', 1, mbdToWei(price) + '')
       .send({ from: fromAddress })

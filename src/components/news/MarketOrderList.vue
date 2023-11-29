@@ -78,6 +78,7 @@ import ListYourItemDialog from '@/components/news/ListYourItemDialog'
 import { getNftOrders, notifyUpdateOrder } from '@/utils/http'
 import { cancelSaleOrder, swapOrder } from '@/utils/web3/market'
 import { approveMbd } from '@/utils/web3/mbd'
+import { weiToMbd } from '@/utils/common'
 export default {
   name: 'market-order-list',
   props: {
@@ -184,7 +185,7 @@ export default {
         var loadingInstance = this.$loading({
           background: 'rgba(0, 0, 0, 0.8)',
         })
-        approveMbd(this.marketAddress, order.price)
+        approveMbd(this.marketAddress, weiToMbd(order.price))
           .then(() => {
             swapOrder(order.ordeId)
               .then((tx) => {
