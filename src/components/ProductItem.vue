@@ -24,8 +24,14 @@
     </div>
     <div class="product-bottom">
       <div class="bottom-left">
-        <span class="value text-color">2500 MBD</span>
-        <span class="transform text-sub-color"> ≈ $0.57</span>
+        <span class="value text-color"
+          >{{ item.price | toLocalString | removeEndZero }} MBD</span
+        >
+        <span class="transform text-sub-color">
+          ≈ ${{
+            ($store.state.chain.mbdPrice * item.price) | decimalPlace8
+          }}</span
+        >
       </div>
       <div class="bottom-right">
         <img style="width: 16px; height: 14px" src="@/assets/images/star.png" />

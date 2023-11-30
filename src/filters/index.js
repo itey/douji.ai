@@ -213,3 +213,15 @@ export const maskByTheme = (theme) => {
     return 'rgba(0, 0, 0, 0.1)'
   }
 }
+
+/** 去除字符串末尾的零 */
+export const removeEndZero = (str) => {
+  if (!str) {
+    return str
+  }
+  if (str.indexOf('.') > -1) {
+    return str.replace(/0+$/, '').replace(/\.$/, '')
+  } else {
+    return str
+  }
+}
