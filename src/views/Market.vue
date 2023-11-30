@@ -14,7 +14,7 @@
     <div class="title-container">
       <span class="text-color title">{{ $t('marketplace.all_nft') }}</span>
       <span class="text-sub-color sub"
-        >28,308 {{ $t('marketplace.result') }}</span
+        >{{ totalCount | toLocalString }} {{ $t('marketplace.result') }}</span
       >
     </div>
     <div class="search-container">

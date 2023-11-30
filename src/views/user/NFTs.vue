@@ -3,7 +3,9 @@
     <div class="top">
       <div>
         <span class="text-big text-color">{{ $t('user.my_nft') }}</span>
-        <span class="sub-value">308 {{ $t('user.items') }}</span>
+        <span class="sub-value"
+          >{{ list.length | toLocalString }} {{ $t('user.items') }}</span
+        >
       </div>
       <div class="search">
         <el-input placeholder="Search by name or Token ID">
