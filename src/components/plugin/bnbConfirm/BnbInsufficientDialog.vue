@@ -82,10 +82,17 @@ export default {
       })
     },
     goBuyNbn() {
-      window.open(
-        'https://docs.douji.ai/getting-started/how-to-get-bnb',
-        '_blank'
-      )
+      if (this.lang == 'en') {
+        window.open(
+          'https://docs.douji.ai/getting-started/how-to-get-bnb',
+          '_blank'
+        )
+      } else {
+        window.open(
+          'https://docs.douji.ai/v/zh-hk/getting-started/how-to-get-bnb',
+          '_blank'
+        )
+      }
     },
   },
 }
