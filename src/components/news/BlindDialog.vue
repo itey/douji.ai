@@ -4,19 +4,16 @@
     top="0vh"
     :fullscreen="true"
     :destroy-on-close="true"
-    :close-on-press-escape="false"
-    :close-on-click-modal="false"
     :visible.sync="show"
-    :modal-append-to-body="false"
     @close="handleClose"
     @open="onOpen"
     width="789px"
   >
     <div class="title" slot="title">{{ $t('news-detail.receive_box') }}</div>
-    <img
+    <!-- <img
       style="width: 789px; height: 800px"
       src="@/assets/images/news/gift-bg.png"
-    />
+    /> -->
     <div class="content">
       <div class="time-container">
         <img
@@ -169,12 +166,11 @@ export default {
 
 <style lang="scss">
 .blind-dialog {
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
+  flex-wrap: nowrap;
 
   &.el-dialog {
     background-color: black;
@@ -188,17 +184,29 @@ export default {
     width: 789px;
     z-index: 10;
     padding-top: 0;
+    text-align: center;
 
     .el-dialog__headerbtn {
       top: 0;
     }
   }
 
+  .el-dialog__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
   .title {
+    align-items: center;
+    align-self: center;
     font-size: 30px;
     font-family: Arial;
     font-weight: bold;
     color: #ffffff;
+    text-align: center;
 
     background: linear-gradient(
       0deg,
@@ -211,8 +219,10 @@ export default {
   }
 
   .content {
+    background-image: url('@/assets/images/news/gift-bg.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     position: absolute;
-    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -233,7 +243,7 @@ export default {
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      margin-bottom: 46px;
+      margin-bottom: 20px !important;
 
       .time {
         margin-left: 14px;
