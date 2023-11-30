@@ -1074,6 +1074,7 @@ post
                 "read_duration":"0.00",
                 "collect_count":0,
                 "praise_count":0,
+                "price": 100,//无精度 实际价格
                 "pltform":null,
                 "nickname":"你是什么夫斯基",
                 "head_img": "url"
@@ -1928,6 +1929,7 @@ post
 | 参数名   | 约束-required | 类型 | 说明 |
 | :------ |:------ | :------    |:------ |
 | txhash |true   | string |交易hash|
+| open_box_flag |true   | string |开盒标记|
 ##### Response parameters:
 
 ```json
@@ -1947,7 +1949,46 @@ post
 | 0            | 失败   |
 | 1            | 成功   |  
 
+### 39.广告
+ 
+Api path：
 
+```bash
+  http://43.198.63.219:1538/api/getAds
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| type |true   | int |1 全站  2首页|
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        "list": [
+           {
+              "img": "11111",
+              "url": "2222222"
+           }
+        ]
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |  
 
 
 

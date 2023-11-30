@@ -335,3 +335,12 @@ export function contractOpenBox(txhash, open_box_flag) {
     params: { txhash, open_box_flag }
   })
 }
+
+// 查询广告列表 1 全站  2首页
+export function getAdList(type) {
+  return request({
+    url: '/getAds',
+    method: 'post',
+    params: { type }
+  })
+}

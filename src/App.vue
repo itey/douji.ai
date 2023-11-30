@@ -6,8 +6,12 @@
     <!-- <creator v-if="$route.path == '/creator'"></creator> -->
     <el-container class="body-container">
       <el-main>
-        <div class="banner">
-          <img style="width: 653px; height: 71px" />
+        <div class="banner" v-if="globalAdvertise && globalAdvertise.img">
+          <img
+            :src="globalAdvertise.img"
+            @click="openAdvertise(globalAdvertise.url)"
+            style="width: 1209px; height: 94px; cursor: pointer"
+          />
         </div>
         <div class="app-content">
           <router-view v-if="show" />
@@ -24,6 +28,7 @@
 <script>
 import NavBar from '@/components/NavBar'
 import NavFooter from '@/components/NavFooter'
+import { getAdList } from '@/utils/http'
 export default {
   components: {
     NavBar,
@@ -32,6 +37,7 @@ export default {
   data() {
     return {
       show: true,
+      globalAdvertise: undefined,
     }
   },
   computed: {
@@ -51,6 +57,7 @@ export default {
   },
   created() {
     this.$store.dispatch('LoadMbdPrice')
+    this.loadAdsList()
   },
   methods: {
     // 高阶组件定义刷新方法
@@ -59,6 +66,21 @@ export default {
       this.$nextTick(() => {
         this.show = true
       })
+    },
+    /** 查询广告 */
+    loadAdsList() {
+      getAdList(1).then((r) => {
+        if (r.code == 1) {
+          const list = r.data.list
+          if (list && list.length > 0) {
+            this.globalAdvertise = list[0]
+          }
+        }
+      })
+    },
+    /** 打开广告 */
+    openAdvertise(url) {
+      window.open(url, '_blank')
     },
   },
 }

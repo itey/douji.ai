@@ -229,8 +229,12 @@
         />
       </div>
     </div>
-    <div style="margin-top: 43px">
-      <img style="width: 653px; height: 71px" />
+    <div style="margin-top: 43px" v-if="advertiseList && advertiseList[0]">
+      <img
+        :src="advertiseList[0].img"
+        @click="openAdvertise(advertiseList[0].url)"
+        style="width: 1209px; height: 94px; cursor: pointer"
+      />
     </div>
     <template v-if="false">
       <div class="news-list-container">
@@ -368,8 +372,12 @@
         />
       </div>
     </div>
-    <div style="margin-top: 46px">
-      <img style="width: 1209px; height: 94px" />
+    <div style="margin-top: 43px" v-if="advertiseList && advertiseList[1]">
+      <img
+        :src="advertiseList[1].img"
+        @click="openAdvertise(advertiseList[1].url)"
+        style="width: 1209px; height: 94px; cursor: pointer"
+      />
     </div>
     <div class="activity-container">
       <div class="top">{{ $t('home.activity') }}</div>
@@ -471,7 +479,7 @@ import ComparisonTable from '@/components/home/ComparisonTable'
 import NewsTabItem from '@/components/home/NewsTabItem'
 import LazyYoutubeVideo from 'vue-lazy-youtube-video'
 import { weiToEth } from '@/utils/common'
-import { hotNewsList, nftListPage, selectedList } from '@/utils/http'
+import { hotNewsList, nftListPage, selectedList, getAdList } from '@/utils/http'
 import { erc20Approve, mintByBnb, mintByErc20 } from '@/utils/web3/bjx'
 import {
   getBjxMbdPrice,
@@ -545,13 +553,19 @@ export default {
       selectedList: [],
       hotNewsList: [],
       bannerNews: {},
+      advertiseList: [],
     }
   },
   mounted() {
     this.getBjxData()
     this.newsInit()
+    this.loadAdsList()
   },
   methods: {
+    /** 打开广告 */
+    openAdvertise(url) {
+      window.open(url, '_blank')
+    },
     /** 鼠标悬浮 */
     onHover(val) {
       this.bannerNews = val
@@ -758,6 +772,14 @@ export default {
             return reject(r.message)
           }
         })
+      })
+    },
+    /** 查询广告列表 */
+    loadAdsList() {
+      getAdList(2).then((r) => {
+        if (r.code == 1) {
+          this.advertiseList = r.data.list
+        }
       })
     },
   },
