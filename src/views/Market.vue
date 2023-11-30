@@ -50,6 +50,7 @@
       </el-select>
       <el-select
         v-model="platformValue"
+        @change="onPlatformChange"
         clearable
         filterable
         :placeholder="$t('marketplace.all_platform')"
@@ -64,6 +65,7 @@
       </el-select>
       <el-select
         v-model="viewedValue"
+        @change="onViewedChange"
         clearable
         filterable
         :placeholder="$t('marketplace.most_viewed')"
@@ -77,6 +79,9 @@
         ></el-option>
       </el-select>
       <el-input
+        v-model="searchValue"
+        @keyup.native.enter="onSearch"
+        @blur="closeSearch"
         style="width: 344px"
         :placeholder="$t('marketplace.search_tip')"
       >
@@ -135,11 +140,14 @@ export default {
       platformOptions: [],
       platformValue: '',
       viewedOptions: [],
-      viewedValue: 'Late creation time',
+      viewedValue: 'time_late',
       list: [],
       pageNo: 1,
       pageSize: 20,
       totalCount: 0,
+      orderBy: 1,
+      orderByDesc: 'desc',
+      searchValue: undefined,
     }
   },
   created() {
@@ -156,19 +164,19 @@ export default {
     initOptions() {
       this.viewedOptions = [
         {
-          value: 'Late creation time',
+          value: 'time_late',
           label: this.$t('marketplace.sort_late_time'),
         },
         {
-          value: 'Early creation time',
+          value: 'time_early',
           label: this.$t('marketplace.sort_early_time'),
         },
         {
-          value: 'High price',
+          value: 'price_high',
           label: this.$t('marketplace.sort_high_price'),
         },
         {
-          value: 'Low price',
+          value: 'price_low',
           label: this.$t('marketplace.sort_low_price'),
         },
       ]
@@ -185,7 +193,10 @@ export default {
         content_type: this.typeValue,
         category: this.categoryValue,
         pltform: this.platformValue,
+        orderField: this.orderBy,
+        orderBy: this.orderByDesc,
       }
+      this.searchValue && (param.keyW = this.searchValue)
       this.loading = true
       nftListPage(param)
         .then((r) => {
@@ -262,6 +273,53 @@ export default {
       this.loadPlatformList(value)
       this.pageNo = 1
       this.loadPageList()
+    },
+    /** 平台发生变化 */
+    onPlatformChange() {
+      this.pageNo = 1
+      this.loadPageList()
+    },
+    /** 排序发生变化 */
+    onViewedChange(sort) {
+      switch (sort) {
+        case 'time_late':
+          this.orderBy = 1
+          this.orderByDesc = 'desc'
+          break
+        case 'time_early':
+          this.orderBy = 1
+          this.orderByDesc = 'asc'
+          break
+        case 'price_high':
+          this.orderBy = 2
+          this.orderByDesc = 'desc'
+          break
+        case 'price_low':
+          this.orderBy = 2
+          this.orderByDesc = 'asc'
+          break
+        default:
+          break
+      }
+      this.pageNo = 1
+      // this.typeValue = undefined
+      // this.categoryValue = undefined
+      // this.platformValue = undefined
+      this.loadPageList()
+    },
+    /** 搜索 */
+    onSearch() {
+      this.pageNo = 1
+      this.typeValue = undefined
+      this.categoryValue = undefined
+      this.platformValue = undefined
+      this.loadPageList()
+    },
+    closeSearch(val) {
+      if (!val.target.value) {
+        this.pageNo = 1
+        this.loadPageList()
+      }
     },
   },
 }

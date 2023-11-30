@@ -64,7 +64,7 @@ export default {
     "bjx_what_value": "BJXStar NFT 有什麼价值？",
     "price": "價格",
     "buy_quantity": "購買數量",
-    "after_early_bird": "早鸟預售活動結束後，價格將恢復為15 ",
+    "after_early_bird": "早鸟預售活動結束後，價格將恢復為 ",
     "buy": "購買",
     "comparison": "比較",
     "what_is_douji": "什麼是DOUJI.AI？",
@@ -313,7 +313,7 @@ export default {
       "提案批准成功！",
     "execute_success":
       "提案執行成功！",
-      "cancel_success": "取消提案成功！",
+    "cancel_success": "取消提案成功！",
     "vote_already":
       "您已經投票過了",
     "like_success": "點讚成功！",
