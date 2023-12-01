@@ -1,8 +1,8 @@
 <template>
   <div class="create-step0">
-    <div class="create-label">{{ $t('create.create') }}</div>
+    <div class="create-label">{{ $t("create.create") }}</div>
     <div class="create-title text-color">
-      {{ $t('create.create_your_collection') }}
+      {{ $t("create.create_your_collection") }}
     </div>
     <div class="type-container" v-for="(arr, index) in typeList" :key="index">
       <div
@@ -13,61 +13,61 @@
       >
         <!-- <img style="width: 72px;height: 67px;" src="@/assets/images/create/article.png" /> -->
         <div :class="showClass(i)">
-          {{ $i18n.locale == 'en' ? item.e_name : item.c_name }}
+          {{ $i18n.locale == "en" ? item.e_name : item.c_name }}
         </div>
       </div>
     </div>
-    <div class="tip">{{ $t('create.the_soon') }}</div>
-    <div class="question text-color">{{ $t('create.how_create') }}</div>
+    <div class="tip">{{ $t("create.the_soon") }}</div>
+    <div class="question text-color">{{ $t("create.how_create") }}</div>
   </div>
 </template>
 
 <script>
-import { getNftTypes } from '@/utils/http'
+import { getNftTypes } from "@/utils/http";
 export default {
-  name: 'create-step0',
+  name: "create-step0",
   data() {
     return {
       typeList: [],
-    }
+    };
   },
   methods: {
     /** 获取分类 */
     loadTypeList() {
       getNftTypes().then((r) => {
-        const arr = r.data.list
+        const arr = r.data.list;
         if (arr) {
-          this.typeList = this._.chunk(arr, 3)
+          this.typeList = this._.chunk(arr, 3);
         }
-      })
+      });
     },
     showClass(i) {
-      const r = i % 3
+      const r = i % 3;
       switch (r) {
         case 0:
-          return 'article'
+          return "article";
         case 1:
-          return 'prompt'
+          return "prompt";
         case 2:
-          return 'art'
+          return "art";
         default:
-          return 'article'
+          return "article";
       }
     },
     itemClick(type) {
-      this.$emit('itemClick', type)
+      this.$emit("itemClick", type);
     },
   },
   mounted() {
-    this.loadTypeList()
+    this.loadTypeList();
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .create-step0 {
   .create-label {
-    font-size: 14px;
+    font-size: 26px;
     font-family: Arial;
     font-weight: bold;
     color: #00f9e5;
@@ -91,7 +91,7 @@ export default {
     .type-item {
       width: 454px;
       height: 140px;
-      background-image: url('@/assets/images/home/item-back2.png');
+      background-image: url("@/assets/images/home/item-back2.png");
       background-size: 100% 100%;
       border-radius: 20px;
       display: flex;
@@ -102,7 +102,6 @@ export default {
     }
 
     .article {
-      margin-top: 25px;
       font-size: 16px;
       font-family: Source Han Sans CN;
       font-weight: bold;
@@ -114,7 +113,6 @@ export default {
     }
 
     .prompt {
-      margin-top: 24px;
       font-size: 16px;
       font-family: Source Han Sans CN;
       font-weight: bold;
@@ -126,7 +124,6 @@ export default {
     }
 
     .art {
-      margin-top: 22px;
       font-size: 16px;
       font-family: Source Han Sans CN;
       font-weight: bold;

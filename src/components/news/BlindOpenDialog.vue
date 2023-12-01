@@ -8,12 +8,13 @@
       :close-on-press-escape="false"
       :close-on-click-modal="false"
       :modal-append-to-body="false"
+      :append-to-body="true"
       :visible.sync="show"
       @open="onOpen"
       @close="handleClose"
       width="789px"
     >
-      <div class="title" slot="title">{{ $t('news-detail.open_box') }}</div>
+      <div class="title" slot="title">{{ $t("news-detail.open_box") }}</div>
       <img
         style="width: 789px; height: 800px"
         src="@/assets/images/news/gift-bg.png"
@@ -33,7 +34,7 @@
           </div>
         </div>
         <div class="label">
-          {{ $t('news-detail.open_rewards') }}
+          {{ $t("news-detail.open_rewards") }}
         </div>
         <div class="blind-list">
           <div
@@ -53,21 +54,21 @@
               style="width: 52px; height: 52px"
             />
             <div class="blind-label">
-              {{ item.count }} {{ item.coin == 'MBD' ? 'MBD' : 'BJXStar NFT' }}
+              {{ item.count }} {{ item.coin == "MBD" ? "MBD" : "BJXStar NFT" }}
             </div>
             <div class="blind-value">{{ item.percent }}</div>
           </div>
         </div>
         <div class="btn-container">
           <el-button @click="openClick" class="btn-open">{{
-            $t('news-detail.open')
+            $t("news-detail.open")
           }}</el-button>
           <el-button @click="giveUpClick" class="btn-give-up">{{
-            $t('news-detail.give_up')
+            $t("news-detail.give_up")
           }}</el-button>
         </div>
         <div class="blind-tip">
-          {{ $t('news-detail.open_fee') }}
+          {{ $t("news-detail.open_fee") }}
           <span style="color: #ffffff">500 MBD</span>
         </div>
       </div>
@@ -77,13 +78,13 @@
 </template>
 
 <script>
-import CongratulationsDialog from '@/components/news/CongratulationsDialog'
-import { setBlindBoxState, getBlindBoxCache } from '@/utils/common'
-import { openBlindBox, contractOpenBox } from '@/utils/http'
-import { transferMbd, approveMbd } from '@/utils/web3/mbd'
-import { openBoxContract } from '@/utils/web3/operator'
+import CongratulationsDialog from "@/components/news/CongratulationsDialog";
+import { setBlindBoxState, getBlindBoxCache } from "@/utils/common";
+import { openBlindBox, contractOpenBox } from "@/utils/http";
+import { transferMbd, approveMbd } from "@/utils/web3/mbd";
+import { openBoxContract } from "@/utils/web3/operator";
 export default {
-  name: 'blind-open-dialog',
+  name: "blind-open-dialog",
   components: {
     CongratulationsDialog,
   },
@@ -92,39 +93,39 @@ export default {
       blindBox: {},
       rewardsOptions: [
         {
-          coin: 'MBD',
+          coin: "MBD",
           count: 500,
-          percent: '40%',
+          percent: "40%",
         },
         {
-          coin: 'MBD',
+          coin: "MBD",
           count: 1000,
-          percent: '30%',
+          percent: "30%",
         },
         {
-          coin: 'MBD',
+          coin: "MBD",
           count: 3000,
-          percent: '15%',
+          percent: "15%",
         },
         {
-          coin: 'MBD',
+          coin: "MBD",
           count: 8000,
-          percent: '10%',
+          percent: "10%",
         },
         {
-          coin: 'MBD',
+          coin: "MBD",
           count: 20000,
-          percent: '4%',
+          percent: "4%",
         },
         {
-          coin: 'MBD',
+          coin: "MBD",
           count: 50000,
-          percent: '0.9%',
+          percent: "0.9%",
         },
         {
-          coin: 'NFT',
+          coin: "NFT",
           count: 5,
-          percent: '0.1%',
+          percent: "0.1%",
         },
       ],
       userInfo: this.$store.state.user.userInfo,
@@ -134,17 +135,17 @@ export default {
       showTimer: false,
       leftTime: undefined,
       boxPrizes: {},
-    }
+    };
   },
   methods: {
     /** 打开盲盒 */
     openClick() {
       const executeProcess = () => {
-        this.show = false
+        this.show = false;
         // 合约调用
         var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
+          background: "rgba(0, 0, 0, 0.8)",
+        });
         if (this.userInfo.isge8model) {
           approveMbd(this.operatorAddress, 500)
             .then(() => {
@@ -153,106 +154,106 @@ export default {
                   contractOpenBox(txJson.transactionHash, this.blindBox.box)
                     .then((r) => {
                       if (r.code == 1) {
-                        this.boxPrizes = r.data
-                        this.onFinished()
-                        this.$refs['successDialog'].showDialog()
-                        this.$emit('handleReload')
+                        this.boxPrizes = r.data;
+                        this.onFinished();
+                        this.$refs["successDialog"].showDialog();
+                        this.$emit("handleReload");
                       } else {
-                        this.$toast.error(r.message)
+                        this.$toast.error(r.message);
                       }
                     })
                     .catch((e) => {
-                      this.$toast.error(e && e.message ? e.message : e)
+                      this.$toast.error(e && e.message ? e.message : e);
                     })
                     .finally(() => {
-                      loadingInstance.close()
-                    })
+                      loadingInstance.close();
+                    });
                 })
                 .catch((e) => {
-                  this.$toast.error(e && e.message ? e.message : e)
-                  loadingInstance.close()
-                })
+                  this.$toast.error(e && e.message ? e.message : e);
+                  loadingInstance.close();
+                });
             })
             .catch((e) => {
-              this.$toast.error(e && e.message ? e.message : e)
-              loadingInstance.close()
-            })
+              this.$toast.error(e && e.message ? e.message : e);
+              loadingInstance.close();
+            });
         } else {
           transferMbd(this.centerAddress, 500)
             .then((txJson) => {
               openBlindBox(this.blindBox.box, txJson.transactionHash)
                 .then((r) => {
                   if (r.code == 1) {
-                    this.boxPrizes = r.data
-                    this.onFinished()
-                    this.$refs['successDialog'].showDialog()
-                    this.$emit('handleReload')
+                    this.boxPrizes = r.data;
+                    this.onFinished();
+                    this.$refs["successDialog"].showDialog();
+                    this.$emit("handleReload");
                   } else {
-                    this.$toast.error(r.message)
+                    this.$toast.error(r.message);
                   }
                 })
                 .catch((e) => {
-                  this.$toast.error(e && e.message ? e.message : e)
+                  this.$toast.error(e && e.message ? e.message : e);
                 })
                 .finally(() => {
-                  loadingInstance.close()
-                })
+                  loadingInstance.close();
+                });
             })
             .catch((e) => {
-              this.$toast.error(e && e.message ? e.message : e)
-              loadingInstance.close()
-            })
+              this.$toast.error(e && e.message ? e.message : e);
+              loadingInstance.close();
+            });
         }
-      }
+      };
 
       if (this.$store.state.chain.balanceBnb < 0.01) {
         this.$bnbConfirm(this.$store.state.common.language, () => {
-          executeProcess()
-        })
-        return
+          executeProcess();
+        });
+        return;
       }
 
-      executeProcess()
+      executeProcess();
     },
     onOpen() {
-      this.blindBox = getBlindBoxCache(this.$store.state.user.userId)
-      const endTime = Number(this.blindBox.time) + 120000
-      this.leftTime = endTime - new Date().getTime()
+      this.blindBox = getBlindBoxCache(this.$store.state.user.userId);
+      const endTime = Number(this.blindBox.time) + 120000;
+      this.leftTime = endTime - new Date().getTime();
       if (this.leftTime <= 0) {
-        this.onFinished()
+        this.onFinished();
       } else {
-        this.showTimer = true
+        this.showTimer = true;
       }
     },
     /** 倒计时结束 */
     onFinished() {
-      setBlindBoxState(this.$store.state.user.userId, true)
-      this.showTimer = false
-      this.show = false
+      setBlindBoxState(this.$store.state.user.userId, true);
+      this.showTimer = false;
+      this.show = false;
     },
     /** 放弃盲盒 */
     giveUpClick() {
-      setBlindBoxState(this.$store.state.user.userId, true)
-      this.show = false
+      setBlindBoxState(this.$store.state.user.userId, true);
+      this.show = false;
     },
     /** 点击关闭 */
     handleClose() {
-      setBlindBoxState(this.$store.state.user.userId, true)
-      this.show = false
+      setBlindBoxState(this.$store.state.user.userId, true);
+      this.show = false;
     },
     showDialog() {
       if (!this.show) {
-        this.show = true
+        this.show = true;
       }
     },
     getStyle(index) {
       return {
-        marginRight: index == 3 || index == 6 ? 0 : '8px',
-        marginBottom: index > 3 ? 0 : '14px',
-      }
+        marginRight: index == 3 || index == 6 ? 0 : "8px",
+        marginBottom: index > 3 ? 0 : "14px",
+      };
     },
   },
-}
+};
 </script>
 
 <style lang="scss">

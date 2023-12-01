@@ -6,46 +6,46 @@
         src="@/assets/logo.png"
       />
       <div class="label1" style="margin: 19px 0 15px 0">
-        {{ $t('footer.ai_ecology') }}
+        {{ $t("footer.ai_ecology") }}
       </div>
       <div class="label2">Copyright @ 2023 ALL Rights Roserved.</div>
     </div>
     <div class="footer-column">
-      <div class="title">{{ $t('footer.video') }}</div>
+      <div class="title">{{ $t("footer.video") }}</div>
       <el-menu>
-        <el-menu-item>{{ $t('footer.about') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.contact') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.advertise') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.creator_policies') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.report_content') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.freelance_contributors') }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.about") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.contact") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.advertise") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.creator_policies") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.report_content") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.freelance_contributors") }}</el-menu-item>
       </el-menu>
     </div>
     <div class="footer-column">
-      <div class="title">{{ $t('footer.legal') }}</div>
+      <div class="title">{{ $t("footer.legal") }}</div>
       <el-menu>
-        <el-menu-item>{{ $t('footer.about') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.contact') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.advertise') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.creator_policies') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.report_content') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.freelance_contributors') }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.about") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.contact") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.advertise") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.creator_policies") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.report_content") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.freelance_contributors") }}</el-menu-item>
       </el-menu>
     </div>
     <div class="footer-column">
-      <div class="title">{{ $t('footer.about_us') }}</div>
+      <div class="title">{{ $t("footer.about_us") }}</div>
       <el-menu>
-        <el-menu-item>{{ $t('footer.about') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.contact') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.advertise') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.creator_policies') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.report_content') }}</el-menu-item>
-        <el-menu-item>{{ $t('footer.freelance_contributors') }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.about") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.contact") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.advertise") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.creator_policies") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.report_content") }}</el-menu-item>
+        <el-menu-item>{{ $t("footer.freelance_contributors") }}</el-menu-item>
       </el-menu>
     </div>
     <div>
       <div>
-        <div class="title">{{ $t('footer.follow_us') }}</div>
+        <div class="title">{{ $t("footer.follow_us") }}</div>
         <div class="follow-ico">
           <img src="@/assets/images/twitter.png" alt />
           <img src="@/assets/images/youtube.png" alt />
@@ -58,11 +58,11 @@
 
 <script>
 export default {
-  name: 'nav-footer',
+  name: "nav-footer",
   components: {},
 
   methods: {},
-}
+};
 </script>
 
 <style lang="scss">
@@ -72,6 +72,8 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   padding: 57px 0 63px 0;
+  z-index: 1;
+  position: relative;
 
   .title {
     font-size: 20px;

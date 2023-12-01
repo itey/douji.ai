@@ -26,9 +26,9 @@
   </el-container>
 </template>
 <script>
-import NavBar from '@/components/NavBar'
-import NavFooter from '@/components/NavFooter'
-import { getAdList } from '@/utils/http'
+import NavBar from "@/components/NavBar";
+import NavFooter from "@/components/NavFooter";
+import { getAdList } from "@/utils/http";
 export default {
   components: {
     NavBar,
@@ -38,52 +38,52 @@ export default {
     return {
       show: true,
       globalAdvertise: undefined,
-    }
+    };
   },
   computed: {
     /** 当前主题 */
     currentTheme() {
       if (this.$store.state.common.theme) {
-        return 'theme-' + this.$store.state.common.theme
+        return "theme-" + this.$store.state.common.theme;
       } else {
-        return 'theme-dark'
+        return "theme-dark";
       }
     },
   },
   provide() {
     return {
       reload: this.reload,
-    }
+    };
   },
   created() {
-    this.$store.dispatch('LoadMbdPrice')
-    this.loadAdsList()
+    this.$store.dispatch("LoadMbdPrice");
+    this.loadAdsList();
   },
   methods: {
     // 高阶组件定义刷新方法
     reload() {
-      this.show = false
+      this.show = false;
       this.$nextTick(() => {
-        this.show = true
-      })
+        this.show = true;
+      });
     },
     /** 查询广告 */
     loadAdsList() {
       getAdList(1).then((r) => {
         if (r.code == 1) {
-          const list = r.data.list
+          const list = r.data.list;
           if (list && list.length > 0) {
-            this.globalAdvertise = list[0]
+            this.globalAdvertise = list[0];
           }
         }
-      })
+      });
     },
     /** 打开广告 */
     openAdvertise(url) {
-      window.open(url, '_blank')
+      window.open(url, "_blank");
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 #app {
@@ -101,6 +101,7 @@ export default {
     background: #1a2027;
     border-bottom: 1px solid #29383f;
     padding: 0 0;
+    z-index: 11;
   }
 
   .banner {

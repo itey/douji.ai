@@ -5,16 +5,17 @@
       :fullscreen="true"
       :show-close="false"
       :visible.sync="show"
+      :append-to-body="true"
       width="789px"
     >
       <div class="content">
-        <div class="title">{{ $t('news-detail.daily_check_gift') }}</div>
+        <div class="title">{{ $t("news-detail.daily_check_gift") }}</div>
         <img
           style="width: 244px; height: 256px"
           src="@/assets/images/news/gift-icon.png"
         />
         <el-button @click="handleCheckIn()" class="common-btn2">{{
-          $t('news-detail.get_id')
+          $t("news-detail.get_id")
         }}</el-button>
       </div>
     </el-dialog>
@@ -23,48 +24,48 @@
 </template>
 
 <script>
-import CheckRewardDialog from './CheckRewardDialog'
+import CheckRewardDialog from "./CheckRewardDialog";
 export default {
-  name: 'check-in-dialog',
+  name: "check-in-dialog",
   data() {
     return {
       show: false,
       rewardAmount: undefined,
-    }
+    };
   },
   components: {
     CheckRewardDialog,
   },
   methods: {
     showDialog() {
-      this.show = true
+      this.show = true;
     },
     /** 点击签到 */
     handleCheckIn() {
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       this.$store
-        .dispatch('CheckInDaily')
+        .dispatch("CheckInDaily")
         .then((r) => {
-          this.$toast.success(this.$t('common.check_in_success'))
-          this.$emit('onCheckedIn')
+          this.$toast.success(this.$t("common.check_in_success"));
+          this.$emit("onCheckedIn");
           if (r && r.amount) {
-            this.rewardAmount = r.amount
-            this.$refs['rewardDialog'].showDialog()
+            this.rewardAmount = r.amount;
+            this.$refs["rewardDialog"].showDialog();
           }
-          this.show = false
+          this.show = false;
         })
         .catch((e) => {
-          console.log(e)
-          this.$toast.error(this.$t('common.check_in_failed'))
+          console.log(e);
+          this.$toast.error(this.$t("common.check_in_failed"));
         })
         .finally(() => {
-          loadingInstance.close()
-        })
+          loadingInstance.close();
+        });
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -74,6 +75,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 13;
 
   &.el-dialog {
     background-color: black;
@@ -82,7 +84,7 @@ export default {
   }
 
   .content {
-    background-image: url('@/assets/images/news/gift-bg.png');
+    background-image: url("@/assets/images/news/gift-bg.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     top: 10%;

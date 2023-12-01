@@ -8,7 +8,7 @@
         }"
         @click="currentIndex = 0"
       >
-        {{ $t('home.tab_rich_resources') }}
+        {{ $t("home.tab_rich_resources") }}
       </div>
       <div
         class="tab-header-item text-color"
@@ -17,7 +17,7 @@
         }"
         @click="currentIndex = 1"
       >
-        {{ $t('home.tab_creators_rights') }}
+        {{ $t("home.tab_creators_rights") }}
       </div>
       <div
         class="tab-header-item text-color"
@@ -26,7 +26,7 @@
         }"
         @click="currentIndex = 2"
       >
-        {{ $t('home.tab_content_model') }}
+        {{ $t("home.tab_content_model") }}
       </div>
       <div
         class="tab-header-item text-color"
@@ -35,7 +35,7 @@
         }"
         @click="currentIndex = 3"
       >
-        {{ $t('home.tab_diversified_models') }}
+        {{ $t("home.tab_diversified_models") }}
       </div>
       <div
         class="tab-header-item text-color"
@@ -44,7 +44,7 @@
         }"
         @click="currentIndex = 4"
       >
-        {{ $t('home.tab_income_timely') }}
+        {{ $t("home.tab_income_timely") }}
       </div>
       <div
         class="tab-header-item text-color"
@@ -53,7 +53,7 @@
         }"
         @click="currentIndex = 5"
       >
-        {{ $t('home.tab_platform_model') }}
+        {{ $t("home.tab_platform_model") }}
       </div>
     </div>
     <div>
@@ -67,19 +67,20 @@
             src="@/assets/images/home/ai.png"
           />
           <div class="tab-row-text">
-            <div class="title text-color">{{ $t('home.tab_ai_tools') }}</div>
+            <div class="title text-color">{{ $t("home.tab_ai_tools") }}</div>
             <div class="desc">
-              {{ $t('home.tab_the_platform_standards') }}
+              {{ $t("home.tab_the_platform_standards") }}
             </div>
           </div>
         </div>
+        <div class="division"></div>
         <div class="tab-row">
           <div class="tab-row-text">
             <div class="title text-color">
-              {{ $t('home.tab_content_resources') }}
+              {{ $t("home.tab_content_resources") }}
             </div>
             <div class="desc">
-              {{ $t('home.tab_the_platform_production') }}
+              {{ $t("home.tab_the_platform_production") }}
             </div>
           </div>
           <img
@@ -98,9 +99,9 @@
             src="@/assets/images/home/ownership.png"
           />
           <div class="title text-color">
-            {{ $t('home.tab_content_ownership') }}
+            {{ $t("home.tab_content_ownership") }}
           </div>
-          <div class="desc">{{ $t('home.tab_content_circulation') }}</div>
+          <div class="desc">{{ $t("home.tab_content_circulation") }}</div>
         </div>
         <div class="item">
           <img
@@ -108,9 +109,9 @@
             src="@/assets/images/home/ownershi.png"
           />
           <div class="title text-color">
-            {{ $t('home.tab_user_ownership') }}
+            {{ $t("home.tab_user_ownership") }}
           </div>
-          <div class="desc">{{ $t('home.tab_the_result_platform') }}</div>
+          <div class="desc">{{ $t("home.tab_the_result_platform") }}</div>
         </div>
         <div class="item">
           <img
@@ -118,16 +119,16 @@
             src="@/assets/images/home/ownershir.png"
           />
           <div class="title text-color">
-            {{ $t('home.tab_income_ownership') }}
+            {{ $t("home.tab_income_ownership") }}
           </div>
-          <div class="desc">{{ $t('home.tab_the_creator_creator') }}</div>
+          <div class="desc">{{ $t("home.tab_the_creator_creator") }}</div>
         </div>
       </div>
       <div
         v-if="currentIndex == 2"
         class="tab-item theme-background-color tab3"
       >
-        <div class="tab-tip">{{ $t('home.tab_the_platform_works') }}</div>
+        <div class="tab-tip">{{ $t("home.tab_the_platform_works") }}</div>
         <div class="tab-bottom">
           <div class="tab-row">
             <img
@@ -136,19 +137,19 @@
             />
             <div class="tab-row-text">
               <div class="title text-color">
-                {{ $t('home.tab_co_creation2') }}
+                {{ $t("home.tab_co_creation2") }}
               </div>
               <div class="desc">
-                {{ $t('home.tab_creator_value') }}
+                {{ $t("home.tab_creator_value") }}
               </div>
             </div>
           </div>
           <div class="tab-row">
             <div class="tab-row-text">
               <div class="title text-color">
-                {{ $t('home.tab_content_governance') }}
+                {{ $t("home.tab_content_governance") }}
               </div>
-              <div class="desc">{{ $t('home.tab_creators_future_value') }}</div>
+              <div class="desc">{{ $t("home.tab_creators_future_value") }}</div>
             </div>
             <img
               style="width: 152px; height: 153px"
@@ -161,7 +162,7 @@
         v-if="currentIndex == 3"
         class="tab-item theme-background-color tab4"
       >
-        <div class="tab-tip">{{ $t('home.tab_platform_works') }}</div>
+        <div class="tab-tip">{{ $t("home.tab_platform_works") }}</div>
         <div class="tab-bottom">
           <div class="item">
             <img
@@ -170,9 +171,9 @@
             />
             <div class="tab-item-text">
               <div class="title text-color">
-                {{ $t('home.tab_income_content') }}
+                {{ $t("home.tab_income_content") }}
               </div>
-              <div class="desc">{{ $t('home.tab_users_based_on') }}</div>
+              <div class="desc">{{ $t("home.tab_users_based_on") }}</div>
             </div>
           </div>
           <div class="item">
@@ -182,9 +183,9 @@
             />
             <div class="tab-item-text">
               <div class="title text-color">
-                {{ $t('home.tab_content_income') }}
+                {{ $t("home.tab_content_income") }}
               </div>
-              <div class="desc">{{ $t('home.tab_the_creator_held') }}</div>
+              <div class="desc">{{ $t("home.tab_the_creator_held") }}</div>
             </div>
           </div>
           <div class="item">
@@ -194,9 +195,9 @@
             />
             <div class="tab-item-text">
               <div class="title text-color">
-                {{ $t('home.tab_content_copyright_income') }}
+                {{ $t("home.tab_content_copyright_income") }}
               </div>
-              <div class="desc">{{ $t('home.tab_creators_transaction') }}</div>
+              <div class="desc">{{ $t("home.tab_creators_transaction") }}</div>
             </div>
           </div>
           <div class="item">
@@ -206,9 +207,9 @@
             />
             <div class="tab-item-text">
               <div class="title text-color">
-                {{ $t('home.tab_content_copyright_income') }}
+                {{ $t("home.tab_content_copyright_income") }}
               </div>
-              <div class="desc">{{ $t('home.tab_as_long_dao') }}</div>
+              <div class="desc">{{ $t("home.tab_as_long_dao") }}</div>
             </div>
           </div>
         </div>
@@ -217,7 +218,7 @@
         v-if="currentIndex == 4"
         class="tab-item theme-background-color tab3"
       >
-        <div class="tab-tip">{{ $t('home.tab_based_income') }}</div>
+        <div class="tab-tip">{{ $t("home.tab_based_income") }}</div>
         <div class="tab-bottom">
           <div class="tab-row">
             <img
@@ -226,19 +227,19 @@
             />
             <div class="tab-row-text">
               <div class="title text-color">
-                {{ $t('home.tab_amount_controllable') }}
+                {{ $t("home.tab_amount_controllable") }}
               </div>
               <div class="desc">
-                {{ $t('home.tab_creator_creative_income') }}
+                {{ $t("home.tab_creator_creative_income") }}
               </div>
             </div>
           </div>
           <div class="tab-row">
             <div class="tab-row-text">
               <div class="title text-color">
-                {{ $t('home.tab_Revenues_time') }}
+                {{ $t("home.tab_Revenues_time") }}
               </div>
-              <div class="desc">{{ $t('home.tab_income_transfer') }}</div>
+              <div class="desc">{{ $t("home.tab_income_transfer") }}</div>
             </div>
             <img
               style="width: 185px; height: 149px"
@@ -251,7 +252,7 @@
         v-if="currentIndex == 5"
         class="tab-item theme-background-color tab3"
       >
-        <div class="tab-tip">{{ $t('home.tab_douji_platform') }}</div>
+        <div class="tab-tip">{{ $t("home.tab_douji_platform") }}</div>
         <div class="tab-bottom">
           <div class="tab-row">
             <img
@@ -260,17 +261,17 @@
             />
             <div class="tab-row-text">
               <div class="title text-color">
-                {{ $t('home.tab_platform_rights') }}
+                {{ $t("home.tab_platform_rights") }}
               </div>
-              <div class="desc">{{ $t('home.tab_dao_voting') }}</div>
+              <div class="desc">{{ $t("home.tab_dao_voting") }}</div>
             </div>
           </div>
           <div class="tab-row">
             <div class="tab-row-text">
               <div class="title text-color">
-                {{ $t('home.tab_platform_rights2') }}
+                {{ $t("home.tab_platform_rights2") }}
               </div>
-              <div class="desc">{{ $t('home.tab_dao_members') }}</div>
+              <div class="desc">{{ $t("home.tab_dao_members") }}</div>
             </div>
             <img
               style="width: 156px; height: 129px"
@@ -285,13 +286,13 @@
 
 <script>
 export default {
-  name: 'comparison-tab',
+  name: "comparison-tab",
   data() {
     return {
       currentIndex: 0,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -365,6 +366,11 @@ export default {
           line-height: 20px;
         }
       }
+    }
+
+    .division {
+      display: block;
+      width: 820px;
     }
   }
 

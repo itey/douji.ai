@@ -5,10 +5,10 @@
       separator-class="el-icon-arrow-right"
     >
       <el-breadcrumb-item :to="{ path: '/' }">{{
-        $t('news-detail.home')
+        $t("news-detail.home")
       }}</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/news' }">{{
-        $t('news-detail.news')
+        $t("news-detail.news")
       }}</el-breadcrumb-item>
       <el-breadcrumb-item v-if="metadata.title">{{
         metadata.title
@@ -43,11 +43,11 @@
           <div class="form-desc">{{ metadata.description }}</div>
           <div class="form-label-sub" style="margin-top: 16px">
             <img
-              style="width: 14px; height: 14px"
+              style="width: 20px; height: 20px"
               src="@/assets/images/create/website.png"
             />
             <div class="form-label-sub-text">
-              {{ $t('news-detail.latest_open') }}
+              {{ $t("news-detail.latest_open") }}
             </div>
           </div>
           <div class="form-content text-color">
@@ -56,11 +56,11 @@
           <template v-if="metadata.protected">
             <div class="form-label-sub">
               <img
-                style="width: 14px; height: 14px"
+                style="width: 20px; height: 20px"
                 src="@/assets/images/create/protect.png"
               />
               <div class="form-label-sub-text">
-                {{ $t('news-detail.latest_pro') }}
+                {{ $t("news-detail.latest_pro") }}
               </div>
             </div>
             <div
@@ -79,12 +79,12 @@
               v-else
             >
               <div class="text-color" style="font-size: 14px">
-                {{ $t('news-detail.latest_least') }}
+                {{ $t("news-detail.latest_least") }}
                 <span style="color: #00f9e5"
-                  >{{ $t('news-detail.latest_id') }}: {{ tokenId }}</span
-                >) {{ $t('news-detail.latest_click') }}
+                  >{{ $t("news-detail.latest_id") }}: {{ tokenId }}</span
+                >) {{ $t("news-detail.latest_click") }}
                 <span style="color: #00f9e5">{{
-                  $t('news-detail.latest_unlock')
+                  $t("news-detail.latest_unlock")
                 }}</span
                 >”
               </div>
@@ -92,7 +92,7 @@
                 @click="handleUnlock()"
                 class="common-btn2"
                 style="border-radius: 25px; margin-top: 29px"
-                >{{ $t('news-detail.latest_unlock') }}</el-button
+                >{{ $t("news-detail.latest_unlock") }}</el-button
               >
             </div>
           </template>
@@ -102,7 +102,7 @@
             v-if="metadata.keyword && metadata.keyword.length"
           >
             <div class="form-tag-label text-color">
-              {{ $t('news-detail.latest_tag') }}:
+              {{ $t("news-detail.latest_tag") }}:
             </div>
             <div
               class="form-tag-item text-color"
@@ -114,7 +114,7 @@
           </div>
           <div class="dao-container" v-if="userAccount && userOwned > 0">
             <div class="dao-title text-color">
-              {{ $t('news-detail.dao_gov') }}
+              {{ $t("news-detail.dao_gov") }}
             </div>
             <div class="dao-set">
               <div
@@ -123,7 +123,7 @@
                 @click="handleUpdate(1)"
               >
                 <div class="dao-set-item-label">
-                  {{ $t('news-detail.dao_update_att') }}
+                  {{ $t("news-detail.dao_update_att") }}
                 </div>
                 <i class="el-icon-arrow-right"></i>
               </div>
@@ -133,7 +133,7 @@
                 @click="handleUpdate(2)"
               >
                 <div class="dao-set-item-label">
-                  {{ $t('news-detail.dao_update_con') }}
+                  {{ $t("news-detail.dao_update_con") }}
                 </div>
                 <i class="el-icon-arrow-right"></i>
               </div>
@@ -143,7 +143,7 @@
                 @click="handleUpdateSale()"
               >
                 <div class="dao-set-item-label">
-                  {{ $t('news-detail.dao_sale_pro') }}
+                  {{ $t("news-detail.dao_sale_pro") }}
                 </div>
                 <i class="el-icon-arrow-right"></i>
               </div>
@@ -153,36 +153,36 @@
                 @click="handleUpdateDao()"
               >
                 <div class="dao-set-item-label">
-                  {{ $t('news-detail.dao_set_gov') }}
+                  {{ $t("news-detail.dao_set_gov") }}
                 </div>
                 <i class="el-icon-arrow-right"></i>
               </div>
             </div>
             <div class="dao-set-tip">
-              {{ $t('news-detail.last_edit') }} : September 21, 2023, 22:18:07
+              {{ $t("news-detail.last_edit") }} : September 21, 2023, 22:18:07
               <span
                 class="text-color"
                 style="cursor: pointer"
                 @click="$refs['revisionHistoryDialog'].showDialog()"
-                >{{ $t('news-detail.view_hist') }}</span
+                >{{ $t("news-detail.view_hist") }}</span
               >
             </div>
           </div>
           <div class="transactions-container">
             <div class="transactions-title text-color">
-              <span>{{ $t('news-detail.latest_tran') }}</span>
+              <span>{{ $t("news-detail.latest_tran") }}</span>
               <!-- <span style="font-size: 16px;color: #ACBCC9;">(3)</span> -->
             </div>
             <div class="transactions-head">
               <div class="transactions-column">
-                {{ $t('news-detail.tx_id') }}
+                {{ $t("news-detail.tx_id") }}
               </div>
               <div class="transactions-column">
-                {{ $t('news-detail.from') }}
+                {{ $t("news-detail.from") }}
               </div>
-              <div class="transactions-column">{{ $t('news-detail.to') }}</div>
+              <div class="transactions-column">{{ $t("news-detail.to") }}</div>
               <div class="transactions-column">
-                {{ $t('news-detail.amount') }}
+                {{ $t("news-detail.amount") }}
               </div>
             </div>
             <template v-if="transactionHistory.length">
@@ -206,12 +206,12 @@
               </div>
             </template>
             <div class="no-transactions" v-else>
-              {{ $t('news-detail.no_tx') }}
+              {{ $t("news-detail.no_tx") }}
             </div>
           </div>
           <div class="more-container">
             <div class="more-title text-color">
-              {{ $t('news-detail.more_creator') }}
+              {{ $t("news-detail.more_creator") }}
             </div>
             <div class="more-list">
               <div v-for="(item, index) in 6" :key="index" class="more-item">
@@ -271,21 +271,21 @@
 </template>
 
 <script>
-import NewsItem from '@/components/NewsItem'
-import SetDaoDialog from '@/components/create/SetDaoDialog'
-import SetSaleDialog from '@/components/create/SetSaleDialog'
-import BlindDialog from '@/components/news/BlindDialog'
-import BlindOpenDialog from '@/components/news/BlindOpenDialog'
-import CheckInDialog from '@/components/news/CheckInDialog'
-import MarketOrderList from '@/components/news/MarketOrderList'
-import NftAttributes from '@/components/news/NftAttributes'
-import NftAuthorInfo from '@/components/news/NftAuthorInfo'
-import NftDaoGovernance from '@/components/news/NftDaoGovernance'
-import NftDaoVote from '@/components/news/NftDaoVote'
-import NftInformation from '@/components/news/NftInformation'
-import NftPrimaryMarket from '@/components/news/NftPrimaryMarket'
-import ReadingReward from '@/components/news/ReadingReward'
-import RevisionHistoryDialog from '@/components/news/RevisionHistoryDialog'
+import NewsItem from "@/components/NewsItem";
+import SetDaoDialog from "@/components/create/SetDaoDialog";
+import SetSaleDialog from "@/components/create/SetSaleDialog";
+import BlindDialog from "@/components/news/BlindDialog";
+import BlindOpenDialog from "@/components/news/BlindOpenDialog";
+import CheckInDialog from "@/components/news/CheckInDialog";
+import MarketOrderList from "@/components/news/MarketOrderList";
+import NftAttributes from "@/components/news/NftAttributes";
+import NftAuthorInfo from "@/components/news/NftAuthorInfo";
+import NftDaoGovernance from "@/components/news/NftDaoGovernance";
+import NftDaoVote from "@/components/news/NftDaoVote";
+import NftInformation from "@/components/news/NftInformation";
+import NftPrimaryMarket from "@/components/news/NftPrimaryMarket";
+import ReadingReward from "@/components/news/ReadingReward";
+import RevisionHistoryDialog from "@/components/news/RevisionHistoryDialog";
 import {
   boxCount2Time,
   getBlindBoxCache,
@@ -295,24 +295,24 @@ import {
   setBlindBoxState,
   setBlindBoxFlagCache,
   setBlindBoxFlagState,
-} from '@/utils/common'
-import { checkBoxContract } from '@/utils/web3/operator'
+} from "@/utils/common";
+import { checkBoxContract } from "@/utils/web3/operator";
 import {
   checkBlindBox,
   getNftTransactions,
   loadFromUrl,
   unlockContent,
-} from '@/utils/http'
-import { balanceOf, userPledgeCount } from '@/utils/web3/nft'
-import { getTokenOwner, tokenURI, tokensData } from '@/utils/web3/open'
-var md = require('markdown-it')({
+} from "@/utils/http";
+import { balanceOf, userPledgeCount } from "@/utils/web3/nft";
+import { getTokenOwner, tokenURI, tokensData } from "@/utils/web3/open";
+var md = require("markdown-it")({
   html: true,
   linkify: true,
   typographer: true,
   breaks: true,
-})
+});
 export default {
-  name: 'news-detail-view',
+  name: "news-detail-view",
   components: {
     NewsItem,
     RevisionHistoryDialog,
@@ -336,29 +336,29 @@ export default {
         this.userAccount &&
         (this.userOwned > 0 || this.userStakeInfo[0] > 0)
       ) {
-        return true
+        return true;
       }
-      return false
+      return false;
     },
     voteOverTime() {
       if (!this.tokenSupplyInfo.isVoting) {
-        return true
+        return true;
       }
       return (
         Number(this.tokenSupplyInfo.vote.startTime) +
           Number(this.voteKeepTime) <
         this.nowTime / 1000
-      )
+      );
     },
     userAccount() {
-      return this.$store.state.user.account
+      return this.$store.state.user.account;
     },
   },
   watch: {
-    '$store.state.user.userId': function (val, od) {
+    "$store.state.user.userId": function (val, od) {
       if (val != od) {
-        this.dataLoad()
-        this.checkIn()
+        this.dataLoad();
+        this.checkIn();
       }
     },
   },
@@ -397,52 +397,52 @@ export default {
       transactionHistory: [],
       timeTask: undefined,
       userStakeInfo: [],
-    }
+    };
   },
   created() {
-    this.tokenId = this.$route.query.tokenId
+    this.tokenId = this.$route.query.tokenId;
     this.timeTask = setInterval(() => {
-      this.nowTime = new Date().getTime()
-    }, 1000)
+      this.nowTime = new Date().getTime();
+    }, 1000);
   },
   mounted() {
     if (!this.tokenId) {
-      return
+      return;
     }
     var loadingInstance = this.$loading({
-      background: 'rgba(0, 0, 0, 0.8)',
-    })
+      background: "rgba(0, 0, 0, 0.8)",
+    });
     setTimeout(() => {
-      this.dataLoad()
-      this.checkIn()
-      this.checkBlindBox()
+      this.dataLoad();
+      this.checkIn();
+      this.checkBlindBox();
       this.blindBoxTimerTask = setInterval(() => {
-        this.checkBlindBox()
-      }, 1000 * 20)
-      loadingInstance.close()
-    }, 4000)
+        this.checkBlindBox();
+      }, 1000 * 20);
+      loadingInstance.close();
+    }, 4000);
   },
   destroyed() {
     if (this.blindBoxTimerTask) {
-      clearInterval(this.blindBoxTimerTask)
+      clearInterval(this.blindBoxTimerTask);
     }
     if (this.timeTask) {
-      clearInterval(this.timeTask)
+      clearInterval(this.timeTask);
     }
   },
   methods: {
     /** 检查每日签到 */
     checkIn() {
       if (!this.$store.state.user.userId) {
-        this.ifCheckedIn = false
-        return
+        this.ifCheckedIn = false;
+        return;
       }
       if (ifCheckInToday(this.$store.state.user.userId)) {
-        this.ifCheckedIn = true
-        return
+        this.ifCheckedIn = true;
+        return;
       }
-      this.ifCheckedIn = false
-      this.$refs.checkInDialog.showDialog()
+      this.ifCheckedIn = false;
+      this.$refs.checkInDialog.showDialog();
     },
     /** 检查盲盒奖励 */
     checkBlindBox() {
@@ -450,32 +450,32 @@ export default {
         this.$store.state.user.userId &&
         ifCheckInToday(this.$store.state.user.userId)
       ) {
-        var haveBox = false
-        const blindBox = getBlindBoxCache(this.$store.state.user.userId)
+        var haveBox = false;
+        const blindBox = getBlindBoxCache(this.$store.state.user.userId);
         if (blindBox && blindBox.time) {
-          const timeGet = Number(blindBox.time)
-          const nowTime = new Date().getTime()
+          const timeGet = Number(blindBox.time);
+          const nowTime = new Date().getTime();
           if (nowTime - timeGet >= 1000 * 120) {
-            setBlindBoxState(this.$store.state.user.userId, true)
-            haveBox = false
+            setBlindBoxState(this.$store.state.user.userId, true);
+            haveBox = false;
           } else if (!blindBox.invalid) {
-            haveBox = true
-            this.$refs['blindOpenDialog'].showDialog()
-            return
+            haveBox = true;
+            this.$refs["blindOpenDialog"].showDialog();
+            return;
           }
         }
-        var haveFlag = false
+        var haveFlag = false;
         if (!haveBox) {
-          const flag = getBlindBoxFlagCache(this.$store.state.user.userId)
+          const flag = getBlindBoxFlagCache(this.$store.state.user.userId);
           if (flag && flag.time) {
-            const timeGet = Number(flag.time)
-            const nowTime = new Date().getTime()
+            const timeGet = Number(flag.time);
+            const nowTime = new Date().getTime();
             if (nowTime - timeGet >= 1000 * 120) {
-              setBlindBoxFlagState(this.$store.state.user.userId, true)
-              haveFlag = false
+              setBlindBoxFlagState(this.$store.state.user.userId, true);
+              haveFlag = false;
             } else if (!flag.invalid) {
-              haveFlag = true
-              this.$refs['blindDialog'].showDialog()
+              haveFlag = true;
+              this.$refs["blindDialog"].showDialog();
             }
           }
         }
@@ -490,36 +490,36 @@ export default {
                  *  uint8 :  0 "本周期领盒子数，如果数量>=12 则不在调用合约方法 getBox 去获取合约"
                  */
                 if (r[0] && r[1] <= 12) {
-                  setBlindBoxFlagCache(this.$store.state.user.userId, 1)
-                  this.$refs['blindDialog'].showDialog()
+                  setBlindBoxFlagCache(this.$store.state.user.userId, 1);
+                  this.$refs["blindDialog"].showDialog();
                 }
               })
               .catch((e) => {
-                console.log(e)
-              })
+                console.log(e);
+              });
           } else {
             // 中心检查盲盒
             checkBlindBox()
               .then((r) => {
                 if (r.code == 1) {
-                  const boxFlag = r.data.get_box_flag
+                  const boxFlag = r.data.get_box_flag;
                   if (boxFlag) {
                     const currentFlag = getBlindBoxFlagCache(
                       this.$store.state.user.userId
-                    )
+                    );
                     if (!currentFlag || currentFlag.flag != boxFlag) {
                       setBlindBoxFlagCache(
                         this.$store.state.user.userId,
                         boxFlag
-                      )
-                      this.$refs['blindDialog'].showDialog()
+                      );
+                      this.$refs["blindDialog"].showDialog();
                     }
                   }
                 }
               })
               .catch((e) => {
-                console.log(e)
-              })
+                console.log(e);
+              });
           }
         }
       }
@@ -529,290 +529,292 @@ export default {
       if (this.$store.state.user.userId) {
         this.blindBoxToday.boxCount = getBoxCountToday(
           this.$store.state.user.userId
-        )
-        this.blindBoxToday.readTime = boxCount2Time(this.blindBoxToday.boxCount)
+        );
+        this.blindBoxToday.readTime = boxCount2Time(
+          this.blindBoxToday.boxCount
+        );
       }
     },
     /** 点击接收盲盒 */
     handleReceiveBox() {
-      this.$refs['blindOpenDialog'].showDialog()
+      this.$refs["blindOpenDialog"].showDialog();
     },
     /** 加载数据 */
     async dataLoad() {
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       const promiseAll = Promise.all([
         this.getOwner(),
         this.loadSupplyInfo(),
         this.loadMetadata(),
         this.getUserOwned(),
         this.loadTransactionHistory(),
-      ])
+      ]);
       try {
-        await promiseAll
+        await promiseAll;
       } catch (error) {
-        this.$toast.error(error)
+        this.$toast.error(error);
       } finally {
-        loadingInstance.close()
+        loadingInstance.close();
       }
     },
     /** 获取用户质押信息 */
     getUserStakeCount() {
       if (!this.tokenId || !this.$store.state.user.account) {
-        return
+        return;
       }
       return new Promise((resolve) => {
         userPledgeCount(this.tokenId)
           .then((data) => {
-            this.userStakeInfo[0] = data[0]
-            this.userStakeInfo[1] = data[1]
-            return resolve()
+            this.userStakeInfo[0] = data[0];
+            this.userStakeInfo[1] = data[1];
+            return resolve();
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
-          })
-      })
+            this.$toast.error(e && e.message ? e.message : e);
+          });
+      });
     },
     /** 获取用户拥有数量 */
     getUserOwned() {
       if (!this.tokenId || !this.$store.state.user.userId) {
-        return
+        return;
       }
       return new Promise((resolve, reject) => {
         balanceOf(this.tokenId)
           .then((balance) => {
-            this.userOwned = balance
-            return resolve()
+            this.userOwned = balance;
+            return resolve();
           })
           .catch((e) => {
-            return reject(e)
-          })
-      })
+            return reject(e);
+          });
+      });
     },
     /** 点击解锁 */
     handleUnlock() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (!c) {
-          return
+          return;
         }
         var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
+          background: "rgba(0, 0, 0, 0.8)",
+        });
         if (this.userOwned && this.userOwned > 0) {
           this.loadProtectedContent(this.metadata.protected)
             .then((protectedContent) => {
               this.$set(
                 this.metadata,
-                'protectedContent',
+                "protectedContent",
                 md.render(protectedContent)
-              )
-              this.$toast.success(this.$t('news-detail.unlock_success'))
-              loadingInstance.close()
+              );
+              this.$toast.success(this.$t("news-detail.unlock_success"));
+              loadingInstance.close();
             })
             .catch((e) => {
-              console.log(e)
-              this.$toast.error(this.$t('news-detail.unlock_failed'))
-              loadingInstance.close()
-            })
+              console.log(e);
+              this.$toast.error(this.$t("news-detail.unlock_failed"));
+              loadingInstance.close();
+            });
         } else {
-          this.$toast.info(this.$t('news-detail.have_no_nft'))
-          loadingInstance.close()
+          this.$toast.info(this.$t("news-detail.have_no_nft"));
+          loadingInstance.close();
         }
-      })
+      });
     },
     /** 点击更新1 */
     handleUpdate(step) {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (!c) {
-          return
+          return;
         }
 
         if (!this.canUpdate) {
-          this.$toast.info(this.$t('news-detail.update_unable'))
-          return
+          this.$toast.info(this.$t("news-detail.update_unable"));
+          return;
         }
         if (this.tokenSupplyInfo.isVoting && !this.voteOverTime) {
-          this.$toast.info(this.$t('create.nft_voting'))
-          return
+          this.$toast.info(this.$t("create.nft_voting"));
+          return;
         }
 
         if (this.$store.state.chain.balanceBnb < 0.01) {
           this.$bnbConfirm(this.$store.state.common.language, () => {
             this.$router.push({
-              path: '/update',
+              path: "/update",
               query: { tokenId: this.tokenId, step: step },
-            })
-          })
-          return
+            });
+          });
+          return;
         }
 
         this.$router.push({
-          path: '/update',
+          path: "/update",
           query: { tokenId: this.tokenId, step: step },
-        })
-      })
+        });
+      });
     },
     /** 点击更新销售策略 */
     handleUpdateSale() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (!c) {
-          return
+          return;
         }
         if (!this.canUpdate) {
-          this.$toast.info(this.$t('news-detail.update_unable'))
-          return
+          this.$toast.info(this.$t("news-detail.update_unable"));
+          return;
         }
         if (this.tokenSupplyInfo.isVoting && !this.voteOverTime) {
-          this.$toast.info(this.$t('create.nft_voting'))
-          return
+          this.$toast.info(this.$t("create.nft_voting"));
+          return;
         }
         if (this.$store.state.chain.balanceBnb < 0.01) {
           this.$bnbConfirm(this.$store.state.common.language, () => {
-            this.$refs['setSaleDialog'].showDialog()
-          })
-          return
+            this.$refs["setSaleDialog"].showDialog();
+          });
+          return;
         }
-        this.$refs['setSaleDialog'].showDialog()
-      })
+        this.$refs["setSaleDialog"].showDialog();
+      });
     },
     /** 点击更新Dao策略 */
     handleUpdateDao() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (!c) {
-          return
+          return;
         }
         if (!this.canUpdate) {
-          this.$toast.info(this.$t('news-detail.update_unable'))
-          return
+          this.$toast.info(this.$t("news-detail.update_unable"));
+          return;
         }
         if (this.tokenSupplyInfo.isVoting && !this.voteOverTime) {
-          this.$toast.info(this.$t('create.nft_voting'))
-          return
+          this.$toast.info(this.$t("create.nft_voting"));
+          return;
         }
         if (this.$store.state.chain.balanceBnb < 0.01) {
           this.$bnbConfirm(this.$store.state.common.language, () => {
-            this.$refs['setDaoDialog'].showDialog()
-          })
-          return
+            this.$refs["setDaoDialog"].showDialog();
+          });
+          return;
         }
-        this.$refs['setDaoDialog'].showDialog()
-      })
+        this.$refs["setDaoDialog"].showDialog();
+      });
     },
     /** 获取token拥有者 */
     getOwner() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          return reject()
+          return reject();
         }
         getTokenOwner(this.tokenId)
           .then((owner) => {
-            this.tokenOwner = owner
-            return resolve()
+            this.tokenOwner = owner;
+            return resolve();
           })
           .catch(() => {
-            return reject()
-          })
-      })
+            return reject();
+          });
+      });
     },
     /** 加载数据 */
     loadSupplyInfo() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          return reject()
+          return reject();
         }
         tokensData(this.tokenId)
           .then((res) => {
-            this.tokenSupplyInfo = res
-            return resolve()
+            this.tokenSupplyInfo = res;
+            return resolve();
           })
           .catch((e) => {
-            console.log(e)
-            return reject(e)
-          })
-      })
+            console.log(e);
+            return reject(e);
+          });
+      });
     },
     /** 加载元数据 */
     loadMetadata() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          return reject()
+          return reject();
         }
         tokenURI(this.tokenId)
           .then((uri) => {
-            this.tokenMetaUrl = uri
+            this.tokenMetaUrl = uri;
             loadFromUrl(this.tokenMetaUrl).then((r) => {
               if (r.status !== 200) {
-                return reject(r.statusText)
+                return reject(r.statusText);
               }
-              this.metadata = r.data
+              this.metadata = r.data;
               if (this.metadata.contentUrl) {
                 this.loadOpenContent(this.metadata.contentUrl)
                   .then((openContent) => {
                     this.$set(
                       this.metadata,
-                      'openContent',
+                      "openContent",
                       md.render(openContent)
-                    )
-                    return resolve()
+                    );
+                    return resolve();
                   })
                   .catch((e) => {
-                    return reject(e)
-                  })
+                    return reject(e);
+                  });
               }
-            })
+            });
           })
           .catch(() => {
-            return reject()
-          })
-      })
+            return reject();
+          });
+      });
     },
     /** 加载公开数据 */
     loadOpenContent(url) {
       return new Promise((resolve, reject) => {
         loadFromUrl(url).then((res) => {
           if (res.status !== 200) {
-            return reject(res.statusText)
+            return reject(res.statusText);
           }
-          return resolve(res.data)
-        })
-      })
+          return resolve(res.data);
+        });
+      });
     },
     /** 加载私有数据 */
     loadProtectedContent(data) {
       return new Promise((resolve, reject) => {
         unlockContent(data, this.tokenId).then((res) => {
           if (res.code != 1) {
-            return reject(res.message)
+            return reject(res.message);
           }
-          const ipfsUrl = res.data.url
+          const ipfsUrl = res.data.url;
           loadFromUrl(ipfsUrl).then((r) => {
             if (r.status !== 200) {
-              return reject(r.statusText)
+              return reject(r.statusText);
             }
-            return resolve(r.data)
-          })
-        })
-      })
+            return resolve(r.data);
+          });
+        });
+      });
     },
     /** 加载交易历史数据 */
     loadTransactionHistory() {
       if (!this.tokenId) {
-        return
+        return;
       }
       return new Promise((resolve, reject) => {
         getNftTransactions(this.tokenId).then((res) => {
           if (res.code == 1) {
-            this.transactionHistory = res.data.list
-            return resolve()
+            this.transactionHistory = res.data.list;
+            return resolve();
           } else {
-            return reject(res.message)
+            return reject(res.message);
           }
-        })
-      })
+        });
+      });
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 .news-container {
@@ -846,6 +848,11 @@ export default {
         width: 940px;
         margin-right: 41px;
 
+        .common-btn2 {
+          width: 300px;
+          height: 50px;
+        }
+
         .form-title {
           font-size: 32px;
           font-family: Source Han Sans CN;
@@ -871,7 +878,7 @@ export default {
           justify-content: center;
 
           .form-label-sub-text {
-            font-size: 13px;
+            font-size: 18px;
             font-family: Source Han Sans CN;
             font-weight: bold;
             color: #00f9e5;
@@ -978,7 +985,7 @@ export default {
             font-weight: bold;
           }
           .transactions-head .transactions-column {
-            color: #9ab8db;
+            color: #acbcc9;
           }
           .transactions-head,
           .transactions-item {
@@ -1051,34 +1058,6 @@ export default {
 
       .form-right {
         width: 385px;
-      }
-    }
-
-    .form-add {
-      margin-top: 40px;
-
-      .form-fee-count {
-        font-size: 13px;
-        font-family: Source Han Sans CN;
-        font-weight: bold;
-        color: #acbcc9;
-        margin-top: 48px;
-        margin-bottom: 22px;
-      }
-
-      .btn-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        .common-btn2 {
-          margin-right: 59px;
-
-          &:last-child {
-            margin-right: 0;
-          }
-        }
       }
     }
 

@@ -1,14 +1,7 @@
 .theme-light {
-
   
   .body-container {
     background: #F6F8F9;
-  }
-
-  .el-main {
-    background-image: url('@/assets/images/page-background.png');
-    background-repeat: no-repeat;
-    background-size: 100%;
   }
 
   .theme-background-color {
@@ -125,8 +118,9 @@
   }
 
   .el-input__inner {
+    height: 42px;
     color: #1A2027;
-    background: #F6F8F9;
+    background: #F7F9FA;
   }
 
   .el-input.is-disabled .el-input__inner {
@@ -153,64 +147,40 @@
     line-height: 20px;
   }
 
-  .el-select-dropdown {
-    border: none;
-    background: #bcd6d6;
-    box-shadow: 0px 5px 10px 0px rgba(9, 11, 12, 0.85);
+  .market-el-select {
+    background-color: #FFFFFF !important;
+    box-shadow: 0px 0px 9px 0px rgba(236,236,236,0.5);
     border-radius: 5px;
-  }
+    padding: 10px 0px 10px 0px;
 
-  .el-select-dropdown__item.hover,
-  .el-select-dropdown__item:hover {
-    background-color: transparent;
-    margin: 5px 5px;
+    .el-select-dropdown__item {
+      font-size: 14px;
+      margin: 5px 5px;
+      color: #636B72;
+    }
+
+    .el-select-dropdown__item.hover {
+      background: #F7F9FA;
+      border-radius: 8px;
+      color: #1A2027;
+      font-weight: bold;
+    }
+
+    .el-select-dropdown__item.selected {
+      background: #F7F9FA;
+      border-radius: 8px;
+      color: #1A2027;
+      font-weight: bold;
+    }
+
   }
 
   .el-scrollbar__bar.is-horizontal {
     height: 0px;
   }
 
-  .el-select-dropdown__item {
-    font-size: 9px;
-    margin: 5px 5px;
-    color: #FFFFFF;
-  }
-
-  .el-select-dropdown__item.selected {
-    font-size: 9px;
-    font-family: Arial;
-    font-weight: bold;
-    color: #00F9E5;
-    box-shadow: 0px 6px 13px 0px rgba(9, 11, 12, 0.25);
-    border-radius: 6px;
-    background: #99c3c3;
-    border-radius: 6px;
-    margin: 5px 5px;
-  }
-
-  .el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
-    background-color: #273037;
-    border-radius: 6px;
-    font-size: 9px;
-    font-family: Arial;
-    font-weight: bold;
-    color: #00F9E5;
-    margin: 0 5px;
-  }
-
-  .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover {
-    background-color: #273037;
-    margin: 5px 5px;
-  }
-
-  .el-select-dropdown.is-multiple .el-select-dropdown__item.selected::after {
-    content: "";
-  }
-
-  .el-select-dropdown__item.hover,
-  .el-select-dropdown__item:hover {
-    background-color: transparent;
-    margin: 0 0px;
+  .el-select .el-input.is-focus .el-input__inner {
+    border-color: #EAEDEF;
   }
 
   .el-popper .popper__arrow,
@@ -294,6 +264,10 @@
     color: #1A2027;
   }
 
+  .comparison-tab .tab1 .division {
+    border: 0.5px solid #EEF2F4;
+  }
+
   .comparison-tab .tab2 .item {
     border: 1px solid #EEF2F4!important;
   }
@@ -320,6 +294,12 @@
 
   .comparison-tab .tab4 .tab-bottom .item .desc {
     color: #1A2027;
+  }
+
+  .home-container .bg{
+    background-image: url('@/assets/images/page-background.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
   }
 
   .home-container .info-container .left .item {
@@ -373,11 +353,26 @@
     background: #FFFFFF;
   }
 
-  .create-step0 .type-container .type-item {
-    background: #FFFFFF; 
-    border: 1px solid;
-    box-shadow: 0px 10px 13px 5px #E8EFF0;
-    border-image: linear-gradient(0deg, #E2E5E7, #F6F8F9) 10 10;
+  .create-step0 {
+
+    color: #17E7D6;
+
+    .type-container .type-item {
+      background-image: none !important;
+      background: #FFFFFF;
+      border: 1px solid;
+      border-image: linear-gradient(0deg, #EBEFF1, #F6F8F9) 10 10;
+      box-shadow: 0px 1px 2px 0px #E8EFF0;
+      border-radius: 20px;
+  
+      &:hover {
+        border-image: linear-gradient(0deg, #E2E5E7, #F6F8F9) 10 10;
+        box-shadow: 0px 10px 13px 5px #E8EFF0;
+        border-radius: 20px;
+      }
+
+    }
+
   }
 
   .proposal-container {
@@ -438,6 +433,10 @@
     
   }
 
+  .info-container .author-container .author-info .author-name span {
+    color: #1A2027;
+  }
+
   .news-container .form-container .form-top .form-left .form-desc {
     color: #1A2027;
   }
@@ -478,6 +477,10 @@
     background: #F7F9FA;
   }
 
+  .news-container .form-container .form-top .form-left .transactions-container .transactions-head .transactions-column {
+    color: #636B72
+  }
+
   .form-attr-container {
     border: 1px solid #EAEEF0;
 
@@ -492,11 +495,14 @@
         background: #F7F9FA;
 
         .form-attr-label {
+          font-size: 14px;
           color: #636B72;
         }
   
         .form-attr-value {
           color: #36404B;
+          font-size: 16px;
+          font-weight: bold;
         }
 
 

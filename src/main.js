@@ -1,34 +1,34 @@
-import App from '@/App.vue'
-import i18n from '@/i18n'
-import router from '@/router'
-import store from '@/store'
-import Vue from 'vue'
-import { VuePlugin } from 'vuera'
+import App from "@/App.vue";
+import i18n from "@/i18n";
+import router from "@/router";
+import store from "@/store";
+import Vue from "vue";
+import { VuePlugin } from "vuera";
 
-import '@/assets/theme/common.css'
-import '@/assets/theme/index.css'
-import '@/assets/theme/theme-dark.scss'
-import '@/assets/theme/theme-light.scss'
-import 'vue-lazy-youtube-video/dist/style.css'
-import * as filters from '@/filters'
-import ElementUI from 'element-ui'
-import _ from 'lodash'
-import VueCountdown from '@chenfengyuan/vue-countdown'
-import VueClipBoard from 'vue-clipboard2'
-import Toast from "vue-toastification"
-import "vue-toastification/dist/index.css"
-import { openDialog } from '@/components/plugin/bnbConfirm'
+import "@/assets/theme/common.css";
+import "element-ui/lib/theme-chalk/index.css";
+import "@/assets/theme/theme-dark.scss";
+import "@/assets/theme/theme-light.scss";
+import "vue-lazy-youtube-video/dist/style.css";
+import * as filters from "@/filters";
+import ElementUI from "element-ui";
+import _ from "lodash";
+import VueCountdown from "@chenfengyuan/vue-countdown";
+import VueClipBoard from "vue-clipboard2";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+import { openDialog } from "@/components/plugin/bnbConfirm";
 
-Vue.prototype.$bnbConfirm = openDialog
+Vue.prototype.$bnbConfirm = openDialog;
 
-Vue.prototype._ = _
+Vue.prototype._ = _;
 
-Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
+Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]));
 
-Vue.component(VueCountdown.name, VueCountdown)
-Vue.use(VuePlugin)
-Vue.use(ElementUI)
-Vue.use(VueClipBoard)
+Vue.component(VueCountdown.name, VueCountdown);
+Vue.use(VuePlugin);
+Vue.use(ElementUI);
+Vue.use(VueClipBoard);
 var toastrConfig = {
   transition: "my-custom-fade",
   maxToasts: 20,
@@ -44,19 +44,18 @@ var toastrConfig = {
   hideProgressBar: true,
   closeButton: "button",
   icon: true,
-  rtl: false
-}
-Vue.use(Toast, toastrConfig)
+  rtl: false,
+};
+Vue.use(Toast, toastrConfig);
 
-
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
   i18n,
-  render: h => {
-    i18n.locale = store.state.common.language
-    return h(App)
+  render: (h) => {
+    i18n.locale = store.state.common.language;
+    return h(App);
   },
-}).$mount('#app')
+}).$mount("#app");

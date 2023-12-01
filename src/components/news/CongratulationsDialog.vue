@@ -1,6 +1,7 @@
 <template>
   <el-dialog
     custom-class="congratulations-dialog"
+    :append-to-body="true"
     top="0vh"
     :fullscreen="true"
     @open="onOpen"
@@ -8,7 +9,7 @@
     width="789px"
   >
     <div class="title" slot="title">
-      {{ $t('news-detail.congratulations') }}
+      {{ $t("news-detail.congratulations") }}
     </div>
     <img
       style="width: 789px; height: 800px"
@@ -17,7 +18,7 @@
     <template v-if="boxPrizes">
       <div class="content" v-if="boxPrizes.coin == 'MBD'">
         <div class="tip">
-          {{ $t('news-detail.gift_account') }}
+          {{ $t("news-detail.gift_account") }}
         </div>
         <img
           style="width: 102px; height: 102px"
@@ -27,7 +28,7 @@
       </div>
       <div class="content" v-else>
         <div class="tip">
-          {{ $t('news-detail.gift_account') }}
+          {{ $t("news-detail.gift_account") }}
         </div>
         <img
           style="width: 102px; height: 102px"
@@ -41,7 +42,7 @@
 
 <script>
 export default {
-  name: 'congratulations-dialog',
+  name: "congratulations-dialog",
   props: {
     boxPrizes: {
       type: Object,
@@ -51,19 +52,19 @@ export default {
   data() {
     return {
       show: false,
-    }
+    };
   },
   methods: {
     showDialog() {
-      this.show = true
+      this.show = true;
     },
     onOpen() {
       setTimeout(() => {
-        this.show = false
-      }, 3000)
+        this.show = false;
+      }, 3000);
     },
   },
-}
+};
 </script>
 
 <style lang="scss">

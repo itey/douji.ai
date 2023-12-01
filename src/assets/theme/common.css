@@ -8,18 +8,22 @@
 	border-radius: 7px;
 }
 
+.v-modal {
+	z-index: 12 !important;
+}
+
 .common-btn1:disabled {
 	background: linear-gradient(-16deg, #848D98, #97A8A7) !important;
 }
 
 .common-btn2 {
 	width: 188px;
-  height: 50px;
+  	height: 50px;
 	background: linear-gradient(-16deg, #4195F6, #17E7D6) !important;
-	border-radius: 10px;
+	border-radius: 25px !important;
 	color: #1A2027;
 	font-weight: bold !important;
-	font-size: 16px !important;
+	font-size: 18px !important;
 }
 
 .common-btn2:disabled {
@@ -112,7 +116,7 @@
 }
 
 .el-input__inner {
-	height: 35px;
+	height: 42px;
 	line-height: 35px;
 	border: 1px solid #313838;
 	border-radius: 6px;
@@ -150,10 +154,15 @@
 }
 
 .el-popover {
-  min-width: 79px !important;
-  background: #2A3543!important;
-  box-shadow: 0px 11px 16px 0px #0D1115 !important;
-  border: none !important;
-  border-radius: 10px !important;
-  padding: 0 !important;
+	min-width: 79px !important;
+	background: #2A3543!important;
+	box-shadow: 0px 11px 16px 0px #0D1115 !important;
+	border: none !important;
+	border-radius: 10px !important;
+	padding: 0 !important;
+}
+
+.el-select-dropdown {
+	border: none !important;
+	/* background-color: #1A2027 !important; */
 }

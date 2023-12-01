@@ -1,6 +1,6 @@
 <template>
   <div class="create-step3">
-    <div class="title text-color">{{ $t('create.step3_mint') }}</div>
+    <div class="title text-color">{{ $t("create.step3_mint") }}</div>
     <div class="form-container">
       <div class="form-top">
         <div class="form-left">
@@ -17,11 +17,11 @@
           <div class="form-desc">{{ form.description }}</div>
           <div class="form-label-sub" style="margin-top: 22px">
             <img
-              style="width: 28px; height: 28px"
+              style="width: 20px; height: 20px"
               src="@/assets/images/create/website.png"
             />
             <div class="form-label-sub-text">
-              {{ $t('create.open_access') }}
+              {{ $t("create.open_access") }}
             </div>
           </div>
           <div class="form-content text-color">
@@ -29,16 +29,16 @@
           </div>
           <div class="form-label-sub" v-if="privateContent">
             <img
-              style="width: 28px; height: 28px"
+              style="width: 20px; height: 20px"
               src="@/assets/images/create/protect.png"
             />
-            <div class="form-label-sub-text">{{ $t('create.protected') }}</div>
+            <div class="form-label-sub-text">{{ $t("create.protected") }}</div>
           </div>
           <div class="form-content text-color" v-if="privateContent">
             <div class="md-reader" v-html="privateContent"></div>
           </div>
           <div class="form-tag">
-            <div class="form-tag-label text-color">{{ $t('create.tag') }}:</div>
+            <div class="form-tag-label text-color">{{ $t("create.tag") }}:</div>
             <div
               class="form-tag-item text-color"
               v-for="(item, index) in form.keyword"
@@ -51,36 +51,36 @@
         <div class="form-right">
           <div class="form-attr-container">
             <div class="form-attr-title text-color">
-              {{ $t('create.attributes') }}
+              {{ $t("create.attributes") }}
             </div>
             <div class="form-attr-list">
               <div class="form-attr-item">
                 <div class="form-attr-label">
-                  {{ $t('create.content_type') }}
+                  {{ $t("create.content_type") }}
                 </div>
                 <div class="form-attr-value">{{ form.contentType }}</div>
               </div>
               <div class="form-attr-item">
-                <div class="form-attr-label">{{ $t('create.category') }}</div>
+                <div class="form-attr-label">{{ $t("create.category") }}</div>
                 <div class="form-attr-value">{{ form.category }}</div>
               </div>
               <div class="form-attr-item" v-if="form.prompt">
-                <div class="form-attr-label">{{ $t('create.platform') }}</div>
+                <div class="form-attr-label">{{ $t("create.platform") }}</div>
                 <div class="form-attr-value">{{ form.prompt }}</div>
               </div>
               <div class="form-attr-item" v-if="form.language">
-                <div class="form-attr-label">{{ $t('create.language') }}</div>
+                <div class="form-attr-label">{{ $t("create.language") }}</div>
                 <div class="form-attr-value">{{ form.language }}</div>
               </div>
               <div class="form-attr-item">
-                <div class="form-attr-label">{{ $t('create.max_supply') }}</div>
+                <div class="form-attr-label">{{ $t("create.max_supply") }}</div>
                 <div class="form-attr-value">
                   {{ form.maxSupply | toLocalString }}
                 </div>
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">
-                  {{ $t('create.avail_supply') }}
+                  {{ $t("create.avail_supply") }}
                 </div>
                 <div class="form-attr-value">
                   {{ form.maxSupply | toLocalString }}
@@ -88,7 +88,7 @@
               </div>
               <div class="form-attr-item">
                 <div class="form-attr-label">
-                  {{ $t('create.initial_mint_qu') }}
+                  {{ $t("create.initial_mint_qu") }}
                 </div>
                 <div class="form-attr-value">
                   {{ form.initialQuantity | toLocalString }}
@@ -98,11 +98,11 @@
           </div>
           <div class="form-attr-container">
             <div class="form-attr-title text-color">
-              {{ $t('create.primary_market') }}
+              {{ $t("create.primary_market") }}
             </div>
             <div class="form-attr-market">
               <div class="form-attr-available">
-                {{ $t('create.available') }} :
+                {{ $t("create.available") }} :
                 <span class="text-color">{{
                   form.maxSupply | toLocalString
                 }}</span>
@@ -119,7 +119,7 @@
                 </div>
               </div>
               <el-button disabled class="common-btn2 form-attr-mint">{{
-                $t('create.mint')
+                $t("create.mint")
               }}</el-button>
             </div>
           </div>
@@ -128,10 +128,10 @@
       <div class="form-add">
         <div class="btn-container" v-if="!txObject || !txObject.status">
           <el-button class="common-btn2" @click="backClick">{{
-            $t('create.back')
+            $t("create.back")
           }}</el-button>
           <el-button class="common-btn2" @click="mintClick">{{
-            $t('create.mint')
+            $t("create.mint")
           }}</el-button>
         </div>
       </div>
@@ -145,18 +145,18 @@
 </template>
 
 <script>
-import MintSuccessDialog from '@/components/create/MintSuccessDialog'
-import cache from '@/utils/cache'
-import { uploadJson } from '@/utils/http'
-import { possessorMint } from '@/utils/web3/nft'
-var md = require('markdown-it')({
+import MintSuccessDialog from "@/components/create/MintSuccessDialog";
+import cache from "@/utils/cache";
+import { uploadJson } from "@/utils/http";
+import { possessorMint } from "@/utils/web3/nft";
+var md = require("markdown-it")({
   html: true,
   linkify: true,
   typographer: true,
   breaks: true,
-})
+});
 export default {
-  name: 'create-step3',
+  name: "create-step3",
   components: {
     MintSuccessDialog,
   },
@@ -169,45 +169,45 @@ export default {
   data() {
     return {
       setSaleShow: false,
-      markdownPub: '',
-      markdownPrivate: '',
+      markdownPub: "",
+      markdownPrivate: "",
       form: {},
       txObject: {},
-    }
+    };
   },
   computed: {
     pubContent() {
       if (this.markdownPub) {
-        return md.render(this.markdownPub)
+        return md.render(this.markdownPub);
       } else {
-        return null
+        return null;
       }
     },
     privateContent() {
       if (this.markdownPrivate) {
-        return md.render(this.markdownPrivate)
+        return md.render(this.markdownPrivate);
       } else {
-        return null
+        return null;
       }
     },
   },
   mounted() {
     if (this.metadata) {
-      this.form = this.metadata
-      this.markdownPub = this.form.openContent
-      this.markdownPrivate = this.form.protectedContent
+      this.form = this.metadata;
+      this.markdownPub = this.form.openContent;
+      this.markdownPrivate = this.form.protectedContent;
     }
   },
   methods: {
     backClick() {
-      this.$emit('backClick', 2)
+      this.$emit("backClick", 2);
     },
     mintClick() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (c) {
           var loadingInstance = this.$loading({
-            background: 'rgba(0, 0, 0, 0.8)',
-          })
+            background: "rgba(0, 0, 0, 0.8)",
+          });
           this.makeURI()
             .then((uri) => {
               possessorMint(
@@ -217,27 +217,27 @@ export default {
                 this.form.maxSupply
               )
                 .then((r) => {
-                  loadingInstance.close()
-                  this.txObject = r
-                  this.$refs['successDialog'].showDialog()
-                  this.afterMinted()
+                  loadingInstance.close();
+                  this.txObject = r;
+                  this.$refs["successDialog"].showDialog();
+                  this.afterMinted();
                 })
                 .catch((e) => {
-                  loadingInstance.close()
-                  console.log(e)
-                  this.$toast.error(this.$t('create.nft_mint_failed'))
-                })
+                  loadingInstance.close();
+                  console.log(e);
+                  this.$toast.error(this.$t("create.nft_mint_failed"));
+                });
             })
             .catch((e) => {
-              console.log(e)
-              loadingInstance.close()
-              this.$toast.error(this.$t('create.save_uri_failed'))
-            })
+              console.log(e);
+              loadingInstance.close();
+              this.$toast.error(this.$t("create.save_uri_failed"));
+            });
         }
-      })
+      });
     },
     updateClick() {
-      this.$emit('updateClick')
+      this.$emit("updateClick");
     },
     /** 生成URI */
     makeURI() {
@@ -252,29 +252,29 @@ export default {
         keyword: this.form.keyword,
         attributes: [
           {
-            trait_type: 'title',
+            trait_type: "title",
             value: this.form.title,
           },
           {
-            trait_type: 'category',
+            trait_type: "category",
             value: this.form.category,
           },
           {
-            trait_type: 'contentType',
+            trait_type: "contentType",
             value: this.form.contentType,
           },
           {
-            trait_type: 'contentUrl',
+            trait_type: "contentUrl",
             value: this.form.contentUrl,
           },
           {
-            display_type: 'date',
-            trait_type: 'Birthday',
+            display_type: "date",
+            trait_type: "Birthday",
             value: new Date().getTime(),
           },
           {
-            display_type: 'date',
-            trait_type: 'UpdateDay',
+            display_type: "date",
+            trait_type: "UpdateDay",
             value: new Date().getTime(),
           },
         ],
@@ -282,38 +282,38 @@ export default {
         protected: this.form.protected,
         Birthday: new Date().getTime(),
         UpdateDay: new Date().getTime(),
-      }
+      };
       if (this.form.language) {
-        metaJson.language = this.form.language
+        metaJson.language = this.form.language;
       }
       if (this.form.prompt) {
-        metaJson.prompt = this.form.prompt
+        metaJson.prompt = this.form.prompt;
       }
       return new Promise((resolve, reject) => {
         uploadJson(metaJson)
           .then((r) => {
             if (r.code == 1) {
-              return resolve(r.data.url)
+              return resolve(r.data.url);
             } else {
-              return reject(r.message)
+              return reject(r.message);
             }
           })
           .catch((e) => {
-            console.log(e)
-            return reject(e.message ? e.message : e)
-          })
-      })
+            console.log(e);
+            return reject(e.message ? e.message : e);
+          });
+      });
     },
     /** 完成铸造后处理 */
     afterMinted() {
-      cache.local.remove('NFT_MINT_CACHE')
+      cache.local.remove("NFT_MINT_CACHE");
     },
     /** 页面刷新 */
     closeDialog() {
-      this.$emit('reload')
+      this.$emit("reload");
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

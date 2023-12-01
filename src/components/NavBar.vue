@@ -9,25 +9,25 @@
       <div class="navbar-divider"></div>
       <div class="navbar-menu">
         <div class="navbar-menu-item text-color" @click="$router.push('/')">
-          {{ $t('common.home') }}
+          {{ $t("common.home") }}
         </div>
         <div class="navbar-menu-item text-color" @click="$router.push('/news')">
-          {{ $t('common.news') }}
+          {{ $t("common.news") }}
         </div>
         <div class="navbar-menu-item text-color" @click="toNavigation()">
-          {{ $t('common.navigation') }}
+          {{ $t("common.navigation") }}
         </div>
         <div
           class="navbar-menu-item text-color"
           @click="$router.push('/market')"
         >
-          {{ $t('common.marketplace') }}
+          {{ $t("common.marketplace") }}
         </div>
         <div
           class="navbar-menu-item text-color"
           @click="$router.push('/create')"
         >
-          {{ $t('common.create') }}
+          {{ $t("common.create") }}
         </div>
       </div>
       <div v-show="!$store.state.user.token">
@@ -80,7 +80,7 @@
                     src="@/assets/images/menu-user.png"
                   />
                 </div>
-                <span>{{ $t('common.user_center') }}</span>
+                <span>{{ $t("common.user_center") }}</span>
               </div>
               <template v-if="isParticleProvider">
                 <div class="item" @click="openWalletModal()">
@@ -90,7 +90,7 @@
                       src="@/assets/images/menu-wallet.png"
                     />
                   </div>
-                  <span>{{ $t('common.wallet') }}</span>
+                  <span>{{ $t("common.wallet") }}</span>
                 </div>
                 <div class="item" @click="openBuyModal()">
                   <div class="icon">
@@ -99,7 +99,7 @@
                       src="@/assets/images/menu-currency.png"
                     />
                   </div>
-                  <span>{{ $t('common.buy_currency') }}</span>
+                  <span>{{ $t("common.buy_currency") }}</span>
                 </div>
               </template>
               <div class="item" @click="handleCopyAddress()">
@@ -109,7 +109,7 @@
                     src="@/assets/images/menu-copy.png"
                   />
                 </div>
-                <span>{{ $t('common.copy_address') }}</span>
+                <span>{{ $t("common.copy_address") }}</span>
               </div>
               <div class="item" @click="signOutClick()">
                 <div class="icon">
@@ -118,7 +118,7 @@
                     src="@/assets/images/menu-exit.png"
                   />
                 </div>
-                <span>{{ $t('common.sign_out') }}</span>
+                <span>{{ $t("common.sign_out") }}</span>
               </div>
             </div>
             <div slot="reference" class="user">
@@ -178,7 +178,7 @@
       </div>
       <div
         v-if="$store.state.common.theme == 'light'"
-        style="margin-right: 14px; cursor: pointer"
+        style="margin-right: 14px; cursor: pointer; display: flex"
         @click="themeClick('dark')"
       >
         <img
@@ -188,7 +188,7 @@
       </div>
       <div
         v-else
-        style="margin-right: 14px; cursor: pointer"
+        style="margin-right: 14px; cursor: pointer; display: flex"
         @click="themeClick('light')"
       >
         <img
@@ -209,15 +209,15 @@
 </template>
 
 <script>
-import Particle from '@/components/react-app/particle'
+import Particle from "@/components/react-app/particle";
 export default {
-  name: 'nav-bar',
+  name: "nav-bar",
   components: {
     Particle,
   },
   computed: {
     isParticleProvider() {
-      return this.$store.state.common.isParticleProvider
+      return this.$store.state.common.isParticleProvider;
     },
   },
   data() {
@@ -226,57 +226,57 @@ export default {
       userMenuVisible: false,
       menuSubVisible: false,
       toggleId: null,
-    }
+    };
   },
   methods: {
     themeClick(theme) {
-      this.$store.commit('setTheme', theme)
+      this.$store.commit("setTheme", theme);
       // location.reload()
     },
     languageClick(locale) {
-      this.languageVisible = false
-      this.$i18n.locale = locale
-      this.$store.commit('setLanguage', locale)
+      this.languageVisible = false;
+      this.$i18n.locale = locale;
+      this.$store.commit("setLanguage", locale);
     },
     menuClick(path) {
-      this.userMenuVisible = false
-      this.$router.push(path)
+      this.userMenuVisible = false;
+      this.$router.push(path);
     },
     openWalletModal() {
-      this.$store.commit('setOpenAccount', true)
-      this.userMenuVisible = false
+      this.$store.commit("setOpenAccount", true);
+      this.userMenuVisible = false;
     },
     openBuyModal() {
-      this.$store.commit('setOpenBuy', true)
-      this.userMenuVisible = false
+      this.$store.commit("setOpenBuy", true);
+      this.userMenuVisible = false;
     },
     handleCopyAddress() {
       this.$copyText(this.$store.state.user.account).then(
         () => {
-          this.$toast.success(this.$t('common.copied_success'))
+          this.$toast.success(this.$t("common.copied_success"));
         },
         () => {
-          this.$toast.error(this.$t('copied_failed'))
+          this.$toast.error(this.$t("copied_failed"));
         }
-      )
+      );
     },
     signOutClick() {
-      this.userMenuVisible = false
-      this.$store.dispatch('Logout')
+      this.userMenuVisible = false;
+      this.$store.dispatch("Logout");
     },
     toNavigation() {
-      window.open('https://navigation.douji.ai', '_blank')
+      window.open("https://navigation.douji.ai", "_blank");
     },
     menuToggle(visible) {
       if (this.toggleId) {
-        clearTimeout(this.toggleId)
+        clearTimeout(this.toggleId);
       }
       this.toggleId = setTimeout(() => {
-        this.menuSubVisible = visible
-      }, 300)
+        this.menuSubVisible = visible;
+      }, 300);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -389,7 +389,6 @@ export default {
   top: 77px;
   left: 0;
   right: 0;
-  z-index: 2023;
 }
 
 .el-popover {

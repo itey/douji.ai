@@ -34,7 +34,7 @@
         >
       </div>
       <div class="bottom-right">
-        <img style="width: 16px; height: 14px" src="@/assets/images/star.png" />
+        <img style="width: 16px; height: 16px" src="@/assets/images/star.png" />
         <span class="star text-sub-color">{{ item.praise_count }}</span>
       </div>
     </div>
@@ -43,13 +43,13 @@
 
 <script>
 export default {
-  name: 'ProductItem',
+  name: "ProductItem",
   props: {
     item: {
       type: Object,
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

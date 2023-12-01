@@ -1,40 +1,74 @@
 <template>
   <div class="news-item" v-if="item">
-    <img style="width: 100%;height:194px; cursor: pointer;" @click="$router.push({path: '/news-detail', query: {tokenId: item.token_id}})" :src="item.image" />
-    <div class="label text-color" @click="$router.push({path: '/news-detail', query: {tokenId: item.token_id}})">{{ item.title }}</div>
+    <img
+      style="width: 100%; height: 194px; cursor: pointer"
+      @click="
+        $router.push({
+          path: '/news-detail',
+          query: { tokenId: item.token_id },
+        })
+      "
+      :src="item.image"
+    />
+    <div
+      class="label text-color"
+      @click="
+        $router.push({
+          path: '/news-detail',
+          query: { tokenId: item.token_id },
+        })
+      "
+    >
+      {{ item.title }}
+    </div>
     <div class="bottom">
       <div class="sub text-sub-color">
         by
         <span
-          @click="$router.push({path: '/creator', query: {address: item.owner_address}})"
-          style="color:#53CFD2; cursor: pointer;"
+          @click="
+            $router.push({
+              path: '/creator',
+              query: { address: item.owner_address },
+            })
+          "
           v-if="item.nickname"
-        >{{ item.nickname }}</span>
+          >{{ item.nickname }}</span
+        >
         <span
-          @click="$router.push({path: '/creator', query: {address: item.owner_address}})"
-          style="color:#53CFD2; cursor: pointer;"
+          @click="
+            $router.push({
+              path: '/creator',
+              query: { address: item.owner_address },
+            })
+          "
           v-else
-        >{{ item.owner_address | omitAddress }}</span>
+          >{{ item.owner_address | omitAddress }}</span
+        >
       </div>
-      <div class="sub text-sub-color">{{ item.create_time | localTimeFormat }}</div>
+      <div class="sub text-sub-color">
+        {{ item.create_time | localTimeFormat }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'NewsItem',
+  name: "NewsItem",
   props: {
     item: {
       type: Object,
       default: () => {},
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .news-item {
+  img {
+    border-radius: 8px;
+  }
   .label {
     cursor: pointer;
     height: 60px;
@@ -68,6 +102,15 @@ export default {
       font-family: Source Han Sans CN;
       font-weight: 400;
       color: #b2b9b9;
+
+      span {
+        cursor: pointer;
+        color: #b2b9b9;
+
+        &:hover {
+          color: #ffffff;
+        }
+      }
     }
   }
 }

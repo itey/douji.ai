@@ -5,32 +5,32 @@
     :element-loading-background="$store.state.common.theme | maskByTheme"
   >
     <div class="form-attr-title text-color">
-      {{ $t('news-detail.dao_governance') }}
+      {{ $t("news-detail.dao_governance") }}
     </div>
     <div class="form-dao">
-      <div class="dao-title text-color">{{ $t('news-detail.dao_earn') }}</div>
+      <div class="dao-title text-color">{{ $t("news-detail.dao_earn") }}</div>
       <div class="dao-income-item" style="margin-top: 22px">
-        <div class="dao-income-label">{{ $t('news-detail.dao_share_tx') }}</div>
+        <div class="dao-income-label">{{ $t("news-detail.dao_share_tx") }}</div>
         <div class="dao-income-value text-color">
           {{ daoFeeShow | fee2Percent }}
         </div>
       </div>
       <div class="dao-title text-color" style="margin-top: 22px">
-        {{ $t('news-detail.dao_gov') }}
+        {{ $t("news-detail.dao_gov") }}
       </div>
       <div class="dao-income-item" style="margin-top: 22px">
         <div class="dao-income-label">
-          {{ $t('news-detail.dao_threshold') }}
+          {{ $t("news-detail.dao_threshold") }}
         </div>
         <div class="dao-income-value text-color">{{ thresholdCount }}</div>
       </div>
       <div class="dao-title text-color" style="margin-top: 39px">
-        {{ $t('news-detail.dao_dividend_pool') }}
+        {{ $t("news-detail.dao_dividend_pool") }}
       </div>
       <div class="dividend-pool">
         <div class="dividend-pool-item">
           <div class="dividend-pool-label">
-            {{ $t('news-detail.dao_balance') }}
+            {{ $t("news-detail.dao_balance") }}
           </div>
           <div class="dividend-pool-value text-color">
             {{ settlePoolBalance | toFixedString }} MBD
@@ -38,7 +38,7 @@
         </div>
         <div class="dividend-pool-item">
           <div class="dividend-pool-label">
-            {{ $t('news-detail.dao_all_staked') }}
+            {{ $t("news-detail.dao_all_staked") }}
           </div>
           <div class="dividend-pool-value text-color">
             {{ totalStakeCount }}
@@ -47,7 +47,7 @@
         <template v-if="$store.state.user.account">
           <div class="dividend-pool-item">
             <div class="dividend-pool-label">
-              {{ $t('news-detail.dao_you_staked') }}
+              {{ $t("news-detail.dao_you_staked") }}
             </div>
             <div
               class="dividend-pool-value text-color"
@@ -59,19 +59,19 @@
           </div>
           <div class="dividend-pool-item">
             <div class="dividend-pool-label">
-              {{ $t('news-detail.dao_retrieve_num') }}
+              {{ $t("news-detail.dao_retrieve_num") }}
             </div>
             <div class="dividend-pool-value text-color">
               {{
-                userStakeInfo[1] != '0'
+                userStakeInfo[1] != "0"
                   ? Number(userStakeInfo[1]) + Number(cycleLen)
-                  : 'No stake'
+                  : "No stake"
               }}
             </div>
           </div>
           <div class="dividend-pool-item">
             <div class="dividend-pool-label">
-              {{ $t('news-detail.dao_curr_num') }}
+              {{ $t("news-detail.dao_curr_num") }}
             </div>
             <div class="dividend-pool-value text-color">
               {{ currentHeight }}
@@ -81,10 +81,10 @@
       </div>
       <div class="dao-btn-container" v-if="operable">
         <div class="dao-btn" @click="handleOpenStake()">
-          {{ $t('news-detail.dao_stake') }}
+          {{ $t("news-detail.dao_stake") }}
         </div>
         <div class="dao-btn-border" @click="handleRetrieve()">
-          {{ $t('news-detail.dao_retrieve') }}
+          {{ $t("news-detail.dao_retrieve") }}
         </div>
       </div>
     </div>
@@ -99,24 +99,24 @@
 </template>
 
 <script>
-import RetrieveDialog from '@/components/news/RetrieveDialog'
-import StakeDialog from '@/components/news/StakeDialog'
-import { weiToMbd } from '@/utils/common'
-import { eventBus } from '@/utils/event-bus'
-import { userPledgeCount } from '@/utils/web3/nft'
+import RetrieveDialog from "@/components/news/RetrieveDialog";
+import StakeDialog from "@/components/news/StakeDialog";
+import { weiToMbd } from "@/utils/common";
+import { eventBus } from "@/utils/event-bus";
+import { userPledgeCount } from "@/utils/web3/nft";
 import {
   blockHeight,
   getSettlePoolBalance,
   getStakeCycleLen,
   tokensData,
   totalPledgeCount,
-} from '@/utils/web3/open'
+} from "@/utils/web3/open";
 export default {
-  name: 'nft-dao-governance',
+  name: "nft-dao-governance",
   props: {
     tokenId: {
       type: String,
-      default: '',
+      default: "",
     },
     operable: {
       type: Boolean,
@@ -124,7 +124,7 @@ export default {
     },
     userOwned: {
       type: String,
-      default: '',
+      default: "",
     },
     showRevision: {
       type: Boolean,
@@ -136,9 +136,9 @@ export default {
     RetrieveDialog,
   },
   watch: {
-    '$store.state.user.account': function (val, od) {
+    "$store.state.user.account": function (val, od) {
       if (val !== od) {
-        this.getUserStakeCount()
+        this.getUserStakeCount();
       }
     },
   },
@@ -150,15 +150,15 @@ export default {
         !this.currentHeight ||
         !this.cycleLen
       ) {
-        return false
+        return false;
       }
       if (
         this.currentHeight >
         Number(this.userStakeInfo[1]) + Number(this.cycleLen)
       ) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     stakePercent() {
@@ -167,37 +167,37 @@ export default {
         !this.userStakeInfo[0] ||
         this.userStakeInfo[0] == 0
       ) {
-        return '0.00%'
+        return "0.00%";
       }
       if (!this.totalStakeCount || this.userStakeInfo[0] == 0) {
-        return '0.00%'
+        return "0.00%";
       }
       return (
         ((this.userStakeInfo[0] / this.totalStakeCount) * 100)
           .toFixed(2)
-          .toString() + '%'
-      )
+          .toString() + "%"
+      );
     },
     thresholdCount() {
       if (
         this.showRevision &&
         this.tokenSupplyInfo.isVoting &&
-        this.tokenSupplyInfo.vote.voteType == '1'
+        this.tokenSupplyInfo.vote.voteType == "1"
       ) {
-        return this.tokenSupplyInfo.vote.tmpToken.mVoteCount
+        return this.tokenSupplyInfo.vote.tmpToken.mVoteCount;
       } else {
-        return this.tokenSupplyInfo.mVoteCount
+        return this.tokenSupplyInfo.mVoteCount;
       }
     },
     daoFeeShow() {
       if (
         this.showRevision &&
         this.tokenSupplyInfo.isVoting &&
-        this.tokenSupplyInfo.vote.voteType == '1'
+        this.tokenSupplyInfo.vote.voteType == "1"
       ) {
-        return this.tokenSupplyInfo.vote.tmpToken.daoFee
+        return this.tokenSupplyInfo.vote.tmpToken.daoFee;
       } else {
-        return this.tokenSupplyInfo.daoFee
+        return this.tokenSupplyInfo.daoFee;
       }
     },
   },
@@ -210,10 +210,10 @@ export default {
       totalStakeCount: undefined,
       userStakeInfo: [],
       tokenSupplyInfo: {},
-    }
+    };
   },
   mounted() {
-    this.loading = true
+    this.loading = true;
     setTimeout(() => {
       Promise.all([
         this.getCurrentHeight(),
@@ -223,33 +223,33 @@ export default {
         this.loadSupplyInfo(),
         this.getStakeLength(),
       ]).then(() => {
-        this.loading = false
-        eventBus.$on('refresh_stake_info', this.handleReload)
-      })
-    }, 4000)
+        this.loading = false;
+        eventBus.$on("refresh_stake_info", this.handleReload);
+      });
+    }, 4000);
   },
   destroyed() {
-    eventBus.$off('refresh_stake_info')
+    eventBus.$off("refresh_stake_info");
   },
   methods: {
     /** 点击质押按钮 */
     handleOpenStake() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (!c) {
-          return
+          return;
         }
         if (this.$store.state.chain.balanceBnb < 0.01) {
           this.$bnbConfirm(this.$store.state.common.language, () => {
-            this.$refs['stakeDialog'].showDialog()
-          })
-          return
+            this.$refs["stakeDialog"].showDialog();
+          });
+          return;
         }
-        this.$refs['stakeDialog'].showDialog()
-      })
+        this.$refs["stakeDialog"].showDialog();
+      });
     },
     /** 加载数据 */
     handleReload() {
-      this.loading = true
+      this.loading = true;
       Promise.all([
         this.loadSupplyInfo(),
         this.getCurrentHeight(),
@@ -258,121 +258,121 @@ export default {
         this.getMbdSettleBalance(),
         this.getStakeLength(),
       ]).then(() => {
-        this.loading = false
-      })
+        this.loading = false;
+      });
     },
     /** 获取用户质押信息 */
     getUserStakeCount() {
       if (!this.tokenId || !this.$store.state.user.account) {
-        return
+        return;
       }
       return new Promise((resolve) => {
         userPledgeCount(this.tokenId)
           .then((data) => {
-            this.userStakeInfo[0] = data[0]
-            this.userStakeInfo[1] = data[1]
-            return resolve()
+            this.userStakeInfo[0] = data[0];
+            this.userStakeInfo[1] = data[1];
+            return resolve();
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
-          })
-      })
+            this.$toast.error(e && e.message ? e.message : e);
+          });
+      });
     },
     /** 获取质押总量 */
     getTotalStakeCount() {
       if (!this.tokenId) {
-        return
+        return;
       }
       return new Promise((resolve) => {
         totalPledgeCount(this.tokenId)
           .then((count) => {
-            this.totalStakeCount = count ? count : 0
-            return resolve()
+            this.totalStakeCount = count ? count : 0;
+            return resolve();
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
-          })
-      })
+            this.$toast.error(e && e.message ? e.message : e);
+          });
+      });
     },
     /** 取合约里DAO 质押奖金池子的额度 */
     getMbdSettleBalance() {
       if (!this.tokenId) {
-        return
+        return;
       }
       return new Promise((resolve) => {
         getSettlePoolBalance(this.tokenId)
           .then((balance) => {
-            this.settlePoolBalance = weiToMbd(balance)
-            return resolve()
+            this.settlePoolBalance = weiToMbd(balance);
+            return resolve();
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
-          })
-      })
+            this.$toast.error(e && e.message ? e.message : e);
+          });
+      });
     },
     /**获取质押周期 */
     getStakeLength() {
       return new Promise((resolve, reject) => {
         getStakeCycleLen()
           .then((r) => {
-            this.cycleLen = r
-            return resolve()
+            this.cycleLen = r;
+            return resolve();
           })
           .catch(() => {
-            return reject()
-          })
-      })
+            return reject();
+          });
+      });
     },
     /** 获取当前区块高度 */
     getCurrentHeight() {
       return new Promise((resolve, reject) => {
         blockHeight()
           .then((height) => {
-            this.currentHeight = height
-            return resolve()
+            this.currentHeight = height;
+            return resolve();
           })
           .catch(() => {
-            return reject()
-          })
-      })
+            return reject();
+          });
+      });
     },
     /** 加载数据 */
     loadSupplyInfo() {
       return new Promise((resolve) => {
         if (!this.tokenId) {
-          return
+          return;
         }
         tokensData(this.tokenId)
           .then((res) => {
-            this.tokenSupplyInfo = res
-            return resolve(res)
+            this.tokenSupplyInfo = res;
+            return resolve(res);
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
-          })
-      })
+            this.$toast.error(e && e.message ? e.message : e);
+          });
+      });
     },
     /** 点击赎回 */
     handleRetrieve() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (!c) {
-          return
+          return;
         }
         if (!this.retrieveUseable) {
-          this.$toast.info(this.$t('news-detail.retrieve_unable'))
-          return
+          this.$toast.info(this.$t("news-detail.retrieve_unable"));
+          return;
         }
         if (this.$store.state.chain.balanceBnb < 0.01) {
           this.$bnbConfirm(this.$store.state.common.language, () => {
-            this.$refs['retrieveDialog'].showDialog()
-          })
-          return
+            this.$refs["retrieveDialog"].showDialog();
+          });
+          return;
         }
-        this.$refs['retrieveDialog'].showDialog()
-      })
+        this.$refs["retrieveDialog"].showDialog();
+      });
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -469,6 +469,7 @@ export default {
 
         &:first-child {
           margin-left: 0;
+          text-align: center;
         }
       }
     }

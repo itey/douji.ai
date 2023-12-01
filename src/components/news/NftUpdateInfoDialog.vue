@@ -6,7 +6,7 @@
     width="1440px"
   >
     <div class="nft-stake-header text-color" slot="title">
-      {{ $t('news-detail.latest_title') }}
+      {{ $t("news-detail.latest_title") }}
     </div>
     <div class="nft-stake-content">
       <div class="nft-stake-container">
@@ -22,11 +22,11 @@
             </div>
             <div class="nft-stake-label-sub" style="margin-top: 16px">
               <img
-                style="width: 14px; height: 14px"
+                style="width: 20px; height: 20px"
                 src="@/assets/images/create/website.png"
               />
               <div class="nft-stake-label-sub-text">
-                {{ $t('news-detail.latest_open') }}
+                {{ $t("news-detail.latest_open") }}
               </div>
             </div>
             <div class="form-content text-color">
@@ -35,11 +35,11 @@
             <template v-if="metadata.protected">
               <div class="nft-stake-label-sub" style="margin-bottom: 10px">
                 <img
-                  style="width: 14px; height: 14px"
+                  style="width: 20px; height: 20px"
                   src="@/assets/images/create/protect.png"
                 />
                 <div class="nft-stake-label-sub-text">
-                  {{ $t('news-detail.latest_pro') }}
+                  {{ $t("news-detail.latest_pro") }}
                 </div>
               </div>
               <div
@@ -58,13 +58,13 @@
                 v-else
               >
                 <div class="text-color" style="font-size: 12px">
-                  {{ $t('news-detail.latest_least') }}
+                  {{ $t("news-detail.latest_least") }}
                   <span style="color: #00f9e5"
-                    >{{ $t('news-detail.latest_id') }}: {{ tokenId }}</span
-                  >) {{ $t('news-detail.latest_click') }}
+                    >{{ $t("news-detail.latest_id") }}: {{ tokenId }}</span
+                  >) {{ $t("news-detail.latest_click") }}
                   “
                   <span style="color: #00f9e5">{{
-                    $t('news-detail.latest_unlock')
+                    $t("news-detail.latest_unlock")
                   }}</span
                   >”
                 </div>
@@ -76,13 +76,13 @@
                     margin-top: 29px;
                     margin-bottom: 50px;
                   "
-                  >{{ $t('news-detail.latest_unlock') }}</el-button
+                  >{{ $t("news-detail.latest_unlock") }}</el-button
                 >
               </div>
             </template>
             <div class="nft-stake-tag">
               <div class="nft-stake-tag-label text-color">
-                {{ $t('news-detail.latest_tag') }}:
+                {{ $t("news-detail.latest_tag") }}:
               </div>
               <div
                 class="nft-stake-tag-item text-color"
@@ -111,7 +111,7 @@
         </div>
         <div class="btn-container">
           <el-button class="common-btn2" @click="show = false">{{
-            $t('news-detail.latest_close')
+            $t("news-detail.latest_close")
           }}</el-button>
         </div>
       </div>
@@ -120,28 +120,28 @@
 </template>
 
 <script>
-import NftAttributes from '@/components/news/NftAttributes'
-import NftDaoGovernance from '@/components/news/NftDaoGovernance'
-import NftPrimaryMarket from '@/components/news/NftPrimaryMarket'
-import { loadFromUrl, unlockContent } from '@/utils/http'
-import { balanceOf } from '@/utils/web3/nft'
-import { tokenURI, tokensData } from '@/utils/web3/open'
-var md = require('markdown-it')({
+import NftAttributes from "@/components/news/NftAttributes";
+import NftDaoGovernance from "@/components/news/NftDaoGovernance";
+import NftPrimaryMarket from "@/components/news/NftPrimaryMarket";
+import { loadFromUrl, unlockContent } from "@/utils/http";
+import { balanceOf } from "@/utils/web3/nft";
+import { tokenURI, tokensData } from "@/utils/web3/open";
+var md = require("markdown-it")({
   html: true,
   linkify: true,
   typographer: true,
   breaks: true,
-})
+});
 export default {
-  name: 'nft-update-info',
+  name: "nft-update-info",
   props: {
     tokenId: {
       type: String,
-      default: '',
+      default: "",
     },
     tokenOwner: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   components: {
@@ -150,9 +150,9 @@ export default {
     NftPrimaryMarket,
   },
   watch: {
-    '$store.state.user.userId': function (val, od) {
+    "$store.state.user.userId": function (val, od) {
       if (val !== od) {
-        this.pageLoad()
+        this.pageLoad();
       }
     },
   },
@@ -174,140 +174,140 @@ export default {
         openContent: undefined,
         protectedContent: undefined,
       },
-    }
+    };
   },
   methods: {
     showDialog() {
-      this.show = true
+      this.show = true;
     },
     async pageLoad() {
-      this.tokenMetaUrl = undefined
+      this.tokenMetaUrl = undefined;
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       try {
-        await this.loadSupplyInfo()
-        if (this.voteType == '0') {
-          this.tokenMetaUrl = this.tokenSupplyInfo.vote.uri
+        await this.loadSupplyInfo();
+        if (this.voteType == "0") {
+          this.tokenMetaUrl = this.tokenSupplyInfo.vote.uri;
         }
         if (!this.tokenMetaUrl) {
-          this.tokenMetaUrl = await tokenURI(this.tokenId)
+          this.tokenMetaUrl = await tokenURI(this.tokenId);
         }
-        const httpResponse = await loadFromUrl(this.tokenMetaUrl)
+        const httpResponse = await loadFromUrl(this.tokenMetaUrl);
         if (httpResponse.status !== 200) {
-          throw new Error('HTTP error ' + httpResponse.status)
+          throw new Error("HTTP error " + httpResponse.status);
         }
 
-        this.metadata = httpResponse.data
-        const openData = await this.loadOpenContent(this.metadata.contentUrl)
+        this.metadata = httpResponse.data;
+        const openData = await this.loadOpenContent(this.metadata.contentUrl);
         this.metadata.openContent = this.$set(
           this.metadata,
-          'openContent',
+          "openContent",
           md.render(openData ? md.render(openData) : null)
-        )
-        await this.getUserOwned()
+        );
+        await this.getUserOwned();
       } catch (e) {
-        this.$toast.error(e && e.message ? e.message : e)
-        loadingInstance.close()
+        this.$toast.error(e && e.message ? e.message : e);
+        loadingInstance.close();
       } finally {
-        loadingInstance.close()
+        loadingInstance.close();
       }
     },
     /** 点击解锁 */
     handleUnlock() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (!c) {
-          this.show = false
-          return
+          this.show = false;
+          return;
         }
         var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
+          background: "rgba(0, 0, 0, 0.8)",
+        });
         if (this.userOwned && this.userOwned > 0) {
           this.loadProtectedContent(this.metadata.protected)
             .then((protectedContent) => {
               this.$set(
                 this.metadata,
-                'protectedContent',
+                "protectedContent",
                 md.render(protectedContent)
-              )
-              this.$toast.success(this.$t('news-detail.unlock_success'))
-              loadingInstance.close()
+              );
+              this.$toast.success(this.$t("news-detail.unlock_success"));
+              loadingInstance.close();
             })
             .catch((e) => {
-              console.log(e)
-              this.$toast.error(this.$t('news-detail.unlock_failed'))
-              loadingInstance.close()
-            })
+              console.log(e);
+              this.$toast.error(this.$t("news-detail.unlock_failed"));
+              loadingInstance.close();
+            });
         } else {
-          this.$toast.info(this.$t('news-detail.have_no_nft'))
-          loadingInstance.close()
+          this.$toast.info(this.$t("news-detail.have_no_nft"));
+          loadingInstance.close();
         }
-      })
+      });
     },
     /** 加载公开数据 */
     loadOpenContent(url) {
       return new Promise((resolve, reject) => {
         loadFromUrl(url).then((res) => {
           if (res.status !== 200) {
-            return reject(res.statusText)
+            return reject(res.statusText);
           }
-          return resolve(res.data)
-        })
-      })
+          return resolve(res.data);
+        });
+      });
     },
     /** 加载私有数据 */
     loadProtectedContent(data) {
       return new Promise((resolve, reject) => {
         unlockContent(data, this.tokenId).then((res) => {
           if (res.code != 1) {
-            return reject(res.message)
+            return reject(res.message);
           }
-          const ipfsUrl = res.data.url
+          const ipfsUrl = res.data.url;
           loadFromUrl(ipfsUrl).then((r) => {
             if (r.status !== 200) {
-              return reject(r.statusText)
+              return reject(r.statusText);
             }
-            return resolve(r.data)
-          })
-        })
-      })
+            return resolve(r.data);
+          });
+        });
+      });
     },
     /** 加载数据 */
     loadSupplyInfo() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          return reject()
+          return reject();
         }
         tokensData(this.tokenId)
           .then((res) => {
-            this.tokenSupplyInfo = res
-            this.voteType = this.tokenSupplyInfo.vote.voteType
-            return resolve()
+            this.tokenSupplyInfo = res;
+            this.voteType = this.tokenSupplyInfo.vote.voteType;
+            return resolve();
           })
           .catch(() => {
-            return reject()
-          })
-      })
+            return reject();
+          });
+      });
     },
     /** 获取用户拥有数量 */
     getUserOwned() {
       if (!this.tokenId || !this.$store.state.user.userId) {
-        return
+        return;
       }
       return new Promise((resolve, reject) => {
         balanceOf(this.tokenId)
           .then((balance) => {
-            this.userOwned = balance
-            return resolve()
+            this.userOwned = balance;
+            return resolve();
           })
           .catch((e) => {
-            return reject(e)
-          })
-      })
+            return reject(e);
+          });
+      });
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -379,7 +379,7 @@ export default {
             justify-content: center;
 
             .nft-stake-label-sub-text {
-              font-size: 13px;
+              font-size: 18px;
               font-family: Source Han Sans CN;
               font-weight: bold;
               color: #00f9e5;
@@ -676,7 +676,8 @@ export default {
         margin-top: 135px;
         margin-bottom: 81px;
         .common-btn2 {
-          width: 188px;
+          width: 300px;
+          height: 50px;
         }
       }
     }

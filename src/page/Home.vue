@@ -1,5 +1,6 @@
 <template>
   <div class="home-container">
+    <div class="bg"></div>
     <div
       class="top-container"
       v-loading="loading['news']"
@@ -83,21 +84,21 @@
     <div class="info-container">
       <div class="left">
         <div class="item">
-          <div class="label">{{ $t('home.creator') }}</div>
+          <div class="label">{{ $t("home.creator") }}</div>
           <div class="value text-color">238,820</div>
         </div>
         <div class="item theme-background-color">
-          <div class="label">{{ $t('home.user') }}</div>
+          <div class="label">{{ $t("home.user") }}</div>
           <div class="value text-color">238,820</div>
         </div>
         <div class="item theme-background-color">
-          <div class="label">{{ $t('home.navigation_items') }}</div>
+          <div class="label">{{ $t("home.navigation_items") }}</div>
           <div class="value text-color">238,820</div>
         </div>
       </div>
       <div class="nft-info-container theme-background-color">
         <div class="nft-column">
-          <div class="title">{{ $t('home.all_nft') }}</div>
+          <div class="title">{{ $t("home.all_nft") }}</div>
           <div class="value-container">
             <span class="value text-color">437,238,820</span>
             <img
@@ -108,7 +109,7 @@
           </div>
           <div class="attr-container">
             <div class="attr-item">
-              <div class="label">{{ $t('home.market_cap') }}</div>
+              <div class="label">{{ $t("home.market_cap") }}</div>
               <div>
                 <span class="value text-color">$10,468,280</span>
                 <img
@@ -119,7 +120,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.nft_volume') }}</div>
+              <div class="label">{{ $t("home.nft_volume") }}</div>
               <div>
                 <span class="value text-color">$10,468,280</span>
                 <img
@@ -130,7 +131,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.transfers') }}</div>
+              <div class="label">{{ $t("home.transfers") }}</div>
               <div>
                 <span class="value text-color">$10,468,280</span>
                 <img
@@ -142,7 +143,7 @@
             </div>
             <div class="attr-item">
               <div class="label">
-                {{ $t('home.weekly_active_users') }}
+                {{ $t("home.weekly_active_users") }}
               </div>
               <div>
                 <span class="value text-color">$10,468,280</span>
@@ -156,7 +157,7 @@
           </div>
         </div>
         <div class="nft-column">
-          <div class="title">{{ $t('home.mbd_price') }}</div>
+          <div class="title">{{ $t("home.mbd_price") }}</div>
           <div class="value-container">
             <span class="value text-color">$0.00011887</span>
             <img
@@ -168,7 +169,7 @@
           <div class="attr-container">
             <div class="attr-item">
               <div class="label">
-                {{ $t('home.mbd_circulation') }}
+                {{ $t("home.mbd_circulation") }}
               </div>
               <div>
                 <span class="value text-color">10,468,280</span>
@@ -181,7 +182,7 @@
             </div>
             <div class="attr-item">
               <div class="label">
-                {{ $t('home.24h_nft_volume') }}
+                {{ $t("home.24h_nft_volume") }}
               </div>
               <div>
                 <span class="value text-color">$10,468,280</span>
@@ -193,7 +194,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.24h_transfers') }}</div>
+              <div class="label">{{ $t("home.24h_transfers") }}</div>
               <div>
                 <span class="value text-color">1468,280</span>
                 <img
@@ -204,7 +205,7 @@
               </div>
             </div>
             <div class="attr-item">
-              <div class="label">{{ $t('home.24h_nfts') }}</div>
+              <div class="label">{{ $t("home.24h_nfts") }}</div>
               <div>
                 <span class="value text-color">8,280</span>
                 <img
@@ -219,7 +220,7 @@
       </div>
     </div>
     <div class="latest-news-container">
-      <div class="title text-color">{{ $t('home.latest_news') }}</div>
+      <div class="title text-color">{{ $t("home.latest_news") }}</div>
       <div class="list-container">
         <NewsItem
           :item="item"
@@ -242,7 +243,7 @@
           <div class="top">
             <div class="title text-color">AI News</div>
             <div class="more">
-              <span>{{ $t('home.read_more') }}</span>
+              <span>{{ $t("home.read_more") }}</span>
               <img
                 style="width: 12px; height: 12px"
                 src="@/assets/images/home/more.png"
@@ -261,7 +262,7 @@
           <div class="top">
             <div class="title text-color">Web3 News</div>
             <div class="more">
-              <span>{{ $t('home.read_more') }}</span>
+              <span>{{ $t("home.read_more") }}</span>
               <img
                 style="width: 12px; height: 12px"
                 src="@/assets/images/home/more.png"
@@ -280,7 +281,7 @@
           <div class="top">
             <div class="title text-color">Crypto News</div>
             <div class="more">
-              <span>{{ $t('home.read_more') }}</span>
+              <span>{{ $t("home.read_more") }}</span>
               <img
                 style="width: 12px; height: 12px"
                 src="@/assets/images/home/more.png"
@@ -299,7 +300,7 @@
           <div class="top">
             <div class="title text-color">Metaverse News</div>
             <div class="more">
-              <span>{{ $t('home.read_more') }}</span>
+              <span>{{ $t("home.read_more") }}</span>
               <img
                 style="width: 12px; height: 12px"
                 src="@/assets/images/home/more.png"
@@ -323,13 +324,13 @@
     <div class="nft-list-container" v-if="promptsList.length">
       <div class="top">
         <div class="title text-color">
-          {{ $t('home.featured_prompts_nft') }}
+          {{ $t("home.featured_prompts_nft") }}
         </div>
         <div
           class="more"
           @click="$router.push({ path: '/market', query: { type: 'Prompt' } })"
         >
-          <span>{{ $t('home.read_more') }}</span>
+          <span>{{ $t("home.read_more") }}</span>
           <img
             style="width: 12px; height: 12px"
             src="@/assets/images/home/more.png"
@@ -348,7 +349,7 @@
     <div class="nft-list-container" v-if="digitalList.length">
       <div class="top">
         <div class="title text-color">
-          {{ $t('home.featured_digital_arts_nft') }}
+          {{ $t("home.featured_digital_arts_nft") }}
         </div>
         <div
           class="more"
@@ -356,7 +357,7 @@
             $router.push({ path: '/market', query: { type: 'Digital Arts' } })
           "
         >
-          <span>{{ $t('home.read_more') }}</span>
+          <span>{{ $t("home.read_more") }}</span>
           <img
             style="width: 12px; height: 12px"
             src="@/assets/images/home/more.png"
@@ -380,10 +381,10 @@
       />
     </div>
     <div class="activity-container">
-      <div class="top">{{ $t('home.activity') }}</div>
-      <div class="title text-color">{{ $t('home.bjx_pre_sale') }}</div>
+      <div class="top">{{ $t("home.activity") }}</div>
+      <div class="title text-color">{{ $t("home.bjx_pre_sale") }}</div>
       <div class="text-sub-color" style="font-size: 20px">
-        {{ $t('home.bjx_what_value') }}
+        {{ $t("home.bjx_what_value") }}
       </div>
       <div
         class="activity-info theme-background-color"
@@ -402,7 +403,7 @@
               {{ (bjxInfoJson.currentSupply - 500000000) | toLocalString }} /
               500,000,000 Sold
             </div>
-            <div class="label">{{ $t('home.price') }}</div>
+            <div class="label">{{ $t("home.price") }}</div>
             <div class="type-container">
               <div
                 @click="bjx.priceType = '0'"
@@ -426,7 +427,7 @@
                 <div>{{ bjx.mbdPrice }} MBD</div>
               </div>
             </div>
-            <div class="label">{{ $t('home.buy_quantity') }}</div>
+            <div class="label">{{ $t("home.buy_quantity") }}</div>
             <el-form ref="bjxForm" :rules="rules" :model="bjx">
               <el-form-item prop="count">
                 <el-input
@@ -438,7 +439,7 @@
             </el-form>
           </div>
           <div class="text-sub-color tip">
-            {{ $t('home.after_early_bird') }}
+            {{ $t("home.after_early_bird") }}
             <span class="text-color">15 USDT</span>
           </div>
           <div style="margin-left: 127px; margin-top: 11px">
@@ -446,7 +447,7 @@
               :disabled="bjx.buying"
               @click="handleBuyBjx()"
               class="common-btn2"
-              >{{ $t('home.buy') }}</el-button
+              >{{ $t("home.buy") }}</el-button
             >
           </div>
         </div>
@@ -454,16 +455,16 @@
     </div>
     <div class="comparison-container">
       <div class="comparison-top">
-        <div class="top">{{ $t('home.comparison') }}</div>
-        <div class="title text-color">{{ $t('home.what_is_douji') }}</div>
-        <div class="tip text-sub-color">{{ $t('home.comparison_tip') }}</div>
+        <div class="top">{{ $t("home.comparison") }}</div>
+        <div class="title text-color">{{ $t("home.what_is_douji") }}</div>
+        <div class="tip text-sub-color">{{ $t("home.comparison_tip") }}</div>
       </div>
       <comparison-table></comparison-table>
       <comparison-tab></comparison-tab>
     </div>
     <div class="video-container">
-      <div class="top">{{ $t('home.video') }}</div>
-      <div class="title text-color">{{ $t('home.how_use') }}</div>
+      <div class="top">{{ $t("home.video") }}</div>
+      <div class="title text-color">{{ $t("home.how_use") }}</div>
       <div class="video-box">
         <LazyYoutubeVideo :src="videoSrc" />
       </div>
@@ -472,22 +473,27 @@
 </template>
 
 <script>
-import NewsItem from '@/components/NewsItem'
-import ProductItem from '@/components/ProductItem'
-import ComparisonTab from '@/components/home/ComparisonTab'
-import ComparisonTable from '@/components/home/ComparisonTable'
-import NewsTabItem from '@/components/home/NewsTabItem'
-import LazyYoutubeVideo from 'vue-lazy-youtube-video'
-import { weiToEth } from '@/utils/common'
-import { hotNewsList, nftListPage, selectedList, getAdList } from '@/utils/http'
-import { erc20Approve, mintByBnb, mintByErc20 } from '@/utils/web3/bjx'
+import NewsItem from "@/components/NewsItem";
+import ProductItem from "@/components/ProductItem";
+import ComparisonTab from "@/components/home/ComparisonTab";
+import ComparisonTable from "@/components/home/ComparisonTable";
+import NewsTabItem from "@/components/home/NewsTabItem";
+import LazyYoutubeVideo from "vue-lazy-youtube-video";
+import { weiToEth } from "@/utils/common";
+import {
+  hotNewsList,
+  nftListPage,
+  selectedList,
+  getAdList,
+} from "@/utils/http";
+import { erc20Approve, mintByBnb, mintByErc20 } from "@/utils/web3/bjx";
 import {
   getBjxMbdPrice,
   getBjxTokenInfo,
   getBjxUsdtPrice,
-} from '@/utils/web3/open'
+} from "@/utils/web3/open";
 export default {
-  name: 'home-view',
+  name: "home-view",
   components: {
     NewsTabItem,
     ProductItem,
@@ -499,33 +505,33 @@ export default {
   computed: {
     /** 视频地址 */
     videoSrc() {
-      return this.$store.state.common.language == 'en'
-        ? 'https://www.youtube.com/embed/gYO1uk7vIcc?si=qhbJM-yMR-ahsdAA'
-        : 'https://www.youtube.com/embed/OYAyuESW5xk?si=WYcoj3r0LJ6PI52W'
+      return this.$store.state.common.language == "en"
+        ? "https://www.youtube.com/embed/gYO1uk7vIcc?si=qhbJM-yMR-ahsdAA"
+        : "https://www.youtube.com/embed/OYAyuESW5xk?si=WYcoj3r0LJ6PI52W";
     },
   },
   data() {
-    var reg = /^\+?[1-9][0-9]*$/
+    var reg = /^\+?[1-9][0-9]*$/;
     var validateNumber = (rule, value, callback) => {
       if (!reg.test(value)) {
-        callback(new Error('Please enter a integer'))
+        callback(new Error("Please enter a integer"));
       }
       if (value <= 0) {
-        callback(new Error('Must be greater than 0'))
+        callback(new Error("Must be greater than 0"));
       }
-      callback()
-    }
+      callback();
+    };
     return {
       loading: {},
-      activeName: 'news',
+      activeName: "news",
       bjxTypeOption: {
-        0: 'USDT',
-        1: 'BNB',
-        2: 'MBD',
+        0: "USDT",
+        1: "BNB",
+        2: "MBD",
       },
       bjx: {
         buying: false,
-        priceType: '0',
+        priceType: "0",
         bnbPrice: 0,
         usdtPrice: 0,
         mbdPrice: 0,
@@ -541,10 +547,10 @@ export default {
         count: [
           {
             required: true,
-            message: 'Please enter the quantity to buy',
-            trigger: 'blur',
+            message: "Please enter the quantity to buy",
+            trigger: "blur",
           },
-          { validator: validateNumber, trigger: 'blur' },
+          { validator: validateNumber, trigger: "blur" },
         ],
       },
       latestNews: [],
@@ -554,182 +560,182 @@ export default {
       hotNewsList: [],
       bannerNews: {},
       advertiseList: [],
-    }
+    };
   },
   mounted() {
-    this.getBjxData()
-    this.newsInit()
-    this.loadAdsList()
+    this.getBjxData();
+    this.newsInit();
+    this.loadAdsList();
   },
   methods: {
     /** 打开广告 */
     openAdvertise(url) {
-      window.open(url, '_blank')
+      window.open(url, "_blank");
     },
     /** 鼠标悬浮 */
     onHover(val) {
-      this.bannerNews = val
+      this.bannerNews = val;
     },
     /** 点击切换 */
     newsTabChange(val) {
-      if (val.index == '0') {
-        this.bannerNews = this.hotNewsList[0]
+      if (val.index == "0") {
+        this.bannerNews = this.hotNewsList[0];
       }
-      if (val.index == '1') {
-        this.bannerNews = this.selectedList[0]
+      if (val.index == "1") {
+        this.bannerNews = this.selectedList[0];
       }
     },
     /** 点击购买BJX */
     async handleBuyBjx() {
-      const c = await this.$store.dispatch('CheckLogin', true)
+      const c = await this.$store.dispatch("CheckLogin", true);
       if (!c) {
-        return
+        return;
       }
-      this.$refs['bjxForm'].validate((valid) => {
-        if (!valid) return
-        this.bjx.buying = true
-        if (this.bjx.priceType == '1') {
+      this.$refs["bjxForm"].validate((valid) => {
+        if (!valid) return;
+        this.bjx.buying = true;
+        if (this.bjx.priceType == "1") {
           const payableAmountWei =
-            Number(this.bjx.count) * Number(this.bjxInfoJson.bnbPrice)
+            Number(this.bjx.count) * Number(this.bjxInfoJson.bnbPrice);
           mintByBnb(this.bjx.count, payableAmountWei)
             .then((tx) => {
-              console.log(tx)
+              console.log(tx);
               this.$toast.success(
-                this.$t('home.bjx_buy_success', {
+                this.$t("home.bjx_buy_success", {
                   count: this.bjx.count,
                   amount: this.bjx.count * this.bjx.bnbPrice,
                   coin: this.bjxTypeOption[this.bjx.priceType],
                 })
-              )
+              );
             })
             .catch((e) => {
-              this.$toast.error(e && e.message ? e.message : e)
+              this.$toast.error(e && e.message ? e.message : e);
             })
             .finally(() => {
-              this.getBjxData()
-              this.bjx.buying = false
-              this.bjx.count = null
-            })
+              this.getBjxData();
+              this.bjx.buying = false;
+              this.bjx.count = null;
+            });
         } else {
-          var erc20Address = process.env.VUE_APP_USDT
-          var decimal = 18
-          var ercPrice = this.bjx.usdtPrice
-          if (this.bjx.priceType == '2') {
-            erc20Address = process.env.VUE_APP_MBD
-            decimal = 8
-            ercPrice = this.bjx.mbdPrice
+          var erc20Address = process.env.VUE_APP_USDT;
+          var decimal = 18;
+          var ercPrice = this.bjx.usdtPrice;
+          if (this.bjx.priceType == "2") {
+            erc20Address = process.env.VUE_APP_MBD;
+            decimal = 8;
+            ercPrice = this.bjx.mbdPrice;
           }
           if (!erc20Address) {
-            this.bjx.buying = false
-            return
+            this.bjx.buying = false;
+            return;
           }
           erc20Approve(erc20Address, this.bjx.count * ercPrice, decimal)
             .then(() => {
               mintByErc20(erc20Address, this.bjx.count)
                 .then((tx) => {
-                  console.log(tx)
+                  console.log(tx);
                   this.$toast.success(
-                    this.$t('home.bjx_buy_success', {
+                    this.$t("home.bjx_buy_success", {
                       count: this.bjx.count,
                       amount: this.bjx.count * ercPrice,
                       coin: this.bjxTypeOption[this.bjx.priceType],
                     })
-                  )
+                  );
                 })
                 .catch((e) => {
-                  this.$toast.error(e && e.message ? e.message : e)
+                  this.$toast.error(e && e.message ? e.message : e);
                 })
                 .finally(() => {
-                  this.bjx.buying = false
-                  this.bjx.count = null
-                  this.getBjxData()
-                })
+                  this.bjx.buying = false;
+                  this.bjx.count = null;
+                  this.getBjxData();
+                });
             })
             .catch((e) => {
-              this.$toast.error(e && e.message ? e.message : e)
-              this.bjx.buying = false
-            })
+              this.$toast.error(e && e.message ? e.message : e);
+              this.bjx.buying = false;
+            });
         }
-      })
+      });
     },
     /** 查询BJX的信息 */
     getBjxData() {
       getBjxTokenInfo()
         .then((res) => {
-          this.bjxInfoJson = res
-          this.bjx.bnbPrice = weiToEth(res.bnbPrice)
+          this.bjxInfoJson = res;
+          this.bjx.bnbPrice = weiToEth(res.bnbPrice);
         })
         .catch((e) => {
-          console.log(e)
-          this.$toast.warning('Network error')
-        })
+          console.log(e);
+          this.$toast.warning("Network error");
+        });
       getBjxUsdtPrice()
         .then((r) => {
-          this.bjx.usdtPrice = r
+          this.bjx.usdtPrice = r;
         })
         .catch((e) => {
-          console.log(e)
-        })
+          console.log(e);
+        });
       getBjxMbdPrice()
         .then((r) => {
-          this.bjx.mbdPrice = r
+          this.bjx.mbdPrice = r;
         })
         .catch((e) => {
-          console.log(e)
-        })
+          console.log(e);
+        });
     },
     /** 所有内容初始化 */
     newsInit() {
       const paramLatestNews = {
         page: 1,
-        content_type: 'Article',
-      }
+        content_type: "Article",
+      };
       const promptsNews = {
         page: 1,
-        content_type: 'Prompt',
-      }
+        content_type: "Prompt",
+      };
       const digitalArts = {
         page: 1,
-        content_type: 'Digital Arts',
-      }
+        content_type: "Digital Arts",
+      };
       this.getNewsList(paramLatestNews)
         .then((r) => {
           if (r.length) {
-            this.latestNews = r.slice(0, 8)
+            this.latestNews = r.slice(0, 8);
           }
         })
         .catch((e) => {
-          console.log(e)
-        })
+          console.log(e);
+        });
       this.getNewsList(promptsNews)
         .then((r) => {
           if (r.length) {
-            this.promptsList = r.slice(0, 8)
+            this.promptsList = r.slice(0, 8);
           }
         })
         .catch((e) => {
-          console.log(e)
-        })
+          console.log(e);
+        });
       this.getNewsList(digitalArts)
         .then((r) => {
           if (r.length) {
-            this.digitalList = r.slice(0, 8)
+            this.digitalList = r.slice(0, 8);
           }
         })
         .catch((e) => {
-          console.log(e)
-        })
-      this.$set(this.loading, 'news', true)
+          console.log(e);
+        });
+      this.$set(this.loading, "news", true);
       Promise.all([this.getSelectedList(), this.getHotNewsList()])
         .then(() => {
-          this.bannerNews = this.hotNewsList[0]
+          this.bannerNews = this.hotNewsList[0];
         })
         .catch((e) => {
-          console.log(e)
+          console.log(e);
         })
         .finally(() => {
-          this.$set(this.loading, 'news', false)
-        })
+          this.$set(this.loading, "news", false);
+        });
     },
     /** 查询News */
     getNewsList(param) {
@@ -737,53 +743,53 @@ export default {
         nftListPage(param)
           .then((r) => {
             if (r.code == 1) {
-              return resolve(r.data.list)
+              return resolve(r.data.list);
             } else {
-              return reject(r.message)
+              return reject(r.message);
             }
           })
           .catch((e) => {
-            console.log(e)
-            return reject(e)
-          })
-      })
+            console.log(e);
+            return reject(e);
+          });
+      });
     },
     /** 精选 */
     getSelectedList() {
       return new Promise((resolve, reject) => {
         selectedList().then((r) => {
           if (r.code == 1) {
-            this.selectedList = r.data.list
-            return resolve(r.data.list)
+            this.selectedList = r.data.list;
+            return resolve(r.data.list);
           } else {
-            return reject(r.message)
+            return reject(r.message);
           }
-        })
-      })
+        });
+      });
     },
     /** 热门 */
     getHotNewsList() {
       return new Promise((resolve, reject) => {
         hotNewsList().then((r) => {
           if (r.code == 1) {
-            this.hotNewsList = r.data.list
-            return resolve(r.data.list)
+            this.hotNewsList = r.data.list;
+            return resolve(r.data.list);
           } else {
-            return reject(r.message)
+            return reject(r.message);
           }
-        })
-      })
+        });
+      });
     },
     /** 查询广告列表 */
     loadAdsList() {
       getAdList(2).then((r) => {
         if (r.code == 1) {
-          this.advertiseList = r.data.list
+          this.advertiseList = r.data.list;
         }
-      })
+      });
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 .home-container {
@@ -1164,7 +1170,7 @@ export default {
     }
 
     .activity-info {
-      // background: #1a2027;
+      position: relative;
       border-radius: 6px;
       padding: 58px 0 69px 274px;
       margin-top: 60px;

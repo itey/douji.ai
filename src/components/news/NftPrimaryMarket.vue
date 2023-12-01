@@ -5,16 +5,16 @@
     :element-loading-background="$store.state.common.theme | maskByTheme"
   >
     <div class="form-attr-title text-color">
-      {{ $t('news-detail.pri_title') }}
+      {{ $t("news-detail.pri_title") }}
     </div>
     <div class="form-attr-market">
       <div class="form-attr-market-top">
         <div class="form-attr-available">
-          {{ $t('news-detail.pri_ava') }} :
+          {{ $t("news-detail.pri_ava") }} :
           <span class="text-color">{{ availableSupply | toLocalString }}</span>
         </div>
         <div class="form-attr-available" v-if="$store.state.user.account">
-          {{ $t('news-detail.pri_own') }} :
+          {{ $t("news-detail.pri_own") }} :
           <span class="text-color">{{ userOwned }}</span>
         </div>
       </div>
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="form-attr-discount">
-          {{ $t('news-detail.pri_ori') }}:
+          {{ $t("news-detail.pri_ori") }}:
           {{ currentPrice | decimalPlace4 }} MBD
         </div>
       </template>
@@ -54,20 +54,20 @@
         @click="handleMint()"
         :disabled="editShow || availableSupply <= 0"
         class="common-btn2 form-attr-mint"
-        >{{ $t('news-detail.pri_mint') }}</el-button
+        >{{ $t("news-detail.pri_mint") }}</el-button
       >
       <div class="form-attr-tip" v-if="discountJson && discountJson.isOpen">
         <div>
-          {{ $t('news-detail.pri_owning') }}
+          {{ $t("news-detail.pri_owning") }}
           <span class="text-color">{{ discountJson.discounts }}</span>
-          {{ $t('news-detail.pri_to_get') }}
+          {{ $t("news-detail.pri_to_get") }}
           <span class="text-color">{{
             discountJson.discountsFee | fee2Percent
           }}</span>
-          {{ $t('news-detail.pri_dis') }}
+          {{ $t("news-detail.pri_dis") }}
         </div>
         <div>
-          {{ $t('news-detail.pri_contract') }}:
+          {{ $t("news-detail.pri_contract") }}:
           <span
             class="text-color contract-address"
             @click="toBnbScan(discountJson.cAddress)"
@@ -75,7 +75,7 @@
           >
           ({{ discountJson.sptType | sptType2Name }})
           <span v-if="discountJson.tokenId"
-            >{{ $t('news-detail.pri_token_id') }}:{{
+            >{{ $t("news-detail.pri_token_id") }}:{{
               discountJson.tokenId
             }}</span
           >
@@ -85,10 +85,10 @@
             $store.state.user.account && discountJson && discountJson.isOpen
           "
         >
-          {{ $t('news-detail.pri_token_own') }}:
+          {{ $t("news-detail.pri_token_own") }}:
           <span class="text-color">{{ disTokenOwned }}</span>
           <span v-if="disTokenOwned > 0"
-            >({{ unusedCount || '0' }} {{ $t('news-detail.pri_unused') }})</span
+            >({{ unusedCount || "0" }} {{ $t("news-detail.pri_unused") }})</span
           >
         </div>
       </div>
@@ -97,21 +97,21 @@
 </template>
 
 <script>
-import { weiToMbd } from '@/utils/common'
-import { eventBus } from '@/utils/event-bus'
-import { approveMbd } from '@/utils/web3/mbd'
-import { getAlreadyDiscounts, userMint } from '@/utils/web3/nft'
+import { weiToMbd } from "@/utils/common";
+import { eventBus } from "@/utils/event-bus";
+import { approveMbd } from "@/utils/web3/mbd";
+import { getAlreadyDiscounts, userMint } from "@/utils/web3/nft";
 import {
   getErc1155BalanceOf,
   getErc20BalanceOf,
   getErc721BalanceOf,
-} from '@/utils/web3/open'
+} from "@/utils/web3/open";
 export default {
-  name: 'nft-attributes',
+  name: "nft-attributes",
   props: {
     tokenId: {
       type: String,
-      default: '',
+      default: "",
     },
     metadata: {
       type: Object,
@@ -123,7 +123,7 @@ export default {
     },
     userOwned: {
       type: String,
-      default: '0',
+      default: "0",
     },
     editShow: {
       type: Boolean,
@@ -136,13 +136,13 @@ export default {
         this.editShow &&
         this.tokensInfo &&
         this.tokensInfo.isVoting &&
-        this.tokensInfo.vote.voteType == '2'
+        this.tokensInfo.vote.voteType == "2"
       ) {
-        return this.tokensInfo.vote.tmpToken.availableSupply
+        return this.tokensInfo.vote.tmpToken.availableSupply;
       } else if (this.tokensInfo) {
-        return this.tokensInfo.availableSupply
+        return this.tokensInfo.availableSupply;
       } else {
-        return null
+        return null;
       }
     },
     currentPrice() {
@@ -150,13 +150,13 @@ export default {
         this.editShow &&
         this.tokensInfo &&
         this.tokensInfo.isVoting &&
-        this.tokensInfo.vote.voteType == '2'
+        this.tokensInfo.vote.voteType == "2"
       ) {
-        return weiToMbd(this.tokensInfo.vote.tmpToken.price.price)
+        return weiToMbd(this.tokensInfo.vote.tmpToken.price.price);
       } else if (this.tokensInfo.price) {
-        return weiToMbd(this.tokensInfo.price.price)
+        return weiToMbd(this.tokensInfo.price.price);
       } else {
-        return null
+        return null;
       }
     },
     discountJson() {
@@ -164,7 +164,7 @@ export default {
         this.editShow &&
         this.tokensInfo &&
         this.tokensInfo.isVoting &&
-        this.tokensInfo.vote.voteType == '3'
+        this.tokensInfo.vote.voteType == "3"
       ) {
         return {
           cAddress: this.tokensInfo.vote.tmpToken.nsp.cAddress,
@@ -173,7 +173,7 @@ export default {
           isOpen: this.tokensInfo.vote.tmpToken.nsp.isOpen,
           sptType: this.tokensInfo.vote.tmpToken.nsp.sptType,
           tokenId: this.tokensInfo.vote.tmpToken.nsp.tokenId,
-        }
+        };
       } else if (this.tokensInfo.nsp) {
         return {
           cAddress: this.tokensInfo.nsp.cAddress,
@@ -182,21 +182,21 @@ export default {
           isOpen: this.tokensInfo.nsp.isOpen,
           sptType: this.tokensInfo.nsp.sptType,
           tokenId: this.tokensInfo.nsp.tokenId,
-        }
+        };
       } else {
-        return {}
+        return {};
       }
     },
   },
   watch: {
-    '$store.state.user.account': function (val, od) {
+    "$store.state.user.account": function (val, od) {
       if (val != od) {
-        this.getDiscountPrice()
+        this.getDiscountPrice();
       }
     },
     tokensInfo: function (val, od) {
       if (val != od) {
-        this.getDiscountPrice()
+        this.getDiscountPrice();
       }
     },
   },
@@ -209,103 +209,103 @@ export default {
       unusedCount: undefined,
       disTokenOwned: 0,
       disTOkenUsed: 0,
-    }
+    };
   },
   mounted() {
-    this.getDiscountPrice()
+    this.getDiscountPrice();
   },
   methods: {
     /** 用户点击mint */
     async handleMint() {
-      const c = await this.$store.dispatch('CheckLogin', true)
+      const c = await this.$store.dispatch("CheckLogin", true);
       if (!c) {
-        return
+        return;
       }
 
       if (this.$store.state.chain.balanceBnb < 0.01) {
         this.$bnbConfirm(this.$store.state.common.language, () => {
-          this.mintExecute()
-        })
-        return
+          this.mintExecute();
+        });
+        return;
       }
-      this.mintExecute()
+      this.mintExecute();
     },
     /** 执行mint */
     async mintExecute() {
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
-      var mintPrice = this.currentPrice
+        background: "rgba(0, 0, 0, 0.8)",
+      });
+      var mintPrice = this.currentPrice;
       if (this.discountPrice && this.discountPrice > 0) {
-        mintPrice = this.discountPrice
+        mintPrice = this.discountPrice;
       }
       if (mintPrice && mintPrice > 0) {
         try {
-          await approveMbd(this.nftContract, mintPrice)
+          await approveMbd(this.nftContract, mintPrice);
         } catch (e) {
-          console.log(e)
-          this.$toast.error(e && e.message ? e.message : e)
-          loadingInstance.close()
-          return
+          console.log(e);
+          this.$toast.error(e && e.message ? e.message : e);
+          loadingInstance.close();
+          return;
         }
       }
       try {
-        await userMint(this.tokenId, 1)
+        await userMint(this.tokenId, 1);
       } catch (e) {
-        console.log(e)
-        this.$toast.warning(e)
-        loadingInstance.close()
-        return
+        console.log(e);
+        this.$toast.warning(e);
+        loadingInstance.close();
+        return;
       }
-      this.$toast.success(this.$t('news-detail.nft_mint_success'))
-      loadingInstance.close()
-      this.$emit('handleReload')
-      eventBus.$emit('refresh_stake_info')
+      this.$toast.success(this.$t("news-detail.nft_mint_success"));
+      loadingInstance.close();
+      this.$emit("handleReload");
+      eventBus.$emit("refresh_stake_info");
     },
     /** 计算折扣额 */
     async getDiscountPrice() {
       if (!this.$store.state.user.account) {
-        return
+        return;
       }
       if (this.editShow) {
-        return
+        return;
       }
       if (!this.discountJson || !this.discountJson.isOpen) {
-        return
+        return;
       }
-      const bepType = this.discountJson.sptType
-      this.disTOkenUsed = await this.getUserAlreadyDiscounts()
-      if (bepType == '0') {
+      const bepType = this.discountJson.sptType;
+      this.disTOkenUsed = await this.getUserAlreadyDiscounts();
+      if (bepType == "0") {
         // erc20
         this.disTokenOwned = await getErc20BalanceOf(
           this.discountJson.cAddress,
           this.$store.state.user.account
-        )
+        );
       }
-      if (bepType == '1') {
+      if (bepType == "1") {
         // erc721
         this.disTokenOwned = await getErc721BalanceOf(
           this.discountJson.cAddress,
           this.$store.state.user.account
-        )
+        );
       }
-      if (bepType == '2') {
+      if (bepType == "2") {
         // erc1155
         this.disTokenOwned = await getErc1155BalanceOf(
           this.discountJson.cAddress,
           this.$store.state.user.account,
           this.discountJson.tokenId
-        )
+        );
       }
       if (this.disTokenOwned == 0) {
-        return
+        return;
       }
 
       if (
         this.disTokenOwned - this.disTOkenUsed - this.discountJson.discounts <
         0
       ) {
-        this.unusedCount = 0
+        this.unusedCount = 0;
       }
       if (
         this.disTokenOwned - this.disTOkenUsed - this.discountJson.discounts >=
@@ -315,32 +315,32 @@ export default {
           this.disTokenOwned -
           this.disTOkenUsed -
           this.discountJson.discounts +
-          1
+          1;
         this.discountPrice =
-          this.currentPrice * (1 - this.discountJson.discountsFee / 10000)
+          this.currentPrice * (1 - this.discountJson.discountsFee / 10000);
       }
     },
     /** 获取我已经使用的折扣数量 */
     getUserAlreadyDiscounts() {
       if (!this.$store.state.user.userId) {
-        return
+        return;
       }
       return new Promise((resolve, reject) => {
         getAlreadyDiscounts(this.discountJson.cAddress)
           .then((r) => {
-            return resolve(r)
+            return resolve(r);
           })
           .catch((e) => {
-            return reject(e)
-          })
-      })
+            return reject(e);
+          });
+      });
     },
     /** 查看折扣Token信息 */
     toBnbScan(address) {
-      window.open(this.bnbScanUrl + '/address/' + address, '_blank')
+      window.open(this.bnbScanUrl + "/address/" + address, "_blank");
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -449,11 +449,12 @@ export default {
 
       .mbd-value {
         font-weight: bold;
-        font-size: 25px;
+        font-size: 36px;
       }
 
       .mbd-transform {
         color: #acbcc9;
+        font-size: 14px;
       }
 
       .form-attr-mbd-value {

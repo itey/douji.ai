@@ -5,11 +5,12 @@
     :fullscreen="true"
     :destroy-on-close="true"
     :visible.sync="show"
+    :append-to-body="true"
     @close="handleClose"
     @open="onOpen"
     width="789px"
   >
-    <div class="title" slot="title">{{ $t('news-detail.receive_box') }}</div>
+    <div class="title" slot="title">{{ $t("news-detail.receive_box") }}</div>
     <!-- <img
       style="width: 789px; height: 800px"
       src="@/assets/images/news/gift-bg.png"
@@ -33,7 +34,7 @@
         src="@/assets/images/news/blind-box-icon.png"
       />
       <el-button @click="handleReceiveBox()" class="btn">{{
-        $t('news-detail.receive')
+        $t("news-detail.receive")
       }}</el-button>
     </div>
   </el-dialog>
@@ -44,16 +45,16 @@ import {
   getBlindBoxFlagCache,
   setBlindBoxCache,
   setBlindBoxFlagState,
-} from '@/utils/common'
-import { getBoxContract } from '@/utils/web3/operator'
-import { getBlindBox, contractGetBox } from '@/utils/http'
-import { getBlindBoxSign } from '@/utils/web3/chain'
+} from "@/utils/common";
+import { getBoxContract } from "@/utils/web3/operator";
+import { getBlindBox, contractGetBox } from "@/utils/http";
+import { getBlindBoxSign } from "@/utils/web3/chain";
 export default {
-  name: 'blind-dialog',
+  name: "blind-dialog",
   props: {
     tokenId: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   data() {
@@ -63,17 +64,17 @@ export default {
       leftTime: undefined,
       userInfo: this.$store.state.user.userInfo,
       boxFlag: {},
-    }
+    };
   },
   methods: {
     onOpen() {
-      this.boxFlag = getBlindBoxFlagCache(this.$store.state.user.userId)
-      const endTime = Number(this.boxFlag.time) + 120000
-      this.leftTime = endTime - new Date().getTime()
+      this.boxFlag = getBlindBoxFlagCache(this.$store.state.user.userId);
+      const endTime = Number(this.boxFlag.time) + 120000;
+      this.leftTime = endTime - new Date().getTime();
       if (this.leftTime <= 0) {
-        this.onFinished()
+        this.onFinished();
       } else {
-        this.showTimer = true
+        this.showTimer = true;
       }
     },
     /** 接收盲盒 */
@@ -81,87 +82,89 @@ export default {
       const executeProcess = () => {
         // 合约接收
         var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
+          background: "rgba(0, 0, 0, 0.8)",
+        });
         getBoxContract(this.tokenId)
           .then((txJson) => {
-            const txId = txJson.transactionHash
+            const txId = txJson.transactionHash;
             contractGetBox(txId)
               .then((r) => {
                 if (r.code == 1) {
-                  const openFlag = r.data.open_box_flag
-                  setBlindBoxCache(this.$store.state.user.userId, openFlag)
-                  this.show = false
-                  this.$emit('handleReceive')
+                  const openFlag = r.data.open_box_flag;
+                  setBlindBoxCache(this.$store.state.user.userId, openFlag);
+                  this.show = false;
+                  this.$emit("handleReceive");
                 } else {
-                  console.log(r.message)
-                  this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
-                  loadingInstance.close()
+                  console.log(r.message);
+                  this.$toast.error(
+                    this.$t("news-detail.get_blind_box_failed")
+                  );
+                  loadingInstance.close();
                 }
               })
               .catch((e) => {
-                this.$toast.error(e && e.message ? e.message : e)
-                loadingInstance.close()
-              })
+                this.$toast.error(e && e.message ? e.message : e);
+                loadingInstance.close();
+              });
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
-            loadingInstance.close()
-          })
-      }
+            this.$toast.error(e && e.message ? e.message : e);
+            loadingInstance.close();
+          });
+      };
       if (this.userInfo.isge8model) {
         if (this.$store.state.chain.balanceBnb < 0.01) {
           this.$bnbConfirm(this.$store.state.common.language, () => {
-            executeProcess()
-          })
-          return
+            executeProcess();
+          });
+          return;
         }
-        executeProcess()
+        executeProcess();
       } else {
         getBlindBoxSign().then((signed) => {
           var loadingInstance = this.$loading({
-            background: 'rgba(0, 0, 0, 0.8)',
-          })
+            background: "rgba(0, 0, 0, 0.8)",
+          });
           getBlindBox(signed, this.boxFlag.flag, this.tokenId)
             .then((r) => {
               if (r.code == 1) {
-                const openFlag = r.data.open_box_flag
-                setBlindBoxCache(this.$store.state.user.userId, openFlag)
-                this.show = false
-                this.$emit('handleReceive')
+                const openFlag = r.data.open_box_flag;
+                setBlindBoxCache(this.$store.state.user.userId, openFlag);
+                this.show = false;
+                this.$emit("handleReceive");
               } else {
-                console.log(r.message)
-                this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
+                console.log(r.message);
+                this.$toast.error(this.$t("news-detail.get_blind_box_failed"));
               }
             })
             .catch((e) => {
-              console.log(e)
-              this.$toast.error(this.$t('news-detail.get_blind_box_failed'))
+              console.log(e);
+              this.$toast.error(this.$t("news-detail.get_blind_box_failed"));
             })
             .finally(() => {
-              loadingInstance.close()
-            })
-        })
+              loadingInstance.close();
+            });
+        });
       }
     },
     showDialog() {
       if (!this.show) {
-        this.show = true
+        this.show = true;
       }
     },
     /** 倒计时结束 */
     onFinished() {
-      setBlindBoxFlagState(this.$store.state.user.userId, true)
-      this.showTimer = false
-      this.show = false
+      setBlindBoxFlagState(this.$store.state.user.userId, true);
+      this.showTimer = false;
+      this.show = false;
     },
     /** 用户关闭 */
     handleClose() {
-      setBlindBoxFlagState(this.$store.state.user.userId, true)
-      this.show = false
+      setBlindBoxFlagState(this.$store.state.user.userId, true);
+      this.show = false;
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -219,7 +222,7 @@ export default {
   }
 
   .content {
-    background-image: url('@/assets/images/news/gift-bg.png');
+    background-image: url("@/assets/images/news/gift-bg.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     position: absolute;
