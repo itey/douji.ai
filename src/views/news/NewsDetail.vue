@@ -113,7 +113,7 @@
               {{ item }}
             </div>
           </div>
-          <div class="dao-container" v-if="userAccount && userOwned > 0">
+          <div class="dao-container" v-if="canUpdate">
             <div class="dao-title text-color">
               {{ $t("news-detail.dao_gov") }}
             </div>
