@@ -25,15 +25,15 @@
 </template>
 
 <script>
-import CreateStep1 from '@/components/create/CreateStep1'
-import CreateStep2 from '@/components/create/CreateStep2'
-import UpdateSuccess from '@/components/create/UpdateSuccessDialog'
-import { weiToMbd } from '@/utils/common'
-import { loadFromUrl, unlockContent, uploadJson } from '@/utils/http'
-import { startSetTokenPrice, startSetTokenURI } from '@/utils/web3/nft'
-import { getTokenOwner, tokenURI, tokensData } from '@/utils/web3/open'
+import CreateStep1 from "@/components/create/CreateStep1";
+import CreateStep2 from "@/components/create/CreateStep2";
+import UpdateSuccess from "@/components/create/UpdateSuccessDialog";
+import { weiToMbd } from "@/utils/common";
+import { loadFromUrl, unlockContent, uploadJson } from "@/utils/http";
+import { startSetTokenPrice, startSetTokenURI } from "@/utils/web3/nft";
+import { getTokenOwner, tokenURI, tokensData } from "@/utils/web3/open";
 export default {
-  name: 'update-view',
+  name: "update-view",
   components: {
     CreateStep1,
     CreateStep2,
@@ -42,13 +42,13 @@ export default {
   computed: {
     voteOverTime() {
       if (!this.tokenSupplyInfo.isVoting) {
-        return true
+        return true;
       }
       return (
         Number(this.tokenSupplyInfo.vote.startTime) +
           Number(this.voteKeepTime) <
         new Date().getTime() / 1000
-      )
+      );
     },
   },
   data() {
@@ -63,197 +63,198 @@ export default {
       tokenMetaUrl: undefined,
       tokenOwner: undefined,
       updateTxJson: {},
-    }
+    };
   },
   mounted() {
-    this.tokenId = this.$route.query.tokenId
-    this.step = this.$route.query.step
+    this.tokenId = this.$route.query.tokenId;
+    this.step = this.$route.query.step;
     var loadingInstance = this.$loading({
-      background: 'rgba(0, 0, 0, 0.8)',
-    })
+      background: "rgba(0, 0, 0, 0.8)",
+    });
     setTimeout(() => {
       Promise.all([this.getOwner(), this.loadSupplyInfo(), this.loadMetadata()])
         .then(() => {
           if (this.tokenSupplyInfo.isVoting && !this.voteOverTime) {
-            this.$toast.warning(this.$t('create.nft_voting'))
-            this.$router.back()
-            return
+            this.$toast.warning(this.$t("create.nft_voting"));
+            this.$router.back();
+            return;
           }
-          this.metadata.maxSupply = this.tokenSupplyInfo.maxSupply
-          this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply
-          this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply
+          this.metadata.maxSupply = this.tokenSupplyInfo.maxSupply;
+          this.metadata.initialQuantity = this.tokenSupplyInfo.currentSupply;
+          this.metadata.availableSupply = this.tokenSupplyInfo.availableSupply;
           this.metadata.initialPrice = weiToMbd(
             this.tokenSupplyInfo.price.price
-          )
-          this.loadComplete = true
+          );
+          this.loadComplete = true;
         })
         .catch((e) => {
-          console.log(e)
+          console.log(e);
         })
         .finally(() => {
-          loadingInstance.close()
-        })
-    }, 4000)
+          loadingInstance.close();
+        });
+    }, 4000);
   },
   methods: {
     /** 页面后退 */
     backClick() {
-      this.$router.back()
+      this.$router.back();
     },
     /** 获取token拥有者 */
     getOwner() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          return reject()
+          return reject();
         }
         getTokenOwner(this.tokenId)
           .then((owner) => {
-            this.tokenOwner = owner
-            return resolve()
+            this.tokenOwner = owner;
+            return resolve();
           })
           .catch(() => {
-            return reject()
-          })
-      })
+            return reject();
+          });
+      });
     },
     /** 加载数据 */
     loadSupplyInfo() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          return reject()
+          return reject();
         }
         tokensData(this.tokenId)
           .then((res) => {
-            this.tokenSupplyInfo = res
-            return resolve()
+            this.tokenSupplyInfo = res;
+            return resolve();
           })
           .catch(() => {
-            return reject()
-          })
-      })
+            return reject();
+          });
+      });
     },
     /** 加载元数据 */
     loadMetadata() {
       return new Promise((resolve, reject) => {
         if (!this.tokenId) {
-          return reject()
+          return reject();
         }
         tokenURI(this.tokenId)
           .then((uri) => {
-            this.tokenMetaUrl = uri
+            this.tokenMetaUrl = uri;
             loadFromUrl(this.tokenMetaUrl).then((r) => {
               if (r.status !== 200) {
-                return reject(r.statusText)
+                return reject(r.statusText);
               }
-              this.metadata = r.data
+              this.metadata = r.data;
               if (this.metadata.contentUrl && this.step == 2) {
                 return Promise.all([
                   this.loadOpenContent(this.metadata.contentUrl),
                   this.loadProtectedContent(this.metadata.protected),
                 ])
                   .then(([openContent, protectedContent]) => {
-                    this.metadata.openContent = openContent
-                    this.metadata.protectedContent = protectedContent
-                    return resolve()
+                    this.metadata.openContent = openContent;
+                    this.metadata.protectedContent = protectedContent;
+                    return resolve();
                   })
                   .catch((e) => {
-                    return reject(e)
-                  })
+                    return reject(e);
+                  });
               }
-              return resolve()
-            })
+              return resolve();
+            });
           })
           .catch(() => {
-            return reject()
-          })
-      })
+            return reject();
+          });
+      });
     },
     /** 加载公开数据 */
     loadOpenContent(url) {
       return new Promise((resolve, reject) => {
         loadFromUrl(url).then((res) => {
           if (res.status !== 200) {
-            return reject(res.statusText)
+            return reject(res.statusText);
           }
-          resolve(res.data)
-        })
-      })
+          resolve(res.data);
+        });
+      });
     },
     /** 加载私有数据 */
     loadProtectedContent(data) {
       return new Promise((resolve, reject) => {
         if (!data) {
-          return resolve('')
+          return resolve("");
         }
         unlockContent(data, this.tokenId).then((res) => {
           if (res.code != 1) {
-            return reject(res.message)
+            return reject(res.message);
           }
-          const ipfsUrl = res.data.url
+          const ipfsUrl = res.data.url;
           loadFromUrl(ipfsUrl).then((r) => {
             if (r.status !== 200) {
-              return reject(r.statusText)
+              return reject(r.statusText);
             }
-            return resolve(r.data)
-          })
-        })
-      })
+            return resolve(r.data);
+          });
+        });
+      });
     },
     /** 更新1 */
     handleUpdate1(form) {
-      const initialPriceUpdate = form.initialPrice
-      const availableSupplyUpdate = form.availableSupply
+      console.log("更新1");
+      const initialPriceUpdate = form.initialPrice;
+      const availableSupplyUpdate = form.availableSupply;
 
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       startSetTokenPrice(
         this.tokenId,
         initialPriceUpdate,
         availableSupplyUpdate
       )
         .then((tx) => {
-          console.log(tx)
-          this.updateTxJson = tx
-          this.$refs['successDialog'].showDialog()
+          console.log(tx);
+          this.updateTxJson = tx;
+          this.$refs["successDialog"].showDialog();
         })
         .catch((e) => {
-          this.$toast.warning(e)
+          this.$toast.warning(e);
         })
         .finally(() => {
-          loadingInstance.close()
-        })
+          loadingInstance.close();
+        });
     },
     /** 更新2 */
     handleUpdate2(form) {
-      const metaJson = this.makeURI(form)
+      const metaJson = this.makeURI(form);
 
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       uploadJson(metaJson)
         .then((r) => {
           if (r.code == 1) {
-            const metaUrl = r.data.url
+            const metaUrl = r.data.url;
             startSetTokenURI(this.tokenId, metaUrl)
               .then((tx) => {
-                console.log(tx)
-                this.updateTxJson = tx
-                this.$refs['successDialog'].showDialog()
+                console.log(tx);
+                this.updateTxJson = tx;
+                this.$refs["successDialog"].showDialog();
               })
               .catch((e) => {
-                this.$toast.warning(e)
+                this.$toast.warning(e);
               })
               .finally(() => {
-                loadingInstance.close()
-              })
+                loadingInstance.close();
+              });
           } else {
-            this.$toast.warning(r.message)
+            this.$toast.warning(r.message);
           }
         })
         .catch((e) => {
-          this.$toast.warning(e)
-        })
+          this.$toast.warning(e);
+        });
     },
     /** 生成URI */
     makeURI(form) {
@@ -268,29 +269,29 @@ export default {
         keyword: form.keyword,
         attributes: [
           {
-            trait_type: 'title',
+            trait_type: "title",
             value: form.title,
           },
           {
-            trait_type: 'category',
+            trait_type: "category",
             value: form.category,
           },
           {
-            trait_type: 'contentType',
+            trait_type: "contentType",
             value: form.contentType,
           },
           {
-            trait_type: 'contentUrl',
+            trait_type: "contentUrl",
             value: form.contentUrl,
           },
           {
-            display_type: 'date',
-            trait_type: 'Birthday',
+            display_type: "date",
+            trait_type: "Birthday",
             value: form.Birthday,
           },
           {
-            display_type: 'date',
-            trait_type: 'UpdateDay',
+            display_type: "date",
+            trait_type: "UpdateDay",
             value: new Date().getTime(),
           },
         ],
@@ -298,14 +299,14 @@ export default {
         protected: form.protected,
         UpdateDay: new Date().getTime(),
         Birthday: form.Birthday,
-      }
+      };
       if (form.language) {
-        metaJson.language = form.language
+        metaJson.language = form.language;
       }
       if (form.prompt) {
-        metaJson.prompt = form.prompt
+        metaJson.prompt = form.prompt;
       }
-      return metaJson
+      return metaJson;
       // return new Promise((resolve, reject) => {
       //   uploadJson(metaJson)
       //     .then((r) => {
@@ -322,7 +323,7 @@ export default {
       // })
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 .create-container {

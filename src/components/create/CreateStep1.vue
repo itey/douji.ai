@@ -1,10 +1,10 @@
 <template>
   <div class="create-step1">
     <div class="title">
-      {{ edit ? $t('create.update_mold_1') : $t('create.create_mold_1') }}
+      {{ edit ? $t("create.update_mold_1") : $t("create.create_mold_1") }}
     </div>
     <div class="form-container">
-      <div class="label">{{ $t('create.type') }}*</div>
+      <div class="label">{{ $t("create.type") }}*</div>
       <div class="type-container" v-for="(arr, index) in typeList" :key="index">
         <div
           v-for="(item, i) in arr"
@@ -15,11 +15,11 @@
           }"
           @click="choseType(item.e_name)"
         >
-          <div>{{ $i18n.locale == 'en' ? item.e_name : item.c_name }}</div>
+          <div>{{ $i18n.locale == "en" ? item.e_name : item.c_name }}</div>
         </div>
       </div>
       <template v-if="categoryList.length">
-        <div class="label">{{ $t('create.category') }}*</div>
+        <div class="label">{{ $t("create.category") }}*</div>
         <div class="category-container">
           <div
             class="item"
@@ -30,15 +30,15 @@
             :key="item.id"
             @click="choseCategory(item)"
           >
-            {{ $i18n.locale == 'en' ? item.e_name : item.c_name }}
+            {{ $i18n.locale == "en" ? item.e_name : item.c_name }}
           </div>
         </div>
       </template>
       <div v-if="error.category" class="tip-error">{{ error.category }}</div>
-      <div v-else class="tip">{{ $t('create.not_allow_change') }}</div>
+      <div v-else class="tip">{{ $t("create.not_allow_change") }}</div>
 
       <template v-if="platformList.length">
-        <div class="label">{{ $t('create.platform') }}</div>
+        <div class="label">{{ $t("create.platform") }}</div>
         <div class="category-container">
           <div
             class="item"
@@ -49,13 +49,13 @@
             :key="index"
             @click="chosePlatform(item)"
           >
-            {{ $i18n.locale == 'en' ? item.e_name : item.c_name }}
+            {{ $i18n.locale == "en" ? item.e_name : item.c_name }}
           </div>
         </div>
-        <div class="tip">{{ $t('create.not_allow_change') }}</div>
+        <div class="tip">{{ $t("create.not_allow_change") }}</div>
       </template>
 
-      <div class="label">{{ $t('create.language') }}</div>
+      <div class="label">{{ $t("create.language") }}</div>
       <div class="category-container">
         <div
           class="item"
@@ -66,10 +66,10 @@
           :key="index"
           @click="choseLanguage(item)"
         >
-          {{ $i18n.locale == 'en' ? item.english : item.chinese }}
+          {{ $i18n.locale == "en" ? item.english : item.chinese }}
         </div>
       </div>
-      <div class="tip">{{ $t('create.not_allow_change') }}</div>
+      <div class="tip">{{ $t("create.not_allow_change") }}</div>
       <div class="label">NFT Max Supply*</div>
       <div class="input-container">
         <el-input
@@ -81,11 +81,11 @@
       </div>
       <div v-if="error.maxSupply" class="tip-error">{{ error.maxSupply }}</div>
       <div class="tip" v-if="form.maxSupply">
-        {{ $t('create.not_allow_change') }}{{ $t('create.defines_level') }}
-        <span class="text-color">{{ $t('create.legendary') }}</span>
+        {{ $t("create.not_allow_change") }}{{ $t("create.defines_level") }}
+        <span class="text-color">{{ $t("create.legendary") }}</span>
       </div>
       <template v-if="edit">
-        <div class="label">{{ $t('create.available_supply') }}*</div>
+        <div class="label">{{ $t("create.available_supply") }}*</div>
         <div class="input-container">
           <el-input
             @change="checkItem('availableSupply')"
@@ -97,12 +97,12 @@
           {{ error.availableSupply }}
         </div>
         <div v-else class="tip">
-          {{ $t('create.max_available') }}
+          {{ $t("create.max_available") }}
           <span class="text-color">{{ currentAvailableSupply }}</span>
         </div>
       </template>
       <template v-if="!edit">
-        <div class="label">{{ $t('create.initial_quantity') }}*</div>
+        <div class="label">{{ $t("create.initial_quantity") }}*</div>
         <div class="input-container">
           <el-input
             :disabled="edit"
@@ -115,11 +115,11 @@
           {{ error.initialQuantity }}
         </div>
         <div v-else class="tip">
-          {{ $t('create.not_allow_change') }}{{ $t('create.max_initial') }}
+          {{ $t("create.not_allow_change") }}{{ $t("create.max_initial") }}
           <span class="text-color">{{ availableInitialQuantity }}</span>
         </div>
       </template>
-      <div class="label">{{ $t('create.mint_price') }}*</div>
+      <div class="label">{{ $t("create.mint_price") }}*</div>
       <div class="input-container">
         <el-input
           @change="checkItem('initialPrice')"
@@ -131,27 +131,27 @@
       <div v-if="error.initialPrice" class="tip-error">
         {{ error.initialPrice }}
       </div>
-      <div v-else class="tip">{{ $t('create.allowed_content') }}</div>
+      <div v-else class="tip">{{ $t("create.allowed_content") }}</div>
       <div class="btn-container" v-if="edit">
         <el-button class="common-btn2" @click="backClick()">{{
-          $t('create.back')
+          $t("create.back")
         }}</el-button>
         <el-button
           class="common-btn2"
           :disabled="!ifUpdate"
           @click="updateClick()"
-          >{{ $t('create.update') }}</el-button
+          >{{ $t("create.update") }}</el-button
         >
       </div>
       <div class="btn-container" v-else>
         <el-button class="common-btn2" @click="backClick()">{{
-          $t('create.back')
+          $t("create.back")
         }}</el-button>
         <el-button class="common-btn2" @click="saveClick()">{{
-          $t('create.save')
+          $t("create.save")
         }}</el-button>
         <el-button class="common-btn2" @click="nextClick()">{{
-          $t('create.next')
+          $t("create.next")
         }}</el-button>
       </div>
     </div>
@@ -164,9 +164,9 @@ import {
   getNftLanguage,
   getNftPlatformsByType,
   getNftTypes,
-} from '@/utils/http'
+} from "@/utils/http";
 export default {
-  name: 'create-step1',
+  name: "create-step1",
   props: {
     edit: {
       type: Boolean,
@@ -195,253 +195,256 @@ export default {
         initialPrice: undefined,
       },
       error: {},
-    }
+    };
   },
   computed: {
     availableInitialQuantity() {
       if (!this.form.maxSupply) {
-        return 0
+        return 0;
       }
-      return Math.floor(this.form.maxSupply * 0.2)
+      return Math.floor(this.form.maxSupply * 0.2);
     },
     ifUpdate() {
       if (!this.edit) {
-        return false
+        return false;
       }
       if (
         this.metadata.availableSupply == this.form.availableSupply &&
         this.metadata.initialPrice == this.form.initialPrice
       ) {
-        return false
+        return false;
       } else {
-        return true
+        return true;
       }
     },
   },
   methods: {
     /** 选择大类 */
     choseType(e_name) {
-      this.form.contentType = e_name
-      this.loadCategoryList()
-      this.loadPlatformList()
+      this.form.contentType = e_name;
+      this.loadCategoryList();
+      this.loadPlatformList();
     },
     /** 选择分类 */
     choseCategory(val) {
-      this.$set(this.form, 'category', val.e_name)
+      this.$set(this.form, "category", val.e_name);
     },
     /** 选择平台 */
     chosePlatform(val) {
-      this.$set(this.form, 'prompt', val.e_name)
+      this.$set(this.form, "prompt", val.e_name);
     },
     /** 选择语言 */
     choseLanguage(val) {
-      this.$set(this.form, 'language', val.english)
+      this.$set(this.form, "language", val.english);
     },
     /** 获取大类 */
     loadTypeList() {
       getNftTypes().then((r) => {
-        const arr = r.data.list
+        const arr = r.data.list;
         if (arr) {
-          this.typeList = this._.chunk(arr, 3)
+          this.typeList = this._.chunk(arr, 3);
         }
-      })
+      });
     },
     /** 获取分类 */
     loadCategoryList() {
       if (this.form.contentType) {
         getNftCategoriesByType(this.form.contentType).then((r) => {
-          this.categoryList = r.data.list
-        })
+          this.categoryList = r.data.list;
+        });
       }
     },
     /** 获取Language */
     loadLanguageList() {
       getNftLanguage().then((r) => {
-        this.languageList = r.data.list
-      })
+        this.languageList = r.data.list;
+      });
     },
     /** 获取平台 */
     loadPlatformList() {
       getNftPlatformsByType(this.form.contentType).then((r) => {
-        this.platformList = r.data.list
-      })
+        this.platformList = r.data.list;
+      });
     },
     clearError(val) {
-      this.$set(this.error, val, '')
+      this.$set(this.error, val, "");
     },
     setError(key, val) {
-      this.$set(this.error, key, val)
+      this.$set(this.error, key, val);
     },
     /** 单项检查 */
     checkItem(key) {
-      var reg = /^\+?[1-9][0-9]*$/
+      var reg = /^\+?[1-9][0-9]*$/;
       switch (key) {
-        case 'category':
+        case "category":
           if (!this.form.category) {
-            this.setError(key, this.$t('create.category_required'))
+            this.setError(key, this.$t("create.category_required"));
           } else {
-            this.clearError(key)
+            this.clearError(key);
           }
-          break
-        case 'maxSupply':
+          break;
+        case "maxSupply":
           if (!this.form.maxSupply) {
-            this.setError(key, this.$t('create.maxSupply_required'))
+            this.setError(key, this.$t("create.maxSupply_required"));
           } else {
             if (!reg.test(this.form.maxSupply)) {
-              this.setError(key, this.$t('create.maxSupply_invalid'))
+              this.setError(key, this.$t("create.maxSupply_invalid"));
             } else {
-              this.clearError(key)
+              this.clearError(key);
             }
           }
-          break
-        case 'availableSupply':
+          break;
+        case "availableSupply":
           if (!this.form.availableSupply && this.edit) {
-            this.setError(key, this.$t('create.availableSupply_required'))
+            this.setError(key, this.$t("create.availableSupply_required"));
           } else {
             if (!reg.test(this.form.availableSupply)) {
-              this.setError(key, this.$t('create.availableSupply_invalid'))
+              this.setError(key, this.$t("create.availableSupply_invalid"));
             } else if (
               this.form.availableSupply > this.currentAvailableSupply
             ) {
               this.setError(
                 key,
-                this.$t('create.availableSupply_more_than_available')
-              )
+                this.$t("create.availableSupply_more_than_available")
+              );
             } else {
-              this.clearError(key)
+              this.clearError(key);
             }
           }
-          break
-        case 'initialQuantity':
+          break;
+        case "initialQuantity":
           if (!this.form.initialQuantity) {
-            this.setError(key, this.$t('create.initialQuantity_required'))
+            this.setError(key, this.$t("create.initialQuantity_required"));
           } else if (
             this.form.initialQuantity > this.availableInitialQuantity
           ) {
-            this.setError(key, this.$t('create.initialQuantity_more_than'))
+            this.setError(key, this.$t("create.initialQuantity_more_than"));
           } else {
             if (!reg.test(this.form.initialQuantity)) {
-              this.setError(key, this.$t('create.initialQuantity_invalid'))
+              this.setError(key, this.$t("create.initialQuantity_invalid"));
             } else {
-              this.clearError(key)
+              this.clearError(key);
             }
           }
-          break
-        case 'initialPrice':
+          break;
+        case "initialPrice":
           if (!this.form.initialPrice) {
-            this.setError(key, this.$t('create.initialPrice_required'))
+            this.setError(key, this.$t("create.initialPrice_required"));
           } else {
             if (
               isNaN(Number(this.form.initialPrice)) ||
               Number(this.form.initialPrice) < 0
             ) {
-              this.setError(key, this.$t('create.initialPrice_invalid'))
+              this.setError(key, this.$t("create.initialPrice_invalid"));
             } else {
-              this.clearError(key)
+              this.clearError(key);
             }
           }
-          break
+          break;
         default:
-          break
+          break;
       }
     },
     /** 表单检查 */
     formCheck() {
-      this.error = {}
-      var reg = /^[0-9]+.?[0-9]*$/
-      var ifPass = true
+      this.error = {};
+      var reg = /^[0-9]+.?[0-9]*$/;
+      var ifPass = true;
       if (!this.form.category) {
-        this.setError('category', this.$t('create.category_required'))
-        ifPass = false
+        this.setError("category", this.$t("create.category_required"));
+        ifPass = false;
       }
 
       if (!this.form.maxSupply) {
-        this.setError('maxSupply', this.$t('create.maxSupply_required'))
-        ifPass = false
+        this.setError("maxSupply", this.$t("create.maxSupply_required"));
+        ifPass = false;
       } else {
         if (!reg.test(this.form.maxSupply) || this.form.maxSupply <= 0) {
-          this.setError('maxSupply', this.$t('create.maxSupply_invalid'))
-          ifPass = false
+          this.setError("maxSupply", this.$t("create.maxSupply_invalid"));
+          ifPass = false;
         }
       }
       if (this.edit) {
         if (!this.form.availableSupply) {
           this.setError(
-            'availableSupply',
-            this.$t('create.availableSupply_required')
-          )
-          ifPass = false
+            "availableSupply",
+            this.$t("create.availableSupply_required")
+          );
+          ifPass = false;
         } else {
           if (!reg.test(this.form.availableSupply)) {
             this.setError(
-              'availableSupply',
-              this.$t('create.availableSupply_invalid')
-            )
-            ifPass = false
+              "availableSupply",
+              this.$t("create.availableSupply_invalid")
+            );
+            ifPass = false;
           } else if (this.form.availableSupply > this.currentAvailableSupply) {
             this.setError(
-              'availableSupply',
-              this.$t('create.availableSupply_more_than_available')
-            )
-            ifPass = false
+              "availableSupply",
+              this.$t("create.availableSupply_more_than_available")
+            );
+            ifPass = false;
           }
         }
       }
 
       if (!this.form.initialQuantity) {
         this.setError(
-          'initialQuantity',
-          this.$t('create.initialQuantity_required')
-        )
-        ifPass = false
-      } else if (this.form.initialQuantity > this.availableInitialQuantity) {
+          "initialQuantity",
+          this.$t("create.initialQuantity_required")
+        );
+        ifPass = false;
+      } else if (
+        this.form.initialQuantity > this.availableInitialQuantity &&
+        !this.edit
+      ) {
         this.setError(
-          'initialQuantity',
-          this.$t('create.initialQuantity_more_than')
-        )
-        ifPass = false
+          "initialQuantity",
+          this.$t("create.initialQuantity_more_than")
+        );
+        ifPass = false;
       } else {
         if (!reg.test(this.form.initialQuantity)) {
           this.setError(
-            'initialQuantity',
-            this.$t('create.initialQuantity_invalid')
-          )
-          ifPass = false
+            "initialQuantity",
+            this.$t("create.initialQuantity_invalid")
+          );
+          ifPass = false;
         }
       }
       if (!this.form.initialPrice) {
-        this.setError('initialPrice', this.$t('create.initialPrice_required'))
-        ifPass = false
+        this.setError("initialPrice", this.$t("create.initialPrice_required"));
+        ifPass = false;
       } else {
         if (
           isNaN(Number(this.form.initialPrice)) ||
           Number(this.form.initialPrice) < 0
         ) {
-          this.setError('initialPrice', this.$t('create.initialPrice_invalid'))
-          ifPass = false
+          this.setError("initialPrice", this.$t("create.initialPrice_invalid"));
+          ifPass = false;
         }
       }
-      return ifPass
+      return ifPass;
     },
     backClick() {
-      this.$emit('backClick', 0)
+      this.$emit("backClick", 0);
     },
     saveClick() {
       if (!this.form.step) {
-        this.form.step = 1
+        this.form.step = 1;
       }
-      if (this.form.prompt != 'Prompt') {
-        this.form.prompt = null
+      if (this.form.prompt != "Prompt") {
+        this.form.prompt = null;
       }
-      this.$emit('saveClick', this.form)
-      this.$toast.success(this.$t('common.save_success'))
+      this.$emit("saveClick", this.form);
+      this.$toast.success(this.$t("common.save_success"));
     },
     nextClick() {
-      this.$emit('saveClick', this.form)
+      this.$emit("saveClick", this.form);
       if (this.formCheck()) {
-        this.$emit('nextClick', 2)
+        this.$emit("nextClick", 2);
       } else {
-        console.log(this.error)
+        console.log(this.error);
       }
     },
     updateClick() {
@@ -449,26 +452,28 @@ export default {
         this.metadata.availableSupply == this.form.availableSupply &&
         this.metadata.initialPrice == this.form.initialPrice
       ) {
-        this.$toast(this.$t('create.data_not_modified'))
-        return
+        this.$toast(this.$t("create.data_not_modified"));
+        return;
       }
       if (this.formCheck()) {
-        this.$emit('handleUpdate', this.form)
+        this.$emit("handleUpdate", this.form);
+      } else {
+        console.log(this.error);
       }
     },
   },
   mounted() {
-    this.loadTypeList()
+    this.loadTypeList();
     if (this.metadata) {
-      this.form = JSON.parse(JSON.stringify(this.metadata))
+      this.form = JSON.parse(JSON.stringify(this.metadata));
     }
-    this.choseType(this.metadata.contentType)
-    this.loadLanguageList()
+    this.choseType(this.metadata.contentType);
+    this.loadLanguageList();
     if (this.form.availableSupply) {
-      this.currentAvailableSupply = this.form.availableSupply
+      this.currentAvailableSupply = this.form.availableSupply;
     }
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

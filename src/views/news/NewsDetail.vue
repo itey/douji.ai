@@ -18,6 +18,7 @@
     <NftDaoVote
       v-if="tokenSupplyInfo.isVoting && !voteOverTime && userOwned > 0"
       @handleReload="dataLoad"
+      :userOwned="userOwned"
       :tokenOwner="tokenOwner"
       :tokenInfo="tokenSupplyInfo"
       :tokenId="tokenId"
