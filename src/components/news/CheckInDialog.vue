@@ -3,12 +3,14 @@
     <el-dialog
       custom-class="check-in-dialog"
       :fullscreen="true"
-      :show-close="false"
       :visible.sync="show"
       width="789px"
     >
+      <div class="title" slot="title">
+        {{ $t("news-detail.daily_check_gift") }}
+      </div>
       <div class="content">
-        <div class="title">{{ $t("news-detail.daily_check_gift") }}</div>
+        <!-- <div class="title">{{ $t("news-detail.daily_check_gift") }}</div> -->
         <img
           style="width: 244px; height: 256px"
           src="@/assets/images/news/gift-icon.png"
@@ -79,6 +81,38 @@ export default {
     background-color: black;
     opacity: 0.8;
     border: none;
+  }
+
+  .el-dialog__header {
+    position: absolute;
+    top: 76px;
+    width: 789px;
+    z-index: 10;
+    padding-top: 0;
+    text-align: center;
+
+    .el-dialog__headerbtn {
+      top: 0;
+    }
+  }
+
+  .title {
+    align-items: center;
+    align-self: center;
+    font-size: 30px;
+    font-family: Arial;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+
+    background: linear-gradient(
+      0deg,
+      #4195f6 0%,
+      #00f9e5 48.2421875%,
+      #14e7a9 83.3251953125%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .content {

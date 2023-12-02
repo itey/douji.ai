@@ -10,10 +10,6 @@
     width="789px"
   >
     <div class="title" slot="title">{{ $t("news-detail.receive_box") }}</div>
-    <!-- <img
-      style="width: 789px; height: 800px"
-      src="@/assets/images/news/gift-bg.png"
-    /> -->
     <div class="content">
       <div class="time-container">
         <img
