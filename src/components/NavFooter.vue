@@ -150,7 +150,6 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   padding: 57px 0 63px 0;
-  z-index: 1;
   position: relative;
 
   .title {

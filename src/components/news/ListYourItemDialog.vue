@@ -6,12 +6,12 @@
     width="946px"
   >
     <div class="list-your-item-header text-color" slot="title">
-      {{ $t('news-detail.list_item') }}
+      {{ $t("news-detail.list_item") }}
     </div>
     <div class="list-your-item-content">
       <div class="item-input-container">
         <div class="item-label text-color">
-          {{ $t('news-detail.sale_price') }}
+          {{ $t("news-detail.sale_price") }}
         </div>
         <div class="item-value">
           <div class="item-input">
@@ -27,13 +27,13 @@
             {{ error.salePrice }}
           </div>
           <div class="item-tip" v-else>
-            {{ $t('news-detail.min_price_tip') }}
+            {{ $t("news-detail.min_price_tip") }}
           </div>
         </div>
       </div>
       <div class="item-input-container">
         <div class="item-label text-color">
-          {{ $t('news-detail.item_quantity') }}
+          {{ $t("news-detail.item_quantity") }}
         </div>
         <div class="item-value">
           <div class="item-input">
@@ -48,14 +48,14 @@
             {{ error.saleQuantity }}
           </div>
           <div class="item-tip" v-else>
-            {{ $t('news-detail.max_quantity') }}
+            {{ $t("news-detail.max_quantity") }}
             <span class="text-color">{{ userOwned }}</span>
           </div>
         </div>
       </div>
       <div class="btn-container">
         <el-button @click="handleCreate()" class="common-btn2">{{
-          $t('news-detail.create_order')
+          $t("news-detail.create_order")
         }}</el-button>
       </div>
     </div>
@@ -63,14 +63,14 @@
 </template>
 
 <script>
-import { createSaleOrder } from '@/utils/web3/market'
-import { balanceOf, nftApproval } from '@/utils/web3/nft'
+import { createSaleOrder } from "@/utils/web3/market";
+import { balanceOf, nftApproval } from "@/utils/web3/nft";
 export default {
-  name: 'list-your-item-dialog',
+  name: "list-your-item-dialog",
   props: {
     tokenId: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   data() {
@@ -88,39 +88,39 @@ export default {
         salePrice: true,
         saleQuantity: true,
       },
-    }
+    };
   },
   methods: {
     /** 点击创建订单 */
     async handleCreate() {
       if (!this.formCheck()) {
-        return
+        return;
       }
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       try {
-        await nftApproval(this.marketAddress)
+        await nftApproval(this.marketAddress);
       } catch (error) {
-        console.log(error)
-        this.$toast.error(error)
-        loadingInstance.close()
-        return
+        console.log(error);
+        this.$toast.error(error);
+        loadingInstance.close();
+        return;
       }
       try {
         await createSaleOrder(
           this.tokenId,
           Number(this.saleQuantity),
           Number(this.salePrice)
-        )
-        loadingInstance.close()
-        this.$toast.success(this.$t('news-detail.order_create_success'))
-        this.show = false
+        );
+        loadingInstance.close();
+        this.$toast.success(this.$t("news-detail.order_create_success"));
+        this.show = false;
       } catch (error) {
-        console.log(error)
-        this.$toast.error(error)
+        console.log(error);
+        this.$toast.error(error);
       } finally {
-        loadingInstance.close()
+        loadingInstance.close();
       }
     },
     /** 数据校验 */
@@ -128,62 +128,64 @@ export default {
       this.ifPass = {
         salePrice: true,
         saleQuantity: true,
-      }
-      var ifSuccess = true
-      var reg = /^\+?[1-9][0-9]*$/
+      };
+      var ifSuccess = true;
+      var reg = /^\+?[1-9][0-9]*$/;
       if (!this.salePrice) {
-        this.error.salePrice = this.$t('news-detail.order_price_required')
-        ifSuccess = false
-        this.ifPass.salePrice = false
+        this.error.salePrice = this.$t("news-detail.order_price_required");
+        ifSuccess = false;
+        this.ifPass.salePrice = false;
       }
       if (isNaN(Number(this.salePrice)) || Number(this.salePrice) <= 0) {
-        this.error.salePrice = this.$t('news-detail.order_price_invalid')
-        ifSuccess = false
-        this.ifPass.salePrice = false
+        this.error.salePrice = this.$t("news-detail.order_price_invalid");
+        ifSuccess = false;
+        this.ifPass.salePrice = false;
       }
       if (!this.saleQuantity) {
-        this.error.saleQuantity = this.$t('news-detail.order_quantity_required')
-        ifSuccess = false
-        this.ifPass.saleQuantity = false
+        this.error.saleQuantity = this.$t(
+          "news-detail.order_quantity_required"
+        );
+        ifSuccess = false;
+        this.ifPass.saleQuantity = false;
       }
       if (
         !reg.test(this.saleQuantity) ||
         Number(this.saleQuantity) <= 0 ||
         Number(this.saleQuantity) > this.userOwned
       ) {
-        this.error.saleQuantity = this.$t('news-detail.order_quantity_invalid')
-        ifSuccess = false
-        this.ifPass.saleQuantity = false
+        this.error.saleQuantity = this.$t("news-detail.order_quantity_invalid");
+        ifSuccess = false;
+        this.ifPass.saleQuantity = false;
       }
 
       if (this.ifPass.salePrice) {
-        this.error.salePrice = ''
+        this.error.salePrice = "";
       }
 
       if (this.ifPass.saleQuantity) {
-        this.error.saleQuantity = ''
+        this.error.saleQuantity = "";
       }
-      return ifSuccess
+      return ifSuccess;
     },
     /** 显示控制 */
     showDialog() {
-      this.show = true
+      this.show = true;
     },
     /** 获取用户拥有数量 */
     getUserOwned() {
       return new Promise((resolve, reject) => {
         balanceOf(this.tokenId)
           .then((balance) => {
-            this.userOwned = balance
-            return resolve()
+            this.userOwned = balance;
+            return resolve();
           })
           .catch((e) => {
-            return reject(e)
-          })
-      })
+            return reject(e);
+          });
+      });
     },
   },
-}
+};
 </script>
 
 <style lang="scss">

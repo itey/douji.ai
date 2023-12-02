@@ -5,7 +5,6 @@
     :fullscreen="true"
     :destroy-on-close="true"
     :visible.sync="show"
-    :append-to-body="true"
     @close="handleClose"
     @open="onOpen"
     width="789px"

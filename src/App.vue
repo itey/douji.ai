@@ -5,7 +5,7 @@
     </el-header>
     <!-- <creator v-if="$route.path == '/creator'"></creator> -->
     <el-container class="body-container">
-      <el-main>
+      <el-main :class="$route.path == '/' ? 'color-bg' : ''">
         <div class="banner" v-if="globalAdvertise && globalAdvertise.img">
           <img
             :src="globalAdvertise.img"
@@ -101,7 +101,6 @@ export default {
     background: #1a2027;
     border-bottom: 1px solid #29383f;
     padding: 0 0;
-    z-index: 11;
   }
 
   .banner {

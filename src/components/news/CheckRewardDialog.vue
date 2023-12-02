@@ -1,7 +1,6 @@
 <template>
   <el-dialog
-    custom-class="congratulations-dialog"
-    :append-to-body="true"
+    custom-class="check-dialog"
     :fullscreen="true"
     @open="onOpen"
     :visible.sync="show"
@@ -52,7 +51,7 @@ export default {
 </script>
 
 <style lang="scss">
-.congratulations-dialog {
+.check-dialog {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -87,6 +86,7 @@ export default {
     font-size: 30px;
     font-family: Arial;
     font-weight: bold;
+    text-align: center;
     color: #ffffff;
 
     background: linear-gradient(

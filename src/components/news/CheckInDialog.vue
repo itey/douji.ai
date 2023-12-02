@@ -5,7 +5,6 @@
       :fullscreen="true"
       :show-close="false"
       :visible.sync="show"
-      :append-to-body="true"
       width="789px"
     >
       <div class="content">

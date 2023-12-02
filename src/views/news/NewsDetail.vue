@@ -551,6 +551,7 @@ export default {
         this.loadMetadata(),
         this.getUserOwned(),
         this.loadTransactionHistory(),
+        this.getUserStakeCount(),
       ]);
       try {
         await promiseAll;

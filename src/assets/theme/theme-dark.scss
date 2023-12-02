@@ -1,7 +1,13 @@
 .theme-dark {
   .body-container {
     background-color: #121315;
-    z-index: 10;
+
+    .color-bg {
+      background-image: url("@/assets/images/page-background.png"),
+        url("@/assets/images/page-background2.png");
+      background-repeat: no-repeat, no-repeat;
+      background-size: 100%, 100%;
+    }
   }
 
   .theme-background-color {
@@ -286,6 +292,10 @@
     border: 0.5px solid #1f262e;
   }
 
+  .comparison-tab .tab3 .division {
+    border: 0.5px solid #1f262e;
+  }
+
   .comparison-tab .tab2 .item {
     border: 1px solid #2c3638 !important;
   }
@@ -312,20 +322,6 @@
 
   .comparison-tab .tab4 .tab-bottom .item .desc {
     color: #a1b5c6;
-  }
-
-  .home-container .bg {
-    position: fixed;
-    top: 0px;
-    right: 0px;
-    background-image: url("@/assets/images/page-background.png"),
-      url("@/assets/images/page-background2.png");
-    background-repeat: repeat-y, repeat-y;
-    background-size: 100%, 100%;
-    background-size: cover;
-    height: 100vh;
-    width: 100%;
-    z-index: -999;
   }
 
   .home-container .info-container .left .item {

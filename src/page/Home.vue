@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <div class="bg"></div>
+    <!-- <div class="bg"></div> -->
     <div
       class="top-container"
       v-loading="loading['news']"

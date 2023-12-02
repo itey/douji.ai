@@ -144,6 +144,7 @@
               </div>
             </div>
           </div>
+          <div class="division"></div>
           <div class="tab-row">
             <div class="tab-row-text">
               <div class="title text-color">
@@ -234,6 +235,7 @@
               </div>
             </div>
           </div>
+          <div class="division"></div>
           <div class="tab-row">
             <div class="tab-row-text">
               <div class="title text-color">
@@ -266,6 +268,7 @@
               <div class="desc">{{ $t("home.tab_dao_voting") }}</div>
             </div>
           </div>
+          <div class="division"></div>
           <div class="tab-row">
             <div class="tab-row-text">
               <div class="title text-color">
@@ -421,6 +424,12 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    .division {
+      display: block;
+      width: 820px;
+      align-self: center;
+    }
 
     .tab-tip {
       width: 840px;

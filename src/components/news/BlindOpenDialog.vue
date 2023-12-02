@@ -8,7 +8,6 @@
       :close-on-press-escape="false"
       :close-on-click-modal="false"
       :modal-append-to-body="false"
-      :append-to-body="true"
       :visible.sync="show"
       @open="onOpen"
       @close="handleClose"

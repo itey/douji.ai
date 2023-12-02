@@ -1,7 +1,12 @@
 .theme-light {
   .body-container {
     background: #f6f8f9;
-    z-index: 10;
+
+    .color-bg {
+      background-image: url("@/assets/images/page-background.png");
+      background-repeat: no-repeat;
+      background-size: 100%;
+    }
   }
 
   .theme-background-color {
@@ -267,6 +272,10 @@
     border: 0.5px solid #eef2f4;
   }
 
+  .comparison-tab .tab3 .division {
+    border: 0.5px solid #eef2f4;
+  }
+
   .comparison-tab .tab2 .item {
     border: 1px solid #eef2f4 !important;
   }
@@ -293,13 +302,6 @@
 
   .comparison-tab .tab4 .tab-bottom .item .desc {
     color: #1a2027;
-  }
-
-  .home-container .bg {
-    background-image: url("@/assets/images/page-background.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    z-index: -999;
   }
 
   .home-container .info-container .left .item {

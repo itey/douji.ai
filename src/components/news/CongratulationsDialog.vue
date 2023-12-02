@@ -1,7 +1,6 @@
 <template>
   <el-dialog
     custom-class="congratulations-dialog"
-    :append-to-body="true"
     top="0vh"
     :fullscreen="true"
     @open="onOpen"
