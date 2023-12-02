@@ -168,7 +168,7 @@
 </template>
 
 <script>
-import { emptyCompare } from '@/utils/common'
+import { emptyCompare, specialCharFilter } from '@/utils/common'
 import { encryptContent, uploadContent, uploadFile } from '@/utils/http'
 import {
   default as PrivateVditor,
@@ -478,7 +478,7 @@ export default {
       }
     },
     charFilter(val) {
-      return val.replace(/(\s*$)/g, '')
+      return specialCharFilter(val)
     },
   },
 }
