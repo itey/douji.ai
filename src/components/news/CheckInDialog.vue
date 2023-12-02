@@ -74,7 +74,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 13;
 
   &.el-dialog {
     background-color: black;
