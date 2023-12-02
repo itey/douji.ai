@@ -16,7 +16,11 @@
     </el-breadcrumb>
 
     <NftDaoVote
-      v-if="tokenSupplyInfo.isVoting && !voteOverTime && userOwned > 0"
+      v-if="
+        tokenSupplyInfo.isVoting &&
+        !voteOverTime &&
+        (userOwned > 0 || userStakeInfo[0] > 0)
+      "
       @handleReload="dataLoad"
       :userOwned="userOwned"
       :tokenOwner="tokenOwner"
@@ -727,6 +731,7 @@ export default {
         }
         tokensData(this.tokenId)
           .then((res) => {
+            console.log(res);
             this.tokenSupplyInfo = res;
             return resolve();
           })
