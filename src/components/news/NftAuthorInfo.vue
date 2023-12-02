@@ -119,8 +119,7 @@
 <script>
 import { getOtUserInfo } from "@/utils/http";
 import {
-  isAlreadyCollect,
-  isAlreadyPraise,
+  isAlreadyPraiseCollect,
   nftCollect,
   nftPraise,
 } from "@/utils/web3/nft";
@@ -281,10 +280,7 @@ export default {
       if (!this.userAccount) {
         return;
       }
-      Promise.all([
-        isAlreadyPraise(this.tokenId),
-        isAlreadyCollect(this.tokenId),
-      ])
+      isAlreadyPraiseCollect(this.tokenId)
         .then((arr) => {
           this.isPraise = arr[0];
           this.isCollect = arr[1];
