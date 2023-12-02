@@ -692,4 +692,13 @@
     background: #0e161d;
     border: 1px solid #313838;
   }
+
+  .creator-container .content-container .creator-info .subscription {
+    color: #a5b5c3;
+    background: #657a8a;
+    &.light {
+      background: #12c7b8;
+      color: #ffffff;
+    }
+  }
 }

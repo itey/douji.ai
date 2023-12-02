@@ -311,26 +311,36 @@ export default {
     },
     /** 点击关注 */
     handleSub() {
+      var loadingInstance = this.$loading({
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       subscribeAuthorContract(this.address)
         .then(() => {
           this.$toast.success(this.$t("common.follow_success"));
-          this.userInfoGet();
+          this.checkIfFollow();
+          loadingInstance.close();
         })
         .catch((e) => {
           this.$toast.error(e && e.message ? e.message : e);
-          this.userInfoGet();
+          this.checkIfFollow();
+          loadingInstance.close();
         });
     },
     /** 点击取消关注 */
     handleSubOut() {
+      var loadingInstance = this.$loading({
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       subscribeAuthorContract(this.address)
         .then(() => {
           this.$toast.success(this.$t("common.un_follow_success"));
-          this.userInfoGet();
+          this.checkIfFollow();
+          loadingInstance.close();
         })
         .catch((e) => {
           this.$toast.error(e && e.message ? e.message : e);
-          this.userInfoGet();
+          this.checkIfFollow();
+          loadingInstance.close();
         });
     },
     /** 点击跳转 */
@@ -414,13 +424,12 @@ export default {
 
       .subscription {
         margin-top: 19px;
-        height: 27px;
-        border-radius: 14px;
-        font-size: 10px;
+        width: 136px;
+        height: 38px;
+        border-radius: 19px;
+        font-size: 12px;
         font-family: Arial;
         font-weight: bold;
-        color: #a5b5c3;
-        background: #657a8a;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -428,11 +437,6 @@ export default {
         padding: 0 12px;
         width: 98px;
         cursor: pointer;
-
-        &.light {
-          background: #12c7b8;
-          color: #ffffff;
-        }
       }
 
       .tag-container {
