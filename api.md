@@ -1052,6 +1052,9 @@ post
 | content_type |true   | string |类型|
 | category |true   | string |分类|
 | pltform |true   | string |平台|
+| orderField |true   | int |1时间 2价格|
+| orderBy |true   | string |asc desc|
+| keyW |true   | string |关键字|
 ##### Response parameters:
 
 ```json
@@ -1990,5 +1993,58 @@ post
 | 0            | 失败   |
 | 1            | 成功   |  
 
+### 40.用户NFT
+ 
+Api path：
 
+```bash
+   http://43.198.63.219:1538/api/userNfts
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| page |true   | int |页码 默认1   每页显示20条|
+| address |true   | string |地址|
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        "pageCount":11,
+        "page":1,
+        "list":[
+            {
+                "token_id":11,
+                "name":"Best 7 AI Text Humanizers to Convert from ChatGPT into Human-Written Text",
+                "title":"Best 7 AI Text Humanizers to Convert from ChatGPT into Human-Written Text",
+                "image":"https:\/\/ipfs.io\/ipfs\/bafkreihsw75pkrp4hpu7wukczgk6neiy5vrd2vwkgasaoxvwuckfwcwiqy",
+                "description":"AI-generated content can sometimes sound robotic and mechanical. Now, there’s a solution that bridges this gap and ensures your AI-generated text is not only human-like but also undetectable by AI detectors.",
+                "category":"ChatGPT",
+                "content_type":"Article",
+                "owner_address":"0xb51dcc6075778ae0ce49c61db0326e412b40ddf1",
+                "language":null,
+                "read_duration":"0.00",
+                "collect_count":0,
+                "praise_count":0,
+                "holdCount":50
+            }
+        ]
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |   
 

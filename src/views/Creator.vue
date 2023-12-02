@@ -33,23 +33,19 @@
             userAccount && userAccount.toLowerCase() != address.toLowerCase()
           "
         >
-          <div
-            class="subscription"
-            v-if="userInfo.isfollow"
-            @click="handleSubOut()"
-          >
+          <div class="subscription" v-if="subscription" @click="handleSubOut()">
             <img
               style="width: 13px; height: 9px; margin-right: 5px"
               src="@/assets/images/news/true.png"
             />
-            <span>{{ $t('creator.subscribe') }}</span>
+            <span>{{ $t("creator.subscribe") }}</span>
           </div>
           <div class="subscription light" v-else @click="handleSub()">
             <img
               style="width: 9px; height: 9px; margin-right: 5px"
               src="@/assets/images/news/add.png"
             />
-            <span>{{ $t('creator.subscribe') }}</span>
+            <span>{{ $t("creator.subscribe") }}</span>
           </div>
         </template>
         <div class="tag-container">
@@ -189,21 +185,26 @@
     </div>
     <div class="list-container">
       <div class="title-container">
-        <span class="text-color title">{{ $t('creator.collect') }}</span>
-        <span class="text-sub-color sub">28</span>
+        <span class="text-color title">{{ $t("creator.collect") }}</span>
+        <span class="text-sub-color sub">{{ total }}</span>
       </div>
-      <div class="content">
+      <div
+        class="content"
+        v-loading="loading"
+        :element-loading-background="$store.state.common.theme | maskByTheme"
+      >
         <div class="list">
-          <div v-for="(item, index) in 20" :key="index" class="item">
-            <product-item></product-item>
+          <div v-for="(item, index) in list" :key="index" class="item">
+            <product-item :item="item"></product-item>
           </div>
         </div>
         <el-pagination
+          v-if="!loading"
           style="width: 100%; margin: 20px 0"
           background
           layout="prev,pager,next"
-          :page-count="4"
-          :total="1000"
+          :page-count="20"
+          :total="total"
         ></el-pagination>
       </div>
     </div>
@@ -211,102 +212,136 @@
 </template>
 
 <script>
-import ProductItem from '@/components/ProductItem'
-import { follow, getOtUserInfo, unfollow } from '@/utils/http'
+import ProductItem from "@/components/ProductItem";
+import { subscribeAuthorContract, isFollow } from "@/utils/web3/operator";
+import { getOtUserInfo, getUserNftList } from "@/utils/http";
 export default {
-  name: 'creator-view',
+  name: "creator-view",
   data() {
     return {
       address: undefined,
+      subscription: undefined,
       userInfo: {},
-    }
+      list: [],
+      total: 0,
+      page: 1,
+      loading: false,
+    };
   },
   components: {
     ProductItem,
   },
   computed: {
     userAccount() {
-      return this.$store.state.user.account
+      return this.$store.state.user.account;
     },
   },
   created() {
-    this.address = this.$route.query.address
-    this.userInfoGet()
+    this.address = this.$route.query.address;
+    this.userInfoGet();
+    this.userNftList();
+    this.checkIfFollow();
   },
   methods: {
+    /** 查询用户的NFT列表  */
+    userNftList() {
+      if (!this.address) {
+        return;
+      }
+      this.loading = true;
+      getUserNftList(this.page, this.address)
+        .then((r) => {
+          if (r.code == 1) {
+            this.list = r.data.list;
+            this.total = r.data.pageCount;
+          } else {
+            this.$toast.error(r.message);
+          }
+        })
+        .catch((e) => {
+          this.$toast.error(e.message ? e.message : e);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    /** 查询是否已关注创作者 */
+    checkIfFollow() {
+      if (!this.userAccount) {
+        return;
+      }
+      isFollow(this.address)
+        .then((r) => {
+          this.subscription = r;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    /** 用户信息查询 */
     userInfoGet() {
       if (!this.address) {
-        return
+        return;
       }
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       getOtUserInfo(this.address)
         .then((r) => {
           if (r.code == 1) {
-            this.userInfo = r.data
+            this.userInfo = r.data;
           } else {
-            this.$toast.error(r.message)
+            this.$toast.error(r.message);
           }
         })
         .finally(() => {
-          loadingInstance.close()
-        })
+          loadingInstance.close();
+        });
     },
     /** 点击复制按钮 */
     handleCopyAddress() {
       this.$copyText(this.address).then(
         () => {
-          this.$toast.success(this.$t('common.copied_success'))
+          this.$toast.success(this.$t("common.copied_success"));
         },
         () => {
-          this.$toast.error(this.$t('copied_failed'))
+          this.$toast.error(this.$t("copied_failed"));
         }
-      )
+      );
     },
     /** 点击关注 */
     handleSub() {
-      follow(this.userInfo.uid)
-        .then((r) => {
-          if (r.code == 1) {
-            this.$toast.success(this.$t('common.follow_success'))
-          } else {
-            this.$toast.error(r.message)
-          }
+      subscribeAuthorContract(this.address)
+        .then(() => {
+          this.$toast.success(this.$t("common.follow_success"));
+          this.userInfoGet();
         })
         .catch((e) => {
-          this.$toast.error(e && e.message ? e.message : e)
-        })
-        .finally(() => {
-          this.userInfoGet()
-        })
+          this.$toast.error(e && e.message ? e.message : e);
+          this.userInfoGet();
+        });
     },
     /** 点击取消关注 */
     handleSubOut() {
-      unfollow(this.userInfo.uid)
-        .then((r) => {
-          if (r.code == 1) {
-            this.$toast.success(this.$t('common.un_follow_success'))
-          } else {
-            this.$toast.error(r.message)
-          }
+      subscribeAuthorContract(this.address)
+        .then(() => {
+          this.$toast.success(this.$t("common.un_follow_success"));
+          this.userInfoGet();
         })
         .catch((e) => {
-          this.$toast.error(e && e.message ? e.message : e)
-        })
-        .finally(() => {
-          this.userInfoGet()
-        })
+          this.$toast.error(e && e.message ? e.message : e);
+          this.userInfoGet();
+        });
     },
     /** 点击跳转 */
     handleGoTo(url) {
       if (!url) {
-        return
+        return;
       }
-      window.open(url, '_blank')
+      window.open(url, "_blank");
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
