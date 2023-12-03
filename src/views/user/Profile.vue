@@ -1,9 +1,9 @@
 <template>
   <div class="profile-container">
-    <div class="profile-title text-color">{{ $t('user.profile') }}</div>
+    <div class="profile-title text-color">{{ $t("user.profile") }}</div>
     <div class="form-container">
       <div class="form-item">
-        <div class="form-label">{{ $t('user.co_im') }}</div>
+        <div class="form-label">{{ $t("user.co_im") }}</div>
         <div class="form-value">
           <el-upload
             accept=".png, .jpeg, .jpg, .gif"
@@ -27,19 +27,19 @@
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">{{ $t('user.alias') }}</div>
+        <div class="form-label">{{ $t("user.alias") }}</div>
         <div class="form-value">
           <el-input
             @input="(val) => (userInfo.nickname = val.replace(/(\s*$)/g, ''))"
             v-model="userInfo.nickname"
           ></el-input>
           <div class="form-tip">
-            {{ $t('user.alias_tip') }}
+            {{ $t("user.alias_tip") }}
           </div>
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">{{ $t('user.short_desc') }}</div>
+        <div class="form-label">{{ $t("user.short_desc") }}</div>
         <div class="form-value">
           <el-input
             @input="
@@ -48,15 +48,15 @@
             v-model="userInfo.short_description"
           ></el-input>
           <div class="form-tip">
-            {{ $t('user.short_tip') }}
+            {{ $t("user.short_tip") }}
           </div>
         </div>
       </div>
     </div>
-    <div class="profile-sub-title text-color">{{ $t('user.social') }}</div>
+    <div class="profile-sub-title text-color">{{ $t("user.social") }}</div>
     <div class="form-container">
       <div class="form-item">
-        <div class="form-label">{{ $t('user.loc') }}</div>
+        <div class="form-label">{{ $t("user.loc") }}</div>
         <div class="form-value">
           <el-input
             @input="(val) => (userInfo.location = val.replace(/(\s*$)/g, ''))"
@@ -67,10 +67,25 @@
     </div>
     <div class="form-container">
       <div class="form-item">
+        <div class="form-label">Website</div>
+        <div class="form-value">
+          <el-input
+            @input="
+              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            "
+            v-model="userInfo.website"
+          ></el-input>
+        </div>
+      </div>
+    </div>
+    <div class="form-container">
+      <div class="form-item">
         <div class="form-label">Twitter</div>
         <div class="form-value">
           <el-input
-            @input="(val) => (userInfo.twitter = charFilter(val))"
+            @input="
+              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            "
             v-model="userInfo.twitter"
           ></el-input>
         </div>
@@ -81,7 +96,9 @@
         <div class="form-label">Telegram</div>
         <div class="form-value">
           <el-input
-            @input="(val) => (userInfo.telegram = charFilter(val))"
+            @input="
+              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            "
             v-model="userInfo.telegram"
           ></el-input>
         </div>
@@ -92,7 +109,9 @@
         <div class="form-label">Facebook</div>
         <div class="form-value">
           <el-input
-            @input="(val) => (userInfo.facebook = charFilter(val))"
+            @input="
+              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            "
             v-model="userInfo.facebook"
           ></el-input>
         </div>
@@ -103,19 +122,10 @@
         <div class="form-label">Tiktok</div>
         <div class="form-value">
           <el-input
-            @input="(val) => (userInfo.tiktok = charFilter(val))"
+            @input="
+              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            "
             v-model="userInfo.tiktok"
-          ></el-input>
-        </div>
-      </div>
-    </div>
-    <div class="form-container">
-      <div class="form-item">
-        <div class="form-label">Website</div>
-        <div class="form-value">
-          <el-input
-            @input="(val) => (userInfo.website = charFilter(val))"
-            v-model="userInfo.website"
           ></el-input>
         </div>
       </div>
@@ -125,7 +135,9 @@
         <div class="form-label">Instagram</div>
         <div class="form-value">
           <el-input
-            @input="(val) => (userInfo.instagram = charFilter(val))"
+            @input="
+              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            "
             v-model="userInfo.instagram"
           ></el-input>
         </div>
@@ -136,7 +148,9 @@
         <div class="form-label">Youtube</div>
         <div class="form-value">
           <el-input
-            @input="(val) => (userInfo.youtube = charFilter(val))"
+            @input="
+              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            "
             v-model="userInfo.youtube"
           ></el-input>
         </div>
@@ -147,19 +161,10 @@
         <div class="form-label">Github</div>
         <div class="form-value">
           <el-input
-            @input="(val) => (userInfo.github = charFilter(val))"
+            @input="
+              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            "
             v-model="userInfo.github"
-          ></el-input>
-        </div>
-      </div>
-    </div>
-    <div class="form-container">
-      <div class="form-item">
-        <div class="form-label">Wechat</div>
-        <div class="form-value">
-          <el-input
-            @input="(val) => (userInfo.wechat = charFilter(val))"
-            v-model="userInfo.wechat"
           ></el-input>
         </div>
       </div>
@@ -171,117 +176,113 @@
 </template>
 
 <script>
-import { specialCharFilter } from '@/utils/common'
-import { getUserInfo, updateUserInfo, uploadFile } from '@/utils/http'
+import { getUserInfo, updateUserInfo, uploadFile } from "@/utils/http";
 export default {
-  name: 'profile-view',
+  name: "profile-view",
   data() {
     return {
       imageFile: undefined,
       imageUrl: undefined,
       error: {},
       userInfo: {
-        nickname: '',
-        head_img: '',
-        short_description: '',
-        location: '',
-        twitter: '',
-        telegram: '',
-        facebook: '',
-        tiktok: '',
-        linkedin: '',
-        medium: '',
-        whatsapp: '',
-        website: '',
-        instagram: '',
-        youtube: '',
-        github: '',
-        wechat: '',
-        discord: '',
-        line: '',
-        bilibili: '',
+        nickname: "",
+        head_img: "",
+        short_description: "",
+        location: "",
+        twitter: "",
+        telegram: "",
+        facebook: "",
+        tiktok: "",
+        linkedin: "",
+        medium: "",
+        whatsapp: "",
+        website: "",
+        instagram: "",
+        youtube: "",
+        github: "",
+        wechat: "",
+        discord: "",
+        line: "",
+        bilibili: "",
       },
-    }
+    };
   },
   mounted() {
-    this.loadUserInfo()
+    this.loadUserInfo();
   },
   methods: {
     fileChange(file) {
-      const fileType = file.raw.type
-      const fileSize = file.size
-      if (fileType.indexOf('image') === -1) {
-        this.$toast.error(this.$t('common.img_format_error'))
-        return
+      const fileType = file.raw.type;
+      const fileSize = file.size;
+      if (fileType.indexOf("image") === -1) {
+        this.$toast.error(this.$t("common.img_format_error"));
+        return;
       }
       if (fileSize > 1 * 1024 * 1024) {
-        this.$toast.error(this.$t('common.img_large_error', 1))
-        return
+        this.$toast.error(this.$t("common.img_large_error", 1));
+        return;
       }
       this.dialogImageUrl = window.URL
         ? window.URL.createObjectURL(file.raw)
-        : window.webkitURL.createObjectURL(file.raw)
-      this.imageUrl = this.dialogImageUrl
-      this.imageFile = file
+        : window.webkitURL.createObjectURL(file.raw);
+      this.imageUrl = this.dialogImageUrl;
+      this.imageFile = file;
     },
     /** 保存用户资料 */
     async handleSave() {
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       try {
-        await this.saveHeadImg()
+        await this.saveHeadImg();
       } catch (e) {
-        this.$toast.error(this.$t('common.img_upload_error'))
-        loadingInstance.close()
-        return
+        this.$toast.error(this.$t("common.img_upload_error"));
+        loadingInstance.close();
+        return;
       }
-      await this.saveBaseInfo()
-      this.$toast.success(this.$t('user.profile_save_success'))
-      loadingInstance.close()
-      this.loadUserInfo()
+      await this.saveBaseInfo();
+      this.$toast.success(this.$t("user.profile_save_success"));
+      loadingInstance.close();
+      this.loadUserInfo();
     },
     /** 保存基本数据 */
     saveBaseInfo() {
       return new Promise((resolve, reject) => {
         updateUserInfo(this.userInfo)
           .then(() => {
-            return resolve()
+            return resolve();
           })
           .catch((e) => {
-            reject(e)
-          })
-      })
+            reject(e);
+          });
+      });
     },
     /** 保存头像文件 */
     async saveHeadImg() {
       if (!this.imageFile) {
-        return
+        return;
       }
-      const formData = new FormData()
-      formData.append('file', this.imageFile.raw)
-      const r = await uploadFile(formData)
-      this.userInfo.head_img = r.data.url
+      const formData = new FormData();
+      formData.append("file", this.imageFile.raw);
+      const r = await uploadFile(formData);
+      this.userInfo.head_img = r.data.url;
     },
     /** 获取用户信息 */
     loadUserInfo() {
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       getUserInfo()
         .then((res) => {
-          this.userInfo = res.data
-          this.imageUrl = this.userInfo.head_img
+          this.userInfo = res.data;
+          this.imageUrl = this.userInfo.head_img;
         })
         .finally(() => {
-          loadingInstance.close()
-        })
-    },
-    charFilter(val) {
-      return specialCharFilter(val)
+          loadingInstance.close();
+        });
     },
   },
-}
+};
 </script>
 <style lang="scss">
 .profile-container {
