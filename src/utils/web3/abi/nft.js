@@ -228,7 +228,10 @@ const abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "_tokenId", type: "uint256" }],
+    inputs: [
+      { internalType: "uint256", name: "_tokenId", type: "uint256" },
+      { internalType: "address", name: "_user", type: "address" },
+    ],
     name: "checkAV",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
@@ -280,6 +283,13 @@ const abi = [
     inputs: [{ internalType: "uint256", name: "_tokenId", type: "uint256" }],
     name: "getDaoRule",
     outputs: [{ internalType: "uint16", name: "", type: "uint16" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_tokenId", type: "uint256" }],
+    name: "getVotePromoter",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -454,15 +464,6 @@ const abi = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "address", name: "_marketAddress", type: "address" },
-    ],
-    name: "setMarket",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "uint256", name: "_tokenId", type: "uint256" }],
     name: "setNsp",
     outputs: [],
@@ -470,8 +471,11 @@ const abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "_operater", type: "address" }],
-    name: "setOperater",
+    inputs: [
+      { internalType: "address", name: "_operater", type: "address" },
+      { internalType: "address", name: "_marketAddress", type: "address" },
+    ],
+    name: "setOperaterAndMarket",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
