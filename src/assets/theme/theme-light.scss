@@ -708,6 +708,16 @@
 
   .settle-label {
     color: #636b72;
+
+    .enough {
+      font-weight: bold;
+      color: #1a2027;
+    }
+
+    .not_enough {
+      font-weight: bold;
+      color: red;
+    }
   }
 
   .profile-container .form-container .form-item .form-value .form-upload {

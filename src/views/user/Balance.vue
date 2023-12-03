@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="balance">
-      <div class="text-big text-color">{{ $t('user.balance') }}</div>
+      <div class="text-big text-color">{{ $t("user.balance") }}</div>
       <div class="balance-address-container" @click="handleCopyAddress()">
         <img
           style="width: 16px; height: 16px"
@@ -24,7 +24,7 @@
         <div class="sub-value text-sub-color">
           ≈${{
             $store.state.chain.balanceMbd * $store.state.chain.mbdPrice ||
-            '0.0000' | decimalPlace4
+            "0.0000" | decimalPlace4
           }}
         </div>
         <div class="unit text-color">MBD</div>
@@ -49,7 +49,7 @@
     </div>
     <div class="divider"></div>
     <template v-if="false">
-      <div class="text-middle text-color">{{ $t('user.ba_dist') }}</div>
+      <div class="text-middle text-color">{{ $t("user.ba_dist") }}</div>
       <div class="settle-container">
         <div class="unit text-color">MBD</div>
         <div class="value text-color">0.0000</div>
@@ -57,12 +57,12 @@
       </div>
       <div class="settle-button">
         <el-button class="common-btn1" type="primary">{{
-          $t('user.settlement')
+          $t("user.settlement")
         }}</el-button>
       </div>
     </template>
     <div class="divider"></div>
-    <div class="text-middle text-color">{{ $t('user.ba_st_in') }}</div>
+    <div class="text-middle text-color">{{ $t("user.ba_st_in") }}</div>
     <!-- <div class="settle-container">
       <div class="unit text-color">MBD</div>
       <div class="value text-color">68415.5684</div>
@@ -73,11 +73,11 @@
         @click="$refs['incomeDialog'].showDialog()"
         class="common-btn1"
         type="primary"
-        >{{ $t('user.ba_go_sett') }}</el-button
+        >{{ $t("user.ba_go_sett") }}</el-button
       >
     </div>
     <div class="divider"></div>
-    <div class="text-middle text-color">{{ $t('user.ba_plat_rew') }}</div>
+    <div class="text-middle text-color">{{ $t("user.ba_plat_rew") }}</div>
     <div class="settle-containers">
       <div class="settle-container">
         <div class="unit text-color">MBD</div>
@@ -107,18 +107,17 @@
         :disabled="
           !settleFee || Number(settleFee) >= Number(mbdSettleBalance.balance)
         "
-        >{{ $t('user.settlement') }}</el-button
+        >{{ $t("user.settlement") }}</el-button
       >
     </div>
     <div class="text-color settle-label">
-      {{ $t('user.ba_sett_fee') }}:
+      {{ $t("user.ba_sett_fee") }}:
       <span
-        :style="{
-          color:
-            Number(settleFee) >= Number(mbdSettleBalance.balance)
-              ? 'red'
-              : 'white',
-        }"
+        :class="
+          Number(settleFee) >= Number(mbdSettleBalance.balance)
+            ? 'enough'
+            : 'not_enough'
+        "
         >{{ settleFee }}</span
       >
       MBD
@@ -133,29 +132,29 @@
 </template>
 
 <script>
-import IncomeDialog from '@/components/user/IncomeDialog'
-import SettleConfirmDialog from '@/components/user/SettleConfirmDialog'
-import { accountSettle, getPledgeSettleAccount } from '@/utils/http'
-import { getBjxBalanceOf, getBjxUsdtPrice } from '@/utils/web3/open'
-import { confirmSettleSign } from '@/utils/web3/chain'
+import IncomeDialog from "@/components/user/IncomeDialog";
+import SettleConfirmDialog from "@/components/user/SettleConfirmDialog";
+import { accountSettle, getPledgeSettleAccount } from "@/utils/http";
+import { getBjxBalanceOf, getBjxUsdtPrice } from "@/utils/web3/open";
+import { confirmSettleSign } from "@/utils/web3/chain";
 export default {
-  name: 'balance-view',
+  name: "balance-view",
   components: {
     IncomeDialog,
     SettleConfirmDialog,
   },
   computed: {
     userAccount() {
-      return this.$store.state.user.account
+      return this.$store.state.user.account;
     },
     settleFee() {
       if (!this.$store.state.chain.mbdPrice || !this.mbdSettleBalance.balance) {
-        return null
+        return null;
       }
       var fee =
         0.5 / this.$store.state.chain.mbdPrice +
-        this.mbdSettleBalance.balance * 0.003
-      return fee.toFixed(8)
+        this.mbdSettleBalance.balance * 0.003;
+      return fee.toFixed(8);
     },
   },
   data() {
@@ -165,82 +164,82 @@ export default {
       settleAccount: [],
       mbdSettleBalance: {},
       bjxSettleBalance: {},
-    }
+    };
   },
   mounted() {
-    this.getBjxBalance()
-    this.getSettleAccount()
-    this.getBjxPrice()
+    this.getBjxBalance();
+    this.getSettleAccount();
+    this.getBjxPrice();
   },
   methods: {
     /** 点击复制地址 */
     handleCopyAddress() {
       this.$copyText(this.$store.state.user.account).then(
         () => {
-          this.$toast.success(this.$t('common.copied_success'))
+          this.$toast.success(this.$t("common.copied_success"));
         },
         () => {
-          this.$toast.error(this.$t('copied_failed'))
+          this.$toast.error(this.$t("copied_failed"));
         }
-      )
+      );
     },
     /** BJX余额 */
     async getBjxBalance() {
-      this.bjxBalance = await getBjxBalanceOf(this.userAccount)
+      this.bjxBalance = await getBjxBalanceOf(this.userAccount);
     },
     /** 待结算账户 */
     getSettleAccount() {
       getPledgeSettleAccount()
         .then((r) => {
           if (r.code == 1) {
-            this.settleAccount = r.data.list
+            this.settleAccount = r.data.list;
             this.mbdSettleBalance = this._.find(this.settleAccount, {
               wallet_type: 1,
-            })
+            });
             this.bjxSettleBalance = this._.find(this.settleAccount, {
               wallet_type: 2,
-            })
+            });
           }
         })
         .catch((e) => {
-          this.$toast.error(e && e.message ? e.message : e)
-        })
+          this.$toast.error(e && e.message ? e.message : e);
+        });
     },
     /** BJX的USDT价格 */
     getBjxPrice() {
       getBjxUsdtPrice().then((r) => {
-        this.bjxUsdtPrice = r
-      })
+        this.bjxUsdtPrice = r;
+      });
     },
     /** 执行结算 */
     handleSettle() {
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       confirmSettleSign()
         .then((signed) => {
           accountSettle(signed)
             .then((r) => {
               if (r.code == 1) {
-                this.$toast.success(this.$t('user.settle_success'))
+                this.$toast.success(this.$t("user.settle_success"));
               } else {
-                this.$toast.error(r.message)
+                this.$toast.error(r.message);
               }
             })
             .catch((e) => {
-              this.$toast.error(e && e.message ? e.message : e)
+              this.$toast.error(e && e.message ? e.message : e);
             })
             .finally(() => {
-              loadingInstance.close()
-            })
+              loadingInstance.close();
+            });
         })
         .catch((e) => {
-          this.$toast.error(e && e.message ? e.message : e)
-          loadingInstance.close()
-        })
+          this.$toast.error(e && e.message ? e.message : e);
+          loadingInstance.close();
+        });
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

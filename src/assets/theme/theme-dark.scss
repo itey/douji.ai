@@ -688,6 +688,20 @@
     }
   }
 
+  .settle-label {
+    color: #ffffff;
+
+    .enough {
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .not_enough {
+      font-weight: bold;
+      color: red;
+    }
+  }
+
   .profile-container .form-container .form-item .form-value .form-upload {
     background: #0e161d;
     border: 1px solid #313838;
