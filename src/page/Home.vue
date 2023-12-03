@@ -121,9 +121,9 @@
               />
             </template>
 
-            <span class="rate text-color"
-              >{{ statistics.nft_mint_all_rate }}%</span
-            >
+            <span class="rate text-color">{{
+              statistics.nft_mint_all_rate | rate2Percent
+            }}</span>
           </div>
           <div class="attr-container">
             <div class="attr-item">
@@ -151,9 +151,9 @@
                     style="width: 8px; height: 6px"
                   />
                 </template>
-                <span class="rate text-color"
-                  >{{ statistics.market_cap_rate }}%</span
-                >
+                <span class="rate text-color">{{
+                  statistics.market_cap_rate | rate2Percent
+                }}</span>
               </div>
             </div>
             <div class="attr-item">
@@ -181,9 +181,9 @@
                     style="width: 8px; height: 6px"
                   />
                 </template>
-                <span class="rate text-color"
-                  >{{ statistics.nft_volume_rate }}%</span
-                >
+                <span class="rate text-color">{{
+                  statistics.nft_volume_rate | rate2Percent
+                }}</span>
               </div>
             </div>
             <div class="attr-item">
@@ -209,9 +209,9 @@
                     style="width: 8px; height: 6px"
                   />
                 </template>
-                <span class="rate text-color"
-                  >{{ statistics.transfers_rate }}%</span
-                >
+                <span class="rate text-color">{{
+                  statistics.transfers_rate | rate2Percent
+                }}</span>
               </div>
             </div>
             <div class="attr-item">
@@ -239,9 +239,9 @@
                     style="width: 8px; height: 6px"
                   />
                 </template>
-                <span class="rate text-color"
-                  >{{ statistics.weekly_active_users_rate }}%</span
-                >
+                <span class="rate text-color">{{
+                  statistics.weekly_active_users_rate | rate2Percent
+                }}</span>
               </div>
             </div>
           </div>
@@ -268,9 +268,9 @@
                 style="width: 8px; height: 6px"
               />
             </template>
-            <span class="rate text-color"
-              >{{ statistics.mbd_price_rate }}%</span
-            >
+            <span class="rate text-color">{{
+              statistics.mbd_price_rate | rate2Percent
+            }}</span>
           </div>
           <div class="attr-container">
             <div class="attr-item">
@@ -298,9 +298,9 @@
                     style="width: 8px; height: 6px"
                   />
                 </template>
-                <span class="rate text-color"
-                  >{{ statistics.mbd_circulation_rate }}%</span
-                >
+                <span class="rate text-color">{{
+                  statistics.mbd_circulation_rate | rate2Percent
+                }}</span>
               </div>
             </div>
             <div class="attr-item">
@@ -330,9 +330,9 @@
                     style="width: 8px; height: 6px"
                   />
                 </template>
-                <span class="rate text-color"
-                  >{{ statistics.nft_volume_24h_rate }}%</span
-                >
+                <span class="rate text-color">{{
+                  statistics.nft_volume_24h_rate | rate2Percent
+                }}</span>
               </div>
             </div>
             <div class="attr-item">
@@ -358,9 +358,9 @@
                     style="width: 8px; height: 6px"
                   />
                 </template>
-                <span class="rate text-color"
-                  >{{ statistics.transfers_24h_rate }}%</span
-                >
+                <span class="rate text-color">{{
+                  statistics.transfers_24h_rate | rate2Percent
+                }}</span>
               </div>
             </div>
             <div class="attr-item">
@@ -386,9 +386,9 @@
                     style="width: 8px; height: 6px"
                   />
                 </template>
-                <span class="rate text-color"
-                  >{{ statistics.nft_createcount_24h_rate }}%</span
-                >
+                <span class="rate text-color">{{
+                  statistics.nft_createcount_24h_rate | rate2Percent
+                }}</span>
               </div>
             </div>
           </div>
