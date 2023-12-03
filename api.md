@@ -2048,3 +2048,58 @@ post
 | 0            | 失败   |
 | 1            | 成功   |   
 
+### 41.大盘数据
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/marketData
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+##### Response parameters:
+
+```json
+{
+    "code":1,
+    "message":"ok",
+    "data":{
+        "id":2,
+        "day":"2023-12-03",
+        "nft_mint_all":7,//1155已mint的所有数量
+        "market_cap":"8300.000000",//总市值
+        "mbd_circulation":"500000000000.000000",//MBD流通量
+        "nft_volume":"0.000000",//NFT交易额
+        "nft_volume_24h":"0.000000",//NFT上24小时交易额
+        "transfers":0,//NFT交易数量
+        "transfers_24h":0,//NFT上24小时交易数量
+        "weekly_active_users":19,//活跃用户
+        "nft_createcount_24h":0,//NFT24小时候创建数量
+        "mbd_price":"0.000010",//MBD价格
+        "nft_mint_all_rate":"-",
+        "market_cap_rate":"-",
+        "mbd_circulation_rate":"-",
+        "nft_volume_rate":"-",
+        "nft_volume_24h_rate":"-",
+        "transfers_rate":"-",
+        "transfers_24h_rate":"-",
+        "weekly_active_users_rate":"-",
+        "nft_createcount_24h_rate":"-",
+        "mbd_price_rate":"-"
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |   

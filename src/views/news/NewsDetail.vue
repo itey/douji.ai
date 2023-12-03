@@ -219,8 +219,12 @@
               {{ $t("news-detail.more_creator") }}
             </div>
             <div class="more-list">
-              <div v-for="(item, index) in 6" :key="index" class="more-item">
-                <news-item></news-item>
+              <div
+                v-for="(item, index) in userOtherlist"
+                :key="index"
+                class="more-item"
+              >
+                <news-item :item="item"></news-item>
               </div>
             </div>
           </div>
@@ -307,6 +311,7 @@ import {
   getNftTransactions,
   loadFromUrl,
   unlockContent,
+  getUserNftList,
 } from "@/utils/http";
 import { balanceOf, userPledgeCount } from "@/utils/web3/nft";
 import { getTokenOwner, tokenURI, tokensData } from "@/utils/web3/open";
@@ -402,6 +407,7 @@ export default {
       transactionHistory: [],
       timeTask: undefined,
       userStakeInfo: [],
+      userOtherlist: [],
     };
   },
   created() {
@@ -716,6 +722,7 @@ export default {
         getTokenOwner(this.tokenId)
           .then((owner) => {
             this.tokenOwner = owner;
+            this.userNftList(owner);
             return resolve();
           })
           .catch(() => {
@@ -819,6 +826,20 @@ export default {
           }
         });
       });
+    },
+    /** 查询用户的NFT列表  */
+    userNftList(address) {
+      getUserNftList(this.page, address)
+        .then((r) => {
+          if (r.code == 1) {
+            this.userOtherlist = r.data.list;
+          } else {
+            console.log(r.message);
+          }
+        })
+        .catch((e) => {
+          console.log(e.message ? e.message : e);
+        });
     },
   },
 };

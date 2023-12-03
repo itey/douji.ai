@@ -721,4 +721,16 @@
       color: #53cfd2;
     }
   }
+
+  .news-item .bottom .sub {
+    color: #b2b9b9;
+
+    span {
+      color: #b2b9b9;
+
+      &:hover {
+        color: #53cfd2;
+      }
+    }
+  }
 }

@@ -6,7 +6,7 @@
     width="1100px"
   >
     <div class="income-header text-color" slot="title">
-      {{ $t('user.inc_d_title') }}
+      {{ $t("user.inc_d_title") }}
     </div>
     <div class="income-content">
       <el-table
@@ -65,20 +65,20 @@
         :disabled="!multipleSelection || !multipleSelection.length"
         class="common-btn2"
         @click="handleSubmit()"
-        >{{ $t('user.settlement') }}</el-button
+        >{{ $t("user.settlement") }}</el-button
       >
     </div>
   </el-dialog>
 </template>
 
 <script>
-import { pledgeSettleList } from '@/utils/http'
-import { userPledgeCount } from '@/utils/web3/nft'
-import { weiToMbd } from '@/utils/common'
-import { totalPledgeCount, getSettlePoolBalance } from '@/utils/web3/open'
-import { marketSettleBatch } from '@/utils/web3/market'
+import { pledgeSettleList } from "@/utils/http";
+import { userPledgeCount } from "@/utils/web3/nft";
+import { weiToMbd } from "@/utils/common";
+import { totalPledgeCount, getSettlePoolBalance } from "@/utils/web3/open";
+import { marketSettleBatch } from "@/utils/web3/market";
 export default {
-  name: 'income-dialog',
+  name: "income-dialog",
   data() {
     return {
       show: false,
@@ -87,132 +87,132 @@ export default {
       totalCount: 0,
       tableData: [],
       multipleSelection: [],
-    }
+    };
   },
   methods: {
     showDialog() {
-      this.show = true
+      this.show = true;
     },
     onOpen() {
-      this.pageNo = 1
-      this.pageLoad()
+      this.pageNo = 1;
+      this.pageLoad();
     },
     /** 选择的数据发生变化 */
     handleSelectionChange(val) {
-      this.multipleSelection = val
+      this.multipleSelection = val;
     },
     /** 加载数据 */
     async pageLoad() {
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       try {
-        const r = await pledgeSettleList(this.pageNo)
+        const r = await pledgeSettleList(this.pageNo);
         if (r.code == 1) {
-          var stakeList = r.data.list
+          var stakeList = r.data.list;
           if (stakeList && stakeList.length > 0) {
-            await this.batchQueryStakeInfo(stakeList)
-            this.tableData = r.data.list
+            await this.batchQueryStakeInfo(stakeList);
+            this.tableData = r.data.list;
           }
-          this.totalCount = r.data.pageCount
+          this.totalCount = r.data.pageCount;
         } else {
-          this.$toast.error(r.message)
+          this.$toast.error(r.message);
         }
       } catch (e) {
-        this.$toast.error(e && e.message ? e.message : e)
+        this.$toast.error(e && e.message ? e.message : e);
       } finally {
-        loadingInstance.close()
+        loadingInstance.close();
       }
     },
     /** 批量请求查询质押信息 */
     async batchQueryStakeInfo(stakeList) {
-      var promise = []
+      var promise = [];
       for (var i = 0; i < stakeList.length; i++) {
-        var stake = stakeList[i]
-        promise.push(this.getUserStakeCount(stake))
-        promise.push(this.getTotalStakeCount(stake))
-        promise.push(this.getMbdSettleBalance(stake))
+        var stake = stakeList[i];
+        promise.push(this.getUserStakeCount(stake));
+        promise.push(this.getTotalStakeCount(stake));
+        promise.push(this.getMbdSettleBalance(stake));
       }
-      await Promise.all(promise)
+      await Promise.all(promise);
     },
     /** 获取用户质押信息 */
     getUserStakeCount(stake) {
       if (!this.$store.state.user.account) {
-        return
+        return;
       }
       return new Promise((resolve) => {
         userPledgeCount(stake.token_id)
           .then((data) => {
-            stake.userStake = data[0]
-            return resolve()
+            stake.userStake = data[0];
+            return resolve();
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
-            return resolve()
-          })
-      })
+            this.$toast.error(e && e.message ? e.message : e);
+            return resolve();
+          });
+      });
     },
     /** 获取质押总量 */
     getTotalStakeCount(stake) {
       return new Promise((resolve) => {
         totalPledgeCount(stake.token_id)
           .then((count) => {
-            stake.totalStakeCount = count ? count : 0
-            return resolve()
+            stake.totalStakeCount = count ? count : 0;
+            return resolve();
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
-            return resolve()
-          })
-      })
+            this.$toast.error(e && e.message ? e.message : e);
+            return resolve();
+          });
+      });
     },
     /** 取合约里DAO 质押奖金池子的额度 */
     getMbdSettleBalance(stake) {
       return new Promise((resolve) => {
         getSettlePoolBalance(stake.token_id)
           .then((balance) => {
-            stake.settlePoolBalance = weiToMbd(balance)
-            return resolve()
+            stake.settlePoolBalance = weiToMbd(balance);
+            return resolve();
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
-            return resolve()
-          })
-      })
+            this.$toast.error(e && e.message ? e.message : e);
+            return resolve();
+          });
+      });
     },
     /** 点击结算按钮 */
     handleSubmit() {
       if (!this.multipleSelection || !this.multipleSelection.length) {
-        return
+        return;
       }
-      const tokenArr = this._.map(this.multipleSelection, 'token_id')
+      const tokenArr = this._.map(this.multipleSelection, "token_id");
       if (this.$store.state.chain.balanceBnb < 0.01) {
         this.$bnbConfirm(this.$store.state.common.language, () => {
-          this.executeProcess(tokenArr)
-        })
-        return
+          this.executeProcess(tokenArr);
+        });
+        return;
       }
-      this.executeProcess(tokenArr)
+      this.executeProcess(tokenArr);
     },
     /** 执行结算 */
     executeProcess(arr) {
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       marketSettleBatch(arr)
         .then(() => {
-          this.$toast.success(this.$t('user.settle_success_1'))
-          this.multipleSelection = []
-          this.onOpen()
-          loadingInstance.close()
+          this.$toast.success(this.$t("user.settle_success_1"));
+          this.multipleSelection = [];
+          this.onOpen();
+          loadingInstance.close();
         })
         .catch((e) => {
-          this.$toast.error(e && e.message ? e.message : e)
-          loadingInstance.close()
-        })
+          this.$toast.error(e && e.message ? e.message : e);
+          loadingInstance.close();
+        });
     },
   },
-}
+};
 </script>
 
 <style lang="scss">

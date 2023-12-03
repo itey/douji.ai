@@ -346,3 +346,11 @@ export function getUserNftList(page, address) {
     params: { page, address },
   });
 }
+
+// 大盘数据
+export function getStatistics() {
+  return request({
+    url: "/marketData",
+    method: "post",
+  });
+}

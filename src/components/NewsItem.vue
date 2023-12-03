@@ -101,15 +101,9 @@ export default {
       line-height: 12px;
       font-family: Source Han Sans CN;
       font-weight: 400;
-      color: #b2b9b9;
-
       span {
+        font-weight: bold;
         cursor: pointer;
-        color: #b2b9b9;
-
-        &:hover {
-          color: #ffffff;
-        }
       }
     }
   }

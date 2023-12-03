@@ -100,45 +100,118 @@
         <div class="nft-column">
           <div class="title">{{ $t("home.all_nft") }}</div>
           <div class="value-container">
-            <span class="value text-color">437,238,820</span>
-            <img
-              src="@/assets/images/home/up.png"
-              style="width: 6px; height: 4px"
-            />
-            <span class="rate text-color">+2.85%</span>
+            <span class="value text-color">{{
+              statistics.nft_mint_all | toLocalString
+            }}</span>
+            <template
+              v-if="
+                statistics.nft_mint_all_rate &&
+                statistics.nft_mint_all_rate != '-'
+              "
+            >
+              <img
+                v-if="statistics.nft_mint_all_rate > 0"
+                src="@/assets/images/home/up.png"
+                style="width: 8px; height: 6px"
+              />
+              <img
+                v-if="statistics.nft_mint_all_rate < 0"
+                src="@/assets/images/home/down.png"
+                style="width: 8px; height: 6px"
+              />
+            </template>
+
+            <span class="rate text-color"
+              >{{ statistics.nft_mint_all_rate }}%</span
+            >
           </div>
           <div class="attr-container">
             <div class="attr-item">
               <div class="label">{{ $t("home.market_cap") }}</div>
               <div>
-                <span class="value text-color">$10,468,280</span>
-                <img
-                  src="@/assets/images/home/up.png"
-                  style="width: 6px; height: 4px"
-                />
-                <span class="rate text-color">+2.85%</span>
+                <span class="value text-color"
+                  >${{
+                    statistics.market_cap | decimalPlace2 | toLocalString
+                  }}</span
+                >
+                <template
+                  v-if="
+                    statistics.market_cap_rate &&
+                    statistics.market_cap_rate != '-'
+                  "
+                >
+                  <img
+                    v-if="statistics.market_cap_rate > 0"
+                    src="@/assets/images/home/up.png"
+                    style="width: 8px; height: 6px"
+                  />
+                  <img
+                    v-if="statistics.market_cap_rate < 0"
+                    src="@/assets/images/home/down.png"
+                    style="width: 8px; height: 6px"
+                  />
+                </template>
+                <span class="rate text-color"
+                  >{{ statistics.market_cap_rate }}%</span
+                >
               </div>
             </div>
             <div class="attr-item">
               <div class="label">{{ $t("home.nft_volume") }}</div>
               <div>
-                <span class="value text-color">$10,468,280</span>
-                <img
-                  src="@/assets/images/home/up.png"
-                  style="width: 6px; height: 4px"
-                />
-                <span class="rate text-color">+2.85%</span>
+                <span class="value text-color"
+                  >${{
+                    statistics.nft_volume | decimalPlace2 | toLocalString
+                  }}</span
+                >
+                <template
+                  v-if="
+                    statistics.nft_volume_rate &&
+                    statistics.nft_volume_rate != '-'
+                  "
+                >
+                  <img
+                    v-if="statistics.nft_volume_rate > 0"
+                    src="@/assets/images/home/up.png"
+                    style="width: 8px; height: 6px"
+                  />
+                  <img
+                    v-if="statistics.nft_volume_rate < 0"
+                    src="@/assets/images/home/down.png"
+                    style="width: 8px; height: 6px"
+                  />
+                </template>
+                <span class="rate text-color"
+                  >{{ statistics.nft_volume_rate }}%</span
+                >
               </div>
             </div>
             <div class="attr-item">
               <div class="label">{{ $t("home.transfers") }}</div>
               <div>
-                <span class="value text-color">$10,468,280</span>
-                <img
-                  src="@/assets/images/home/up.png"
-                  style="width: 6px; height: 4px"
-                />
-                <span class="rate text-color">+2.85%</span>
+                <span class="value text-color">{{
+                  statistics.transfers | toLocalString
+                }}</span>
+                <template
+                  v-if="
+                    statistics.transfers_rate &&
+                    statistics.transfers_rate != '-'
+                  "
+                >
+                  <img
+                    v-if="statistics.transfers_rate > 0"
+                    src="@/assets/images/home/up.png"
+                    style="width: 8px; height: 6px"
+                  />
+                  <img
+                    v-if="statistics.transfers_rate < 0"
+                    src="@/assets/images/home/down.png"
+                    style="width: 8px; height: 6px"
+                  />
+                </template>
+                <span class="rate text-color"
+                  >{{ statistics.transfers_rate }}%</span
+                >
               </div>
             </div>
             <div class="attr-item">
@@ -146,12 +219,29 @@
                 {{ $t("home.weekly_active_users") }}
               </div>
               <div>
-                <span class="value text-color">$10,468,280</span>
-                <img
-                  src="@/assets/images/home/up.png"
-                  style="width: 6px; height: 4px"
-                />
-                <span class="rate text-color">+2.85%</span>
+                <span class="value text-color">{{
+                  statistics.weekly_active_users | toLocalString
+                }}</span>
+                <template
+                  v-if="
+                    statistics.weekly_active_users_rate &&
+                    statistics.weekly_active_users_rate != '-'
+                  "
+                >
+                  <img
+                    v-if="statistics.weekly_active_users_rate > 0"
+                    src="@/assets/images/home/up.png"
+                    style="width: 8px; height: 6px"
+                  />
+                  <img
+                    v-if="statistics.weekly_active_users_rate < 0"
+                    src="@/assets/images/home/down.png"
+                    style="width: 8px; height: 6px"
+                  />
+                </template>
+                <span class="rate text-color"
+                  >{{ statistics.weekly_active_users_rate }}%</span
+                >
               </div>
             </div>
           </div>
@@ -159,12 +249,28 @@
         <div class="nft-column">
           <div class="title">{{ $t("home.mbd_price") }}</div>
           <div class="value-container">
-            <span class="value text-color">$0.00011887</span>
-            <img
-              src="@/assets/images/home/up.png"
-              style="width: 6px; height: 4px"
-            />
-            <span class="rate text-color">+0.25%</span>
+            <span class="value text-color"
+              >${{ statistics.mbd_price | toLocalString }}</span
+            >
+            <template
+              v-if="
+                statistics.mbd_price_rate && statistics.mbd_price_rate != '-'
+              "
+            >
+              <img
+                v-if="statistics.mbd_price_rate > 0"
+                src="@/assets/images/home/up.png"
+                style="width: 8px; height: 6px"
+              />
+              <img
+                v-if="statistics.mbd_price_rate < 0"
+                src="@/assets/images/home/down.png"
+                style="width: 8px; height: 6px"
+              />
+            </template>
+            <span class="rate text-color"
+              >{{ statistics.mbd_price_rate }}%</span
+            >
           </div>
           <div class="attr-container">
             <div class="attr-item">
@@ -172,12 +278,29 @@
                 {{ $t("home.mbd_circulation") }}
               </div>
               <div>
-                <span class="value text-color">10,468,280</span>
-                <img
-                  src="@/assets/images/home/up.png"
-                  style="width: 6px; height: 4px"
-                />
-                <span class="rate text-color">+2.85%</span>
+                <span class="value text-color">{{
+                  statistics.mbd_circulation | decimalPlace2 | toLocalString
+                }}</span>
+                <template
+                  v-if="
+                    statistics.mbd_circulation_rate &&
+                    statistics.mbd_circulation_rate != '-'
+                  "
+                >
+                  <img
+                    v-if="statistics.mbd_circulation_rate > 0"
+                    src="@/assets/images/home/up.png"
+                    style="width: 8px; height: 6px"
+                  />
+                  <img
+                    v-if="statistics.mbd_circulation_rate < 0"
+                    src="@/assets/images/home/down.png"
+                    style="width: 8px; height: 6px"
+                  />
+                </template>
+                <span class="rate text-color"
+                  >{{ statistics.mbd_circulation_rate }}%</span
+                >
               </div>
             </div>
             <div class="attr-item">
@@ -185,34 +308,87 @@
                 {{ $t("home.24h_nft_volume") }}
               </div>
               <div>
-                <span class="value text-color">$10,468,280</span>
-                <img
-                  src="@/assets/images/home/up.png"
-                  style="width: 6px; height: 4px"
-                />
-                <span class="rate text-color">+2.85%</span>
+                <span class="value text-color"
+                  >${{
+                    statistics.nft_volume_24h | decimalPlace2 | toLocalString
+                  }}</span
+                >
+                <template
+                  v-if="
+                    statistics.nft_volume_24h_rate &&
+                    statistics.nft_volume_24h_rate != '-'
+                  "
+                >
+                  <img
+                    v-if="statistics.nft_volume_24h_rate > 0"
+                    src="@/assets/images/home/up.png"
+                    style="width: 8px; height: 6px"
+                  />
+                  <img
+                    v-if="statistics.nft_volume_24h_rate < 0"
+                    src="@/assets/images/home/down.png"
+                    style="width: 8px; height: 6px"
+                  />
+                </template>
+                <span class="rate text-color"
+                  >{{ statistics.nft_volume_24h_rate }}%</span
+                >
               </div>
             </div>
             <div class="attr-item">
               <div class="label">{{ $t("home.24h_transfers") }}</div>
               <div>
-                <span class="value text-color">1468,280</span>
-                <img
-                  src="@/assets/images/home/up.png"
-                  style="width: 6px; height: 4px"
-                />
-                <span class="rate text-color">+2.85%</span>
+                <span class="value text-color">{{
+                  statistics.transfers_24h | toLocalString
+                }}</span>
+                <template
+                  v-if="
+                    statistics.transfers_24h_rate &&
+                    statistics.transfers_24h_rate != '-'
+                  "
+                >
+                  <img
+                    v-if="statistics.transfers_24h_rate > 0"
+                    src="@/assets/images/home/up.png"
+                    style="width: 8px; height: 6px"
+                  />
+                  <img
+                    v-if="statistics.transfers_24h_rate < 0"
+                    src="@/assets/images/home/down.png"
+                    style="width: 8px; height: 6px"
+                  />
+                </template>
+                <span class="rate text-color"
+                  >{{ statistics.transfers_24h_rate }}%</span
+                >
               </div>
             </div>
             <div class="attr-item">
               <div class="label">{{ $t("home.24h_nfts") }}</div>
               <div>
-                <span class="value text-color">8,280</span>
-                <img
-                  src="@/assets/images/home/up.png"
-                  style="width: 6px; height: 4px"
-                />
-                <span class="rate text-color">+2.85%</span>
+                <span class="value text-color">{{
+                  statistics.nft_createcount_24h | toLocalString
+                }}</span>
+                <template
+                  v-if="
+                    statistics.nft_createcount_24h_rate &&
+                    statistics.nft_createcount_24h_rate != '-'
+                  "
+                >
+                  <img
+                    v-if="statistics.nft_createcount_24h_rate > 0"
+                    src="@/assets/images/home/up.png"
+                    style="width: 8px; height: 6px"
+                  />
+                  <img
+                    v-if="statistics.nft_createcount_24h_rate < 0"
+                    src="@/assets/images/home/down.png"
+                    style="width: 8px; height: 6px"
+                  />
+                </template>
+                <span class="rate text-color"
+                  >{{ statistics.nft_createcount_24h_rate }}%</span
+                >
               </div>
             </div>
           </div>
@@ -486,6 +662,7 @@ import {
   nftListPage,
   selectedList,
   getAdList,
+  getStatistics,
 } from "@/utils/http";
 import { erc20Approve, mintByBnb, mintByErc20 } from "@/utils/web3/bjx";
 import {
@@ -561,14 +738,32 @@ export default {
       hotNewsList: [],
       bannerNews: {},
       advertiseList: [],
+      statistics: {},
     };
   },
   mounted() {
     this.getBjxData();
     this.newsInit();
     this.loadAdsList();
+    this.getStatisticsInfo();
   },
   methods: {
+    /** 查询大盘数据 */
+    getStatisticsInfo() {
+      this.loading["s"] = true;
+      getStatistics()
+        .then((r) => {
+          if (r.code == 1) {
+            this.statistics = r.data;
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => {
+          this.loading["s"] = false;
+        });
+    },
     /** 打开广告 */
     openAdvertise(url) {
       window.open(url, "_blank");
