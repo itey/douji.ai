@@ -171,5 +171,9 @@
 }
 
 .income-content .el-table--fit {
-  border: #1f262e !important;
+  border-bottom: none !important;
+}
+
+.income-content .el-table {
+  border: 1px solid #1f262e !important;
 }

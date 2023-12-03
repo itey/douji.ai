@@ -387,15 +387,6 @@ export default {
   background-color: transparent;
 }
 
-.el-table th.el-table__cell {
-  background-color: #252d36;
-}
-
-.el-table td.el-table__cell,
-.el-table th.el-table__cell.is-leaf {
-  border-bottom: 1px solid #1f262e;
-}
-
 .el-table-column--selection .cell {
   padding-left: 11px;
   padding-right: 11px;
@@ -425,10 +416,6 @@ export default {
   &:nth-child(5) {
     text-align: center;
   }
-}
-
-.el-table--fit {
-  border-bottom: 1px solid #1f262e;
 }
 
 .el-table--scrollable-x .el-table__body-wrapper {
