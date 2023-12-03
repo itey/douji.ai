@@ -384,7 +384,7 @@ export function isAlreadyVote(voteNo) {
   const userAccount = store.state.chain.account;
   return new Promise((resolve, reject) => {
     nftContract.methods
-      .checkAV(voteNo)
+      .checkAV(voteNo, userAccount)
       .call({ from: userAccount })
       .then((res) => {
         resolve(res);

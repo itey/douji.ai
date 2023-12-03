@@ -30,7 +30,7 @@
                     query: { address: bannerNews.owner_address },
                   })
                 "
-                class="text-primary-color text-color"
+                class="text-primary-color"
                 v-if="bannerNews.nickname"
                 >{{ bannerNews.nickname }}</span
               >
@@ -41,7 +41,7 @@
                     query: { address: bannerNews.owner_address },
                   })
                 "
-                class="text-primary-color text-color"
+                class="text-primary-color"
                 v-else
                 >{{ bannerNews.owner_address | omitAddress }}</span
               >
