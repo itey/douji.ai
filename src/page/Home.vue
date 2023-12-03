@@ -446,7 +446,8 @@
             <el-button
               :disabled="bjx.buying"
               @click="handleBuyBjx()"
-              class="common-btn2"
+              class="common-btn2 square"
+              style="width: 180px; height: 50px"
               >{{ $t("home.buy") }}</el-button
             >
           </div>
@@ -793,6 +794,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .home-container {
+  .el-table--fit {
+    border-bottom: none;
+  }
+  .el-table td.el-table__cell,
+  .el-table th.el-table__cell.is-leaf {
+    border-bottom: none;
+  }
   .top-container {
     margin-top: 16px;
     display: flex;

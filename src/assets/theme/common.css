@@ -16,10 +16,14 @@
   width: 188px;
   height: 50px;
   background: linear-gradient(-16deg, #4195f6, #17e7d6) !important;
-  border-radius: 25px !important;
+  border-radius: 25px;
   color: #1a2027;
   font-weight: bold !important;
   font-size: 18px !important;
+}
+
+.common-btn2.square {
+  border-radius: 10px;
 }
 
 .common-btn2:disabled {
