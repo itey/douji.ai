@@ -85,15 +85,21 @@
       <div class="left">
         <div class="item">
           <div class="label">{{ $t("home.creator") }}</div>
-          <div class="value text-color">238,820</div>
+          <div class="value text-color">
+            {{ statistics.creater_count | toLocalString }}
+          </div>
         </div>
         <div class="item theme-background-color">
           <div class="label">{{ $t("home.user") }}</div>
-          <div class="value text-color">238,820</div>
+          <div class="value text-color">
+            {{ statistics.user_count | toLocalString }}
+          </div>
         </div>
         <div class="item theme-background-color">
           <div class="label">{{ $t("home.navigation_items") }}</div>
-          <div class="value text-color">238,820</div>
+          <div class="value text-color">
+            {{ statistics.all_supply | toLocalString }}
+          </div>
         </div>
       </div>
       <div class="nft-info-container theme-background-color">
