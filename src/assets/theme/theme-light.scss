@@ -13,6 +13,10 @@
     background: #ffffff;
   }
 
+  .common-btn1 {
+    color: #ffffff !important;
+  }
+
   .el-table--border::after,
   .el-table--group::after,
   .el-table::before {
@@ -709,5 +713,11 @@
   .profile-container .form-container .form-item .form-value .form-upload {
     background: #f7f9fa;
     border: 1px solid #f7f9fa;
+  }
+
+  .news-tab-item .bottom .sub {
+    span {
+      color: #4195f6 !important;
+    }
   }
 }

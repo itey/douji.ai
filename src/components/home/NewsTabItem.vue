@@ -21,7 +21,6 @@
               query: { address: item.owner_address },
             })
           "
-          style="color: #53cfd2"
           v-if="item.nickname"
           >{{ item.nickname }}</span
         >
@@ -32,7 +31,6 @@
               query: { address: item.owner_address },
             })
           "
-          style="color: #53cfd2"
           v-else
           >{{ item.owner_address | omitAddress }}</span
         >
@@ -46,7 +44,7 @@
 
 <script>
 export default {
-  name: 'NewsTabItem',
+  name: "NewsTabItem",
   props: {
     item: {
       type: Object,
@@ -55,10 +53,10 @@ export default {
   },
   methods: {
     onHover() {
-      this.$emit('onHover', this.item)
+      this.$emit("onHover", this.item);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
