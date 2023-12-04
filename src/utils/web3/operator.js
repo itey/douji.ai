@@ -151,11 +151,10 @@ export function isFollow(account) {
   if (!operatorContract) {
     return;
   }
-  const fromAddress = store.state.chain.account;
   return new Promise((resolve, reject) => {
     operatorContract.methods
       .checkFollow(account)
-      .call({ from: fromAddress })
+      .call()
       .then((res) => {
         resolve(res);
       })

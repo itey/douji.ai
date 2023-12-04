@@ -116,7 +116,6 @@ export default {
       .list {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
 
         .item {
           width: 342px;

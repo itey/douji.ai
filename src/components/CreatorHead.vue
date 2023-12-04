@@ -25,7 +25,7 @@
             userAccount && userAccount.toLowerCase() != address.toLowerCase()
           "
         >
-          <div class="sub_btn" v-if="isSubscription" @click="handleSubOut()">
+          <div class="sub_btn" v-if="!isSubscription" @click="handleSubOut()">
             <img
               style="width: 13px; height: 13px; margin-right: 5px"
               src="@/assets/images/news/add.png"
@@ -179,12 +179,6 @@ import { subscribeAuthorContract, isFollow } from "@/utils/web3/operator";
 import { getOtUserInfo } from "@/utils/http";
 export default {
   name: "creator-head",
-  props: {
-    address: {
-      type: String,
-      default: "",
-    },
-  },
   computed: {
     userAccount() {
       return this.$store.state.user.account;
@@ -194,9 +188,11 @@ export default {
     return {
       isSubscription: undefined,
       userInfo: {},
+      address: undefined,
     };
   },
   created() {
+    this.address = this.$route.query.address;
     this.userInfoGet();
     this.checkIfFollow();
   },
@@ -237,7 +233,7 @@ export default {
     },
     /** 查询是否已关注创作者 */
     checkIfFollow() {
-      if (!this.userAccount) {
+      if (!this.userAccount || !this.address) {
         return;
       }
       isFollow(this.address)
