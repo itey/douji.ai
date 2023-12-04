@@ -47,7 +47,7 @@
         <div class="form-label">{{ $t("create.cover_img") }}*</div>
         <div class="form-value">
           <el-upload
-            accept=".png, .jpeg, .jpg, .gif"
+            accept=".png, .jpeg, .jpg, .gif, .webp"
             :show-file-list="false"
             class="form-upload"
             :on-change="fileChange"
@@ -202,7 +202,7 @@ export default {
         headers: {
           token: this.$store.state.user.token,
         },
-        fileType: ["png", "jpg", "jpeg", "gif"],
+        fileType: ["png", "jpg", "jpeg", "gif", "webp"],
         fileSize: 1,
       },
       form: {

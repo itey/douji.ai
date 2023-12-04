@@ -126,7 +126,14 @@
           v-model="form.initialPrice"
           class="input"
         ></el-input>
-        <div class="unit">MBD</div>
+        <div class="unit">
+          MBD
+          <span v-if="form.initialPrice && form.initialPrice > 0"
+            >≈${{
+              ($store.state.chain.mbdPrice * form.initialPrice) | decimalPlace8
+            }}</span
+          >
+        </div>
       </div>
       <div v-if="error.initialPrice" class="tip-error">
         {{ error.initialPrice }}
