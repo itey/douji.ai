@@ -6,12 +6,12 @@
     @open="onOpen()"
   >
     <div class="set-dao-header text-color" slot="title">
-      {{ $t('create.set_dao') }}
+      {{ $t("create.set_dao") }}
     </div>
     <div class="set-dao-top">
       <el-form ref="form" :rules="rules" :model="form" label-position="top">
         <el-form-item prop="daoFee">
-          <div class="label text-color">{{ $t('create.dao_earn') }}</div>
+          <div class="label text-color">{{ $t("create.dao_earn") }}</div>
           <div class="set-dao-value" style="margin-left: 0">
             <el-input
               v-model="form.daoFee"
@@ -23,13 +23,13 @@
             <div class="set-dao-unit">%</div>
           </div>
           <div class="set-dao-tip" style="margin-left: 0">
-            {{ $t('create.dao_member_receive') }}
+            {{ $t("create.dao_member_receive") }}
             <span class="text-color">{{ form.daoFee }}%</span>
-            {{ $t('create.for_sale') }}
+            {{ $t("create.for_sale") }}
           </div>
         </el-form-item>
         <el-form-item prop="mVoteCount">
-          <div class="label text-color">{{ $t('create.execution_vote') }}</div>
+          <div class="label text-color">{{ $t("create.execution_vote") }}</div>
           <div class="set-dao-value" style="margin-left: 0">
             <el-input
               v-model="form.mVoteCount"
@@ -39,20 +39,20 @@
             ></el-input>
           </div>
           <div class="set-dao-tip" style="margin-left: 0">
-            {{ $t('create.modification_value') }}
+            {{ $t("create.modification_value") }}
           </div>
         </el-form-item>
       </el-form>
       <div class="btn-container">
         <el-button class="common-border-btn" plain @click="show = false">{{
-          $t('create.cancel')
+          $t("create.cancel")
         }}</el-button>
         <el-button
           :disabled="!isModification"
           class="common-btn2"
           style="margin-left: 59px"
           @click="handleSubmit()"
-          >{{ $t('create.apply') }}</el-button
+          >{{ $t("create.apply") }}</el-button
         >
       </div>
     </div>
@@ -60,14 +60,14 @@
 </template>
 
 <script>
-import { startSetDaoRule } from '@/utils/web3/nft'
-import { getDaoRule, tokensData } from '@/utils/web3/open'
+import { startSetDaoRule } from "@/utils/web3/nft";
+import { getDaoRule, tokensData } from "@/utils/web3/open";
 export default {
-  name: 'set-dao-dialog',
+  name: "set-dao-dialog",
   props: {
     tokenId: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   computed: {
@@ -76,29 +76,29 @@ export default {
         this.currentJson.mVoteCount == this.form.mVoteCount &&
         this.currentJson.daoFee == this.form.daoFee * 100
       ) {
-        return false
+        return false;
       } else {
-        return true
+        return true;
       }
     },
   },
   data() {
-    var reg = /^\+?[1-9][0-9]*$/
+    var reg = /^\+?[1-9][0-9]*$/;
     var validateDecimal = (rule, value, callback) => {
       if (isNaN(Number(value)) || Number(value) < 0) {
-        callback(new Error('Input value invalid'))
+        callback(new Error("Input value invalid"));
       }
-      callback()
-    }
+      callback();
+    };
     var validateNumber = (rule, value, callback) => {
       if (!reg.test(value)) {
-        callback(new Error('Please enter a integer'))
+        callback(new Error("Please enter a integer"));
       }
       if (value <= 0) {
-        callback(new Error('Must be greater than 0'))
+        callback(new Error("Must be greater than 0"));
       }
-      callback()
-    }
+      callback();
+    };
     return {
       show: false,
       currentJson: {},
@@ -111,72 +111,71 @@ export default {
         daoFee: [
           {
             required: true,
-            message: 'Please enter the DAO fee',
-            trigger: 'blur',
+            message: "Please enter the DAO fee",
+            trigger: "blur",
           },
           {
             validator: validateDecimal,
-            trigger: 'blur',
+            trigger: "blur",
           },
         ],
         mVoteCount: [
           {
             required: true,
-            message: 'Please enter the mVoteCount',
-            trigger: 'blur',
+            message: "Please enter the mVoteCount",
+            trigger: "blur",
           },
-          { validator: validateNumber, trigger: 'blur' },
+          { validator: validateNumber, trigger: "blur" },
         ],
       },
-    }
+    };
   },
   methods: {
     showDialog() {
-      this.show = true
+      this.show = true;
     },
     /** 提交数据 */
     handleSubmit() {
-      this.$refs['form'].validate((valid) => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
-          console.log(this.isModification)
           var loadingInstance = this.$loading({
-            background: 'rgba(0, 0, 0, 0.8)',
-          })
-          var param = JSON.parse(JSON.stringify(this.currentJson))
-          param.daoFee = (this.form.daoFee * 100).toFixed()
-          param.mVoteCount = this.form.mVoteCount
-          const { daoFee, mVoteCount } = param
+            background: "rgba(0, 0, 0, 0.8)",
+          });
+          var param = JSON.parse(JSON.stringify(this.currentJson));
+          param.daoFee = (this.form.daoFee * 100).toFixed();
+          param.mVoteCount = this.form.mVoteCount;
+          const { daoFee, mVoteCount } = param;
           startSetDaoRule(this.tokenId, {
             daoFee,
             mVoteCount,
           })
             .then(() => {
-              this.$toast.success(this.$t('news-detail.submit_success'))
-              this.$emit('handleReload')
-              this.show = false
+              this.$toast.success(this.$t("news-detail.submit_success"));
+              this.$emit("handleReload");
+              this.show = false;
             })
             .catch((e) => {
-              this.$toast.error(e && e.message ? e.message : e)
+              this.$toast.error(e && e.message ? e.message : e);
             })
             .finally(() => {
-              loadingInstance.close()
-            })
+              loadingInstance.close();
+            });
         }
-      })
+      });
     },
     /** 加载数据 */
     onOpen() {
       if (this.tokenId) {
         var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
+          background: "rgba(0, 0, 0, 0.8)",
+        });
         Promise.all([this.getTokenInfoData(), this.getDaoRuleData()]).then(
           () => {
-            this.currentJson.creatorAddress = this.daoRule[3]
-            this.currentJson.curCreatorFees = this.daoRule[4]
-            loadingInstance.close()
+            this.currentJson.creatorAddress = this.daoRule[3];
+            this.currentJson.curCreatorFees = this.daoRule[4];
+            loadingInstance.close();
           }
-        )
+        );
       }
     },
     /** 加载tokenInfo */
@@ -184,34 +183,34 @@ export default {
       return new Promise((resolve, reject) => {
         tokensData(this.tokenId)
           .then((res) => {
-            this.currentJson = res
-            this.form.mVoteCount = res.mVoteCount
-            this.form.daoFee = (res.daoFee / 100).toFixed(2)
-            return resolve()
+            this.currentJson = res;
+            this.form.mVoteCount = res.mVoteCount;
+            this.form.daoFee = (res.daoFee / 100).toFixed(2);
+            return resolve();
           })
           .catch((e) => {
-            return reject(e)
-          })
-      })
+            return reject(e);
+          });
+      });
     },
     /** 加载DaoRule */
     getDaoRuleData() {
       return new Promise((resolve, reject) => {
         getDaoRule(this.tokenId)
           .then((daoRule) => {
-            this.daoRule = daoRule
-            return resolve()
+            this.daoRule = daoRule;
+            return resolve();
           })
           .catch((e) => {
-            return reject(e)
-          })
-      })
+            return reject(e);
+          });
+      });
     },
     handleInputFee(e) {
-      this.form.daoFee = e.target.value.match(/^\d*(\.?\d{0,2})/g)[0] || null
+      this.form.daoFee = e.target.value.match(/^\d*(\.?\d{0,2})/g)[0] || null;
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
