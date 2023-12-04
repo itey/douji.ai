@@ -218,14 +218,17 @@
             <div class="more-title text-color">
               {{ $t("news-detail.more_creator") }}
             </div>
-            <div class="more-list">
+            <div class="more-list" v-if="userOtherList && userOtherList.length">
               <div
-                v-for="(item, index) in userOtherlist"
+                v-for="(item, index) in userOtherList"
                 :key="index"
                 class="more-item"
               >
                 <news-item :item="item"></news-item>
               </div>
+            </div>
+            <div class="no-data" v-else>
+              {{ $t("news-detail.no_more_data") }}
             </div>
           </div>
         </div>
@@ -407,7 +410,7 @@ export default {
       transactionHistory: [],
       timeTask: undefined,
       userStakeInfo: [],
-      userOtherlist: [],
+      userOtherList: [],
     };
   },
   created() {
@@ -831,7 +834,11 @@ export default {
       getUserNftList(this.page, address)
         .then((r) => {
           if (r.code == 1) {
-            this.userOtherlist = r.data.list ? r.data.list.slice(0, 8) : [];
+            let arr = r.data.list;
+            if (arr && arr.length) {
+              const filterList = arr.filter((i) => i.token_id != this.tokenId);
+              this.userOtherList = filterList.slice(0, 8);
+            }
           } else {
             console.log(r.message);
           }
@@ -1079,6 +1086,13 @@ export default {
                 margin-right: 0;
               }
             }
+          }
+
+          .no-data {
+            text-align: center;
+            width: 100%;
+            color: #999fa5;
+            margin-top: 30px;
           }
         }
       }

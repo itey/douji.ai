@@ -448,6 +448,7 @@ export default {
     amount: "Amount",
     no_tx: "No transactions",
     more_creator: "More from this creator",
+    no_more_data: "No more data",
   },
   marketplace: {
     home: "Home",
