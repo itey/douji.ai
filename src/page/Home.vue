@@ -107,7 +107,7 @@
           <div class="title">{{ $t("home.all_nft") }}</div>
           <div class="value-container">
             <span class="value text-color">{{
-              statistics.nft_mint_all | toLocalString
+              statistics.all_supply | toLocalString
             }}</span>
             <template
               v-if="
