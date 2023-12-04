@@ -1198,7 +1198,7 @@ export default {
             }
 
             .rate {
-              font-size: 9px;
+              font-size: 12px;
               font-family: Arial;
               font-weight: 400;
               margin-left: 4px;

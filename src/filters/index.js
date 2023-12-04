@@ -124,7 +124,7 @@ export const fee2Percent = (fee) => {
 export const rate2Percent = (r) => {
   if (!r) return "";
   if (r == "-") return "-";
-  return (r >= 0 ? "+" : "-") + (r / 100).toFixed(2) + "%";
+  return (r >= 0 ? "+" : "") + (r * 100).toFixed(2) + "%";
 };
 
 export const sptType2Name = (type) => {
