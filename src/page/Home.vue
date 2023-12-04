@@ -745,6 +745,7 @@ export default {
       bannerNews: {},
       advertiseList: [],
       statistics: {},
+      timer: undefined
     };
   },
   mounted() {
@@ -752,6 +753,12 @@ export default {
     this.newsInit();
     this.loadAdsList();
     this.getStatisticsInfo();
+    this.timer = setInterval(() => {
+      this.getStatisticsInfo()
+    }, 30000);
+  },
+  destroyed () {
+    this.timer && (clearInterval(this.timer))
   },
   methods: {
     /** 查询大盘数据 */
