@@ -98,7 +98,7 @@
         <div class="item theme-background-color">
           <div class="label">{{ $t("home.navigation_items") }}</div>
           <div class="value text-color">
-            {{ statistics.all_supply | toLocalString }}
+            {{ statistics.nft_count | toLocalString }}
           </div>
         </div>
       </div>

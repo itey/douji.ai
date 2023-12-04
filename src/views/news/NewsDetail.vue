@@ -837,7 +837,7 @@ export default {
             let arr = r.data.list;
             if (arr && arr.length) {
               const filterList = arr.filter((i) => i.token_id != this.tokenId);
-              this.userOtherList = filterList.slice(0, 8);
+              this.userOtherList = filterList.slice(0, 6);
             }
           } else {
             console.log(r.message);
