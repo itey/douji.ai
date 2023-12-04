@@ -17,6 +17,7 @@
         </div>
         <el-pagination
           v-if="!loading"
+          @current-change="onPageChange"
           style="width: 100%; margin: 20px 0"
           background
           layout="prev,pager,next"
@@ -51,6 +52,9 @@ export default {
     this.userNftList();
   },
   methods: {
+    onPageChange() {
+      this.userNftList();
+    },
     /** 查询用户的NFT列表  */
     userNftList() {
       if (!this.address) {

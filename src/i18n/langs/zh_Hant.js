@@ -433,6 +433,7 @@ export default {
     sort_low_price: "更低價格",
   },
   user: {
+    search_tip: "按名稱和Token ID搜索",
     menu_balance: "賬戶",
     menu_nfts: "NFTs",
     menu_profile: "個人資料",

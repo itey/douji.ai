@@ -466,6 +466,7 @@ export default {
     sort_low_price: "Low price",
   },
   user: {
+    search_tip: "Search by name or Token ID",
     menu_balance: "Balance",
     menu_nfts: "NFTs",
     menu_profile: "Profile",

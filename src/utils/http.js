@@ -163,10 +163,11 @@ export function updateUserInfo(data) {
 }
 
 // 我的NFT列表
-export function getMyNftList() {
+export function getMyNftList(param) {
   return request({
     url: "/myNfts",
     method: "post",
+    params: param,
   });
 }
 

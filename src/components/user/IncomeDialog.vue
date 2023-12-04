@@ -53,6 +53,7 @@
         </el-table-column>
       </el-table>
       <el-pagination
+        @current-change="onPageChange"
         style="width: 100%; margin: 20px 0"
         background
         layout="prev,pager,next"
@@ -100,6 +101,9 @@ export default {
     /** 选择的数据发生变化 */
     handleSelectionChange(val) {
       this.multipleSelection = val;
+    },
+    onPageChange() {
+      this.pageLoad();
     },
     /** 加载数据 */
     async pageLoad() {

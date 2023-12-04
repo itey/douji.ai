@@ -2,13 +2,18 @@
   <div class="container">
     <div class="top">
       <div>
-        <span class="text-big text-color">{{ $t('user.my_nft') }}</span>
+        <span class="text-big text-color">{{ $t("user.my_nft") }}</span>
         <span class="sub-value"
-          >{{ list.length | toLocalString }} {{ $t('user.items') }}</span
+          >{{ list.length | toLocalString }} {{ $t("user.items") }}</span
         >
       </div>
       <div class="search">
-        <el-input placeholder="Search by name or Token ID">
+        <el-input
+          v-model="searchValue"
+          @keyup.native.enter="onSearch"
+          @blur="closeSearch"
+          :placeholder="$t('user.search_tip')"
+        >
           <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-input>
       </div>
@@ -19,47 +24,75 @@
           <ProductItem :item="item" />
         </div>
       </div>
-      <!-- <el-pagination style="width:100%;margin: 20px 0;" background layout="prev,pager,next" :page-count="4" :total="1000"></el-pagination> -->
+      <el-pagination
+        @current-change="onPageChange"
+        style="width: 100%; margin: 20px 0"
+        background
+        layout="prev,pager,next"
+        :page-size="20"
+        :total="total"
+      ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import ProductItem from '@/components/ProductItem'
-import { getMyNftList } from '@/utils/http'
+import ProductItem from "@/components/ProductItem";
+import { getMyNftList } from "@/utils/http";
 export default {
-  name: 'nft-view',
+  name: "nft-view",
   components: {
     ProductItem,
   },
   data() {
     return {
       list: [],
-    }
+      searchValue: undefined,
+      total: 0,
+      pageNo: 1,
+    };
   },
   created() {
-    this.nftListLoad()
+    this.nftListLoad();
   },
   methods: {
+    onPageChange() {
+      this.nftListLoad();
+    },
+    /** 回车搜索 */
+    onSearch() {
+      this.nftListLoad();
+    },
+    closeSearch(val) {
+      if (!val.target.value) {
+        this.nftListLoad();
+      }
+    },
+    /** 加载数据 */
     nftListLoad() {
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
-      getMyNftList()
+        background: "rgba(0, 0, 0, 0.8)",
+      });
+      var param = {
+        page: this.pageNo,
+      };
+      this.searchValue && (param.keyW = this.searchValue);
+      getMyNftList(param)
         .then((r) => {
           if (r.code == 1) {
-            this.list = r.data.list
+            this.list = r.data.list;
+            this.total = r.data.pageCount;
           }
         })
         .catch((e) => {
-          this.$toast.error(e.message)
+          this.$toast.error(e.message);
         })
         .finally(() => {
-          loadingInstance.close()
-        })
+          loadingInstance.close();
+        });
     },
   },
-}
+};
 </script>
 
 <style lang="scss">

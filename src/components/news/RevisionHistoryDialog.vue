@@ -6,7 +6,7 @@
     width="946px"
   >
     <div class="history-header text-color" slot="title">
-      {{ $t('news-detail.revision_hist') }}
+      {{ $t("news-detail.revision_hist") }}
     </div>
     <div class="history-content">
       <el-table ref="multipleTable" :data="tableData" style="width: 850px">
@@ -22,6 +22,7 @@
         </el-table-column>
       </el-table>
       <el-pagination
+        @current-change="onPageChange"
         style="width: 100%; margin: 20px 0"
         background
         layout="prev,pager,next"
@@ -33,13 +34,13 @@
 </template>
 
 <script>
-import { nftUpdateLog } from '@/utils/http'
+import { nftUpdateLog } from "@/utils/http";
 export default {
-  name: 'revision-history-dialog',
+  name: "revision-history-dialog",
   props: {
     tokenId: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   data() {
@@ -48,23 +49,26 @@ export default {
       tableData: [{}, {}],
       page: 1,
       totalCount: null,
-    }
+    };
   },
   methods: {
+    onPageChange() {
+      this.onOpen();
+    },
     showDialog() {
-      this.show = true
+      this.show = true;
     },
     onOpen() {
       nftUpdateLog(this.tokenId, this.page).then((r) => {
-        console.log(r)
+        console.log(r);
         if (r.code == 1) {
-          this.tableData = r.data.list
-          this.totalCount = r.data.pageCount
+          this.tableData = r.data.list;
+          this.totalCount = r.data.pageCount;
         }
-      })
+      });
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
