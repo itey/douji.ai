@@ -107,28 +107,28 @@
           <div class="title">{{ $t("home.all_nft") }}</div>
           <div class="value-container">
             <span class="value text-color">{{
-              statistics.all_supply | toLocalString
+              statistics.all_currentsupply | toLocalString
             }}</span>
             <template
               v-if="
-                statistics.nft_mint_all_rate &&
-                statistics.nft_mint_all_rate != '-'
+                statistics.all_currentsupply_rate &&
+                statistics.all_currentsupply_rate != '-'
               "
             >
               <img
-                v-if="statistics.nft_mint_all_rate > 0"
+                v-if="statistics.all_currentsupply_rate > 0"
                 src="@/assets/images/home/up.png"
                 style="width: 8px; height: 6px"
               />
               <img
-                v-if="statistics.nft_mint_all_rate < 0"
+                v-if="statistics.all_currentsupply_rate < 0"
                 src="@/assets/images/home/down.png"
                 style="width: 8px; height: 6px"
               />
             </template>
 
             <span class="rate text-color">{{
-              statistics.nft_mint_all_rate | rate2Percent
+              statistics.all_currentsupply_rate | rate2Percent
             }}</span>
           </div>
           <div class="attr-container">
