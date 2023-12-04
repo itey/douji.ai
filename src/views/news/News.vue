@@ -1,19 +1,24 @@
 <template>
   <div class="news-container">
-    <el-breadcrumb style="margin-top: 27px;" separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">{{ $t('news.home') }}</el-breadcrumb-item>
-      <el-breadcrumb-item>{{ $t('news.news') }}</el-breadcrumb-item>
+    <el-breadcrumb
+      style="margin-top: 27px"
+      separator-class="el-icon-arrow-right"
+    >
+      <el-breadcrumb-item :to="{ path: '/' }">{{
+        $t("news.home")
+      }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ $t("news.news") }}</el-breadcrumb-item>
     </el-breadcrumb>
-    <div class="text-color title">{{ $t('news.news') }}</div>
+    <div class="text-color title">{{ $t("news.news") }}</div>
     <div class="content">
       <div class="list">
-        <div v-for="(item,index) in list" :key="index" class="item">
+        <div v-for="(item, index) in list" :key="index" class="item">
           <NewsItem :item="item" />
         </div>
       </div>
       <el-pagination
         @current-change="onPageChange"
-        style="width:100%;margin: 20px 0;"
+        style="width: 100%; margin: 20px 0"
         background
         layout="prev, pager, next"
         :page-size="pageSize"
@@ -24,10 +29,10 @@
 </template>
 
 <script>
-import { nftListPage } from '@/utils/http'
-import NewsItem from '@/components/NewsItem'
+import { nftListPage } from "@/utils/http";
+import NewsItem from "@/components/NewsItem";
 export default {
-  name: 'news-view',
+  name: "news-view",
   components: {
     NewsItem,
   },
@@ -37,38 +42,38 @@ export default {
       pageSize: 20,
       totalCount: 0,
       list: [],
-    }
+    };
   },
   created() {
-    this.loadPageList()
+    this.loadPageList();
   },
   methods: {
     /** 列表加载 */
     loadPageList() {
       const param = {
         page: this.pageNo,
-        content_type: 'Article'
-      }
-      this.loading = true
+        content_type: "Article",
+      };
+      this.loading = true;
       nftListPage(param)
         .then((r) => {
           if (r.code == 1) {
-            this.list = r.data.list
-            this.totalCount = r.data.pageCount
-            this.pageNo = r.data.page
+            this.list = r.data.list;
+            this.totalCount = r.data.pageCount;
+            this.pageNo = r.data.page;
           }
         })
         .finally(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
     },
     /** 页码变化 */
     onPageChange(page) {
-      this.pageNo = page
-      this.loadPageList()
+      this.pageNo = page;
+      this.loadPageList();
     },
-  }
-}
+  },
+};
 </script>
 <style lang="scss" scoped>
 .news-container {

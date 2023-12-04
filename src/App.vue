@@ -6,7 +6,11 @@
     <!-- <creator v-if="$route.path == '/creator'"></creator> -->
     <el-container class="body-container">
       <el-main :class="$route.path == '/' ? 'color-bg' : ''">
-        <div class="banner" v-if="globalAdvertise && globalAdvertise.img">
+        <CreatorHeader
+          v-if="$route.path == '/creator'"
+          :address="$route.query.address"
+        />
+        <div class="banner" v-else-if="globalAdvertise && globalAdvertise.img">
           <img
             :src="globalAdvertise.img"
             @click="openAdvertise(globalAdvertise.url)"
@@ -26,13 +30,15 @@
   </el-container>
 </template>
 <script>
-import NavBar from "@/components/NavBar";
-import NavFooter from "@/components/NavFooter";
+import NavBar from "@/components/NavBar.vue";
+import NavFooter from "@/components/NavFooter.vue";
+import CreatorHeader from "@/components/CreatorHead.vue";
 import { getAdList } from "@/utils/http";
 export default {
   components: {
     NavBar,
     NavFooter,
+    CreatorHeader,
   },
   data() {
     return {

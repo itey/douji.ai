@@ -742,4 +742,38 @@
       }
     }
   }
+
+  .creator-head {
+    background-color: #ffffff;
+
+    .content-container .user-info .title .name {
+      color: #1a2027;
+    }
+    .content-container .user-info .title .address {
+      background: #f7f9fa;
+
+      span {
+        color: #505861;
+      }
+    }
+
+    .content-container .user-info .desc {
+      color: #505861;
+    }
+
+    .content-container .user-info .sub_btn.gray {
+      background-color: #e7edf1;
+      color: #aabbcd;
+    }
+
+    .content-container .user-info .tag_container .tag {
+      background-color: #f7f9fa;
+      span {
+        color: #36404b;
+      }
+    }
+  }
+  .creator-container .list-container .title-container .sub {
+    background-color: #ffffff;
+  }
 }
