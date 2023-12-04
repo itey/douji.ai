@@ -738,7 +738,6 @@ export default {
         }
         tokensData(this.tokenId)
           .then((res) => {
-            console.log(res);
             this.tokenSupplyInfo = res;
             return resolve();
           })

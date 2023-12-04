@@ -201,7 +201,6 @@ export default {
     },
     /** 更新1 */
     handleUpdate1(form) {
-      console.log("更新1");
       const initialPriceUpdate = form.initialPrice;
       const availableSupplyUpdate = form.availableSupply;
 
