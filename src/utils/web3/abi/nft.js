@@ -67,6 +67,13 @@ const abi = [
         name: "amount",
         type: "uint256",
       },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "toAddress",
+        type: "address",
+      },
+      { indexed: false, internalType: "uint256", name: "num", type: "uint256" },
     ],
     name: "Sold",
     type: "event",

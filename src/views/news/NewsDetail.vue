@@ -832,7 +832,7 @@ export default {
       getUserNftList(this.page, address)
         .then((r) => {
           if (r.code == 1) {
-            this.userOtherlist = r.data.list;
+            this.userOtherlist = r.data.list ? r.data.list.slice(0, 8) : [];
           } else {
             console.log(r.message);
           }
