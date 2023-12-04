@@ -30,7 +30,10 @@
         <div class="form-label">{{ $t("user.alias") }}</div>
         <div class="form-value">
           <el-input
-            @input="(val) => (userInfo.nickname = val.replace(/(\s*$)/g, ''))"
+            @blur="
+              () =>
+                (userInfo.nickname = userInfo.nickname.replace(/(\s*$)/g, ''))
+            "
             v-model="userInfo.nickname"
           ></el-input>
           <div class="form-tip">
@@ -42,8 +45,10 @@
         <div class="form-label">{{ $t("user.short_desc") }}</div>
         <div class="form-value">
           <el-input
-            @input="
-              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            @blur="
+              () =>
+                (userInfo.short_description =
+                  userInfo.short_description.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.short_description"
           ></el-input>
@@ -59,7 +64,10 @@
         <div class="form-label">{{ $t("user.loc") }}</div>
         <div class="form-value">
           <el-input
-            @input="(val) => (userInfo.location = val.replace(/(\s*$)/g, ''))"
+            @blur="
+              () =>
+                (userInfo.location = userInfo.location.replace(/(\s*$)/g, ''))
+            "
             v-model="userInfo.location"
           ></el-input>
         </div>
@@ -70,8 +78,8 @@
         <div class="form-label">Website</div>
         <div class="form-value">
           <el-input
-            @input="
-              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            @blur="
+              () => (userInfo.website = userInfo.website.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.website"
           ></el-input>
@@ -83,8 +91,8 @@
         <div class="form-label">Twitter</div>
         <div class="form-value">
           <el-input
-            @input="
-              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            @blur="
+              () => (userInfo.twitter = userInfo.twitter.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.twitter"
           ></el-input>
@@ -96,8 +104,9 @@
         <div class="form-label">Telegram</div>
         <div class="form-value">
           <el-input
-            @input="
-              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            @blur="
+              () =>
+                (userInfo.telegram = userInfo.telegram.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.telegram"
           ></el-input>
@@ -109,8 +118,9 @@
         <div class="form-label">Facebook</div>
         <div class="form-value">
           <el-input
-            @input="
-              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            @blur="
+              () =>
+                (userInfo.facebook = userInfo.facebook.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.facebook"
           ></el-input>
@@ -122,8 +132,8 @@
         <div class="form-label">Tiktok</div>
         <div class="form-value">
           <el-input
-            @input="
-              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            @blur="
+              () => (userInfo.tiktok = userInfo.tiktok.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.tiktok"
           ></el-input>
@@ -135,8 +145,9 @@
         <div class="form-label">Instagram</div>
         <div class="form-value">
           <el-input
-            @input="
-              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            @blur="
+              () =>
+                (userInfo.instagram = userInfo.instagram.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.instagram"
           ></el-input>
@@ -148,8 +159,8 @@
         <div class="form-label">Youtube</div>
         <div class="form-value">
           <el-input
-            @input="
-              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            @blur="
+              () => (userInfo.youtube = userInfo.youtube.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.youtube"
           ></el-input>
@@ -161,8 +172,8 @@
         <div class="form-label">Github</div>
         <div class="form-value">
           <el-input
-            @input="
-              (val) => (userInfo.short_description = val.replace(/(\s*$)/g, ''))
+            @blur="
+              () => (userInfo.github = userInfo.github.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.github"
           ></el-input>

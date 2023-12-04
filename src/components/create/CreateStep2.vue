@@ -1,15 +1,15 @@
 <template>
   <div class="create-step2">
     <div class="title">
-      {{ edit ? $t('create.update_mold_2') : $t('create.create_mold_2') }}
+      {{ edit ? $t("create.update_mold_2") : $t("create.create_mold_2") }}
     </div>
     <div class="form-container">
       <div class="form-item">
-        <div class="form-label">{{ $t('create.title') }}*</div>
+        <div class="form-label">{{ $t("create.title") }}*</div>
         <div class="form-value">
           <div>
             <el-input
-              @input="(val) => (form.title = charFilter(val))"
+              @blur="() => (form.title = form.title.replace(/(\s*$)/g, ''))"
               v-model="form.title"
               @change="checkItem('title')"
               class="input"
@@ -17,15 +17,18 @@
             ></el-input>
           </div>
           <div v-if="error.title" class="tip-error">{{ error.title }}</div>
-          <div v-else class="tip">{{ $t('create.name') }}</div>
+          <div v-else class="tip">{{ $t("create.name") }}</div>
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">{{ $t('create.description') }}*</div>
+        <div class="form-label">{{ $t("create.description") }}*</div>
         <div class="form-value">
           <div>
             <el-input
-              @input="(val) => (form.description = charFilter(val))"
+              @blur="
+                () =>
+                  (form.description = form.description.replace(/(\s*$)/g, ''))
+              "
               v-model="form.description"
               @change="checkItem('description')"
               class="input"
@@ -37,11 +40,11 @@
           <div v-if="error.description" class="tip-error">
             {{ error.description }}
           </div>
-          <div v-else class="tip">{{ $t('create.write_detail_content') }}</div>
+          <div v-else class="tip">{{ $t("create.write_detail_content") }}</div>
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">{{ $t('create.cover_img') }}*</div>
+        <div class="form-label">{{ $t("create.cover_img") }}*</div>
         <div class="form-value">
           <el-upload
             accept=".png, .jpeg, .jpg, .gif"
@@ -57,7 +60,7 @@
             <div class="form-upload-empty" v-else>
               <div class="form-upload-icon">+</div>
               <div class="form-upload-tip">
-                {{ $t('create.upload_img_limit') }}
+                {{ $t("create.upload_img_limit") }}
               </div>
             </div>
           </el-upload>
@@ -65,7 +68,7 @@
         </div>
       </div>
       <div class="form-item">
-        <div class="form-label">{{ $t('create.tag') }}*</div>
+        <div class="form-label">{{ $t("create.tag") }}*</div>
         <div class="form-value">
           <div>
             <el-tag
@@ -81,7 +84,6 @@
               class="input-new-tag"
               v-if="inputVisible"
               v-model="inputValue"
-              @input="(val) => (inputValue = charFilter(val))"
               ref="saveTagInput"
               size="small"
               @keyup.enter.native="handleInputConfirm"
@@ -92,23 +94,23 @@
               class="button-new-tag"
               size="small"
               @click="showInput"
-              >+ {{ $t('create.add') }}</el-button
+              >+ {{ $t("create.add") }}</el-button
             >
           </div>
           <div v-if="error.keyword" class="tip-error">{{ error.keyword }}</div>
-          <div v-else class="tip">>{{ $t('create.write_detail_content') }}</div>
+          <div v-else class="tip">>{{ $t("create.write_detail_content") }}</div>
         </div>
       </div>
       <div class="form-item">
         <div class="form-label">
-          <div>{{ $t('create.article_content') }}*</div>
+          <div>{{ $t("create.article_content") }}*</div>
           <div class="form-label-sub">
             <img
               style="width: 14px; height: 14px"
               src="@/assets/images/create/website.png"
             />
             <div class="form-label-sub-text">
-              {{ $t('create.open_access') }}
+              {{ $t("create.open_access") }}
             </div>
           </div>
         </div>
@@ -119,18 +121,18 @@
           <div v-if="error.contentUrl" class="tip-error">
             {{ error.contentUrl }}
           </div>
-          <div v-else class="tip">{{ $t('create.write_detail_content') }}</div>
+          <div v-else class="tip">{{ $t("create.write_detail_content") }}</div>
         </div>
       </div>
       <div class="form-item">
         <div class="form-label">
-          <div>{{ $t('create.article_content') }}</div>
+          <div>{{ $t("create.article_content") }}</div>
           <div class="form-label-sub">
             <img
               style="width: 14px; height: 14px"
               src="@/assets/images/create/protect.png"
             />
-            <div class="form-label-sub-text">{{ $t('create.protected') }}</div>
+            <div class="form-label-sub-text">{{ $t("create.protected") }}</div>
           </div>
         </div>
         <div class="form-value">
@@ -141,26 +143,26 @@
               :pdata="form.protectedContent"
             />
           </div>
-          <div class="tip">{{ $t('create.write_detail_content') }}</div>
+          <div class="tip">{{ $t("create.write_detail_content") }}</div>
         </div>
       </div>
       <div class="btn-container" v-if="edit">
         <el-button class="common-btn2" @click="backClick">{{
-          $t('create.back')
+          $t("create.back")
         }}</el-button>
         <el-button class="common-btn2" @click="updateClick">{{
-          $t('create.update')
+          $t("create.update")
         }}</el-button>
       </div>
       <div class="btn-container" v-else>
         <el-button class="common-btn2" @click="backClick">{{
-          $t('create.back')
+          $t("create.back")
         }}</el-button>
         <el-button class="common-btn2" @click="saveClick">{{
-          $t('create.save')
+          $t("create.save")
         }}</el-button>
         <el-button class="common-btn2" @click="nextClick">{{
-          $t('create.next')
+          $t("create.next")
         }}</el-button>
       </div>
     </div>
@@ -168,14 +170,14 @@
 </template>
 
 <script>
-import { emptyCompare, specialCharFilter } from '@/utils/common'
-import { encryptContent, uploadContent, uploadFile } from '@/utils/http'
+import { emptyCompare, specialCharFilter } from "@/utils/common";
+import { encryptContent, uploadContent, uploadFile } from "@/utils/http";
 import {
   default as PrivateVditor,
   default as PubVditor,
-} from '../MarkdownVditor.vue'
+} from "../MarkdownVditor.vue";
 export default {
-  name: 'create-step2',
+  name: "create-step2",
   props: {
     edit: {
       type: Boolean,
@@ -196,11 +198,11 @@ export default {
       imageUrl: undefined,
       tags: [],
       upload: {
-        action: process.env.VUE_APP_BASE_URL + '/uploadFile',
+        action: process.env.VUE_APP_BASE_URL + "/uploadFile",
         headers: {
           token: this.$store.state.user.token,
         },
-        fileType: ['png', 'jpg', 'jpeg', 'gif'],
+        fileType: ["png", "jpg", "jpeg", "gif"],
         fileSize: 1,
       },
       form: {
@@ -224,264 +226,264 @@ export default {
       },
       error: {},
       inputVisible: false,
-      inputValue: '',
-    }
+      inputValue: "",
+    };
   },
   mounted() {
     if (this.metadata) {
-      this.form = JSON.parse(JSON.stringify(this.metadata))
+      this.form = JSON.parse(JSON.stringify(this.metadata));
       if (this.form.image) {
-        this.imageUrl = this.form.image
+        this.imageUrl = this.form.image;
       }
       if (this.form.keyword) {
-        this.tags = this.form.keyword
+        this.tags = this.form.keyword;
       }
     }
   },
   methods: {
     /** 获取markdown内容 */
     async markdownGetValue() {
-      var pubContent = this.$refs.contentPub.getValue()
-      if (pubContent) pubContent = pubContent.trim()
-      var privateContent = this.$refs.contentPrivate.getValue()
-      if (privateContent) privateContent = privateContent.trim()
-      if (pubContent != null && pubContent != 'Cg==' && pubContent != '') {
+      var pubContent = this.$refs.contentPub.getValue();
+      if (pubContent) pubContent = pubContent.trim();
+      var privateContent = this.$refs.contentPrivate.getValue();
+      if (privateContent) privateContent = privateContent.trim();
+      if (pubContent != null && pubContent != "Cg==" && pubContent != "") {
         if (!emptyCompare(pubContent, this.metadata.openContent)) {
-          const r = await uploadContent(pubContent)
+          const r = await uploadContent(pubContent);
           if (r.code == 1) {
-            this.form.contentUrl = r.data.url
-            this.form.openContent = pubContent
+            this.form.contentUrl = r.data.url;
+            this.form.openContent = pubContent;
           }
         }
       } else {
-        this.form.contentUrl = undefined
-        this.form.openContent = undefined
+        this.form.contentUrl = undefined;
+        this.form.openContent = undefined;
       }
       if (
         privateContent != null &&
-        privateContent != 'Cg==' &&
-        privateContent != ''
+        privateContent != "Cg==" &&
+        privateContent != ""
       ) {
         if (!emptyCompare(privateContent, this.metadata.protectedContent)) {
-          const r = await uploadContent(privateContent)
+          const r = await uploadContent(privateContent);
           if (r.code == 1) {
-            const protectedUrl = r.data.url
-            const res = await encryptContent(protectedUrl)
+            const protectedUrl = r.data.url;
+            const res = await encryptContent(protectedUrl);
             if (res.code == 1) {
-              this.form.protected = res.data.encrypted
-              this.form.protectedContent = privateContent
+              this.form.protected = res.data.encrypted;
+              this.form.protectedContent = privateContent;
             }
           }
         }
       } else {
-        this.form.protected = undefined
-        this.form.protectedContent = undefined
+        this.form.protected = undefined;
+        this.form.protectedContent = undefined;
       }
     },
     /** 图片选择 */
     fileChange(file) {
-      this.clearError('image')
-      const fileType = file.raw.type
-      const fileSize = file.size
-      if (fileType.indexOf('image') === -1) {
-        this.$set(this.error, 'image', this.$t('common.img_format_error'))
-        return
+      this.clearError("image");
+      const fileType = file.raw.type;
+      const fileSize = file.size;
+      if (fileType.indexOf("image") === -1) {
+        this.$set(this.error, "image", this.$t("common.img_format_error"));
+        return;
       }
       if (fileSize > this.upload.fileSize * 1024 * 1024) {
         this.$set(
           this.error,
-          'image',
-          this.$t('common.img_large_error', [this.upload.fileSize])
-        )
-        return
+          "image",
+          this.$t("common.img_large_error", [this.upload.fileSize])
+        );
+        return;
       }
       this.dialogImageUrl = window.URL
         ? window.URL.createObjectURL(file.raw)
-        : window.webkitURL.createObjectURL(file.raw)
-      this.imageUrl = this.dialogImageUrl
-      this.imageFile = file
+        : window.webkitURL.createObjectURL(file.raw);
+      this.imageUrl = this.dialogImageUrl;
+      this.imageFile = file;
     },
     /** 处理图片上传 */
     async uploadFileProcess() {
       if (this.imageFile && this.imageFile != this.metadata.imageFile) {
-        const formData = new FormData()
-        formData.append('file', this.imageFile.raw)
-        const r = await uploadFile(formData)
+        const formData = new FormData();
+        formData.append("file", this.imageFile.raw);
+        const r = await uploadFile(formData);
         if (r.code == 1) {
-          this.form.image = r.data.url
-          this.form.imageFile = this.imageFile
+          this.form.image = r.data.url;
+          this.form.imageFile = this.imageFile;
         }
       }
     },
     handleClose(tag) {
-      this.tags.splice(this.tags.indexOf(tag), 1)
-      this.form.keyword = this.tags
+      this.tags.splice(this.tags.indexOf(tag), 1);
+      this.form.keyword = this.tags;
     },
     showInput() {
-      this.inputVisible = true
+      this.inputVisible = true;
       this.$nextTick(() => {
-        this.$refs.saveTagInput.$refs.input.focus()
-      })
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
     },
     handleInputConfirm() {
       if (!this.form.keyword) {
-        this.form.keyword = []
+        this.form.keyword = [];
       }
-      let inputValue = this.inputValue
+      let inputValue = this.inputValue.replace(/(\s*$)/g, "");
       if (inputValue && this.tags.indexOf(inputValue) < 0) {
-        this.tags.push(inputValue)
-        this.form.keyword = this.tags
+        this.tags.push(inputValue);
+        this.form.keyword = this.tags;
       }
-      this.inputVisible = false
-      this.inputValue = ''
+      this.inputVisible = false;
+      this.inputValue = "";
     },
     clearError(val) {
-      this.$set(this.error, val, '')
+      this.$set(this.error, val, "");
     },
     setError(key, val) {
-      this.$set(this.error, key, val)
+      this.$set(this.error, key, val);
     },
     /** 单项检查 */
     checkItem(key) {
       switch (key) {
-        case 'title':
+        case "title":
           if (!this.form.title) {
-            this.setError(key, this.$t('create.title_required'))
+            this.setError(key, this.$t("create.title_required"));
           } else {
-            this.clearError(key)
+            this.clearError(key);
           }
-          break
-        case 'description':
+          break;
+        case "description":
           if (!this.form.description) {
-            this.setError(key, this.$t('create.description_required'))
+            this.setError(key, this.$t("create.description_required"));
           } else {
-            this.clearError(key)
+            this.clearError(key);
           }
-          break
-        case 'image':
+          break;
+        case "image":
           if (!this.form.image) {
-            this.setError(key, this.$t('create.image_required'))
+            this.setError(key, this.$t("create.image_required"));
           } else {
-            this.clearError(key)
+            this.clearError(key);
           }
-          break
-        case 'keyword':
+          break;
+        case "keyword":
           if (!this.form.keyword.length) {
-            this.setError(key, this.$t('create.keyword_required'))
+            this.setError(key, this.$t("create.keyword_required"));
           } else {
-            this.clearError(key)
+            this.clearError(key);
           }
-          break
-        case 'contentUrl':
+          break;
+        case "contentUrl":
           if (!this.form.contentUrl) {
-            this.setError(key, this.$t('create.content_pub_required'))
+            this.setError(key, this.$t("create.content_pub_required"));
           } else {
-            this.clearError(key)
+            this.clearError(key);
           }
-          break
+          break;
         default:
-          break
+          break;
       }
     },
     /** 表单检查 */
     formCheck() {
-      this.error = {}
-      var ifPass = true
+      this.error = {};
+      var ifPass = true;
       if (!this.form.title) {
-        this.setError('title', this.$t('create.title_required'))
-        ifPass = false
+        this.setError("title", this.$t("create.title_required"));
+        ifPass = false;
       }
 
       if (!this.form.description) {
-        this.setError('description', this.$t('create.description_required'))
-        ifPass = false
+        this.setError("description", this.$t("create.description_required"));
+        ifPass = false;
       }
 
       if (!this.form.image) {
-        this.setError('image', this.$t('create.image_required'))
-        ifPass = false
+        this.setError("image", this.$t("create.image_required"));
+        ifPass = false;
       }
 
       if (!this.form.keyword.length) {
-        this.setError('keyword', this.$t('create.keyword_required'))
-        ifPass = false
+        this.setError("keyword", this.$t("create.keyword_required"));
+        ifPass = false;
       }
 
       if (!this.form.contentUrl) {
-        this.setError('contentUrl', this.$t('create.content_pub_required'))
-        ifPass = false
+        this.setError("contentUrl", this.$t("create.content_pub_required"));
+        ifPass = false;
       }
-      return ifPass
+      return ifPass;
     },
     backClick() {
-      this.$emit('backClick', 1)
+      this.$emit("backClick", 1);
     },
     async saveClick() {
-      const c = await this.$store.dispatch('CheckLogin', true)
+      const c = await this.$store.dispatch("CheckLogin", true);
       if (!c) {
-        return
+        return;
       }
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       try {
-        await this.markdownGetValue()
-        await this.uploadFileProcess()
+        await this.markdownGetValue();
+        await this.uploadFileProcess();
       } finally {
-        loadingInstance.close()
+        loadingInstance.close();
       }
-      this.$emit('saveClick', this.form)
-      this.$toast.success(this.$t('common.save_success'))
+      this.$emit("saveClick", this.form);
+      this.$toast.success(this.$t("common.save_success"));
     },
     async nextClick() {
-      const c = await this.$store.dispatch('CheckLogin', true)
+      const c = await this.$store.dispatch("CheckLogin", true);
       if (!c) {
-        return
+        return;
       }
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       try {
-        await this.markdownGetValue()
-        await this.uploadFileProcess()
+        await this.markdownGetValue();
+        await this.uploadFileProcess();
       } finally {
-        loadingInstance.close()
+        loadingInstance.close();
       }
-      this.$emit('saveClick', this.form)
+      this.$emit("saveClick", this.form);
       if (this.formCheck()) {
-        this.$emit('nextClick', 3)
+        this.$emit("nextClick", 3);
       }
     },
     async updateClick() {
       var loadingInstance = this.$loading({
-        background: 'rgba(0, 0, 0, 0.8)',
-      })
+        background: "rgba(0, 0, 0, 0.8)",
+      });
       try {
-        await this.markdownGetValue()
-        await this.uploadFileProcess()
+        await this.markdownGetValue();
+        await this.uploadFileProcess();
       } finally {
-        loadingInstance.close()
+        loadingInstance.close();
       }
       if (
         this.metadata.title == this.form.title &&
         this.metadata.description == this.form.description &&
         this.metadata.image == this.form.image &&
-        this.metadata.keyword.join(',') == this.form.keyword.join(',') &&
+        this.metadata.keyword.join(",") == this.form.keyword.join(",") &&
         emptyCompare(this.metadata.openContent, this.form.openContent) &&
         emptyCompare(this.metadata.protectedContent, this.form.protectedContent)
       ) {
-        this.$toast(this.$t('create.data_not_modified'))
-        return
+        this.$toast(this.$t("create.data_not_modified"));
+        return;
       }
       if (this.formCheck()) {
-        this.$emit('handleUpdate', this.form)
+        this.$emit("handleUpdate", this.form);
       }
     },
     charFilter(val) {
-      return specialCharFilter(val)
+      return specialCharFilter(val);
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
