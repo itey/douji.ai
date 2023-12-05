@@ -94,7 +94,7 @@ export default {
       text-align: left;
       margin: 23px 0 46px 0;
       display: flex;
-      align-items: baseline;
+      align-items: end;
 
       .title {
         font-size: 36px;
@@ -105,10 +105,11 @@ export default {
       }
 
       .sub {
+        height: 18px;
         font-size: 14px;
         font-family: Source Han Sans CN;
         margin-left: 9px;
-        padding: 4px 8px 3px 8px;
+        padding: 1px 8px 1px 8px;
         font-weight: bold;
         border-radius: 8px;
       }

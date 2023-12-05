@@ -86,19 +86,31 @@
         <div class="item">
           <div class="label">{{ $t("home.creator") }}</div>
           <div class="value text-color">
-            {{ statistics.creater_count | toLocalString }}
+            <Roller
+              defaultChar="0"
+              :isNumberFormat="true"
+              :text="String(statistics.creater_count)"
+            />
           </div>
         </div>
         <div class="item theme-background-color">
           <div class="label">{{ $t("home.user") }}</div>
           <div class="value text-color">
-            {{ statistics.user_count | toLocalString }}
+            <Roller
+              defaultChar="0"
+              :isNumberFormat="true"
+              :text="String(statistics.user_count)"
+            />
           </div>
         </div>
         <div class="item theme-background-color">
           <div class="label">{{ $t("home.navigation_items") }}</div>
           <div class="value text-color">
-            {{ statistics.nft_count | toLocalString }}
+            <Roller
+              defaultChar="0"
+              :isNumberFormat="true"
+              :text="String(statistics.nft_count)"
+            />
           </div>
         </div>
       </div>
@@ -106,9 +118,13 @@
         <div class="nft-column">
           <div class="title">{{ $t("home.all_nft") }}</div>
           <div class="value-container">
-            <span class="value text-color">{{
-              statistics.all_currentsupply | toLocalString
-            }}</span>
+            <span class="value text-color">
+              <Roller
+                defaultChar="0"
+                :isNumberFormat="true"
+                :text="String(statistics.all_currentsupply)"
+              />
+            </span>
             <template
               v-if="
                 statistics.all_currentsupply_rate &&
@@ -229,24 +245,21 @@
                   statistics.weekly_active_users | toLocalString
                 }}</span>
                 <template
-                  v-if="
-                    statistics.weekly_active_users_rate &&
-                    statistics.weekly_active_users_rate != '-'
-                  "
+                  v-if="statistics.weekly_active_users_rate_rate != '-'"
                 >
                   <img
-                    v-if="statistics.weekly_active_users_rate > 0"
+                    v-if="statistics.weekly_active_users_rate_rate > 0"
                     src="@/assets/images/home/up.png"
                     style="width: 8px; height: 6px"
                   />
                   <img
-                    v-if="statistics.weekly_active_users_rate < 0"
+                    v-if="statistics.weekly_active_users_rate_rate < 0"
                     src="@/assets/images/home/down.png"
                     style="width: 8px; height: 6px"
                   />
                 </template>
                 <span class="rate text-color">{{
-                  statistics.weekly_active_users_rate | rate2Percent
+                  statistics.weekly_active_users_rate_rate | rate2Percent
                 }}</span>
               </div>
             </div>
@@ -255,9 +268,15 @@
         <div class="nft-column">
           <div class="title">{{ $t("home.mbd_price") }}</div>
           <div class="value-container">
-            <span class="value text-color"
-              >${{ statistics.mbd_price | toLocalString }}</span
+            <span
+              class="value text-color"
+              v-if="statistics.mbd_price != undefined"
             >
+              <Roller
+                defaultChar="0"
+                :text="'$' + String(statistics.mbd_price)"
+              />
+            </span>
             <template
               v-if="
                 statistics.mbd_price_rate && statistics.mbd_price_rate != '-'
@@ -662,6 +681,7 @@ import ComparisonTab from "@/components/home/ComparisonTab";
 import ComparisonTable from "@/components/home/ComparisonTable";
 import NewsTabItem from "@/components/home/NewsTabItem";
 import LazyYoutubeVideo from "vue-lazy-youtube-video";
+import Roller from "vue-roller";
 import { weiToEth } from "@/utils/common";
 import {
   hotNewsList,
@@ -684,6 +704,7 @@ export default {
     NewsItem,
     ComparisonTab,
     ComparisonTable,
+    Roller,
     LazyYoutubeVideo,
   },
   computed: {
@@ -745,7 +766,7 @@ export default {
       bannerNews: {},
       advertiseList: [],
       statistics: {},
-      timer: undefined
+      timer: undefined,
     };
   },
   mounted() {
@@ -754,13 +775,21 @@ export default {
     this.loadAdsList();
     this.getStatisticsInfo();
     this.timer = setInterval(() => {
-      this.getStatisticsInfo()
+      this.getStatisticsInfo();
     }, 30000);
   },
-  destroyed () {
-    this.timer && (clearInterval(this.timer))
+  destroyed() {
+    this.timer && clearInterval(this.timer);
   },
   methods: {
+    theFormat(num) {
+      if (!num) {
+        return num;
+      }
+      return num.toString().replace(/\d+/, function (n) {
+        return n.replace(/(\d)(?=(?:\d{3})+$)/g, "$1,");
+      });
+    },
     /** 查询大盘数据 */
     getStatisticsInfo() {
       this.loading["s"] = true;
