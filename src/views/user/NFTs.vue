@@ -4,8 +4,24 @@
       <div>
         <span class="text-big text-color">{{ $t("user.my_nft") }}</span>
         <span class="sub-value"
-          >{{ list.length | toLocalString }} {{ $t("user.items") }}</span
+          >{{ totalOwner + totalOther }} {{ $t("user.items") }}</span
         >
+      </div>
+    </div>
+    <div class="middle">
+      <div class="mid-tab">
+        <div
+          :class="['tab', isOwner == 0 ? 'active' : '']"
+          @click="changeTab(0)"
+        >
+          Created<span>({{ totalOwner }})</span>
+        </div>
+        <div
+          :class="['tab', isOwner == 1 ? 'active' : '']"
+          @click="changeTab(1)"
+        >
+          Other<span>({{ totalOther }})</span>
+        </div>
       </div>
       <div class="search">
         <el-input
@@ -19,19 +35,40 @@
       </div>
     </div>
     <div class="content">
-      <div class="list">
-        <div v-for="(item, index) in list" :key="index" class="item">
+      <div class="list" v-if="isOwner == 0">
+        <div v-for="(item, index) in listOwner" :key="index" class="item">
           <ProductItem :item="item" />
         </div>
       </div>
-      <el-pagination
-        @current-change="onPageChange"
-        style="width: 100%; margin: 20px 0"
-        background
-        layout="prev,pager,next"
-        :page-size="20"
-        :total="total"
-      ></el-pagination>
+      <div class="list" v-if="isOwner == 1">
+        <div v-for="(item, index) in listOther" :key="index" class="item">
+          <ProductItem :item="item" />
+        </div>
+      </div>
+      <template v-if="isOwner == 0">
+        <el-pagination
+          v-if="totalOwner > 0"
+          @current-change="onPageChange"
+          style="width: 100%; margin: 20px 0"
+          background
+          layout="prev,pager,next"
+          :page-size="20"
+          :total="totalOwner"
+        ></el-pagination>
+        <div class="empty" v-else>No data</div>
+      </template>
+      <template v-if="isOwner == 1">
+        <el-pagination
+          v-if="listOther.length > 0"
+          @current-change="onPageChange"
+          style="width: 100%; margin: 20px 0"
+          background
+          layout="prev,pager,next"
+          :page-size="20"
+          :total="totalOther"
+        ></el-pagination>
+        <div class="empty" v-else>No data</div>
+      </template>
     </div>
   </div>
 </template>
@@ -46,16 +83,27 @@ export default {
   },
   data() {
     return {
-      list: [],
+      isOwner: 0,
+      listOwner: [],
+      listOther: [],
       searchValue: undefined,
-      total: 0,
+      totalOwner: 0,
+      totalOther: 0,
       pageNo: 1,
     };
   },
   created() {
-    this.nftListLoad();
+    this.initTabList();
   },
   methods: {
+    changeTab(val) {
+      if (val != this.isOwner) {
+        this.isOwner = val;
+        this.pageNo = 1;
+        this.searchValue = undefined;
+        this.nftListLoad();
+      }
+    },
     onPageChange() {
       this.nftListLoad();
     },
@@ -68,6 +116,28 @@ export default {
         this.nftListLoad();
       }
     },
+    initTabList() {
+      getMyNftList({ page: 1, isOwner: 0 })
+        .then((r) => {
+          if (r.code == 1) {
+            this.listOwner = r.data.list;
+            this.totalOwner = r.data.pageCount;
+          }
+        })
+        .catch((e) => {
+          this.$toast.error(e.message);
+        });
+      getMyNftList({ page: 1, isOwner: 1 })
+        .then((r) => {
+          if (r.code == 1) {
+            this.listOther = r.data.list;
+            this.totalOther = r.data.pageCount;
+          }
+        })
+        .catch((e) => {
+          this.$toast.error(e.message);
+        });
+    },
     /** 加载数据 */
     nftListLoad() {
       var loadingInstance = this.$loading({
@@ -75,13 +145,19 @@ export default {
       });
       var param = {
         page: this.pageNo,
+        isOwner: this.isOwner,
       };
       this.searchValue && (param.keyW = this.searchValue);
       getMyNftList(param)
         .then((r) => {
           if (r.code == 1) {
-            this.list = r.data.list;
-            this.total = r.data.pageCount;
+            if (this.isOwner == 0) {
+              this.listOwner = r.data.list;
+              this.totalOwner = r.data.pageCount;
+            } else {
+              this.listOther = r.data.list;
+              this.totalOther = r.data.pageCount;
+            }
           }
         })
         .catch((e) => {
@@ -125,9 +201,53 @@ export default {
     }
   }
 
+  .middle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .mid-tab {
+      display: flex;
+      align-items: center;
+
+      .tab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #e8ecf0;
+        font-family: Source Han Sans CN;
+        font-weight: bold;
+        margin-right: 5px;
+        align-self: center;
+        width: 140px;
+        height: 40px;
+        cursor: pointer;
+
+        &:hover {
+          color: #ffffff;
+          background: #2b343f;
+          border-radius: 20px;
+        }
+
+        &.active {
+          background: #2b343f;
+          border-radius: 20px;
+          color: #00f9e5;
+        }
+
+        span {
+          margin-left: 5px;
+          font-size: 14px;
+          color: #7a91ab;
+        }
+      }
+    }
+  }
+
   .content {
     flex: 1;
-    padding-bottom: 50px;
+    margin: 20px 0px 50px 0px;
 
     .list {
       display: flex;
@@ -142,6 +262,11 @@ export default {
           margin-right: 0;
         }
       }
+    }
+
+    .empty {
+      margin-top: 20px;
+      color: #7a91ab;
     }
   }
 }

@@ -94,7 +94,7 @@ export default {
       text-align: left;
       margin: 23px 0 46px 0;
       display: flex;
-      align-items: end;
+      align-items: flex-end;
 
       .title {
         font-size: 36px;

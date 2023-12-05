@@ -836,4 +836,18 @@
     background-color: #ffffff;
     border: 1px solid #e7edf1;
   }
+
+  .container .middle .mid-tab .tab {
+    color: #36404b;
+
+    &:hover {
+      background-color: #e7edf1;
+      color: #36404b;
+    }
+
+    &.active {
+      color: #36404b;
+      background-color: #e7edf1;
+    }
+  }
 }
