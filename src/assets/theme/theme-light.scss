@@ -850,4 +850,18 @@
       background-color: #e7edf1;
     }
   }
+
+  .creator-container .list-container .middle .mid-tab .tab {
+    color: #36404b !important;
+
+    &:hover {
+      background-color: #e7edf1 !important;
+      color: #36404b !important;
+    }
+
+    &.active {
+      color: #36404b !important;
+      background-color: #e7edf1 !important;
+    }
+  }
 }
