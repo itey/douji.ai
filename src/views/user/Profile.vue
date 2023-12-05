@@ -78,9 +78,7 @@
         <div class="form-label">Website</div>
         <div class="form-value">
           <el-input
-            @blur="
-              () => (userInfo.website = userInfo.website.replace(/(\s*$)/g, ''))
-            "
+            @input="(val) => (userInfo.website = val.replace(/\s/g, ''))"
             v-model="userInfo.website"
           ></el-input>
         </div>
@@ -91,9 +89,7 @@
         <div class="form-label">Twitter</div>
         <div class="form-value">
           <el-input
-            @blur="
-              () => (userInfo.twitter = userInfo.twitter.replace(/(\s*$)/g, ''))
-            "
+            @input="(val) => (userInfo.twitter = val.replace(/\s/g, ''))"
             v-model="userInfo.twitter"
           ></el-input>
         </div>
@@ -104,10 +100,7 @@
         <div class="form-label">Telegram</div>
         <div class="form-value">
           <el-input
-            @blur="
-              () =>
-                (userInfo.telegram = userInfo.telegram.replace(/(\s*$)/g, ''))
-            "
+            @input="(val) => (userInfo.telegram = val.replace(/\s/g, ''))"
             v-model="userInfo.telegram"
           ></el-input>
         </div>
@@ -118,10 +111,7 @@
         <div class="form-label">Facebook</div>
         <div class="form-value">
           <el-input
-            @blur="
-              () =>
-                (userInfo.facebook = userInfo.facebook.replace(/(\s*$)/g, ''))
-            "
+            @input="(val) => (userInfo.facebook = val.replace(/\s/g, ''))"
             v-model="userInfo.facebook"
           ></el-input>
         </div>
@@ -132,9 +122,7 @@
         <div class="form-label">Tiktok</div>
         <div class="form-value">
           <el-input
-            @blur="
-              () => (userInfo.tiktok = userInfo.tiktok.replace(/(\s*$)/g, ''))
-            "
+            @input="(val) => (userInfo.tiktok = val.replace(/\s/g, ''))"
             v-model="userInfo.tiktok"
           ></el-input>
         </div>
@@ -145,10 +133,7 @@
         <div class="form-label">Instagram</div>
         <div class="form-value">
           <el-input
-            @blur="
-              () =>
-                (userInfo.instagram = userInfo.instagram.replace(/(\s*$)/g, ''))
-            "
+            @input="(val) => (userInfo.instagram = val.replace(/\s/g, ''))"
             v-model="userInfo.instagram"
           ></el-input>
         </div>
@@ -159,9 +144,7 @@
         <div class="form-label">Youtube</div>
         <div class="form-value">
           <el-input
-            @blur="
-              () => (userInfo.youtube = userInfo.youtube.replace(/(\s*$)/g, ''))
-            "
+            @input="(val) => (userInfo.youtube = val.replace(/\s/g, ''))"
             v-model="userInfo.youtube"
           ></el-input>
         </div>
@@ -172,9 +155,7 @@
         <div class="form-label">Github</div>
         <div class="form-value">
           <el-input
-            @blur="
-              () => (userInfo.github = userInfo.github.replace(/(\s*$)/g, ''))
-            "
+            @input="(val) => (userInfo.github = val.replace(/\s/g, ''))"
             v-model="userInfo.github"
           ></el-input>
         </div>
