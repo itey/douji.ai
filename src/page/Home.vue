@@ -125,12 +125,7 @@
                 :text="String(statistics.all_currentsupply)"
               />
             </span>
-            <template
-              v-if="
-                statistics.all_currentsupply_rate &&
-                statistics.all_currentsupply_rate != '-'
-              "
-            >
+            <template v-if="statistics.all_currentsupply_rate != '-'">
               <img
                 v-if="statistics.all_currentsupply_rate > 0"
                 src="@/assets/images/home/up.png"
@@ -156,12 +151,7 @@
                     statistics.market_cap | decimalPlace2 | toLocalString
                   }}</span
                 >
-                <template
-                  v-if="
-                    statistics.market_cap_rate &&
-                    statistics.market_cap_rate != '-'
-                  "
-                >
+                <template v-if="statistics.market_cap_rate != '-'">
                   <img
                     v-if="statistics.market_cap_rate > 0"
                     src="@/assets/images/home/up.png"
@@ -186,12 +176,7 @@
                     statistics.nft_volume | decimalPlace2 | toLocalString
                   }}</span
                 >
-                <template
-                  v-if="
-                    statistics.nft_volume_rate &&
-                    statistics.nft_volume_rate != '-'
-                  "
-                >
+                <template v-if="statistics.nft_volume_rate != '-'">
                   <img
                     v-if="statistics.nft_volume_rate > 0"
                     src="@/assets/images/home/up.png"
@@ -214,12 +199,7 @@
                 <span class="value text-color">{{
                   statistics.transfers | toLocalString
                 }}</span>
-                <template
-                  v-if="
-                    statistics.transfers_rate &&
-                    statistics.transfers_rate != '-'
-                  "
-                >
+                <template v-if="statistics.transfers_rate != '-'">
                   <img
                     v-if="statistics.transfers_rate > 0"
                     src="@/assets/images/home/up.png"
@@ -277,11 +257,7 @@
                 :text="'$' + String(statistics.mbd_price)"
               />
             </span>
-            <template
-              v-if="
-                statistics.mbd_price_rate && statistics.mbd_price_rate != '-'
-              "
-            >
+            <template v-if="statistics.mbd_price_rate != '-'">
               <img
                 v-if="statistics.mbd_price_rate > 0"
                 src="@/assets/images/home/up.png"
@@ -306,12 +282,7 @@
                 <span class="value text-color">{{
                   statistics.mbd_circulation | decimalPlace2 | toLocalString
                 }}</span>
-                <template
-                  v-if="
-                    statistics.mbd_circulation_rate &&
-                    statistics.mbd_circulation_rate != '-'
-                  "
-                >
+                <template v-if="statistics.mbd_circulation_rate != '-'">
                   <img
                     v-if="statistics.mbd_circulation_rate > 0"
                     src="@/assets/images/home/up.png"
@@ -338,12 +309,7 @@
                     statistics.nft_volume_24h | decimalPlace2 | toLocalString
                   }}</span
                 >
-                <template
-                  v-if="
-                    statistics.nft_volume_24h_rate &&
-                    statistics.nft_volume_24h_rate != '-'
-                  "
-                >
+                <template v-if="statistics.nft_volume_24h_rate != '-'">
                   <img
                     v-if="statistics.nft_volume_24h_rate > 0"
                     src="@/assets/images/home/up.png"
@@ -366,12 +332,7 @@
                 <span class="value text-color">{{
                   statistics.transfers_24h | toLocalString
                 }}</span>
-                <template
-                  v-if="
-                    statistics.transfers_24h_rate &&
-                    statistics.transfers_24h_rate != '-'
-                  "
-                >
+                <template v-if="statistics.transfers_24h_rate != '-'">
                   <img
                     v-if="statistics.transfers_24h_rate > 0"
                     src="@/assets/images/home/up.png"
@@ -392,27 +353,22 @@
               <div class="label">{{ $t("home.24h_nfts") }}</div>
               <div>
                 <span class="value text-color">{{
-                  statistics.nft_createcount_24h | toLocalString
+                  statistics.all_currentsupply_24h | toLocalString
                 }}</span>
-                <template
-                  v-if="
-                    statistics.nft_createcount_24h_rate &&
-                    statistics.nft_createcount_24h_rate != '-'
-                  "
-                >
+                <template v-if="statistics.all_currentsupply_24h_rate != '-'">
                   <img
-                    v-if="statistics.nft_createcount_24h_rate > 0"
+                    v-if="statistics.all_currentsupply_24h_rate > 0"
                     src="@/assets/images/home/up.png"
                     style="width: 8px; height: 6px"
                   />
                   <img
-                    v-if="statistics.nft_createcount_24h_rate < 0"
+                    v-if="statistics.all_currentsupply_24h_rate < 0"
                     src="@/assets/images/home/down.png"
                     style="width: 8px; height: 6px"
                   />
                 </template>
                 <span class="rate text-color">{{
-                  statistics.nft_createcount_24h_rate | rate2Percent
+                  statistics.all_currentsupply_24h_rate | rate2Percent
                 }}</span>
               </div>
             </div>
