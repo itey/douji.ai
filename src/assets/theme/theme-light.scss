@@ -776,4 +776,20 @@
   .creator-container .list-container .title-container .sub {
     background-color: #ffffff;
   }
+
+  .income-dialog .income-btn .common-btn2 {
+    color: #ffffff;
+  }
+
+  .income-dialog .income-content {
+    border: none;
+  }
+  .income-content .el-table {
+    border: 1px solid #eaedef !important;
+  }
+
+  .el-dialog {
+    background-color: #ffffff;
+    border: 1px solid #e7edf1;
+  }
 }

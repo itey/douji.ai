@@ -233,7 +233,6 @@ export default {
   }
 
   .income-content {
-    border: 1px solid #1f272f;
     padding: 30px 52px 0 52px;
     text-align: left;
 
