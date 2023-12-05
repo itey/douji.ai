@@ -18,7 +18,7 @@
           />
         </div>
         <div class="app-content">
-          <router-view v-if="show" />
+          <router-view v-if="show" :key="$route.fullPath" />
         </div>
       </el-main>
       <el-footer style="height: auto; background: #1a2027; margin-top: 16px">
