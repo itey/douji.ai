@@ -340,11 +340,11 @@ export function getAdList(type) {
 }
 
 // 查询用户的NFT列表
-export function getUserNftList(page, address) {
+export function getUserNftList(params) {
   return request({
     url: "/userNfts",
     method: "post",
-    params: { page, address },
+    params: params,
   });
 }
 
