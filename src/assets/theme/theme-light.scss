@@ -139,8 +139,21 @@
     cursor: not-allowed;
   }
   .el-textarea__inner {
-    color: #ffffff;
+    color: #636b72;
     background: #f6f8f9;
+  }
+
+  .el-tag {
+    background-color: #f6f8f9;
+    border-color: #e4e7ed;
+    color: #636b72;
+
+    .el-tag__close {
+      color: #636b72;
+      &:hover {
+        background-color: #ded9d9;
+      }
+    }
   }
 
   .el-tag.el-tag--info {
@@ -650,6 +663,37 @@
 
       .form-attr-mbd-value {
         color: #636b72;
+      }
+    }
+  }
+
+  .create-step1 .title {
+    color: #1a2027;
+  }
+
+  .create-step1 .form-container {
+    background: #ffffff;
+
+    .type-container {
+      .item {
+        background-color: #f7f9fa !important;
+        border: none !important;
+        color: #636b72 !important;
+
+        &.light {
+          color: #00f9e5 !important;
+        }
+      }
+    }
+
+    .category-container {
+      .item {
+        background-color: #f7f9fa !important;
+        border: none !important;
+        color: #636b72 !important;
+        &.light {
+          color: #00f9e5 !important;
+        }
       }
     }
   }

@@ -105,7 +105,7 @@
             >
           </div>
           <div v-if="error.keyword" class="tip-error">{{ error.keyword }}</div>
-          <div v-else class="tip">>{{ $t("create.write_detail_content") }}</div>
+          <div v-else class="tip">{{ $t("create.write_detail_content") }}</div>
         </div>
       </div>
       <div class="form-item">

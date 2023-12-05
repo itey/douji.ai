@@ -491,12 +491,10 @@ export default {
     font-size: 14px;
     font-family: Source Han Sans CN;
     font-weight: bold;
-    color: #ffffff;
     text-align: left;
   }
 
   .form-container {
-    background: #1a2027;
     border-radius: 6px;
     padding: 15px 0 55px 97px;
 
@@ -580,7 +578,7 @@ export default {
 
     .tip {
       margin-top: 13px;
-      font-size: 9px;
+      font-size: 12px;
       font-family: Arial;
       font-weight: 400;
       color: #707d8c;
@@ -589,7 +587,7 @@ export default {
 
     .tip-error {
       margin-top: 13px;
-      font-size: 9px;
+      font-size: 12px;
       font-family: Arial;
       font-weight: 400;
       color: #a50507;
@@ -602,7 +600,7 @@ export default {
 
       .input {
         width: 271px;
-        font-size: 10px;
+        font-size: 14px;
         font-family: Source Han Sans CN;
         font-weight: bold;
         color: #ffffff;

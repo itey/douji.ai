@@ -151,6 +151,21 @@
   .el-textarea__inner {
     color: #ffffff;
     background: #0e161d;
+    border: 1px solid #313838;
+  }
+
+  .el-tag {
+    background-color: #434d56;
+    border: none;
+    color: #ffffff;
+
+    .el-tag__close {
+      color: #ffffff;
+
+      &:hover {
+        background-color: #727272;
+      }
+    }
   }
 
   .el-tag.el-tag--info {
@@ -636,12 +651,28 @@
     }
   }
 
+  .create-step1 .title {
+    color: #ffffff;
+  }
+
+  .create-step1 .form-container {
+    background: #1a2027;
+  }
+
   .create-step2 .title {
     color: #ffffff;
   }
 
   .create-step2 .form-container {
     background: #1a2027;
+  }
+
+  .create-step2 .form-container .form-item .form-value .button-new-tag {
+    background-color: #434d56;
+    color: #ffffff;
+    &:hover {
+      background-color: #535f6a;
+    }
   }
 
   .user-container .el-aside {
