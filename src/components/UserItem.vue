@@ -10,7 +10,7 @@
       "
     />
     <span class="type" v-if="item.pltform">{{ item.pltform }}</span>
-    <span class="hold" v-if="item.holdCount > 1">{{ item.holdCount }}</span>
+    <span class="hold" v-if="item.holdCount > 1">x{{ item.holdCount }}</span>
     <div
       class="label text-color"
       @click="
@@ -90,14 +90,12 @@ export default {
     padding: 0px 5px 0px 5px;
     top: 12px;
     right: 15px;
-    background: rgba(13, 18, 18, 0.66);
-    border-radius: 4px;
+    background: rgba(20, 25, 30, 0.75);
+    border-radius: 5px;
     font-size: 14px;
     font-family: Source Han Sans CN;
     font-weight: bold;
-    font-weight: 400;
-    color: #ffffff;
-    height: 30px;
+    color: #f7f8f9;
     line-height: 30px;
   }
 
