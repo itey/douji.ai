@@ -1094,8 +1094,9 @@ export default {
       justify-content: space-between;
 
       .item {
-        width: 380px;
-        padding: 23px 33px 19px 33px;
+        width: 412px;
+        height: 74px;
+        padding: 23px 32px 23px 32px;
         text-align: left;
         border-radius: 8px;
         display: flex;
@@ -1110,11 +1111,10 @@ export default {
         }
 
         .value {
+          display: block;
           font-size: 34px;
-          line-height: 34px;
           font-family: Source Han Sans CN;
           font-weight: 800;
-          margin-top: 30px;
         }
       }
     }
