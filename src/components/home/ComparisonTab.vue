@@ -309,7 +309,7 @@ export default {
   .tab-header {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    // justify-content: space-between;
 
     .tab-header-item {
       width: 404px;
@@ -323,6 +323,7 @@ export default {
       color: #527293;
       cursor: pointer;
       text-align: left;
+      margin-top: 20px;
     }
 
     .select {
@@ -366,7 +367,7 @@ export default {
           margin-top: 20px;
           font-size: 14px;
           font-family: Source Han Sans CN;
-          line-height: 20px;
+          line-height: 25px;
         }
       }
     }
@@ -415,7 +416,7 @@ export default {
         margin: 18px 24px 38px 24px;
         font-size: 14px;
         font-family: Source Han Sans CN;
-        line-height: 22px;
+        line-height: 25px;
       }
     }
   }
@@ -434,7 +435,7 @@ export default {
     .tab-tip {
       width: 840px;
       border-radius: 10px;
-      line-height: 17px;
+      line-height: 25px;
       padding: 15px 12px;
       font-size: 16px;
       font-family: Source Han Sans CN;
@@ -470,7 +471,7 @@ export default {
             margin-top: 20px;
             font-size: 14px;
             font-family: Source Han Sans CN;
-            line-height: 20px;
+            line-height: 25px;
           }
         }
       }
@@ -526,7 +527,7 @@ export default {
           margin: 17px 29px 0 39px;
           font-size: 14px;
           font-family: SourceHanSansCN-Bold;
-          line-height: 22px;
+          line-height: 25px;
           text-align: left;
         }
       }
