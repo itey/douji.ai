@@ -11,14 +11,14 @@
     <div class="middle">
       <div class="mid-tab">
         <div
-          :class="['tab', isOwner == 0 ? 'active' : '']"
-          @click="changeTab(0)"
+          :class="['tab', isOwner == 1 ? 'active' : '']"
+          @click="changeTab(1)"
         >
           Created<span>({{ totalOwner }})</span>
         </div>
         <div
-          :class="['tab', isOwner == 1 ? 'active' : '']"
-          @click="changeTab(1)"
+          :class="['tab', isOwner == 0 ? 'active' : '']"
+          @click="changeTab(0)"
         >
           Other<span>({{ totalOther }})</span>
         </div>
@@ -35,17 +35,17 @@
       </div>
     </div>
     <div class="content">
-      <div class="list" v-if="isOwner == 0">
-        <div v-for="(item, index) in listOwner" :key="index" class="item">
-          <ProductItem :item="item" />
-        </div>
-      </div>
       <div class="list" v-if="isOwner == 1">
-        <div v-for="(item, index) in listOther" :key="index" class="item">
-          <ProductItem :item="item" />
+        <div v-for="(item, index) in listOwner" :key="index" class="item">
+          <UserItem :item="item" />
         </div>
       </div>
-      <template v-if="isOwner == 0">
+      <div class="list" v-if="isOwner == 0">
+        <div v-for="(item, index) in listOther" :key="index" class="item">
+          <UserItem :item="item" />
+        </div>
+      </div>
+      <template v-if="isOwner == 1">
         <el-pagination
           v-if="totalOwner > 0"
           @current-change="onPageChange"
@@ -57,7 +57,7 @@
         ></el-pagination>
         <div class="empty" v-else>No data</div>
       </template>
-      <template v-if="isOwner == 1">
+      <template v-if="isOwner == 0">
         <el-pagination
           v-if="listOther.length > 0"
           @current-change="onPageChange"
@@ -74,16 +74,16 @@
 </template>
 
 <script>
-import ProductItem from "@/components/ProductItem";
+import UserItem from "@/components/UserItem";
 import { getMyNftList } from "@/utils/http";
 export default {
   name: "nft-view",
   components: {
-    ProductItem,
+    UserItem,
   },
   data() {
     return {
-      isOwner: 0,
+      isOwner: 1,
       listOwner: [],
       listOther: [],
       searchValue: undefined,
@@ -117,7 +117,7 @@ export default {
       }
     },
     initTabList() {
-      getMyNftList({ page: 1, isOwner: 0 })
+      getMyNftList({ page: 1, isOwner: 1 })
         .then((r) => {
           if (r.code == 1) {
             this.listOwner = r.data.list;
@@ -127,7 +127,7 @@ export default {
         .catch((e) => {
           this.$toast.error(e.message);
         });
-      getMyNftList({ page: 1, isOwner: 1 })
+      getMyNftList({ page: 1, isOwner: 0 })
         .then((r) => {
           if (r.code == 1) {
             this.listOther = r.data.list;
@@ -151,7 +151,7 @@ export default {
       getMyNftList(param)
         .then((r) => {
           if (r.code == 1) {
-            if (this.isOwner == 0) {
+            if (this.isOwner == 1) {
               this.listOwner = r.data.list;
               this.totalOwner = r.data.pageCount;
             } else {
@@ -173,7 +173,7 @@ export default {
 
 <style lang="scss">
 .container {
-  padding: 0 50px;
+  padding: 0 25px;
   display: flex;
   flex-direction: column;
 
@@ -252,7 +252,7 @@ export default {
     .list {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: flex-start;
 
       .item {
         width: calc((100% - 39px) / 4);

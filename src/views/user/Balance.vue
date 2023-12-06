@@ -245,7 +245,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   width: 100%;
-  padding: 0 50px;
+  padding: 0 25px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

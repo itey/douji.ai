@@ -4,14 +4,14 @@
       <div class="middle">
         <div class="mid-tab">
           <div
-            :class="['tab', isOwner == 0 ? 'active' : '']"
-            @click="changeTab(0)"
+            :class="['tab', isOwner == 1 ? 'active' : '']"
+            @click="changeTab(1)"
           >
             Created<span>({{ totalOwner }})</span>
           </div>
           <div
-            :class="['tab', isOwner == 1 ? 'active' : '']"
-            @click="changeTab(1)"
+            :class="['tab', isOwner == 0 ? 'active' : '']"
+            @click="changeTab(0)"
           >
             Other<span>({{ totalOther }})</span>
           </div>
@@ -32,17 +32,17 @@
         v-loading="loading"
         :element-loading-background="$store.state.common.theme | maskByTheme"
       >
-        <div class="list" v-if="isOwner == 0">
+        <div class="list" v-if="isOwner == 1">
           <div v-for="(item, index) in listOwner" :key="index" class="item">
             <ProductItem :item="item" />
           </div>
         </div>
-        <div class="list" v-if="isOwner == 1">
+        <div class="list" v-if="isOwner == 0">
           <div v-for="(item, index) in listOther" :key="index" class="item">
             <ProductItem :item="item" />
           </div>
         </div>
-        <template v-if="isOwner == 0">
+        <template v-if="isOwner == 1">
           <el-pagination
             v-if="totalOwner > 0"
             @current-change="onPageChange"
@@ -54,7 +54,7 @@
           ></el-pagination>
           <div class="empty" v-else>No data</div>
         </template>
-        <template v-if="isOwner == 1">
+        <template v-if="isOwner == 0">
           <el-pagination
             v-if="listOther.length > 0"
             @current-change="onPageChange"
@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       address: undefined,
-      isOwner: 0,
+      isOwner: 1,
       listOwner: [],
       listOther: [],
       searchValue: undefined,
@@ -115,7 +115,7 @@ export default {
       this.userNftList();
     },
     initTabList() {
-      getUserNftList({ page: 1, address: this.address, isOwner: 0 })
+      getUserNftList({ page: 1, address: this.address, isOwner: 1 })
         .then((r) => {
           if (r.code == 1) {
             this.listOwner = r.data.list;
@@ -125,7 +125,7 @@ export default {
         .catch((e) => {
           this.$toast.error(e.message);
         });
-      getUserNftList({ page: 1, address: this.address, isOwner: 1 })
+      getUserNftList({ page: 1, address: this.address, isOwner: 0 })
         .then((r) => {
           if (r.code == 1) {
             this.listOther = r.data.list;
@@ -155,7 +155,7 @@ export default {
       getUserNftList(param)
         .then((r) => {
           if (r.code == 1) {
-            if (this.isOwner == 0) {
+            if (this.isOwner == 1) {
               this.listOwner = r.data.list;
               this.totalOwner = r.data.pageCount;
             } else {
