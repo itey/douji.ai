@@ -62,12 +62,17 @@
       </div>
     </template>
     <div class="divider"></div>
+    <div class="text-middle text-color">{{ $t("user.ba_income") }}</div>
+    <div class="settle-button">
+      <el-button
+        @click="$refs['creationDialog'].showDialog()"
+        class="common-btn1"
+        type="primary"
+        >{{ $t("user.ba_go_sett") }}</el-button
+      >
+    </div>
+    <div class="divider"></div>
     <div class="text-middle text-color">{{ $t("user.ba_st_in") }}</div>
-    <!-- <div class="settle-container">
-      <div class="unit text-color">MBD</div>
-      <div class="value text-color">68415.5684</div>
-      <div class="sub-value text-sub-color">≈$27.57</div>
-    </div>-->
     <div class="settle-button">
       <el-button
         @click="$refs['incomeDialog'].showDialog()"
@@ -123,6 +128,7 @@
       MBD
     </div>
     <IncomeDialog ref="incomeDialog" />
+    <CreationIncomeDialog ref="creationDialog" />
     <SettleConfirmDialog
       ref="settleConfirmDialog"
       :settleFee="settleFee"
@@ -132,8 +138,9 @@
 </template>
 
 <script>
-import IncomeDialog from "@/components/user/IncomeDialog";
-import SettleConfirmDialog from "@/components/user/SettleConfirmDialog";
+import IncomeDialog from "@/components/user/IncomeDialog.vue";
+import CreationIncomeDialog from "@/components/user/CreationIncomeDialog.vue";
+import SettleConfirmDialog from "@/components/user/SettleConfirmDialog.vue";
 import { accountSettle, getPledgeSettleAccount } from "@/utils/http";
 import { getBjxBalanceOf, getBjxUsdtPrice } from "@/utils/web3/open";
 import { confirmSettleSign } from "@/utils/web3/chain";
@@ -142,6 +149,7 @@ export default {
   components: {
     IncomeDialog,
     SettleConfirmDialog,
+    CreationIncomeDialog,
   },
   computed: {
     userAccount() {

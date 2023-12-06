@@ -1,11 +1,10 @@
-import BigNumber from 'bignumber.js';
-import { SHA256 } from 'crypto-js';
-import cache from './cache';
+import BigNumber from "bignumber.js";
+import { SHA256 } from "crypto-js";
+import cache from "./cache";
 
 /** 通用脱敏 */
 export function desensitization(str, beginLen, endLen) {
-
-  var tempStr = '';
+  var tempStr = "";
 
   var len = str.length;
 
@@ -13,12 +12,13 @@ export function desensitization(str, beginLen, endLen) {
 
   var lastStr = str.substr(endLen);
 
-  var middleStr = str.substring(beginLen, len - Math.abs(endLen)).replace(/[\s\S]/ig, '*');
+  var middleStr = str
+    .substring(beginLen, len - Math.abs(endLen))
+    .replace(/[\s\S]/gi, "*");
 
   tempStr = firstStr + middleStr + lastStr;
 
   return tempStr;
-
 }
 
 /**
@@ -29,22 +29,25 @@ export function desensitization(str, beginLen, endLen) {
 // 日期格式化
 export function parseTime(time, pattern) {
   if (arguments.length === 0 || !time) {
-    return null
+    return null;
   }
-  const format = pattern || '{y}-{m}-{d} {h}:{i}:{s}'
-  let date
-  if (typeof time === 'object') {
-    date = time
+  const format = pattern || "{y}-{m}-{d} {h}:{i}:{s}";
+  let date;
+  if (typeof time === "object") {
+    date = time;
   } else {
-    if ((typeof time === 'string') && (/^[0-9]+$/.test(time))) {
-      time = parseInt(time)
-    } else if (typeof time === 'string') {
-      time = time.replace(new RegExp(/-/gm), '/').replace('T', ' ').replace(new RegExp(/\.[\d]{3}/gm), '');
+    if (typeof time === "string" && /^[0-9]+$/.test(time)) {
+      time = parseInt(time);
+    } else if (typeof time === "string") {
+      time = time
+        .replace(new RegExp(/-/gm), "/")
+        .replace("T", " ")
+        .replace(new RegExp(/\.[\d]{3}/gm), "");
     }
-    if ((typeof time === 'number') && (time.toString().length === 10)) {
-      time = time * 1000
+    if (typeof time === "number" && time.toString().length === 10) {
+      time = time * 1000;
     }
-    date = new Date(time)
+    date = new Date(time);
   }
   const formatObj = {
     y: date.getFullYear(),
@@ -53,18 +56,20 @@ export function parseTime(time, pattern) {
     h: date.getHours(),
     i: date.getMinutes(),
     s: date.getSeconds(),
-    a: date.getDay()
-  }
+    a: date.getDay(),
+  };
   const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
-    let value = formatObj[key]
+    let value = formatObj[key];
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
-    if (result.length > 0 && value < 10) {
-      value = '0' + value
+    if (key === "a") {
+      return ["日", "一", "二", "三", "四", "五", "六"][value];
     }
-    return value || 0
-  })
-  return time_str
+    if (result.length > 0 && value < 10) {
+      value = "0" + value;
+    }
+    return value || 0;
+  });
+  return time_str;
 }
 
 // 表單更新
@@ -77,14 +82,19 @@ export function resetForm(refName) {
 // 新增日期范围
 export function addDateRange(params, dateRange, propName) {
   let search = params;
-  search.params = typeof (search.params) === 'object' && search.params !== null && !Array.isArray(search.params) ? search.params : {};
+  search.params =
+    typeof search.params === "object" &&
+    search.params !== null &&
+    !Array.isArray(search.params)
+      ? search.params
+      : {};
   dateRange = Array.isArray(dateRange) ? dateRange : [];
-  if (typeof (propName) === 'undefined') {
-    search.params['beginTime'] = dateRange[0];
-    search.params['endTime'] = dateRange[1];
+  if (typeof propName === "undefined") {
+    search.params["beginTime"] = dateRange[0];
+    search.params["endTime"] = dateRange[1];
   } else {
-    search.params['begin' + propName] = dateRange[0];
-    search.params['end' + propName] = dateRange[1];
+    search.params["begin" + propName] = dateRange[0];
+    search.params["end" + propName] = dateRange[1];
   }
   return search;
 }
@@ -96,15 +106,15 @@ export function selectDictLabel(datas, value) {
   }
   var actions = [];
   Object.keys(datas).some((key) => {
-    if (datas[key].value == ('' + value)) {
+    if (datas[key].value == "" + value) {
       actions.push(datas[key].label);
       return true;
     }
-  })
+  });
   if (actions.length === 0) {
     actions.push(value);
   }
-  return actions.join('');
+  return actions.join("");
 }
 
 // 回显数据字典（字符串数组）
@@ -118,30 +128,32 @@ export function selectDictLabels(datas, value, separator) {
   Object.keys(value.split(currentSeparator)).some((val) => {
     var match = false;
     Object.keys(datas).some((key) => {
-      if (datas[key].value == ('' + temp[val])) {
+      if (datas[key].value == "" + temp[val]) {
         actions.push(datas[key].label + currentSeparator);
         match = true;
       }
-    })
+    });
     if (!match) {
       actions.push(temp[val] + currentSeparator);
     }
-  })
-  return actions.join('').substring(0, actions.join('').length - 1);
+  });
+  return actions.join("").substring(0, actions.join("").length - 1);
 }
 
 // 字符串格式化(%s )
 export function sprintf(str) {
-  var args = arguments, flag = true, i = 1;
+  var args = arguments,
+    flag = true,
+    i = 1;
   str = str.replace(/%s/g, function () {
     var arg = args[i++];
-    if (typeof arg === 'undefined') {
+    if (typeof arg === "undefined") {
       flag = false;
-      return '';
+      return "";
     }
     return arg;
   });
-  return flag ? str : '';
+  return flag ? str : "";
 }
 
 // 转换字符串，undefined,null等转化为""
@@ -177,9 +189,9 @@ export function mergeRecursive(source, target) {
  */
 export function handleTree(data, id, parentId, children) {
   let config = {
-    id: id || 'id',
-    parentId: parentId || 'parentId',
-    childrenList: children || 'children'
+    id: id || "id",
+    parentId: parentId || "parentId",
+    childrenList: children || "children",
   };
 
   var childrenListMap = {};
@@ -220,19 +232,19 @@ export function handleTree(data, id, parentId, children) {
 }
 
 /**
-* 參數處理
-* @param {*} params  參數
-*/
+ * 參數處理
+ * @param {*} params  參數
+ */
 export function tansParams(params) {
-  let result = ''
+  let result = "";
   for (const propName of Object.keys(params)) {
     const value = params[propName];
     var part = encodeURIComponent(propName) + "=";
-    if (value !== null && typeof (value) !== "undefined") {
-      if (typeof value === 'object') {
+    if (value !== null && typeof value !== "undefined") {
+      if (typeof value === "object") {
         for (const key of Object.keys(value)) {
-          if (value[key] !== null && typeof (value[key]) !== 'undefined') {
-            let params = propName + '[' + key + ']';
+          if (value[key] !== null && typeof value[key] !== "undefined") {
+            let params = propName + "[" + key + "]";
             var subPart = encodeURIComponent(params) + "=";
             result += subPart + encodeURIComponent(value[key]) + "&";
           }
@@ -242,7 +254,7 @@ export function tansParams(params) {
       }
     }
   }
-  return result
+  return result;
 }
 
 // 验证是否为blob格式
@@ -258,41 +270,41 @@ export async function blobValidate(data) {
 
 // 获取UUID
 export function getUuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     var r = (Math.random() * 16) | 0,
-      v = c == 'x' ? r : (r & 0x3) | 0x8;
+      v = c == "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
 }
 
 export function percentage(val, total) {
   if (!val || val == 0) {
-    return '0.00%'
+    return "0.00%";
   } else {
-    return (val / total * 100).toFixed(2) + '%'
+    return ((val / total) * 100).toFixed(2) + "%";
   }
 }
 
 // wei->mbd
 export function weiToMbd(wei) {
   if (!wei) {
-    return wei
+    return wei;
   }
-  return Number(wei) / Math.pow(10, 8)
+  return Number(wei) / Math.pow(10, 8);
 }
 
 // mbd->wei
 export function mbdToWei(eth) {
   if (!eth) {
-    return eth
+    return eth;
   }
-  return new BigNumber(eth).shiftedBy(8).integerValue()
+  return new BigNumber(eth).shiftedBy(8).integerValue();
 }
 
 // wei->eth
 export function weiToEth(wei) {
   if (!wei) {
-    return wei
+    return wei;
   }
   return Number(wei) / Math.pow(10, 18);
 }
@@ -300,72 +312,72 @@ export function weiToEth(wei) {
 // eth->wei
 export function ethToWei(eth) {
   if (!eth) {
-    return eth
+    return eth;
   }
-  return new BigNumber(eth).shiftedBy(18).integerValue()
+  return new BigNumber(eth).shiftedBy(18).integerValue();
 }
 
 export function timestampToDate(timestamp) {
-  var date = new Date(Number(timestamp))  //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-  var Y = date.getFullYear() + "-"
+  var date = new Date(Number(timestamp)); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  var Y = date.getFullYear() + "-";
   var M =
     (date.getMonth() + 1 < 10
       ? "0" + (date.getMonth() + 1)
-      : date.getMonth() + 1) + "-"
-  var D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + " "
+      : date.getMonth() + 1) + "-";
+  var D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + " ";
   return Y + M + D;
 }
 
 /** 判断当天是否已签到 */
 export function ifCheckInToday(account) {
-  const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME_' + account)
+  const latestCheck = cache.local.get("DOJI_AI_CHECK_IN_TIME_" + account);
   if (latestCheck) {
-    const a = timestampToDate(latestCheck)
-    const b = timestampToDate(new Date().getTime())
+    const a = timestampToDate(latestCheck);
+    const b = timestampToDate(new Date().getTime());
     if (a === b) {
-      return true
+      return true;
     }
   }
-  return false
+  return false;
 }
 
 /** 获取当天阅读时长 */
 export function getBoxCountToday(account) {
-  const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME_' + account)
+  const latestCheck = cache.local.get("DOJI_AI_CHECK_IN_TIME_" + account);
   if (!ifCheckInToday()) {
-    return null
+    return null;
   }
-  const today = timestampToDate(latestCheck)
-  const count = cache.local.get('DOJI_BOX_COUNT_' + account + '_' + today)
+  const today = timestampToDate(latestCheck);
+  const count = cache.local.get("DOJI_BOX_COUNT_" + account + "_" + today);
   if (!count) {
-    return 0
+    return 0;
   } else {
-    return Number(count)
+    return Number(count);
   }
 }
 
 /** 增加盲盒次数 */
 export function addBoxCountToday(account) {
-  const latestCheck = cache.local.get('DOJI_AI_CHECK_IN_TIME_' + account)
+  const latestCheck = cache.local.get("DOJI_AI_CHECK_IN_TIME_" + account);
   if (!ifCheckInToday()) {
-    return
+    return;
   }
-  const today = timestampToDate(latestCheck)
-  const currentCount = getBoxCountToday()
-  cache.local.set('DOJI_BOX_COUNT_' + account + '_' + today, currentCount + 1)
-  return
+  const today = timestampToDate(latestCheck);
+  const currentCount = getBoxCountToday();
+  cache.local.set("DOJI_BOX_COUNT_" + account + "_" + today, currentCount + 1);
+  return;
 }
 
 /** 盲盒次数转时间格式显示 */
 export function boxCount2Time(count) {
-  count = count * 5 * 60
-  const time = Math.floor(count / 3600)
-  var hour = time < 10 ? '0' + time : time
-  var minute = Math.floor((count - time * 3600) / 60)
-  minute = minute < 10 ? '0' + minute : minute
-  var second = Math.floor(count - time * 3600 - minute * 60)
-  second = second < 10 ? '0' + second : second
-  return hour + ':' + minute + ':' + second
+  count = count * 5 * 60;
+  const time = Math.floor(count / 3600);
+  var hour = time < 10 ? "0" + time : time;
+  var minute = Math.floor((count - time * 3600) / 60);
+  minute = minute < 10 ? "0" + minute : minute;
+  var second = Math.floor(count - time * 3600 - minute * 60);
+  second = second < 10 ? "0" + second : second;
+  return hour + ":" + minute + ":" + second;
 }
 
 /** 保存盲盒标志 */
@@ -373,21 +385,21 @@ export function setBlindBoxFlagCache(userId, flag) {
   const cacheData = {
     flag: flag,
     time: new Date().getTime(),
-    invalid: false
-  }
-  cache.local.setJSON('DOJI_BOX_FLAG_' + userId, cacheData)
+    invalid: false,
+  };
+  cache.local.setJSON("DOJI_BOX_FLAG_" + userId, cacheData);
 }
 
 /** 更新盲盒状态 */
 export function setBlindBoxFlagState(userId, invalid) {
-  var cacheData = getBlindBoxFlagCache(userId)
-  cacheData && (cacheData.invalid = invalid)
-  cache.local.setJSON('DOJI_BOX_FLAG_' + userId, cacheData)
+  var cacheData = getBlindBoxFlagCache(userId);
+  cacheData && (cacheData.invalid = invalid);
+  cache.local.setJSON("DOJI_BOX_FLAG_" + userId, cacheData);
 }
 
 /** 获取盲盒标志 */
 export function getBlindBoxFlagCache(userId) {
-  return cache.local.getJSON('DOJI_BOX_FLAG_' + userId)
+  return cache.local.getJSON("DOJI_BOX_FLAG_" + userId);
 }
 
 /** 保存盲盒 */
@@ -395,35 +407,45 @@ export function setBlindBoxCache(userId, box) {
   var cacheData = {
     box: box,
     time: new Date().getTime(),
-    invalid: false
-  }
-  cache.local.setJSON('DOJI_BOX_' + userId, cacheData)
+    invalid: false,
+  };
+  cache.local.setJSON("DOJI_BOX_" + userId, cacheData);
 }
 
 /** 更新盲盒 */
 export function setBlindBoxState(userId, invalid) {
-  var cacheData = getBlindBoxCache(userId)
-  cacheData && (cacheData.invalid = invalid)
-  cache.local.setJSON('DOJI_BOX_' + userId, cacheData)
+  var cacheData = getBlindBoxCache(userId);
+  cacheData && (cacheData.invalid = invalid);
+  cache.local.setJSON("DOJI_BOX_" + userId, cacheData);
 }
 /** 获取盲盒 */
 export function getBlindBoxCache(userId) {
-  return cache.local.getJSON('DOJI_BOX_' + userId)
+  return cache.local.getJSON("DOJI_BOX_" + userId);
 }
 
 /** 对比 null,undefined,'' 表示同类 */
 export function emptyCompare(a, b) {
-  const v1 = a ? a.toString().trim() : null
-  const v2 = b ? b.toString().trim() : null
+  const v1 = a ? a.toString().trim() : null;
+  const v2 = b ? b.toString().trim() : null;
 
   if (!v1 && !v2) {
-    return true
+    return true;
   }
-  return SHA256(v1).toString() == SHA256(v2).toString()
+  return SHA256(v1).toString() == SHA256(v2).toString();
 }
 
 /** 过滤特殊字符 */
 export function specialCharFilter(val) {
-  if (!val) { return val }
-  return val.replace(/[`\\<>:"/;'\\·^……+={}“”‘’]/g, '').replace(/\s/g, "")
+  if (!val) {
+    return val;
+  }
+  return val.replace(/[`\\<>:"/;'\\·^……+={}“”‘’]/g, "").replace(/\s/g, "");
+}
+
+/** 秒转小时 */
+export function secondsToHour(val) {
+  if (!val) {
+    return val;
+  }
+  return Math.ceil(val / 3600);
 }

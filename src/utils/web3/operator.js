@@ -164,3 +164,69 @@ export function isFollow(account) {
       });
   });
 }
+
+/** 是否已加入计划 */
+export function ifCreativePlanIn() {
+  const operatorContract = getOperatorContract();
+  if (!operatorContract) {
+    return;
+  }
+  const fromAddress = store.state.chain.account;
+  return new Promise((resolve, reject) => {
+    operatorContract.methods
+      .creativePlan(fromAddress)
+      .call()
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+}
+
+/** 查询用户的粉丝数 */
+export function getUserFansCount() {
+  const operatorContract = getOperatorContract();
+  if (!operatorContract) {
+    return;
+  }
+  const fromAddress = store.state.chain.account;
+  return new Promise((resolve, reject) => {
+    operatorContract.methods
+      .userFans(fromAddress)
+      .call()
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+}
+
+/** 加入计划 */
+export function joinCreativePlan() {
+  if (!checkAccount()) {
+    return;
+  }
+  const operatorContract = getOperatorContract();
+  if (!operatorContract) {
+    return;
+  }
+  const fromAddress = store.state.chain.account;
+  return new Promise((resolve, reject) => {
+    operatorContract.methods
+      .joinCreativePlan()
+      .send({ from: fromAddress })
+      .on("transactionHash", (hash) => {
+        console.log("transactionHash:", hash);
+      })
+      .on("receipt", (receipt) => {
+        resolve(receipt);
+      })
+      .on("error", (error) => {
+        reject(error);
+      });
+  });
+}

@@ -31,6 +31,43 @@
           </div>
         </el-menu-item>
       </el-menu>
+      <template v-if="isPlanIn != undefined">
+        <div class="left-b">
+          <div class="title">Creator Creation Income Plan</div>
+          <div class="desc" v-if="isPlanIn">
+            Creation income can be settle done a week Creators, NFT holder sand
+            stakers can all participate in the settlement of work income. All
+            income after settlement will be transferred to the NFT DAO stake
+            dividend pool.
+          </div>
+          <div class="desc" v-else>
+            Once the number of followers of the creator reaches 100, and the
+            total reading time of the creation reaches 100 hours, he can join
+            the creator's creation income plan income will be obtained based on
+            the incremental value of reading time, likes, collections, etc. in
+            the future, and the income from the creation will belong to the
+            work. Allowed by DAO.
+          </div>
+          <div class="sub" v-if="fansSt">
+            <div class="num">{{ fansCount }} / {{ fansSt }}</div>
+            <p class="sub-desc">Subscriber</p>
+          </div>
+          <div class="split"></div>
+          <div class="sub" v-if="durationSt">
+            <div class="num">
+              {{ durationSeconds }} / {{ durationSt }}<span>Hour</span>
+            </div>
+            <p class="sub-desc">Subscriber</p>
+          </div>
+          <el-button
+            @click="handleJoinPlan()"
+            v-if="!isPlanIn"
+            :disabled="!canJoin"
+            class="btn common-btn1"
+            >Join the plan</el-button
+          >
+        </div>
+      </template>
     </el-aside>
     <el-main class="right">
       <router-view></router-view>
@@ -39,42 +76,138 @@
 </template>
 
 <script>
+import {
+  getCreativeDuration,
+  getCreativeFans,
+  getCreaterData,
+} from "@/utils/web3/open";
+import {
+  ifCreativePlanIn,
+  getUserFansCount,
+  joinCreativePlan,
+} from "@/utils/web3/operator";
+import { secondsToHour } from "@/utils/common";
 export default {
-  name: 'user-view',
+  name: "user-view",
   data() {
     return {
       menuList: [],
-    }
+      durationSt: undefined,
+      durationSeconds: 0,
+      fansSt: undefined,
+      fansCount: undefined,
+      isPlanIn: false,
+    };
+  },
+  computed: {
+    canJoin() {
+      if (this.isPlanIn) {
+        return false;
+      }
+
+      if (
+        this.fansSt != undefined &&
+        this.fansCount >= this.fansSt &&
+        this.durationSt != undefined &&
+        this.durationSeconds > this.durationSt
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   watch: {
-    '$store.state.common.language': function (val, od) {
+    "$store.state.common.language": function (val, od) {
       if (val != od) {
-        this.loadMenuList()
+        this.loadMenuList();
       }
     },
   },
   mounted() {
-    this.loadMenuList()
+    this.loadMenuList();
+    this.getStandardValue();
   },
   methods: {
+    /** 菜单加载 */
     loadMenuList() {
       this.menuList = [
         {
-          path: 'balance',
-          text: this.$t('user.menu_balance'),
+          path: "balance",
+          text: this.$t("user.menu_balance"),
         },
         {
-          path: 'nfts',
-          text: this.$t('user.menu_nfts'),
+          path: "nfts",
+          text: this.$t("user.menu_nfts"),
         },
         {
-          path: 'profile',
-          text: this.$t('user.menu_profile'),
+          path: "profile",
+          text: this.$t("user.menu_profile"),
         },
-      ]
+      ];
+    },
+    /** 查询计划阈值 */
+    getStandardValue() {
+      ifCreativePlanIn()
+        .then((planIn) => {
+          this.isPlanIn = planIn;
+          if (!this.isPlanIn) {
+            getCreativeDuration()
+              .then((r) => {
+                this.durationSt = r;
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+            getCreativeFans()
+              .then((r) => {
+                this.fansSt = r;
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+
+            getUserFansCount()
+              .then((r) => {
+                this.fansCount = r;
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+
+            getCreaterData(this.$store.state.user.account)
+              .then((r) => {
+                this.durationSeconds = secondsToHour(r[1]);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    /** 加入计划 */
+    handleJoinPlan() {
+      var loadingInstance = this.$loading({
+        background: "rgba(0, 0, 0, 0.8)",
+      });
+      joinCreativePlan()
+        .then((tx) => {
+          console.log(tx);
+          this.$toast.success(this.$t("user.plan_success"));
+        })
+        .catch((e) => {
+          this.$toast.error(e.message ? e.message : e);
+        })
+        .finally(() => {
+          this.getStandardValue();
+          loadingInstance.close();
+        });
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 .user-container {
@@ -84,6 +217,9 @@ export default {
   .el-aside {
     overflow: initial;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .el-menu-item:focus,
     .el-menu-item:hover {
@@ -109,6 +245,63 @@ export default {
 
       &.select {
         border-radius: 10px;
+      }
+    }
+
+    .left-b {
+      margin: 50px 10px 13px 10px;
+      padding: 15px;
+
+      .title {
+        text-align: left;
+        font-size: 18px;
+        font-family: Arial;
+        font-weight: bold;
+        line-height: 28px;
+      }
+
+      .desc {
+        margin-top: 17px;
+        text-align: left;
+        font-size: 14px;
+        font-family: Arial;
+        font-weight: bold;
+        line-height: 20px;
+      }
+
+      .sub {
+        text-align: left;
+        margin: 20px 0px;
+        .num {
+          font-size: 24px;
+          font-family: Arial;
+          font-weight: bold;
+          span {
+            margin-left: 5px;
+            font-size: 12px;
+            font-family: Arial;
+            font-weight: 400;
+          }
+        }
+
+        .sub-desc {
+          margin-top: 4px;
+          font-size: 12px;
+          font-family: Arial;
+          font-weight: bold;
+        }
+      }
+
+      .btn {
+        margin-top: 40px;
+        width: 198px;
+        height: 36px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

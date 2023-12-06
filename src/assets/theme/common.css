@@ -2,6 +2,7 @@
   width: 188px;
   background: linear-gradient(-21deg, #50ced5 0%, #46d1af 100%) !important;
   border-radius: 7px;
+  font-size: 18px !important;
 }
 
 .common-btn1:disabled {

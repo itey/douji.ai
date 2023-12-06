@@ -940,4 +940,33 @@
     border: 1px solid #f7f9fa;
     color: #36404b;
   }
+
+  .user-container .el-aside .left-b {
+    background: #f7f9fa;
+    border: none;
+    border-radius: 8px;
+    .title {
+      color: #1a2027;
+    }
+    .desc {
+      color: #636b72;
+    }
+
+    .sub {
+      .num {
+        color: #1a2027;
+
+        span {
+          color: #636b72;
+        }
+      }
+      .sub-desc {
+        color: #636b72;
+      }
+    }
+
+    .split {
+      border: 0.5px solid #eaedef;
+    }
+  }
 }

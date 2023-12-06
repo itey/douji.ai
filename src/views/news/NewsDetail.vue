@@ -831,7 +831,7 @@ export default {
     },
     /** 查询用户的NFT列表  */
     userNftList(address) {
-      getUserNftList(this.page, address)
+      getUserNftList({ page: this.page, address: address })
         .then((r) => {
           if (r.code == 1) {
             let arr = r.data.list;

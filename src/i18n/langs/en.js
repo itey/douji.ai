@@ -476,12 +476,13 @@ export default {
     settle_success: "Settlement application submitted successfully.",
     settle_success_1:
       "Settlement successful! The settled assets have been transferred to your wallet.",
-    inc_d_title: "Set NFT DAO Governance",
+    inc_d_title: "NFT Stake income settlement",
     plat_d_title: "Platform Rewards Settlement",
     plat_d_desc:
       "The fee of <span class='color-word'>{0} MBD</span> will be deducted from this settlement, and the MBD and BJXStar after settlement will be transferred to your wallet address within 24 hours. The first settlement will receive BNB rewards worth <span class='color-word'>$3.00 USD</span>.",
     balance: "Balance",
     ba_dist: "Distributes income to be settled",
+    ba_income: "Creation Income Settlement",
     ba_st_in: "NFT Stake income settlement",
     ba_go_sett: "Go Settlement",
     ba_plat_rew: "Platform rewards to be settled",
@@ -496,6 +497,7 @@ export default {
     short_tip: "Short bio to be displayed on the public profile page",
     social: "Social accounts",
     loc: "Location",
+    plan_success: "Join in success",
   },
   creator: {
     subscribe: "Subscribe",

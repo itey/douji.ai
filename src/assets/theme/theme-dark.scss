@@ -778,4 +778,33 @@
   .creator-container .list-container .title-container .sub {
     background-color: #262f39;
   }
+
+  .user-container .el-aside .left-b {
+    background: #212932;
+    border: 1px solid #28313c;
+    border-radius: 8px;
+    .title {
+      color: #ffffff;
+    }
+    .desc {
+      color: #9ab8db;
+    }
+
+    .sub {
+      .num {
+        color: #ffffff;
+
+        span {
+          color: #9ab8db;
+        }
+      }
+      .sub-desc {
+        color: #9ab8db;
+      }
+    }
+
+    .split {
+      border: 0.5px solid #1f262e;
+    }
+  }
 }
