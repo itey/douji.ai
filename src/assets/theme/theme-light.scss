@@ -112,6 +112,16 @@
     border-radius: 8px;
   }
 
+  .product-item {
+    border: 1px solid;
+    border-image: linear-gradient(0deg, #ebeff1, #f6f8f9) 10 10;
+    box-shadow: 0px 1px 2px 0px #e8eff0;
+
+    &:hover {
+      box-shadow: 0px 10px 13px 5px #e2eaeb;
+    }
+  }
+
   /* el-breadcrumb */
 
   .el-breadcrumb__inner a,

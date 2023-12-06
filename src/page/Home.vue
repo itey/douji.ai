@@ -1334,7 +1334,7 @@ export default {
 
       .item {
         width: 342px;
-        margin: 0 22px 24px 0;
+        margin: 0 20px 24px 0;
 
         &:nth-child(4n) {
           margin-right: 0;

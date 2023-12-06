@@ -56,8 +56,6 @@ export default {
 .product-item {
   position: relative;
   cursor: pointer;
-  // background: #1a2027;
-  box-shadow: 0px 8px 18px 0px rgba(9, 11, 12, 0.25);
   border-radius: 8px;
 
   img {

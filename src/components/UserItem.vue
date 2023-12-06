@@ -57,7 +57,7 @@ export default {
   position: relative;
   cursor: pointer;
   width: 270px;
-  box-shadow: 0px 8px 18px 0px rgba(9, 11, 12, 0.25);
+  // box-shadow: 0px 8px 18px 0px rgba(9, 11, 12, 0.25);
   border-radius: 8px;
 
   img {
