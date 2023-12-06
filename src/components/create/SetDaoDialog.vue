@@ -228,7 +228,8 @@ export default {
 
   .set-dao-top {
     border: 1px solid #1f272f;
-    padding: 33px 47px 0 47px;
+    margin: 33px 47px 20px 47px;
+    padding: 20px;
     text-align: left;
 
     .label {
@@ -243,7 +244,6 @@ export default {
   .set-dao-form {
     background: #212831;
     border-radius: 11px;
-    margin: 30px 0 84px 0;
     padding: 38px 0 44px 0;
   }
 
@@ -312,7 +312,6 @@ export default {
     font-family: Arial;
     font-weight: 400;
     color: #747c7c;
-    margin: 12px 35px 0 35px;
   }
 
   .btn-container {

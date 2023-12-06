@@ -19,83 +19,83 @@
 
 <script>
 export default {
-  name: 'bnb-dialog',
+  name: "bnb-dialog",
   props: {
     lang: {
       type: String,
-      default: 'en',
+      default: "en",
     },
     onConfirm: Function,
   },
   computed: {
     title() {
-      if (this.lang == 'en') {
-        return 'Important Reminder'
+      if (this.lang == "en") {
+        return "Important Reminder";
       } else {
-        return '重要提醒'
+        return "重要提醒";
       }
     },
     content() {
-      if (this.lang == 'en') {
-        return "The amount of BNB in your current account is less than <span class='color-word'>0.01BNB</span>, which may prevent you from completing this operation. Please add BNB to your wallet address as soon as possible."
+      if (this.lang == "en") {
+        return "The amount of BNB in your current account is less than <span class='color-word'>0.01BNB</span>, which may prevent you from completing this operation. Please add BNB to your wallet address as soon as possible.";
       } else {
-        return "您當前賬戶中的BNB數量已不足<span class='color-word'>0.01BNB</span>，可能導致您無法繼續完成本次操作，請盡快補充BNB到您的錢包地址。"
+        return "您當前賬戶中的BNB數量已不足<span class='color-word'>0.01BNB</span>，可能導致您無法繼續完成本次操作，請盡快補充BNB到您的錢包地址。";
       }
     },
     howTo() {
-      if (this.lang == 'en') {
-        return 'How to get BNB?'
+      if (this.lang == "en") {
+        return "How to get BNB?";
       } else {
-        return '如何獲得BNB'
+        return "如何獲得BNB";
       }
     },
     getBnb() {
-      if (this.lang == 'en') {
-        return 'Get BNB'
+      if (this.lang == "en") {
+        return "Get BNB";
       } else {
-        return '獲取BNB'
+        return "獲取BNB";
       }
     },
     continueGo() {
-      if (this.lang == 'en') {
-        return 'Continue'
+      if (this.lang == "en") {
+        return "Continue";
       } else {
-        return '繼續'
+        return "繼續";
       }
     },
   },
   data() {
     return {
       show: true,
-    }
+    };
   },
   methods: {
     showDialog() {
-      this.show = true
+      this.show = true;
     },
     handleConfirm() {
-      this.onConfirm()
-      this.show = false
+      this.onConfirm();
+      this.show = false;
       this.$nextTick(() => {
-        this.$destroy() // 手动销毁组件实例
-        this.$el.parentNode.removeChild(this.$el) // 从 DOM 中移除元素
-      })
+        this.$destroy(); // 手动销毁组件实例
+        this.$el.parentNode.removeChild(this.$el); // 从 DOM 中移除元素
+      });
     },
     goBuyNbn() {
-      if (this.lang == 'en') {
+      if (this.lang == "en") {
         window.open(
-          'https://docs.douji.ai/getting-started/how-to-get-bnb',
-          '_blank'
-        )
+          "https://docs.douji.ai/getting-started/how-to-get-bnb",
+          "_blank"
+        );
       } else {
         window.open(
-          'https://docs.douji.ai/v/zh-hk/getting-started/how-to-get-bnb',
-          '_blank'
-        )
+          "https://docs.douji.ai/v/zh-hk/getting-started/how-to-get-bnb",
+          "_blank"
+        );
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -116,7 +116,7 @@ export default {
 
   .desc-content {
     border: 1px solid #1f272f;
-    padding: 30px 52px 0 52px;
+    padding: 30px 52px 30px 52px;
     text-align: left;
     color: white;
     line-height: 30px;

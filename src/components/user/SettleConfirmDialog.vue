@@ -1,7 +1,7 @@
 <template>
   <el-dialog custom-class="settle-confirm" :visible.sync="show" width="1100px">
     <div class="income-header text-color" slot="title">
-      {{ $t('user.plat_d_title') }}
+      {{ $t("user.plat_d_title") }}
     </div>
     <div
       class="desc-content"
@@ -9,10 +9,10 @@
     ></div>
     <div class="confirm">
       <el-button class="confirm-btn" @click="handleConfirm()">{{
-        $t('user.settlement')
+        $t("user.settlement")
       }}</el-button>
       <el-button class="cancel-btn" @click="show = false">{{
-        $t('user.cancel')
+        $t("user.cancel")
       }}</el-button>
     </div>
   </el-dialog>
@@ -20,28 +20,28 @@
 
 <script>
 export default {
-  name: 'settle-confirm',
+  name: "settle-confirm",
   props: {
     settleFee: {
       type: String,
-      default: '0.0000',
+      default: "0.0000",
     },
   },
   data() {
     return {
       show: false,
-    }
+    };
   },
   methods: {
     showDialog() {
-      this.show = true
+      this.show = true;
     },
     handleConfirm() {
-      this.$emit('confirm')
-      this.show = false
+      this.$emit("confirm");
+      this.show = false;
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -62,7 +62,7 @@ export default {
 
   .desc-content {
     border: 1px solid #1f272f;
-    padding: 30px 52px 0 52px;
+    padding: 30px 52px 30px 52px;
     text-align: left;
     color: white;
     line-height: 30px;

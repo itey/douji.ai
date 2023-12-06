@@ -227,7 +227,6 @@ export default {
 
           .input {
             background: #0e161d;
-            border: 1px solid #313838;
             border-radius: 8px;
           }
 
