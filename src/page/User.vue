@@ -40,15 +40,25 @@
           <div class="desc" v-else>
             {{ $t("user.plan_desc_2") }}
           </div>
-          <div class="sub" v-if="fansSt">
+          <div class="sub" v-if="!isPlanIn">
             <div class="num">{{ fansCount }} / {{ fansSt }}</div>
             <p class="sub-desc">{{ $t("user.plan_sub") }}</p>
           </div>
+          <div class="sub" v-else>
+            <div class="num">{{ fansCount }}</div>
+            <p class="sub-desc">{{ $t("user.plan_sub") }}</p>
+          </div>
           <div class="split"></div>
-          <div class="sub" v-if="durationSt">
+          <div class="sub" v-if="!isPlanIn">
             <div class="num">
               {{ durationSeconds }} / {{ durationSt
               }}<span>{{ $t("user.plan_h") }}</span>
+            </div>
+            <p class="sub-desc">{{ $t("user.plan_time") }}</p>
+          </div>
+          <div class="sub" v-else>
+            <div class="num">
+              {{ durationSeconds }}<span>{{ $t("user.plan_h") }}</span>
             </div>
             <p class="sub-desc">{{ $t("user.plan_time") }}</p>
           </div>
