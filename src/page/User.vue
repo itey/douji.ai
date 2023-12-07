@@ -33,38 +33,31 @@
       </el-menu>
       <template v-if="isPlanIn != undefined">
         <div class="left-b">
-          <div class="title">Creator Creation Income Plan</div>
+          <div class="title">{{ $t("user.plan_title") }}</div>
           <div class="desc" v-if="isPlanIn">
-            Creation income can be settle done a week Creators, NFT holder sand
-            stakers can all participate in the settlement of work income. All
-            income after settlement will be transferred to the NFT DAO stake
-            dividend pool.
+            {{ $t("user.plan_desc_1") }}
           </div>
           <div class="desc" v-else>
-            Once the number of followers of the creator reaches 100, and the
-            total reading time of the creation reaches 100 hours, he can join
-            the creator's creation income plan income will be obtained based on
-            the incremental value of reading time, likes, collections, etc. in
-            the future, and the income from the creation will belong to the
-            work. Allowed by DAO.
+            {{ $t("user.plan_desc_2") }}
           </div>
           <div class="sub" v-if="fansSt">
             <div class="num">{{ fansCount }} / {{ fansSt }}</div>
-            <p class="sub-desc">Subscriber</p>
+            <p class="sub-desc">{{ $t("user.plan_sub") }}</p>
           </div>
           <div class="split"></div>
           <div class="sub" v-if="durationSt">
             <div class="num">
-              {{ durationSeconds }} / {{ durationSt }}<span>Hour</span>
+              {{ durationSeconds }} / {{ durationSt
+              }}<span>{{ $t("user.plan_h") }}</span>
             </div>
-            <p class="sub-desc">Total Creation Reading Time</p>
+            <p class="sub-desc">{{ $t("user.plan_time") }}</p>
           </div>
           <el-button
             @click="handleJoinPlan()"
             v-if="!isPlanIn"
             :disabled="!canJoin"
             class="btn common-btn1"
-            >Join The Plan</el-button
+            >{{ $t("user.plan_join") }}</el-button
           >
         </div>
       </template>

@@ -34,7 +34,7 @@
         ></el-table-column>
         <el-table-column :label="$t('user.ct_rate')" width="209px">
           <template slot-scope="scope">
-            {{ scope.row.valueRate | decimalPlace4 }}
+            {{ scope.row.tokenWorth }} / {{ totalWorth }}
           </template>
         </el-table-column>
         <el-table-column :label="$t('user.ct_income')" width="165px">

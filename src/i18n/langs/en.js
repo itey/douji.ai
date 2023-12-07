@@ -507,6 +507,15 @@ export default {
     ct_pool_balance: "Creator Fund Pool Balance(MBD)",
     ct_rate: "Token Value / Total Value",
     ct_income: "NFT DAO Income(MBD)",
+    plan_title: "Creator Creation Income Plan",
+    plan_desc_1:
+      "Creation income can be settle done a week Creators, NFT holder sand stakers can all participate in the settlement of work income. All income after settlement will be transferred to the NFT DAO stake dividend pool.",
+    plan_desc_2:
+      "Once the number of followers of the creator reaches 100, and the total reading time of the creation reaches 100 hours, he can join the creator's creation income plan income will be obtained based on the incremental value of reading time, likes, collections, etc. in the future, and the income from the creation will belong to the work. Allowed by DAO.",
+    plan_sub: "Subscriber",
+    plan_h: "Hour",
+    plan_time: "Total Creation Reading Time",
+    plan_join: "Join The Plan",
   },
   creator: {
     subscribe: "Subscribe",
