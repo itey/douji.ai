@@ -2,11 +2,12 @@
   <el-dialog
     custom-class="creation-income-dialog"
     @open="onOpen()"
+    @closed="onClose()"
     :visible.sync="show"
     width="1100px"
   >
     <div class="income-header text-color" slot="title">
-      {{ $t("user.inc_d_title") }}
+      {{ $t("user.ct_title") }}
     </div>
     <div class="income-content">
       <el-table
@@ -17,38 +18,28 @@
       >
         <el-table-column type="selection" width="47px"></el-table-column>
         <el-table-column
-          label="Token ID"
+          :label="$t('user.st_token_id')"
           prop="token_id"
           width="119px"
         ></el-table-column>
         <el-table-column
           prop="name"
-          label="NFT name"
+          :label="$t('user.st_name')"
           width="211px"
         ></el-table-column>
         <el-table-column
           prop="settlePoolBalance"
-          label="Bonus Dividend Pool BalancelMBD)"
+          :label="$t('user.ct_pool_balance')"
           width="249px"
         ></el-table-column>
-        <el-table-column label="Your NFTs / Members NFTs" width="209px">
+        <el-table-column :label="$t('user.ct_rate')" width="209px">
           <template slot-scope="scope">
-            <span
-              >{{ scope.row.userStake }} / {{ scope.row.totalStakeCount }}</span
-            >
+            {{ scope.row.valueRate | decimalPlace4 }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="userStake"
-          label="Stake NFT Income(MBD)"
-          width="165px"
-        >
+        <el-table-column :label="$t('user.ct_income')" width="165px">
           <template slot-scope="scope">
-            <span>{{
-              ((scope.row.settlePoolBalance * 0.2 * scope.row.userStake) /
-                scope.row.totalStakeCount)
-                | decimalPlace8
-            }}</span>
+            <span>{{ scope.row.incomeValue | decimalPlace8 }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -74,15 +65,21 @@
 
 <script>
 import { pledgeSettleList } from "@/utils/http";
-import { userPledgeCount } from "@/utils/web3/nft";
 import { weiToMbd } from "@/utils/common";
-import { totalPledgeCount, getSettlePoolBalance } from "@/utils/web3/open";
-import { marketSettleBatch } from "@/utils/web3/market";
+import {
+  getAllValueData,
+  getCreatorSettlePool,
+  getCPD,
+} from "@/utils/web3/open";
+import { settleCreativeBonus } from "@/utils/web3/operator";
 export default {
   name: "creation-income-dialog",
   data() {
     return {
       show: false,
+      timer: undefined,
+      creatorPoolBalance: undefined,
+      totalWorth: undefined,
       pageNo: 1,
       pageSize: 20,
       totalCount: 0,
@@ -97,6 +94,15 @@ export default {
     onOpen() {
       this.pageNo = 1;
       this.pageLoad();
+      this.timer = setInterval(() => {
+        this.getTotalValue();
+        this.getMbdCreatorPoolBalance();
+      }, 20000);
+    },
+    onClose() {
+      if (this.timer) {
+        clearInterval(this.timer);
+      }
     },
     /** 选择的数据发生变化 */
     handleSelectionChange(val) {
@@ -105,18 +111,32 @@ export default {
     onPageChange() {
       this.pageLoad();
     },
+    /** 计算价值 */
+    computationValue(tableList) {
+      if (!tableList || tableList.length <= 0) {
+        return tableList;
+      }
+      tableList.forEach((token) => {
+        token.settlePoolBalance = this.creatorPoolBalance;
+        token.valueRate = token.tokenWorth / this.totalWorth;
+        token.incomeValue = token.valueRate * this.creatorPoolBalance * 0.1;
+      });
+    },
     /** 加载数据 */
     async pageLoad() {
       var loadingInstance = this.$loading({
         background: "rgba(0, 0, 0, 0.8)",
       });
       try {
+        await this.getMbdCreatorPoolBalance();
+        await this.getTotalValue();
         const r = await pledgeSettleList(this.pageNo);
         if (r.code == 1) {
           var stakeList = r.data.list;
           if (stakeList && stakeList.length > 0) {
             await this.batchQueryStakeInfo(stakeList);
-            this.tableData = r.data.list;
+            this.computationValue(stakeList);
+            this.tableData = stakeList;
           }
           this.totalCount = r.data.pageCount;
         } else {
@@ -133,21 +153,23 @@ export default {
       var promise = [];
       for (var i = 0; i < stakeList.length; i++) {
         var stake = stakeList[i];
-        promise.push(this.getUserStakeCount(stake));
-        promise.push(this.getTotalStakeCount(stake));
-        promise.push(this.getMbdSettleBalance(stake));
+        promise.push(this.getTokenWorth(stake));
       }
       await Promise.all(promise);
     },
-    /** 获取用户质押信息 */
-    getUserStakeCount(stake) {
+    /** 获取 */
+    getTokenWorth(stake) {
       if (!this.$store.state.user.account) {
         return;
       }
       return new Promise((resolve) => {
-        userPledgeCount(stake.token_id)
+        getCPD(stake.token_id)
           .then((data) => {
-            stake.userStake = data[0];
+            const c = data[0];
+            const p = data[1];
+            const d = data[2];
+            // tokenid阅读时长*100+tokenid点赞量*1+tokenid收藏量*10
+            stake.tokenWorth = Number(d) * 100 + Number(p) + Number(c) * 10;
             return resolve();
           })
           .catch((e) => {
@@ -156,12 +178,12 @@ export default {
           });
       });
     },
-    /** 获取质押总量 */
-    getTotalStakeCount(stake) {
+    /** 获取总价值 */
+    getTotalValue() {
       return new Promise((resolve) => {
-        totalPledgeCount(stake.token_id)
-          .then((count) => {
-            stake.totalStakeCount = count ? count : 0;
+        getAllValueData()
+          .then((worth) => {
+            this.totalWorth = worth;
             return resolve();
           })
           .catch((e) => {
@@ -170,12 +192,12 @@ export default {
           });
       });
     },
-    /** 取合约里DAO 质押奖金池子的额度 */
-    getMbdSettleBalance(stake) {
+    /** 取合约里基金池余额 */
+    getMbdCreatorPoolBalance() {
       return new Promise((resolve) => {
-        getSettlePoolBalance(stake.token_id)
+        getCreatorSettlePool()
           .then((balance) => {
-            stake.settlePoolBalance = weiToMbd(balance);
+            this.creatorPoolBalance = weiToMbd(balance);
             return resolve();
           })
           .catch((e) => {
@@ -203,7 +225,7 @@ export default {
       var loadingInstance = this.$loading({
         background: "rgba(0, 0, 0, 0.8)",
       });
-      marketSettleBatch(arr)
+      settleCreativeBonus(arr)
         .then(() => {
           this.$toast.success(this.$t("user.settle_success_1"));
           this.multipleSelection = [];

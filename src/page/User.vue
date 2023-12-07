@@ -57,14 +57,14 @@
             <div class="num">
               {{ durationSeconds }} / {{ durationSt }}<span>Hour</span>
             </div>
-            <p class="sub-desc">Subscriber</p>
+            <p class="sub-desc">Total Creation Reading Time</p>
           </div>
           <el-button
             @click="handleJoinPlan()"
             v-if="!isPlanIn"
             :disabled="!canJoin"
             class="btn common-btn1"
-            >Join the plan</el-button
+            >Join The Plan</el-button
           >
         </div>
       </template>

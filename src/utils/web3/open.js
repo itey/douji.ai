@@ -313,6 +313,25 @@ export function getCreativeFans() {
   });
 }
 
+/** 获取创作者资金池 */
+export function getCreatorSettlePool() {
+  const operatorContract = getOperatorContract();
+  if (!operatorContract) {
+    return;
+  }
+  return new Promise((resolve, reject) => {
+    operatorContract.methods
+      .createrSettlePool()
+      .call()
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+}
+
 ///////////////////NFT///////////////////
 /** 获取NFT合约 */
 function getNFTContract() {
@@ -480,6 +499,25 @@ export function getCreaterData(owner) {
   return new Promise((resolve, reject) => {
     nftContract.methods
       .getCreaterData(owner)
+      .call()
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+}
+
+/** 查询总价值 */
+export function getAllValueData() {
+  const nftContract = getNFTContract();
+  if (!nftContract) {
+    return;
+  }
+  return new Promise((resolve, reject) => {
+    nftContract.methods
+      .allValue()
       .call()
       .then((res) => {
         resolve(res);

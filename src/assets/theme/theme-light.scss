@@ -738,11 +738,11 @@
     background: #ffffff;
   }
 
-  .container .balance .balance-address-container {
+  .balance-container .balance .balance-address-container {
     background: #f7f9fa;
   }
 
-  .container .balance-value .item {
+  .balance-container .balance-value .item {
     border: 1px solid #eaedef;
 
     .sub-value {
@@ -754,7 +754,7 @@
     }
   }
 
-  .container .settle-container {
+  .balance-container .settle-container {
     background: #f7f9fa;
 
     .unit {
@@ -764,6 +764,10 @@
     .sub-value {
       color: #636b72;
     }
+  }
+
+  .balance-container .divider {
+    background: #eaedef;
   }
 
   .settle-label {

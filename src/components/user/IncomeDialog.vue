@@ -17,21 +17,21 @@
       >
         <el-table-column type="selection" width="47px"></el-table-column>
         <el-table-column
-          label="Token ID"
+          :label="$t('user.st_token_id')"
           prop="token_id"
           width="119px"
         ></el-table-column>
         <el-table-column
           prop="name"
-          label="NFT name"
+          :label="$t('user.st_name')"
           width="211px"
         ></el-table-column>
         <el-table-column
           prop="settlePoolBalance"
-          label="Bonus Dividend Pool BalancelMBD)"
+          :label="$t('user.st_pool_balance')"
           width="249px"
         ></el-table-column>
-        <el-table-column label="Your NFTs / Members NFTs" width="209px">
+        <el-table-column :label="$t('user.st_rate')" width="209px">
           <template slot-scope="scope">
             <span
               >{{ scope.row.userStake }} / {{ scope.row.totalStakeCount }}</span
@@ -40,7 +40,7 @@
         </el-table-column>
         <el-table-column
           prop="userStake"
-          label="Stake NFT Income(MBD)"
+          :label="$t('user.st_income')"
           width="165px"
         >
           <template slot-scope="scope">

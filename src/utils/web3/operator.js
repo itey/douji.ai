@@ -230,3 +230,29 @@ export function joinCreativePlan() {
       });
   });
 }
+
+/** 结算计划 */
+export function settleCreativeBonus(tokenIdArr) {
+  if (!checkAccount()) {
+    return;
+  }
+  const operatorContract = getOperatorContract();
+  if (!operatorContract) {
+    return;
+  }
+  const fromAddress = store.state.chain.account;
+  return new Promise((resolve, reject) => {
+    operatorContract.methods
+      .settleCreativeBonus(tokenIdArr)
+      .send({ from: fromAddress })
+      .on("transactionHash", (hash) => {
+        console.log("transactionHash:", hash);
+      })
+      .on("receipt", (receipt) => {
+        resolve(receipt);
+      })
+      .on("error", (error) => {
+        reject(error);
+      });
+  });
+}

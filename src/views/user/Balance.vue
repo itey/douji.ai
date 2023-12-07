@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="balance-container">
     <div class="balance">
       <div class="text-big text-color">{{ $t("user.balance") }}</div>
       <div class="balance-address-container" @click="handleCopyAddress()">
@@ -47,7 +47,6 @@
         <div class="unit text-color">DJPlanet NFT</div>
       </div>
     </div>
-    <div class="divider"></div>
     <template v-if="false">
       <div class="text-middle text-color">{{ $t("user.ba_dist") }}</div>
       <div class="settle-container">
@@ -61,7 +60,6 @@
         }}</el-button>
       </div>
     </template>
-    <div class="divider"></div>
     <div class="text-middle text-color">{{ $t("user.ba_income") }}</div>
     <div class="settle-button">
       <el-button
@@ -104,7 +102,7 @@
         </div>
       </div>
     </div>
-    <div class="settle-button">
+    <div class="settle-button" style="margin-top: 30px; margin-bottom: 0px">
       <el-button
         @click="$refs['settleConfirmDialog'].showDialog()"
         class="common-btn1"
@@ -251,7 +249,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.balance-container {
   width: 100%;
   padding: 0 25px;
   display: flex;
@@ -271,6 +269,7 @@ export default {
     line-height: 24px;
     font-family: Arial;
     font-weight: bold;
+    margin: 30px 0px;
   }
 
   .balance {
@@ -340,9 +339,8 @@ export default {
   }
 
   .divider {
+    width: 85%;
     height: 1px;
-    background: #1e252d;
-    margin-top: 37px;
   }
 
   .settle-containers {
@@ -357,7 +355,6 @@ export default {
     align-items: flex-start;
     width: 416px;
     border-radius: 8px;
-    margin-top: 39px;
 
     .unit {
       line-height: 16px;
@@ -386,8 +383,7 @@ export default {
   .settle-button {
     display: flex;
     flex-direction: row;
-    align-items: left;
-    margin-top: 24px;
+    margin-bottom: 30px;
   }
 
   .settle-label {
