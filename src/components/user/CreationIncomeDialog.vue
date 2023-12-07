@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { pledgeSettleList } from "@/utils/http";
+import { createSettleList } from "@/utils/http";
 import { weiToMbd } from "@/utils/common";
 import {
   getAllValueData,
@@ -130,7 +130,7 @@ export default {
       try {
         await this.getMbdCreatorPoolBalance();
         await this.getTotalValue();
-        const r = await pledgeSettleList(this.pageNo);
+        const r = await createSettleList(this.pageNo);
         if (r.code == 1) {
           var stakeList = r.data.list;
           if (stakeList && stakeList.length > 0) {

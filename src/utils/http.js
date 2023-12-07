@@ -355,3 +355,12 @@ export function getStatistics() {
     method: "post",
   });
 }
+
+// 计划结算列表
+export function createSettleList(page) {
+  return request({
+    url: "/createSettleList",
+    method: "post",
+    params: { page },
+  });
+}

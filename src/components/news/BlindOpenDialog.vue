@@ -266,7 +266,7 @@ export default {
 
   &.el-dialog {
     background-color: black;
-    opacity: 0.8;
+    // opacity: 0.8;
     border: none;
   }
 
@@ -399,7 +399,7 @@ export default {
         border-radius: 25px;
         cursor: pointer;
         margin-left: 46px;
-        color: #5e646d;
+        color: #ffffff;
       }
     }
     .blind-tip {

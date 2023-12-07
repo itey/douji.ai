@@ -949,6 +949,7 @@ post
 | 参数名   | 约束-required | 类型 | 说明 |
 | :------ |:------ | :------    |:------ |
 | page |true   | int |页码 默认1   每页显示20条|
+| keyW |true   | string |关键字|
 ##### Response parameters:
 
 ```json
@@ -2073,7 +2074,7 @@ post
     "data":{
         "id":2,
         "day":"2023-12-03",
-        "nft_mint_all":7,//1155已mint的所有数量
+        "nft_count":7,//tokenid数量
         "market_cap":"8300.000000",//总市值
         "mbd_circulation":"500000000000.000000",//MBD流通量
         "nft_volume":"0.000000",//NFT交易额
@@ -2083,7 +2084,7 @@ post
         "weekly_active_users":19,//活跃用户
         "nft_createcount_24h":0,//NFT24小时候创建数量
         "mbd_price":"0.000010",//MBD价格
-        "nft_mint_all_rate":"-",
+        "nft_count_rate":"-",
         "market_cap_rate":"-",
         "mbd_circulation_rate":"-",
         "nft_volume_rate":"-",
@@ -2092,7 +2093,10 @@ post
         "transfers_24h_rate":"-",
         "weekly_active_users_rate":"-",
         "nft_createcount_24h_rate":"-",
-        "mbd_price_rate":"-"
+        "mbd_price_rate":"-",
+        "creater_count": 100,//创作者,
+        "user_count": 100,//用户数,
+        "all_supply": 100,//nft总发行量
     }
 }
 ```
@@ -2103,3 +2107,46 @@ post
 | -------------|:---------------------------------|
 | 0            | 失败   |
 | 1            | 成功   |   
+
+
+
+### 42.创作者待结算列表
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/createSettleList
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| page |true   | int |页码 默认1   每页显示20条|
+##### Response parameters:
+
+```json
+{
+    "code": 1,
+    "message": "ok",
+    "data": {
+       "list": [
+          {"token_id":111111,"name": "11111"}
+       ],
+       "page": 1,
+       "pageCount": 3
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |
+
