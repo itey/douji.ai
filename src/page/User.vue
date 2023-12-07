@@ -151,6 +151,7 @@ export default {
       ifCreativePlanIn()
         .then((planIn) => {
           this.isPlanIn = planIn;
+          this.$store.commit("setCreatorPlan", planIn);
           if (!this.isPlanIn) {
             getCreativeDuration()
               .then((r) => {
@@ -294,6 +295,7 @@ export default {
 
       .btn {
         margin-top: 40px;
+        margin-bottom: 10px;
         width: 198px;
         height: 36px;
         border-radius: 10px;
