@@ -2,14 +2,14 @@ import i18n from "@/i18n";
 import store from "@/store";
 import Vue from "vue";
 import marketJson from "./abi/market";
-import { checkAccount } from "./chain";
+import { checkAccount, getWeb3FromCache } from "./chain";
 import { mbdToWei } from "../common";
 
 var contract = undefined;
 
 /** 获取市场合约 */
 function getMarketContract() {
-  const web3 = window.web3Particle;
+  const web3 = getWeb3FromCache();
   if (!web3) {
     Vue.$toast(i18n.t("common.need_reconnect_wallet"));
     return null;

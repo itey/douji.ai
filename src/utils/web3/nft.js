@@ -3,13 +3,13 @@ import store from "@/store";
 import Vue from "vue";
 import { mbdToWei } from "../common";
 import nft from "./abi/nft";
-import { checkAccount } from "./chain";
+import { checkAccount, getWeb3FromCache } from "./chain";
 
 var nftContract = undefined;
 
 /** 获取NFT合约 */
 function getNFTContract() {
-  const web3 = window.web3Particle;
+  const web3 = getWeb3FromCache();
   if (!web3) {
     Vue.$toast(i18n.t("common.need_reconnect_wallet"));
     return null;

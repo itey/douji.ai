@@ -5,7 +5,11 @@ import { eventBus } from "@/utils/event-bus";
 import { checkInContract } from "@/utils/web3/operator";
 import { checkIn, login, getUserInfo, contractSign } from "@/utils/http";
 import { beginEventBus, endEventBus } from "@/utils/task";
-import { checkInSign, loginWalletSign } from "@/utils/web3/chain";
+import {
+  checkInSign,
+  loginWalletSign,
+  getWeb3FromCache,
+} from "@/utils/web3/chain";
 import { i18n } from "element-ui/lib/locale";
 import Vue from "vue";
 
@@ -50,7 +54,7 @@ const user = {
       if (!payload.address) {
         return;
       }
-      if (!window.web3Particle) {
+      if (!getWeb3FromCache()) {
         return;
       }
       const currentAccount = store.state.user.account;
@@ -202,7 +206,7 @@ const user = {
     // 检查登录状态，未登录则弹窗登录
     CheckLogin({ commit }, ifOpenConnect) {
       return new Promise((resolve) => {
-        if (store.state.user.token && window.web3Particle) {
+        if (store.state.user.token && getWeb3FromCache()) {
           return resolve(true);
         } else {
           if (ifOpenConnect) {

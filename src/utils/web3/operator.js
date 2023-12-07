@@ -2,13 +2,13 @@ import i18n from "@/i18n";
 import store from "@/store";
 import Vue from "vue";
 import operator from "./abi/operator";
-import { checkAccount } from "./chain";
+import { checkAccount, getWeb3FromCache } from "./chain";
 
 var contract = undefined;
 
 /** 获取市场合约 */
 function getOperatorContract() {
-  const web3 = window.web3Particle;
+  const web3 = getWeb3FromCache();
   if (!web3) {
     Vue.$toast(i18n.t("common.need_reconnect_wallet"));
     return null;
@@ -147,6 +147,9 @@ export function subscribeAuthorContract(address) {
 
 /** 查询我是否关注了 */
 export function isFollow(account) {
+  if (!checkAccount()) {
+    return;
+  }
   const operatorContract = getOperatorContract();
   if (!operatorContract) {
     return;

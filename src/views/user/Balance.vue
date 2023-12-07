@@ -60,18 +60,16 @@
         }}</el-button>
       </div>
     </template>
-    <template v-if="isInPlan">
-      <div class="text-middle text-color">{{ $t("user.ba_income") }}</div>
-      <div class="settle-button">
-        <el-button
-          @click="$refs['creationDialog'].showDialog()"
-          class="common-btn1"
-          type="primary"
-          >{{ $t("user.ba_go_sett") }}</el-button
-        >
-      </div>
-      <div class="divider"></div>
-    </template>
+    <div class="text-middle text-color">{{ $t("user.ba_income") }}</div>
+    <div class="settle-button">
+      <el-button
+        @click="$refs['creationDialog'].showDialog()"
+        class="common-btn1"
+        type="primary"
+        >{{ $t("user.ba_go_sett") }}</el-button
+      >
+    </div>
+    <div class="divider"></div>
     <div class="text-middle text-color">{{ $t("user.ba_st_in") }}</div>
     <div class="settle-button">
       <el-button

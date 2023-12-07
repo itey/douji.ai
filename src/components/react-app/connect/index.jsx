@@ -48,11 +48,13 @@ function WalletButton() {
     if (connectKit) {
       connectKit.on('connect', (provider) => {
         if (provider && isEVMProvider(provider)) {
-          window.web3Particle = new Web3(provider)
+          const web3 = new Web3(provider)
+          window.web3Particle = web3
         }
       })
       connectKit.on('disconnect', () => {
         console.log('disconnect')
+        sessionStorage.removeItem("web3Provider")
       })
       connectKit.on('chainChanged', (chain) => {
         console.log('chainChanged:', chain)

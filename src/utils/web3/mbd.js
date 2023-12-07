@@ -1,69 +1,68 @@
-import i18n from '@/i18n'
-import store from '@/store'
-import Vue from 'vue'
-import { mbdToWei } from '../common'
-import mbd from './abi/mbd'
-import { checkAccount } from './chain'
-
+import i18n from "@/i18n";
+import store from "@/store";
+import Vue from "vue";
+import { mbdToWei } from "../common";
+import mbd from "./abi/mbd";
+import { checkAccount, getWeb3FromCache } from "./chain";
 
 /** 获取MBD合约 */
 function getMBDContract() {
-  const web3 = window.web3Particle
+  const web3 = getWeb3FromCache();
   if (!web3) {
-    Vue.$toast.warning(i18n.t('common.need_reconnect_wallet'))
-    return
+    Vue.$toast.warning(i18n.t("common.need_reconnect_wallet"));
+    return;
   }
-  return new web3.eth.Contract(mbd.abi, process.env.VUE_APP_MBD)
+  return new web3.eth.Contract(mbd.abi, process.env.VUE_APP_MBD);
 }
 
 /** 授权MBD */
 export function approveMbd(spender, count) {
   if (!checkAccount()) {
-    return
+    return;
   }
-  const mbdContract = getMBDContract()
+  const mbdContract = getMBDContract();
   if (!mbdContract) {
-    return
+    return;
   }
-  const userAccount = store.state.chain.account
+  const userAccount = store.state.chain.account;
   return new Promise((resolve, reject) => {
-    mbdContract.methods.approve(spender, mbdToWei(count) + '')
+    mbdContract.methods
+      .approve(spender, mbdToWei(count) + "")
       .send({ from: userAccount })
-      .on('transactionHash', (hash) => {
-        console.log('transactionHash:', hash)
+      .on("transactionHash", (hash) => {
+        console.log("transactionHash:", hash);
       })
-      .on('receipt', (receipt) => {
-        resolve(receipt)
+      .on("receipt", (receipt) => {
+        resolve(receipt);
       })
-      .on('error', (error) => {
-        reject(error.message)
-      })
-  })
-
+      .on("error", (error) => {
+        reject(error.message);
+      });
+  });
 }
 
 /** MBD转账 */
 export function transferMbd(to, count) {
   if (!checkAccount()) {
-    return
+    return;
   }
-  const mbdContract = getMBDContract()
+  const mbdContract = getMBDContract();
   if (!mbdContract) {
-    return
+    return;
   }
-  const userAccount = store.state.chain.account
+  const userAccount = store.state.chain.account;
   return new Promise((resolve, reject) => {
-    mbdContract.methods.transfer(to, mbdToWei(count) + '')
+    mbdContract.methods
+      .transfer(to, mbdToWei(count) + "")
       .send({ from: userAccount })
-      .on('transactionHash', (hash) => {
-        console.log('transactionHash:', hash)
+      .on("transactionHash", (hash) => {
+        console.log("transactionHash:", hash);
       })
-      .on('receipt', (receipt) => {
-        resolve(receipt)
+      .on("receipt", (receipt) => {
+        resolve(receipt);
       })
-      .on('error', (error) => {
-        reject(error.message)
-      })
-  })
-
+      .on("error", (error) => {
+        reject(error.message);
+      });
+  });
 }
