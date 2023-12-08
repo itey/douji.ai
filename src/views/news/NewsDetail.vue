@@ -38,6 +38,7 @@
             :creator="tokenOwner"
           />
           <el-image
+            v-if="metadata.image"
             style="
               width: 940px;
               height: 532px;
@@ -47,6 +48,15 @@
             :src="metadata.image"
             fit="cover"
           ></el-image>
+          <div
+            v-else
+            style="
+              width: 940px;
+              height: 532px;
+              border-radius: 8px;
+              margin-top: 36px;
+            "
+          ></div>
 
           <div class="form-desc">{{ metadata.description }}</div>
           <div class="form-label-sub" style="margin-top: 16px">
