@@ -443,8 +443,7 @@ export default {
     setTimeout(async () => {
       try {
         await this.dataLoad();
-        console.log(this.tokenOwner);
-        if (!this.tokenSupplyInfo) {
+        if (this.tokenSupplyInfo) {
           this.checkIn();
           this.checkBlindBox();
           this.blindBoxTimerTask = setInterval(() => {
