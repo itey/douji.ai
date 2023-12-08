@@ -2150,3 +2150,43 @@ post
 | 0            | 失败   |
 | 1            | 成功   |
 
+### 43.用户作品
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/createrNftList
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+| page |true   | int |页码 默认1   每页显示18条|
+| address |true   | string |地址|
+##### Response parameters:
+
+```json
+{
+    "code": 1,
+    "message": "ok",
+    "data": {
+       "list": [
+          {"token_id":111111,"name": "11111"}
+       ],
+       "page": 1,
+       "pageCount": 3
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |

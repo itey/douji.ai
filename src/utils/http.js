@@ -364,3 +364,12 @@ export function createSettleList(page) {
     params: { page },
   });
 }
+
+// 创作作品列表
+export function createrNftList(param) {
+  return request({
+    url: "/createrNftList",
+    method: "post",
+    params: param,
+  });
+}

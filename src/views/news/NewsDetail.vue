@@ -314,7 +314,7 @@ import {
   getNftTransactions,
   loadFromUrl,
   unlockContent,
-  getUserNftList,
+  createrNftList,
 } from "@/utils/http";
 import { balanceOf, userPledgeCount } from "@/utils/web3/nft";
 import { getTokenOwner, tokenURI, tokensData } from "@/utils/web3/open";
@@ -831,7 +831,7 @@ export default {
     },
     /** 查询用户的NFT列表  */
     userNftList(address) {
-      getUserNftList({ page: this.page, address: address })
+      createrNftList({ page: this.page, address: address })
         .then((r) => {
           if (r.code == 1) {
             let arr = r.data.list;
