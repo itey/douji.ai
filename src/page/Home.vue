@@ -1,13 +1,12 @@
 <template>
   <div class="home-container">
-    <!-- <div class="bg"></div> -->
-    <div
-      class="top-container"
-      v-loading="loading['news']"
-      :element-loading-background="$store.state.common.theme | maskByTheme"
-    >
-      <div class="news-img-container" v-if="bannerNews">
-        <img style="width: 934px; height: 526px" :src="bannerNews.image" />
+    <div class="top-container">
+      <div class="news-img-container">
+        <el-image
+          style="width: 934px; height: 528px; border-radius: 8px"
+          :src="bannerNews.image"
+          fit="cover"
+        ></el-image>
         <div class="news-text">
           <div
             class="title"
@@ -1000,20 +999,27 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    border: none !important;
 
     .news-img-container {
       position: relative;
-      border-radius: 8px;
+      // border-radius: 8px;
+      border: none !important;
+      background: transparent;
 
-      img {
-        border-radius: 8px;
+      .el-image {
+        background: transparent;
+        .el-image__inner {
+          background: transparent;
+        }
       }
 
       .news-text {
         position: absolute;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        bottom: 0px;
+        border: none !important;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        bottom: 3px;
         left: 0px;
         right: 0px;
         background: linear-gradient(

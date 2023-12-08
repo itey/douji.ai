@@ -38,6 +38,13 @@
   background: transparent !important;
 }
 
+.el-image,
+.el-image__placeholder,
+.el-image__inner,
+.el-image__error {
+  background: transparent !important;
+}
+
 /* el-pagination */
 .el-pagination {
   position: relative;

@@ -17,6 +17,7 @@
 
     <NftDaoVote
       v-if="
+        tokenOwner &&
         tokenSupplyInfo.isVoting &&
         !voteOverTime &&
         (userOwned > 0 || userStakeInfo[0] > 0)
@@ -27,7 +28,7 @@
       :tokenInfo="tokenSupplyInfo"
       :tokenId="tokenId"
     />
-    <div class="form-container theme-background-color">
+    <div v-if="tokenOwner" class="form-container theme-background-color">
       <div class="form-top">
         <div class="form-left">
           <div class="form-title text-color">{{ metadata.title }}</div>
@@ -36,15 +37,17 @@
             :tokenId="tokenId"
             :creator="tokenOwner"
           />
-          <img
+          <el-image
             style="
               width: 940px;
               height: 532px;
-              margin-top: 36px;
               border-radius: 8px;
+              margin-top: 36px;
             "
             :src="metadata.image"
-          />
+            fit="cover"
+          ></el-image>
+
           <div class="form-desc">{{ metadata.description }}</div>
           <div class="form-label-sub" style="margin-top: 16px">
             <img
@@ -248,6 +251,7 @@
             :operable="true"
           />
           <NftInformation
+            v-if="tokenOwner"
             :metadata="metadata"
             :tokenOwner="tokenOwner"
             :tokenId="tokenId"
@@ -426,14 +430,22 @@ export default {
     var loadingInstance = this.$loading({
       background: "rgba(0, 0, 0, 0.8)",
     });
-    setTimeout(() => {
-      this.dataLoad();
-      this.checkIn();
-      this.checkBlindBox();
-      this.blindBoxTimerTask = setInterval(() => {
-        this.checkBlindBox();
-      }, 1000 * 20);
-      loadingInstance.close();
+    setTimeout(async () => {
+      try {
+        await this.dataLoad();
+        console.log(this.tokenOwner);
+        if (!this.tokenSupplyInfo) {
+          this.checkIn();
+          this.checkBlindBox();
+          this.blindBoxTimerTask = setInterval(() => {
+            this.checkBlindBox();
+          }, 1000 * 20);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        loadingInstance.close();
+      }
     }, 4000);
   },
   destroyed() {
@@ -570,6 +582,7 @@ export default {
         await promiseAll;
       } catch (error) {
         this.$toast.error(error);
+        loadingInstance.close();
       } finally {
         loadingInstance.close();
       }
@@ -724,7 +737,10 @@ export default {
         }
         getTokenOwner(this.tokenId)
           .then((owner) => {
-            this.tokenOwner = owner;
+            this.tokenOwner =
+              owner == "0x0000000000000000000000000000000000000000"
+                ? null
+                : owner;
             this.userNftList(owner);
             return resolve();
           })
