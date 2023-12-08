@@ -3,11 +3,16 @@
     <div class="top-container">
       <div class="news-img-container">
         <el-image
+          v-if="bannerNews.image"
           style="width: 934px; height: 528px; border-radius: 8px"
           :src="bannerNews.image"
           fit="cover"
         ></el-image>
-        <div class="news-text">
+        <div
+          style="width: 934px; height: 528px; border-radius: 8px"
+          v-else
+        ></div>
+        <div class="news-text" v-if="bannerNews.image">
           <div
             class="title"
             @click="
