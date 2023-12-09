@@ -40,7 +40,7 @@ export default {
     featured: "Featured",
     creator: "Creator",
     user: "User",
-    navigation_items: "Navigation Items",
+    navigation_items: "Creation",
     all_nft: "All NFTs",
     mbd_price: "MBD Price",
     market_cap: "Market Cap",
@@ -479,7 +479,7 @@ export default {
     inc_d_title: "NFT Stake income settlement",
     plat_d_title: "Platform Rewards Settlement",
     plat_d_desc:
-      "The fee of <span class='color-word'>{0} MBD</span> will be deducted from this settlement, and the MBD and BJXStar after settlement will be transferred to your wallet address within 24 hours. The first settlement will receive BNB rewards worth <span class='color-word'>$3.00 USD</span>.",
+      "The fee of <span class='color-word'>{0} MBD</span> will be deducted from this settlement, and the MBD and BJXStar after settlement will be transferred to your wallet address within 24 hours. The first settlement will receive BNB rewards worth <span class='color-word'>$0.30 USD</span>.",
     balance: "Balance",
     ba_dist: "Distributes income to be settled",
     ba_income: "Creation Income Settlement",
@@ -509,7 +509,7 @@ export default {
     ct_income: "NFT DAO Income(MBD)",
     plan_title: "Creator Creation Income Plan",
     plan_desc_1:
-      "Creation income can be settle done a week Creators, NFT holder sand stakers can all participate in the settlement of work income. All income after settlement will be transferred to the NFT DAO stake dividend pool.",
+      "Creators, NFT holders, and pledgers can all participate in the settlement of income from creators' works at any time, and all income after settlement will be transferred to the NFT DAO equity dividend pool.",
     plan_desc_2:
       "Once the number of followers of the creator reaches 100, and the total reading time of the creation reaches 100 hours, he can join the creator's creation income plan income will be obtained based on the incremental value of reading time, likes, collections, etc. in the future, and the income from the creation will belong to the work. Allowed by DAO.",
     plan_sub: "Subscriber",
