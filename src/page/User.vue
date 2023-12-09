@@ -170,23 +170,22 @@ export default {
               .catch((e) => {
                 console.log(e);
               });
-
-            getUserFansCount()
-              .then((r) => {
-                this.fansCount = r;
-              })
-              .catch((e) => {
-                console.log(e);
-              });
-
-            getCreaterData(this.$store.state.user.account)
-              .then((r) => {
-                this.durationSeconds = secondsToHour(r[1]);
-              })
-              .catch((e) => {
-                console.log(e);
-              });
           }
+          getUserFansCount()
+            .then((r) => {
+              this.fansCount = r;
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+
+          getCreaterData(this.$store.state.user.account)
+            .then((r) => {
+              this.durationSeconds = secondsToHour(r[1]);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
         })
         .catch((e) => {
           console.log(e);
