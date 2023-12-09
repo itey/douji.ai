@@ -5,15 +5,15 @@
     :element-loading-background="$store.state.common.theme | maskByTheme"
   >
     <div class="form-attr-title">
-      <div class="text-color">{{ $t('news-detail.secondary_market') }}</div>
+      <div class="text-color">{{ $t("news-detail.secondary_market") }}</div>
       <div class="form-attr-action" @click="handleListOrder()">
-        + {{ $t('news-detail.list_item') }}
+        + {{ $t("news-detail.list_item") }}
       </div>
     </div>
     <div class="form-second-market">
       <div class="second-market-column" style="width: 130px">
         <div class="second-market-header" style="padding-left: 14px">
-          {{ $t('news-detail.from') }}
+          {{ $t("news-detail.from") }}
         </div>
         <div
           class="second-market-td"
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="second-market-column" style="text-align: right; width: 91px">
-        <div class="second-market-header">{{ $t('news-detail.price') }}</div>
+        <div class="second-market-header">{{ $t("news-detail.price") }}</div>
         <div
           class="second-market-td"
           v-for="(item, index) in nftOrderList"
@@ -36,7 +36,7 @@
       </div>
       <div class="second-market-column" style="text-align: right; width: 104px">
         <div class="second-market-header" style="padding-right: 12px">
-          {{ $t('news-detail.available') }}
+          {{ $t("news-detail.available") }}
         </div>
         <div
           class="second-market-td"
@@ -57,13 +57,13 @@
         >
           <div class="second-btn">
             <span
-              v-if="item.owner != userAccount"
+              v-if="item.owner.toLowerCase() != userAccount.toLowerCase()"
               class="buy"
               @click="handleSwapOrder(item)"
-              >{{ $t('news-detail.buy') }}</span
+              >{{ $t("news-detail.buy") }}</span
             >
             <span v-else @click="handleCancelOrder(item.ordeId)">{{
-              $t('news-detail.cancel')
+              $t("news-detail.cancel")
             }}</span>
           </div>
         </div>
@@ -74,17 +74,17 @@
 </template>
 
 <script>
-import ListYourItemDialog from '@/components/news/ListYourItemDialog'
-import { getNftOrders, notifyUpdateOrder } from '@/utils/http'
-import { cancelSaleOrder, swapOrder } from '@/utils/web3/market'
-import { approveMbd } from '@/utils/web3/mbd'
-import { weiToMbd } from '@/utils/common'
+import ListYourItemDialog from "@/components/news/ListYourItemDialog";
+import { getNftOrders, notifyUpdateOrder } from "@/utils/http";
+import { cancelSaleOrder, swapOrder } from "@/utils/web3/market";
+import { approveMbd } from "@/utils/web3/mbd";
+import { weiToMbd } from "@/utils/common";
 export default {
-  name: 'market-order-list',
+  name: "market-order-list",
   props: {
     tokenId: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   components: {
@@ -92,7 +92,7 @@ export default {
   },
   computed: {
     userAccount() {
-      return this.$store.state.user.account
+      return this.$store.state.user.account;
     },
   },
   data() {
@@ -101,130 +101,130 @@ export default {
       marketAddress: process.env.VUE_APP_MARKET,
       nftOrderList: [],
       timer: undefined,
-    }
+    };
   },
   mounted() {
-    this.loadNftOrderList()
+    this.loadNftOrderList();
     this.timer = setInterval(() => {
-      this.loadNftOrderList()
-    }, 30000)
+      this.loadNftOrderList();
+    }, 30000);
   },
   destroyed() {
     if (this.timer) {
-      clearInterval(this.timer)
+      clearInterval(this.timer);
     }
   },
   methods: {
     handleListOrder() {
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (!c) {
-          return
+          return;
         }
         if (this.$store.state.chain.balanceBnb < 0.01) {
           this.$bnbConfirm(this.$store.state.common.language, () => {
-            this.$refs['listItemDialog'].showDialog()
-          })
-          return
+            this.$refs["listItemDialog"].showDialog();
+          });
+          return;
         }
-        this.$refs['listItemDialog'].showDialog()
-      })
+        this.$refs["listItemDialog"].showDialog();
+      });
     },
     /** 加载挂单数据 */
     loadNftOrderList() {
-      this.loading = true
+      this.loading = true;
       getNftOrders(1, this.tokenId)
         .then((r) => {
           if (r.code == 1) {
-            this.nftOrderList = r.data.list
+            this.nftOrderList = r.data.list;
           }
         })
         .catch((e) => {
-          console.log(e)
+          console.log(e);
         })
         .finally(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
     },
     /** 取消订单 */
     handleCancelOrder(ordeId) {
       const execute = () => {
         var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
+          background: "rgba(0, 0, 0, 0.8)",
+        });
         cancelSaleOrder(ordeId)
           .then((tx) => {
-            console.log(tx)
-            this.$toast.success(this.$t('news-detail.order_cancel_success'))
+            console.log(tx);
+            this.$toast.success(this.$t("news-detail.order_cancel_success"));
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
+            this.$toast.error(e && e.message ? e.message : e);
           })
           .finally(() => {
             notifyUpdateOrder(this.tokenId).finally(() => {
-              this.loadNftOrderList()
-              loadingInstance.close()
-            })
-          })
-      }
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+              this.loadNftOrderList();
+              loadingInstance.close();
+            });
+          });
+      };
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (!c) {
-          return
+          return;
         }
         if (this.$store.state.chain.balanceBnb < 0.01) {
           this.$bnbConfirm(this.$store.state.common.language, () => {
-            execute()
-          })
-          return
+            execute();
+          });
+          return;
         }
-        execute()
-      })
+        execute();
+      });
     },
     /** 交易下单 */
     handleSwapOrder(order) {
       const execute = () => {
         var loadingInstance = this.$loading({
-          background: 'rgba(0, 0, 0, 0.8)',
-        })
+          background: "rgba(0, 0, 0, 0.8)",
+        });
         approveMbd(this.marketAddress, weiToMbd(order.price))
           .then(() => {
             swapOrder(order.ordeId)
               .then((tx) => {
-                console.log(tx)
-                this.$toast.success(this.$t('news-detail.swap_success'))
+                console.log(tx);
+                this.$toast.success(this.$t("news-detail.swap_success"));
               })
               .catch((e) => {
-                this.$toast.error(e && e.message ? e.message : e)
+                this.$toast.error(e && e.message ? e.message : e);
               })
               .finally(() => {
                 notifyUpdateOrder(this.tokenId).finally(() => {
-                  this.loadNftOrderList()
-                  loadingInstance.close()
-                })
-              })
+                  this.loadNftOrderList();
+                  loadingInstance.close();
+                });
+              });
           })
           .catch((e) => {
-            this.$toast.error(e && e.message ? e.message : e)
-            loadingInstance.close()
-          })
-      }
+            this.$toast.error(e && e.message ? e.message : e);
+            loadingInstance.close();
+          });
+      };
 
-      this.$store.dispatch('CheckLogin', true).then((c) => {
+      this.$store.dispatch("CheckLogin", true).then((c) => {
         if (!c) {
-          return
+          return;
         }
 
         if (this.$store.state.chain.balanceBnb < 0.01) {
           this.$bnbConfirm(this.$store.state.common.language, () => {
-            execute()
-          })
-          return
+            execute();
+          });
+          return;
         }
 
-        execute()
-      })
+        execute();
+      });
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
