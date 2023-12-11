@@ -63,7 +63,7 @@
       >
         <div class="tab-row">
           <img
-            style="width: 266px; height: 165px"
+            style="width: 200px; height: 200px"
             src="@/assets/images/home/ai.png"
           />
           <div class="tab-row-text">
@@ -84,7 +84,7 @@
             </div>
           </div>
           <img
-            style="width: 156px; height: 170px"
+            style="width: 200px; height: 200px"
             src="@/assets/images/home/resource.png"
           />
         </div>
@@ -95,7 +95,7 @@
       >
         <div class="item">
           <img
-            style="width: 141px; height: 143px"
+            style="width: 145px; height: 145px"
             src="@/assets/images/home/ownership.png"
           />
           <div class="title text-color">
@@ -105,7 +105,7 @@
         </div>
         <div class="item">
           <img
-            style="width: 131px; height: 129px"
+            style="width: 145px; height: 145px"
             src="@/assets/images/home/ownershi.png"
           />
           <div class="title text-color">
@@ -115,7 +115,7 @@
         </div>
         <div class="item">
           <img
-            style="width: 129px; height: 128px"
+            style="width: 145px; height: 145px"
             src="@/assets/images/home/ownershir.png"
           />
           <div class="title text-color">
@@ -132,7 +132,7 @@
         <div class="tab-bottom">
           <div class="tab-row">
             <img
-              style="width: 175px; height: 152px"
+              style="width: 160px; height: 160px"
               src="@/assets/images/home/creation.png"
             />
             <div class="tab-row-text">
@@ -153,7 +153,7 @@
               <div class="desc">{{ $t("home.tab_creators_future_value") }}</div>
             </div>
             <img
-              style="width: 152px; height: 153px"
+              style="width: 160px; height: 160px"
               src="@/assets/images/home/governance.png"
             />
           </div>
@@ -221,9 +221,9 @@
       >
         <div class="tab-tip">{{ $t("home.tab_based_income") }}</div>
         <div class="tab-bottom">
-          <div class="tab-row">
+          <div class="tab-row" style="padding-top: 10px; padding-bottom: 40px">
             <img
-              style="width: 200px; height: 149px"
+              style="width: 150px; height: 150px"
               src="@/assets/images/home/amount.png"
             />
             <div class="tab-row-text">
@@ -236,7 +236,7 @@
             </div>
           </div>
           <div class="division"></div>
-          <div class="tab-row">
+          <div class="tab-row" style="padding-top: 40px; padding-bottom: 40px">
             <div class="tab-row-text">
               <div class="title text-color">
                 {{ $t("home.tab_Revenues_time") }}
@@ -244,7 +244,7 @@
               <div class="desc">{{ $t("home.tab_income_transfer") }}</div>
             </div>
             <img
-              style="width: 185px; height: 149px"
+              style="width: 150px; height: 150px"
               src="@/assets/images/home/revenue.png"
             />
           </div>
@@ -258,7 +258,7 @@
         <div class="tab-bottom">
           <div class="tab-row">
             <img
-              style="width: 150px; height: 149px"
+              style="width: 150px; height: 150px"
               src="@/assets/images/home/dao.png"
             />
             <div class="tab-row-text">
@@ -277,7 +277,7 @@
               <div class="desc">{{ $t("home.tab_dao_members") }}</div>
             </div>
             <img
-              style="width: 156px; height: 129px"
+              style="width: 150px; height: 150px"
               src="@/assets/images/home/dividend.png"
             />
           </div>
