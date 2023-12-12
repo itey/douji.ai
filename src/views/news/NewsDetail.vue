@@ -638,7 +638,10 @@ export default {
         var loadingInstance = this.$loading({
           background: "rgba(0, 0, 0, 0.8)",
         });
-        if (this.userOwned && this.userOwned > 0) {
+        if (
+          this.userOwned &&
+          (this.userOwned > 0 || this.userStakeInfo[0] > 0)
+        ) {
           this.loadProtectedContent(this.metadata.protected)
             .then((protectedContent) => {
               this.$set(

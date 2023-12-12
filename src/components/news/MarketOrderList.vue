@@ -57,13 +57,15 @@
         >
           <div class="second-btn">
             <span
-              v-if="item.owner.toLowerCase() != userAccount.toLowerCase()"
-              class="buy"
-              @click="handleSwapOrder(item)"
-              >{{ $t("news-detail.buy") }}</span
+              v-if="
+                userAccount &&
+                item.owner.toLowerCase() == userAccount.toLowerCase()
+              "
+              @click="handleCancelOrder(item.ordeId)"
+              >{{ $t("news-detail.cancel") }}</span
             >
-            <span v-else @click="handleCancelOrder(item.ordeId)">{{
-              $t("news-detail.cancel")
+            <span v-else class="buy" @click="handleSwapOrder(item)">{{
+              $t("news-detail.buy")
             }}</span>
           </div>
         </div>
