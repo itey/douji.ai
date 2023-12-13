@@ -112,7 +112,7 @@ export default {
         this.fansSt != undefined &&
         this.fansCount >= this.fansSt &&
         this.durationSt != undefined &&
-        this.durationSeconds > this.durationSt
+        this.durationSeconds >= this.durationSt
       ) {
         return true;
       } else {
