@@ -165,9 +165,9 @@ export default {
       return new Promise((resolve) => {
         getCPD(stake.token_id)
           .then((data) => {
-            const c = data[0];
-            const p = data[1];
-            const d = data[2];
+            const c = data[0] - data[3];
+            const p = data[1] - data[4];
+            const d = data[2] - data[5];
             // tokenid阅读时长*100+tokenid点赞量*1+tokenid收藏量*10
             stake.tokenWorth = Number(d) * 100 + Number(p) + Number(c) * 10;
             return resolve();
