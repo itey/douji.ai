@@ -604,8 +604,8 @@ export default {
       return new Promise((resolve) => {
         userPledgeCount(this.tokenId)
           .then((data) => {
-            this.userStakeInfo[0] = data[0];
-            this.userStakeInfo[1] = data[1];
+            this.$set(this.userStakeInfo, 0, data[0]);
+            this.$set(this.userStakeInfo, 1, data[1]);
             return resolve();
           })
           .catch((e) => {
