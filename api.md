@@ -2190,3 +2190,41 @@ post
 | -------------|:---------------------------------|
 | 0            | 失败   |
 | 1            | 成功   |
+
+### 44.是否已签到
+ 
+Api path：
+
+```bash
+   http://43.198.63.219:1538/api/isCheckIn
+```
+
+##### HTTP request method
+
+post
+
+##### Request parameters:
+
+| 参数名   | 约束-required | 类型 | 说明 |
+| :------ |:------ | :------    |:------ |
+##### Response parameters:
+
+```json
+{
+    "code": 1,
+    "message": "ok",
+    "data": {
+       "is_check_in": 0/1 //0否 1是
+    }
+}
+```
+
+##### Response the result data code instructions
+
+| code         | 说明                             |
+| -------------|:---------------------------------|
+| 0            | 失败   |
+| 1            | 成功   |
+
+
+
