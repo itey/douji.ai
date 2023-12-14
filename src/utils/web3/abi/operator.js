@@ -146,6 +146,20 @@ const abi = [
     },
     {
         inputs: [
+            { internalType: "uint256", name: "_tokenId", type: "uint256" },
+        ],
+        name: "getSettleCreativeBonus",
+        outputs: [
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
             { internalType: "address", name: "_address", type: "address" },
             {
                 internalType: "enum DouJiOperater.Role",
@@ -173,6 +187,20 @@ const abi = [
         name: "joinCreativePlan",
         outputs: [],
         stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "marketAddress",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "mbdAddress",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
         type: "function",
     },
     {
@@ -230,8 +258,22 @@ const abi = [
     },
     {
         inputs: [],
+        name: "openBoxPrice",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
         name: "paused",
         outputs: [{ internalType: "bool", name: "", type: "bool" }],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "platform1155Address",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
         stateMutability: "view",
         type: "function",
     },
