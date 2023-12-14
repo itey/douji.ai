@@ -671,8 +671,8 @@ export default {
     /** 视频地址 */
     videoSrc() {
       return this.$store.state.common.language == "en"
-        ? "https://www.youtube.com/embed/gYO1uk7vIcc?si=qhbJM-yMR-ahsdAA"
-        : "https://www.youtube.com/embed/OYAyuESW5xk?si=WYcoj3r0LJ6PI52W";
+        ? "https://www.youtube.com/embed/gJqaMDm53Js?si=IkivxNrZXib-OrYG"
+        : "https://www.youtube.com/embed/gJqaMDm53Js?si=IkivxNrZXib-OrYG";
     },
   },
   data() {
