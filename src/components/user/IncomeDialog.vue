@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { pledgeSettleList } from "@/utils/http";
+import { pledgeSettleList, notifyPledge } from "@/utils/http";
 import { userPledgeCount } from "@/utils/web3/nft";
 import { weiToMbd } from "@/utils/common";
 import { totalPledgeCount, getSettlePoolBalance } from "@/utils/web3/open";
@@ -209,6 +209,9 @@ export default {
           this.multipleSelection = [];
           this.onOpen();
           loadingInstance.close();
+          arr.forEach((tokenId) => {
+            notifyPledge(tokenId);
+          });
         })
         .catch((e) => {
           this.$toast.error(e && e.message ? e.message : e);
