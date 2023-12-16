@@ -978,4 +978,20 @@
             border: 0.5px solid #eaedef;
         }
     }
+
+    .mint-success-dialog .mint-success-info {
+        background: #f7f9fa;
+
+        .info-label {
+            .info-label-item {
+                color: #636b72;
+            }
+        }
+
+        .info-value {
+            .info-label-item {
+                color: #1a2027;
+            }
+        }
+    }
 }

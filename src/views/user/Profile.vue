@@ -32,9 +32,7 @@
           <el-input
             @blur="
               () =>
-                (userInfo.nickname = userInfo.nickname
-                  ? userInfo.nickname.replace(/(\s*$)/g, '')
-                  : '')
+                (userInfo.nickname = userInfo.nickname.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.nickname"
           ></el-input>
@@ -49,9 +47,8 @@
           <el-input
             @blur="
               () =>
-                (userInfo.short_description = userInfo.short_description
-                  ? userInfo.short_description.replace(/(\s*$)/g, '')
-                  : '')
+                (userInfo.short_description =
+                  userInfo.short_description.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.short_description"
           ></el-input>
@@ -69,9 +66,7 @@
           <el-input
             @blur="
               () =>
-                (userInfo.location = userInfo.location
-                  ? userInfo.location.replace(/(\s*$)/g, '')
-                  : '')
+                (userInfo.location = userInfo.location.replace(/(\s*$)/g, ''))
             "
             v-model="userInfo.location"
           ></el-input>

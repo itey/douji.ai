@@ -9,12 +9,7 @@
         <div class="form-value">
           <div>
             <el-input
-              @blur="
-                () =>
-                  (form.title = form.title
-                    ? form.title.replace(/(\s*$)/g, '')
-                    : '')
-              "
+              @blur="() => (form.title = form.title.replace(/(\s*$)/g, ''))"
               v-model="form.title"
               @change="checkItem('title')"
               class="input"
@@ -32,9 +27,7 @@
             <el-input
               @blur="
                 () =>
-                  (form.description = form.description
-                    ? form.description.replace(/(\s*$)/g, '')
-                    : '')
+                  (form.description = form.description.replace(/(\s*$)/g, ''))
               "
               v-model="form.description"
               @change="checkItem('description')"

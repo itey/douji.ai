@@ -10,15 +10,15 @@
       style="width: 104px; height: 104px; margin-top: 85px"
       src="@/assets/images/create/mint-success.png"
     />
-    <div class="mint-success-title">{{ $t('create.congratulations') }}</div>
+    <div class="mint-success-title">{{ $t("create.congratulations") }}</div>
     <div class="mint-success-label text-color">
-      {{ $t('create.minted_success') }}
+      {{ $t("create.minted_success") }}
     </div>
     <div class="mint-success-info">
       <div class="info-label">
-        <div class="info-label-item">{{ $t('create.tx_id') }}</div>
-        <div class="info-label-item">{{ $t('create.token_address') }}</div>
-        <div class="info-label-item">{{ $t('create.token_id') }}</div>
+        <div class="info-label-item">{{ $t("create.tx_id") }}</div>
+        <div class="info-label-item">{{ $t("create.token_address") }}</div>
+        <div class="info-label-item">{{ $t("create.token_id") }}</div>
       </div>
       <div class="info-value" v-if="tx.events">
         <div class="info-value-item">{{ tx.transactionHash }}</div>
@@ -30,7 +30,7 @@
     </div>
     <div class="btn-container">
       <el-button @click="toViewNft()" class="common-btn2">{{
-        $t('create.view_nft')
+        $t("create.view_nft")
       }}</el-button>
     </div>
   </el-dialog>
@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  name: 'mint-success-dialog',
+  name: "mint-success-dialog",
   props: {
     tx: {
       type: Object,
@@ -53,30 +53,30 @@ export default {
               },
             },
           },
-        }
+        };
       },
     },
   },
   data() {
     return {
       show: false,
-    }
+    };
   },
   methods: {
     showDialog() {
-      this.show = true
+      this.show = true;
     },
     onClose() {
-      this.$emit('close')
+      this.$emit("close");
     },
     toViewNft() {
       this.$router.replace({
-        path: '/news-detail',
+        path: "/news-detail",
         query: { tokenId: this.tx.events.Authorised.returnValues.tokenId },
-      })
+      });
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
