@@ -313,11 +313,8 @@ import NftPrimaryMarket from "@/components/news/NftPrimaryMarket";
 import ReadingReward from "@/components/news/ReadingReward";
 import RevisionHistoryDialog from "@/components/news/RevisionHistoryDialog";
 import {
-  boxCount2Time,
   getBlindBoxCache,
   getBlindBoxFlagCache,
-  getBoxCountToday,
-  ifCheckInToday,
   setBlindBoxState,
   setBlindBoxFlagCache,
   setBlindBoxFlagState,
@@ -380,6 +377,9 @@ export default {
     userAccount() {
       return this.$store.state.user.account;
     },
+    ifCheckedIn() {
+      return this.$store.state.user.ifCheckIn;
+    },
   },
   watch: {
     "$store.state.user.userId": function (val, od) {
@@ -418,7 +418,6 @@ export default {
         isVoting: false,
       },
       userOwned: undefined,
-      ifCheckedIn: false,
       blindBoxToday: {},
       blindBoxTimerTask: undefined,
       transactionHistory: [],
@@ -447,6 +446,7 @@ export default {
           this.checkIn();
           this.checkBlindBox();
           this.blindBoxTimerTask = setInterval(() => {
+            this.checkIn();
             this.checkBlindBox();
           }, 1000 * 20);
         }
@@ -469,22 +469,15 @@ export default {
     /** 检查每日签到 */
     checkIn() {
       if (!this.$store.state.user.userId) {
-        this.ifCheckedIn = false;
         return;
       }
-      if (ifCheckInToday(this.$store.state.user.userId)) {
-        this.ifCheckedIn = true;
-        return;
+      if (this.ifCheckedIn == false && !this.$refs.checkInDialog.show) {
+        this.$refs.checkInDialog.showDialog();
       }
-      this.ifCheckedIn = false;
-      this.$refs.checkInDialog.showDialog();
     },
     /** 检查盲盒奖励 */
     checkBlindBox() {
-      if (
-        this.$store.state.user.userId &&
-        ifCheckInToday(this.$store.state.user.userId)
-      ) {
+      if (this.$store.state.user.userId && this.ifCheckedIn) {
         var haveBox = false;
         const blindBox = getBlindBoxCache(this.$store.state.user.userId);
         if (blindBox && blindBox.time) {
@@ -557,17 +550,6 @@ export default {
               });
           }
         }
-      }
-    },
-    /** 获取当日盲盒数据 */
-    getBlindBoxToday() {
-      if (this.$store.state.user.userId) {
-        this.blindBoxToday.boxCount = getBoxCountToday(
-          this.$store.state.user.userId
-        );
-        this.blindBoxToday.readTime = boxCount2Time(
-          this.blindBoxToday.boxCount
-        );
       }
     },
     /** 点击接收盲盒 */

@@ -1,6 +1,5 @@
 import router from "@/router"
 import store from "@/store"
-import cache from "@/utils/cache"
 import { eventBus } from "@/utils/event-bus"
 import { checkInContract } from "@/utils/web3/operator"
 import {
@@ -27,6 +26,7 @@ const user = {
         logout: false,
         creatorPlan: false,
         userInfo: {},
+        ifCheckIn: undefined,
     },
 
     mutations: {
@@ -47,6 +47,9 @@ const user = {
         },
         setCreatorPlan: (state, plan) => {
             state.creatorPlan = plan
+        },
+        setIfCheckIn: (state, ifCheckIn) => {
+            state.ifCheckIn = ifCheckIn
         },
     },
 
@@ -82,25 +85,6 @@ const user = {
                                 getUserInfo().then((u) => {
                                     if (u.code == 1) {
                                         commit("setUserInfo", u.data)
-                                        const latestCheck = cache.local.get(
-                                            "DOJI_AI_CHECK_IN_TIME"
-                                        )
-                                        if (!latestCheck) {
-                                            isCheckIn().then((checkRes) => {
-                                                if (checkRes.code == 1) {
-                                                    const isCheck =
-                                                        checkRes.data
-                                                            .is_check_in
-                                                    isCheck == 1 &&
-                                                        cache.local.set(
-                                                            "DOJI_AI_CHECK_IN_TIME_" +
-                                                                store.state.user
-                                                                    .userId,
-                                                            new Date().getTime()
-                                                        )
-                                                }
-                                            })
-                                        }
                                         return resolve()
                                     } else {
                                         console.log(u.message)
@@ -125,16 +109,23 @@ const user = {
                     })
             })
         },
+        // 更新签到状态
+        UpdateCheckStatus({ commit }) {
+            if (!store.state.user.account) {
+                return
+            }
+            isCheckIn().then((checkRes) => {
+                if (checkRes.code == 1) {
+                    commit("setIfCheckIn", checkRes.data.is_check_in == 1)
+                }
+            })
+        },
         // 每日签到
-        CheckInDaily() {
+        CheckInDaily({ commit }) {
             return new Promise((resolve, reject) => {
-                const latestCheck = cache.local.get("DOJI_AI_CHECK_IN_TIME")
-                if (latestCheck) {
-                    const a = new Date(latestCheck).setHours(0, 0, 0, 0)
-                    const b = new Date().setHours(0, 0, 0, 0)
-                    if (a === b) {
-                        return reject(i18n.t("common.already_check_in"))
-                    }
+                const ifCheckIn = store.state.user.ifCheckIn
+                if (ifCheckIn) {
+                    return reject(i18n.t("common.already_check_in"))
                 }
                 if (store.state.user.userInfo.isge8model) {
                     // 合约签到
@@ -143,21 +134,13 @@ const user = {
                             contractSign(txJson.transactionHash)
                                 .then((r) => {
                                     if (r.code == 1) {
-                                        cache.local.set(
-                                            "DOJI_AI_CHECK_IN_TIME_" +
-                                                store.state.user.userId,
-                                            new Date().getTime()
-                                        )
+                                        commit("setIfCheckIn", true)
                                         return resolve(r.data)
                                     } else {
                                         if (
                                             r.message.indexOf("已签过到") >= 0
                                         ) {
-                                            cache.local.set(
-                                                "DOJI_AI_CHECK_IN_TIME_" +
-                                                    store.state.user.userId,
-                                                new Date().getTime()
-                                            )
+                                            commit("setIfCheckIn", true)
                                             return resolve()
                                         }
                                         return reject(r.message)
@@ -177,21 +160,13 @@ const user = {
                             checkIn(signed)
                                 .then((res) => {
                                     if (res.code == 1) {
-                                        cache.local.set(
-                                            "DOJI_AI_CHECK_IN_TIME_" +
-                                                store.state.user.userId,
-                                            new Date().getTime()
-                                        )
+                                        commit("setIfCheckIn", true)
                                         return resolve(res.data)
                                     } else {
                                         if (
                                             res.message.indexOf("已签过到") >= 0
                                         ) {
-                                            cache.local.set(
-                                                "DOJI_AI_CHECK_IN_TIME_" +
-                                                    store.state.user.userId,
-                                                new Date().getTime()
-                                            )
+                                            commit("setIfCheckIn", true)
                                             return resolve()
                                         }
                                         return reject(res.message)
@@ -200,11 +175,7 @@ const user = {
                                 .catch((e) => {
                                     console.log(e)
                                     if (e && e.indexOf("已签过到") >= 0) {
-                                        cache.local.set(
-                                            "DOJI_AI_CHECK_IN_TIME_" +
-                                                store.state.user.userId,
-                                            new Date().getTime()
-                                        )
+                                        commit("setIfCheckIn", true)
                                         return resolve()
                                     }
                                     return reject(e)
