@@ -110,9 +110,9 @@ export default {
 
       if (
         this.fansSt != undefined &&
-        this.fansCount >= this.fansSt &&
+        Number(this.fansCount) >= Number(this.fansSt) &&
         this.durationSt != undefined &&
-        this.durationSeconds >= this.durationSt
+        Number(this.durationSeconds) >= Number(this.durationSt)
       ) {
         return true;
       } else {
