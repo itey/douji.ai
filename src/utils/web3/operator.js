@@ -2,7 +2,7 @@ import i18n from "@/i18n"
 import store from "@/store"
 import Vue from "vue"
 import operator from "./abi/operator"
-import { checkAccount, getWeb3FromCache } from "./chain"
+import { checkAccount, getWeb3FromCache, updateGasPrice } from "./chain"
 
 var contract = undefined
 
@@ -35,23 +35,32 @@ export function checkInContract() {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        operatorContract.methods
-            .checkIn()
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            operatorContract.methods
+                .checkIn()
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    operatorContract.methods
+                        .checkIn()
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -83,23 +92,32 @@ export function getBoxContract(tokenId) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        operatorContract.methods
-            .getBox(tokenId)
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            operatorContract.methods
+                .getBox(tokenId)
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    operatorContract.methods
+                        .getBox(tokenId)
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -114,23 +132,32 @@ export function openBoxContract() {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        operatorContract.methods
-            .openBox()
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            operatorContract.methods
+                .openBox()
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    operatorContract.methods
+                        .openBox()
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -145,23 +172,32 @@ export function subscribeAuthorContract(address) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        operatorContract.methods
-            .followUser(address)
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            operatorContract.methods
+                .followUser(address)
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    operatorContract.methods
+                        .followUser(address)
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -239,23 +275,32 @@ export function joinCreativePlan() {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        operatorContract.methods
-            .joinCreativePlan()
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            operatorContract.methods
+                .joinCreativePlan()
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    operatorContract.methods
+                        .joinCreativePlan()
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -270,22 +315,31 @@ export function settleCreativeBonus(tokenIdArr) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        operatorContract.methods
-            .settleCreativeBonus(tokenIdArr)
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            operatorContract.methods
+                .settleCreativeBonus(tokenIdArr)
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    operatorContract.methods
+                        .settleCreativeBonus(tokenIdArr)
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }

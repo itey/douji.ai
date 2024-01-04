@@ -2,7 +2,7 @@ import i18n from "@/i18n"
 import store from "@/store"
 import Vue from "vue"
 import marketJson from "./abi/market"
-import { checkAccount, getWeb3FromCache } from "./chain"
+import { checkAccount, getWeb3FromCache, updateGasPrice } from "./chain"
 import { mbdToWei } from "../common"
 
 var contract = undefined
@@ -37,29 +37,44 @@ export function createSaleOrder(tokenId, count, price) {
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
         // nftType 0-721 1-1155
-        marketContract.methods
-            .create(
-                process.env.VUE_APP_NFT,
-                tokenId + "",
-                count + "",
-                1,
-                mbdToWei(price) + ""
-            )
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            marketContract.methods
+                .create(
+                    process.env.VUE_APP_NFT,
+                    tokenId + "",
+                    count + "",
+                    1,
+                    mbdToWei(price) + ""
+                )
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    marketContract.methods
+                        .create(
+                            process.env.VUE_APP_NFT,
+                            tokenId + "",
+                            count + "",
+                            1,
+                            mbdToWei(price) + ""
+                        )
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -75,23 +90,32 @@ export function cancelSaleOrder(orderId) {
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
         // nftType 0-721 1-1155
-        marketContract.methods
-            .cancel(orderId)
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            marketContract.methods
+                .cancel(orderId)
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    marketContract.methods
+                        .cancel(orderId)
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -107,23 +131,32 @@ export function swapOrder(orderId) {
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
         // nftType 0-721 1-1155
-        marketContract.methods
-            .swap(orderId)
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            marketContract.methods
+                .swap(orderId)
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    marketContract.methods
+                        .swap(orderId)
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -138,22 +171,31 @@ export function marketSettleBatch(tokenIdArr) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        marketContract.methods
-            .settles(tokenIdArr)
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            marketContract.methods
+                .settles(tokenIdArr)
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    marketContract.methods
+                        .settles(tokenIdArr)
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }

@@ -169,7 +169,8 @@ export default {
             const p = data[1] - data[4];
             const d = data[2] - data[5];
             // tokenid阅读时长*100+tokenid点赞量*1+tokenid收藏量*10
-            stake.tokenWorth = Number(d) * 100 + Number(p) + Number(c) * 10;
+            stake.tokenWorth =
+              (Number(d) / 60) * 100 + Number(p) + Number(c) * 10;
             return resolve();
           })
           .catch((e) => {

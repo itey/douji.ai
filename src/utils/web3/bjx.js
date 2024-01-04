@@ -4,7 +4,7 @@ import BigNumber from "bignumber.js"
 import Vue from "vue"
 import bjx from "./abi/bjx"
 import erc20 from "./abi/erc20"
-import { checkAccount, getWeb3FromCache } from "./chain"
+import { checkAccount, getWeb3FromCache, updateGasPrice } from "./chain"
 
 var contract = undefined
 
@@ -34,23 +34,32 @@ export function erc20Approve(cAddress, amount, decimal) {
     const fromAddress = store.state.chain.account
     const weiAmount = new BigNumber(amount).shiftedBy(decimal).integerValue()
     return new Promise((resolve, reject) => {
-        erc20Contract.methods
-            .approve(process.env.VUE_APP_BJX, weiAmount + "")
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            erc20Contract.methods
+                .approve(process.env.VUE_APP_BJX, weiAmount + "")
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    erc20Contract.methods
+                        .approve(process.env.VUE_APP_BJX, weiAmount + "")
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -65,29 +74,44 @@ export function mintByErc20(ercAddress, amount) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        bjxContract.methods
-            .mint(
-                ercAddress,
-                fromAddress,
-                process.env.VUE_APP_BJX_TOKEN_ID,
-                amount + "",
-                "0x"
-            )
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            bjxContract.methods
+                .mint(
+                    ercAddress,
+                    fromAddress,
+                    process.env.VUE_APP_BJX_TOKEN_ID,
+                    amount + "",
+                    "0x"
+                )
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    bjxContract.methods
+                        .mint(
+                            ercAddress,
+                            fromAddress,
+                            process.env.VUE_APP_BJX_TOKEN_ID,
+                            amount + "",
+                            "0x"
+                        )
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -102,28 +126,42 @@ export function mintByBnb(count, payableAmountWei) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        bjxContract.methods
-            .mintWithEth(
-                fromAddress,
-                process.env.VUE_APP_BJX_TOKEN_ID,
-                count,
-                "0x"
-            )
-            .send({
-                from: fromAddress,
-                value: payableAmountWei + "",
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error)
-            })
+        updateGasPrice().then((gasPrice) => {
+            bjxContract.methods
+                .mintWithEth(
+                    fromAddress,
+                    process.env.VUE_APP_BJX_TOKEN_ID,
+                    count,
+                    "0x"
+                )
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    bjxContract.methods
+                        .mintWithEth(
+                            fromAddress,
+                            process.env.VUE_APP_BJX_TOKEN_ID,
+                            count,
+                            "0x"
+                        )
+                        .send({
+                            from: fromAddress,
+                            value: payableAmountWei + "",
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }

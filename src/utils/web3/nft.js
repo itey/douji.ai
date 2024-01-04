@@ -3,7 +3,7 @@ import store from "@/store"
 import Vue from "vue"
 import { mbdToWei } from "../common"
 import nft from "./abi/nft"
-import { checkAccount, getWeb3FromCache } from "./chain"
+import { checkAccount, getWeb3FromCache, updateGasPrice } from "./chain"
 
 var nftContract = undefined
 
@@ -38,28 +38,42 @@ export function possessorMint(
     }
     const toAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .authorise(
-                tokenURI,
-                initAmount + "",
-                mbdToWei(priceTokenIdOrAmount) + "",
-                maxSupply + ""
-            )
-            .send({
-                from: toAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .authorise(
+                    tokenURI,
+                    initAmount + "",
+                    mbdToWei(priceTokenIdOrAmount) + "",
+                    maxSupply + ""
+                )
+                .estimateGas({ from: toAddress })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .authorise(
+                            tokenURI,
+                            initAmount + "",
+                            mbdToWei(priceTokenIdOrAmount) + "",
+                            maxSupply + ""
+                        )
+                        .send({
+                            from: toAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -74,23 +88,32 @@ export function userMint(tokenId, count) {
     }
     const toAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .mint(toAddress, tokenId, count + "", "0x")
-            .send({
-                from: toAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .mint(toAddress, tokenId, count + "", "0x")
+                .estimateGas({ from: toAddress })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .mint(toAddress, tokenId, count + "", "0x")
+                        .send({
+                            from: toAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -128,23 +151,32 @@ export function voteByBallot(tokenId) {
     }
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .voteByBallot(tokenId)
-            .send({
-                from: userAccount,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .voteByBallot(tokenId)
+                .estimateGas({ from: userAccount })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .voteByBallot(tokenId)
+                        .send({
+                            from: userAccount,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -159,23 +191,32 @@ export function cancelVote(tokenId) {
     }
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .cancelVote(tokenId)
-            .send({
-                from: userAccount,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .cancelVote(tokenId)
+                .estimateGas({ from: userAccount })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .cancelVote(tokenId)
+                        .send({
+                            from: userAccount,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -190,27 +231,40 @@ export function startSetTokenPrice(tokenId, price, availableSupply) {
     }
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .startSetTokenPrice(
-                tokenId,
-                mbdToWei(price) + "",
-                availableSupply + ""
-            )
-            .send({
-                from: userAccount,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .startSetTokenPrice(
+                    tokenId,
+                    mbdToWei(price) + "",
+                    availableSupply + ""
+                )
+                .estimateGas({ from: userAccount })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .startSetTokenPrice(
+                            tokenId,
+                            mbdToWei(price) + "",
+                            availableSupply + ""
+                        )
+                        .send({
+                            from: userAccount,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -225,23 +279,32 @@ export function setTokenPriceDao(tokenId) {
     }
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .setTokenPrice(tokenId)
-            .send({
-                from: userAccount,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .setTokenPrice(tokenId)
+                .estimateGas({ from: userAccount })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .setTokenPrice(tokenId)
+                        .send({
+                            from: userAccount,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -256,23 +319,32 @@ export function startSetTokenURI(tokenId, url) {
     }
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .startSetTokenURI(tokenId, url)
-            .send({
-                from: userAccount,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .startSetTokenURI(tokenId, url)
+                .estimateGas({ from: userAccount })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .startSetTokenURI(tokenId, url)
+                        .send({
+                            from: userAccount,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -287,23 +359,32 @@ export function setTokenURIDao(tokenId) {
     }
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .setTokenURI(tokenId)
-            .send({
-                from: userAccount,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .setTokenURI(tokenId)
+                .estimateGas({ from: userAccount })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .setTokenURI(tokenId)
+                        .send({
+                            from: userAccount,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -318,31 +399,48 @@ export function startSetNsp(tokenId, param) {
     }
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .startSetNsp(
-                tokenId,
-                param.isOpen,
-                param.sptType,
-                param.cAddress,
-                param.discounts + "",
-                (param.discountsFee * 100).toFixed(0) + "",
-                param.tokenId
-            )
-            .send({
-                from: userAccount,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .startSetNsp(
+                    tokenId,
+                    param.isOpen,
+                    param.sptType,
+                    param.cAddress,
+                    param.discounts + "",
+                    (param.discountsFee * 100).toFixed(0) + "",
+                    param.tokenId
+                )
+                .estimateGas({ from: userAccount })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .startSetNsp(
+                            tokenId,
+                            param.isOpen,
+                            param.sptType,
+                            param.cAddress,
+                            param.discounts + "",
+                            (param.discountsFee * 100).toFixed(0) + "",
+                            param.tokenId
+                        )
+                        .send({
+                            from: userAccount,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -357,23 +455,32 @@ export function setNspDao(tokenId) {
     }
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .setNsp(tokenId)
-            .send({
-                from: userAccount,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .setNsp(tokenId)
+                .estimateGas({ from: userAccount })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .setNsp(tokenId)
+                        .send({
+                            from: userAccount,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -388,23 +495,40 @@ export function startSetDaoRule(tokenId, param) {
     }
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .startSetDaoRule(tokenId, param.daoFee + "", param.mVoteCount + "")
-            .send({
-                from: userAccount,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .startSetDaoRule(
+                    tokenId,
+                    param.daoFee + "",
+                    param.mVoteCount + ""
+                )
+                .estimateGas({ from: userAccount })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .startSetDaoRule(
+                            tokenId,
+                            param.daoFee + "",
+                            param.mVoteCount + ""
+                        )
+                        .send({
+                            from: userAccount,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -419,23 +543,32 @@ export function setDaoRuleDao(tokenId) {
     }
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .setDaoRule(tokenId)
-            .send({
-                from: userAccount,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .setDaoRule(tokenId)
+                .estimateGas({ from: userAccount })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .setDaoRule(tokenId)
+                        .send({
+                            from: userAccount,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -470,23 +603,32 @@ export function stakeNft(tokenId, count) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .pledgeNft(tokenId, count + "")
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .pledgeNft(tokenId, count + "")
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .pledgeNft(tokenId, count + "")
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -501,23 +643,32 @@ export function unStakeNft(tokenId, count) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .unPledgeNft(tokenId, count + "")
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .unPledgeNft(tokenId, count + "")
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .unPledgeNft(tokenId, count + "")
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -552,23 +703,32 @@ export function nftApproval(operator) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .setApprovalForAll(operator, true)
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .setApprovalForAll(operator, true)
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .setApprovalForAll(operator, true)
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -623,23 +783,32 @@ export function nftPraise(tokenId) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .setPraiseCount(tokenId)
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .setPraiseCount(tokenId)
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .setPraiseCount(tokenId)
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
 
@@ -654,22 +823,31 @@ export function nftCollect(tokenId) {
     }
     const fromAddress = store.state.chain.account
     return new Promise((resolve, reject) => {
-        nftContract.methods
-            .setCollectCount(tokenId)
-            .send({
-                from: fromAddress,
-                gas: "300000",
-                maxPriorityFeePerGas: "5000000000",
-                maxFeePerGas: "10000000000",
-            })
-            .on("transactionHash", (hash) => {
-                console.log("transactionHash:", hash)
-            })
-            .on("receipt", (receipt) => {
-                resolve(receipt)
-            })
-            .on("error", (error) => {
-                reject(error.message)
-            })
+        updateGasPrice().then((gasPrice) => {
+            nftContract.methods
+                .setCollectCount(tokenId)
+                .estimateGas({ from: fromAddress })
+                .then((gasAmount) => {
+                    nftContract.methods
+                        .setCollectCount(tokenId)
+                        .send({
+                            from: fromAddress,
+                            gas: Math.ceil(gasAmount * 1.5) + "",
+                            gasPrice: Math.ceil(gasPrice * 1.2),
+                        })
+                        .on("transactionHash", (hash) => {
+                            console.log("transactionHash:", hash)
+                        })
+                        .on("receipt", (receipt) => {
+                            resolve(receipt)
+                        })
+                        .on("error", (error) => {
+                            reject(error.message)
+                        })
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     })
 }
