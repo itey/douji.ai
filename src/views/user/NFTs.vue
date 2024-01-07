@@ -104,7 +104,8 @@ export default {
         this.nftListLoad();
       }
     },
-    onPageChange() {
+    onPageChange(page) {
+      this.pageNo = page;
       this.nftListLoad();
     },
     /** 回车搜索 */

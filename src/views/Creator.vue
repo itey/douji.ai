@@ -111,7 +111,8 @@ export default {
         this.userNftList();
       }
     },
-    onPageChange() {
+    onPageChange(page) {
+      this.pageNo = page;
       this.userNftList();
     },
     initTabList() {

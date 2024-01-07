@@ -108,7 +108,8 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    onPageChange() {
+    onPageChange(page) {
+      this.pageNo = page;
       this.pageLoad();
     },
     /** 计算价值 */

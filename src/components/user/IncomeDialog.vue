@@ -102,7 +102,8 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    onPageChange() {
+    onPageChange(page) {
+      this.pageNo = page;
       this.pageLoad();
     },
     /** 加载数据 */

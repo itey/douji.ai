@@ -52,7 +52,8 @@ export default {
     };
   },
   methods: {
-    onPageChange() {
+    onPageChange(page) {
+      this.page = page;
       this.onOpen();
     },
     showDialog() {
