@@ -2,6 +2,7 @@
   <el-dialog
     custom-class="income-dialog"
     @open="onOpen()"
+    :row-key="RowKey"
     :visible.sync="show"
     width="1100px"
   >
@@ -15,7 +16,11 @@
         style="width: 1000px"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="47px"></el-table-column>
+        <el-table-column
+          type="selection"
+          :reserve-selection="true"
+          width="47px"
+        ></el-table-column>
         <el-table-column
           :label="$t('user.st_token_id')"
           prop="token_id"
@@ -91,6 +96,9 @@ export default {
     };
   },
   methods: {
+    RowKey(row) {
+      return row.token_id;
+    },
     showDialog() {
       this.show = true;
     },
