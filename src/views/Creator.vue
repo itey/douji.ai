@@ -112,11 +112,11 @@ export default {
       }
     },
     onPageChange(page) {
-      this.pageNo = page;
+      this.page = page;
       this.userNftList();
     },
     initTabList() {
-      getUserNftList({ page: 1, address: this.address, isOwner: 1 })
+      getUserNftList({ page: this.page, address: this.address, isOwner: 1 })
         .then((r) => {
           if (r.code == 1) {
             this.listOwner = r.data.list;
@@ -126,7 +126,7 @@ export default {
         .catch((e) => {
           this.$toast.error(e.message);
         });
-      getUserNftList({ page: 1, address: this.address, isOwner: 0 })
+      getUserNftList({ page: this.page, address: this.address, isOwner: 0 })
         .then((r) => {
           if (r.code == 1) {
             this.listOther = r.data.list;
