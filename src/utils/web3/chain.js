@@ -191,8 +191,6 @@ export function updateGasPrice() {
         web3.eth
             .getGasPrice()
             .then((gasPrice) => {
-                console.log(gasPrice)
-                // const gasGwei = web3.utils.fromWei(gasPrice, "gwei")
                 store.commit("setGasPriceCache", gasPrice)
                 store.commit("setGasTimeOut", timestamp + 1000 * 60)
                 resolve(gasPrice)
