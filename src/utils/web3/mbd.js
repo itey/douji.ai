@@ -28,7 +28,7 @@ export function approveMbd(spender, count) {
     const userAccount = store.state.chain.account
     return new Promise((resolve, reject) => {
         getAllowance(userAccount, spender).then((allowance) => {
-            if (allowance >= mbdToWei(count)) {
+            if (Number(allowance) >= Number(mbdToWei(count))) {
                 resolve()
             } else {
                 updateGasPrice().then((gasPrice) => {
