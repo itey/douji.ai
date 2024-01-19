@@ -1,6 +1,6 @@
 import store from '@/store/index';
 import { WalletEntryPosition } from '@particle-network/auth';
-import { BNBChainTestnet } from '@particle-network/chains';
+import { opBNBTestnet } from '@particle-network/chains';
 import { evmWallets } from '@particle-network/connect';
 import { ModalProvider } from '@particle-network/connect-react-ui';
 import '@particle-network/connect-react-ui/dist/index.css';
@@ -17,16 +17,16 @@ const config = {
   projectId: projectId,
   clientKey: clientKey,
   appId: appId,
-  chainName: BNBChainTestnet.name,
-  chainId: BNBChainTestnet.id,
+  chainName: opBNBTestnet.name,
+  chainId: opBNBTestnet.id,
   chains: [
-    BNBChainTestnet
+    opBNBTestnet
   ],
   particleWalletEntry: {
     displayWalletEntry: true,
     defaultWalletEntryPosition: WalletEntryPosition.BR,
     supportChains: [
-      BNBChainTestnet
+      opBNBTestnet
     ],
     customStyle: {},
   },

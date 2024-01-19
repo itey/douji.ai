@@ -1,7 +1,7 @@
 import store from "@/store"
 import { weiToEth, weiToMbd } from "@/utils/common"
 import { balanceOfBnb, balanceOfMbd, getMbdPrice } from "@/utils/web3/open"
-import { BNBChainTestnet } from "@particle-network/chains"
+import { opBNBTestnet } from "@particle-network/chains"
 import Vue from "vue"
 
 const projectId = process.env.VUE_APP_PROJECT_ID
@@ -11,7 +11,7 @@ const walletProjectId = process.env.VUE_APP_WALLETCONNECT_PROJECT_ID
 
 const chain = {
     state: {
-        chainId: BNBChainTestnet.id,
+        chainId: opBNBTestnet.id,
         projectId: projectId,
         clientKey: clientKey,
         appId: appId,

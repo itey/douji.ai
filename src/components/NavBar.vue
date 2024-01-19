@@ -133,6 +133,41 @@
             </div>
           </el-popover>
         </div>
+        <div @click="networksVisible = true">
+          <el-popover :visible-arrow="false" v-model="networksVisible">
+            <div class="menu-container">
+              <img
+                @click="networksVisible = false"
+                class="close"
+                src="@/assets/images/menu-close.png"
+              />
+              <div class="item" @click="toChangeNetwork(97)">
+                <div class="icon">
+                  <img
+                    style="width: 17px; height: 17px"
+                    src="@/assets/images/BNB.png"
+                  />
+                </div>
+                <span>BNB Chain Testnet</span>
+              </div>
+              <div class="item" @click="toChangeNetwork(5611)">
+                <div class="icon">
+                  <img
+                    style="width: 17px; height: 17px"
+                    src="@/assets/images/opbnb.png"
+                  />
+                </div>
+                <span>opBNB Testnet</span>
+              </div>
+            </div>
+            <div slot="reference" class="user">
+              <span class="text" style="color: #90a9c6">
+                opBNB Testnet
+                <i class="el-icon-caret-bottom el-icon--right"></i>
+              </span>
+            </div>
+          </el-popover>
+        </div>
       </div>
       <div class="navbar-language" @click="languageVisible = true">
         <el-popover
@@ -224,8 +259,15 @@ export default {
     return {
       languageVisible: false,
       userMenuVisible: false,
+      networksVisible: false,
       menuSubVisible: false,
       toggleId: null,
+      chainNameOption: {
+        56: "BSC Mainnet",
+        97: "https://test.douji.ai/",
+        204: "opBNB Mainnet",
+        5611: "https://opbnbtest.douji.ai/",
+      },
     };
   },
   methods: {
@@ -266,6 +308,10 @@ export default {
     },
     toNavigation() {
       window.open("https://navigation.douji.ai", "_blank");
+    },
+    toChangeNetwork(chainId) {
+      const url = this.chainNameOption[chainId];
+      window.location = url;
     },
     menuToggle(visible) {
       if (this.toggleId) {
