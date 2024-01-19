@@ -162,7 +162,7 @@
             </div>
             <div slot="reference" class="user">
               <span class="text" style="color: #90a9c6">
-                opBNB Testnet
+                BNB Chain Testnet
                 <i class="el-icon-caret-bottom el-icon--right"></i>
               </span>
             </div>
