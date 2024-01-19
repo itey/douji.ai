@@ -391,7 +391,8 @@ export default {
   },
   data() {
     return {
-      nftContract: process.env.VUE_APP_NFT,
+      nftContract:
+        process.env["VUE_APP_NFT" + "_" + this.$store.state.chain.chainId],
       voteKeepTime: process.env.VUE_APP_VOTE_TIME,
       nowTime: new Date().getTime(),
       userInfo: this.$store.state.user.userInfo,

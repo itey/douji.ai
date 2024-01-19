@@ -100,7 +100,8 @@ export default {
   data() {
     return {
       loading: false,
-      marketAddress: process.env.VUE_APP_MARKET,
+      marketAddress:
+        process.env["VUE_APP_MARKET" + "_" + this.$store.state.chain.chainId],
       nftOrderList: [],
       timer: undefined,
     };

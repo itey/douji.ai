@@ -18,7 +18,10 @@ function getBjxContract() {
     if (contract) {
         return contract
     } else {
-        contract = new web3.eth.Contract(bjx.abi, process.env.VUE_APP_BJX)
+        contract = new web3.eth.Contract(
+            bjx.abi,
+            process.env["VUE_APP_BJX" + "_" + store.state.chain.chainId]
+        )
         return contract
     }
 }
@@ -36,11 +39,21 @@ export function erc20Approve(cAddress, amount, decimal) {
     return new Promise((resolve, reject) => {
         updateGasPrice().then((gasPrice) => {
             erc20Contract.methods
-                .approve(process.env.VUE_APP_BJX, weiAmount + "")
+                .approve(
+                    process.env[
+                        "VUE_APP_BJX" + "_" + store.state.chain.chainId
+                    ],
+                    weiAmount + ""
+                )
                 .estimateGas({ from: fromAddress })
                 .then((gasAmount) => {
                     erc20Contract.methods
-                        .approve(process.env.VUE_APP_BJX, weiAmount + "")
+                        .approve(
+                            process.env[
+                                "VUE_APP_BJX" + "_" + store.state.chain.chainId
+                            ],
+                            weiAmount + ""
+                        )
                         .send({
                             from: fromAddress,
                             gas: Math.ceil(gasAmount * 1.5) + "",

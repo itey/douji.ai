@@ -164,7 +164,8 @@ export default {
       N S P//更新折扣 NFTSALESPROMOTION
     */
     return {
-      tokenAddress: process.env.VUE_APP_NFT,
+      tokenAddress:
+        process.env["VUE_APP_NFT" + "_" + this.$store.state.chain.chainId],
       userOwned: undefined,
       show: false,
       voteType: undefined,

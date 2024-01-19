@@ -815,11 +815,15 @@ export default {
               this.bjx.count = null;
             });
         } else {
-          var erc20Address = process.env.VUE_APP_USDT;
+          var erc20Address =
+            process.env["VUE_APP_USDT" + "_" + this.$store.state.chain.chainId];
           var decimal = 18;
           var ercPrice = this.bjx.usdtPrice;
           if (this.bjx.priceType == "2") {
-            erc20Address = process.env.VUE_APP_MBD;
+            erc20Address =
+              process.env[
+                "VUE_APP_MBD" + "_" + this.$store.state.chain.chainId
+              ];
             decimal = 8;
             ercPrice = this.bjx.mbdPrice;
           }

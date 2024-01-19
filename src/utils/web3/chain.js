@@ -1,7 +1,7 @@
 import { ParticleNetwork, WalletEntryPosition } from "@particle-network/auth"
 import { ParticleProvider } from "@particle-network/provider"
 import { evmWallets } from "@particle-network/connect"
-import { BNBChainTestnet } from "@particle-network/chains"
+import { BNBChainTestnet, opBNBTestnet } from "@particle-network/chains"
 import i18n from "@/i18n"
 import store from "@/store"
 import Vue from "vue"
@@ -28,13 +28,13 @@ export function getWeb3FromCache() {
             projectId: projectId,
             clientKey: clientKey,
             appId: appId,
-            chainName: BNBChainTestnet.name,
-            chainId: BNBChainTestnet.id,
-            chains: [BNBChainTestnet],
+            chainName: store.state.chain.chainName,
+            chainId: store.state.chain.chainId,
+            chains: [BNBChainTestnet, opBNBTestnet],
             particleWalletEntry: {
                 displayWalletEntry: true,
                 defaultWalletEntryPosition: WalletEntryPosition.BR,
-                supportChains: [BNBChainTestnet],
+                supportChains: [BNBChainTestnet, opBNBTestnet],
                 customStyle: {},
             },
             securityAccount: {

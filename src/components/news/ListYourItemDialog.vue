@@ -78,7 +78,8 @@ export default {
       show: false,
       salePrice: null,
       saleQuantity: null,
-      marketAddress: process.env.VUE_APP_MARKET,
+      marketAddress:
+        process.env["VUE_APP_MARKET" + "_" + this.$store.state.chain.chainId],
       userOwned: 0,
       error: {
         salePrice: undefined,

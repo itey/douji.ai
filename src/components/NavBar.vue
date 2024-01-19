@@ -30,7 +30,7 @@
           {{ $t("common.create") }}
         </div>
       </div>
-      <div v-show="!$store.state.user.token">
+      <div>
         <Particle
           :theme="$store.state.common.theme"
           :isLogout="$store.state.user.logout"
@@ -38,6 +38,7 @@
           :openAccount="$store.state.common.openAccount"
           :openBuy="$store.state.common.openBuy"
           :openConnect="$store.state.common.openConnect"
+          :openChainModal="$store.state.common.openChainModal"
           :isParticleProvider="$store.state.common.isParticleProvider"
         />
       </div>
@@ -133,6 +134,10 @@
             </div>
           </el-popover>
         </div>
+        <span class="open-chain" @click="openChainModal()">
+          {{ $store.state.chain.chainName }}
+          <i class="el-icon-caret-bottom el-icon--right"></i>
+        </span>
       </div>
       <div class="navbar-language" @click="languageVisible = true">
         <el-popover
@@ -225,6 +230,7 @@ export default {
       languageVisible: false,
       userMenuVisible: false,
       menuSubVisible: false,
+      netMenuVisible: false,
       toggleId: null,
     };
   },
@@ -249,6 +255,9 @@ export default {
     openBuyModal() {
       this.$store.commit("setOpenBuy", true);
       this.userMenuVisible = false;
+    },
+    openChainModal() {
+      this.$store.commit("setOpenChain", true);
     },
     handleCopyAddress() {
       this.$copyText(this.$store.state.user.account).then(
@@ -364,6 +373,13 @@ export default {
         background: #2c3846;
         margin: 0 7px;
       }
+    }
+
+    .open-chain {
+      font-size: 14px;
+      color: #90a9c6;
+      margin: 0px 10px;
+      cursor: pointer;
     }
 
     .user {

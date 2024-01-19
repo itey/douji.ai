@@ -19,7 +19,7 @@ function getMarketContract() {
     } else {
         contract = new web3.eth.Contract(
             marketJson.abi,
-            process.env.VUE_APP_MARKET
+            process.env["VUE_APP_MARKET" + "_" + store.state.chain.chainId]
         )
         return contract
     }
@@ -40,7 +40,9 @@ export function createSaleOrder(tokenId, count, price) {
         updateGasPrice().then((gasPrice) => {
             marketContract.methods
                 .create(
-                    process.env.VUE_APP_NFT,
+                    process.env[
+                        "VUE_APP_NFT" + "_" + store.state.chain.chainId
+                    ],
                     tokenId + "",
                     count + "",
                     1,
@@ -50,7 +52,9 @@ export function createSaleOrder(tokenId, count, price) {
                 .then((gasAmount) => {
                     marketContract.methods
                         .create(
-                            process.env.VUE_APP_NFT,
+                            process.env[
+                                "VUE_APP_NFT" + "_" + store.state.chain.chainId
+                            ],
                             tokenId + "",
                             count + "",
                             1,

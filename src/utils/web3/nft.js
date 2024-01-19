@@ -17,7 +17,10 @@ function getNFTContract() {
     if (nftContract) {
         return nftContract
     } else {
-        nftContract = new web3.eth.Contract(nft.abi, process.env.VUE_APP_NFT)
+        nftContract = new web3.eth.Contract(
+            nft.abi,
+            process.env["VUE_APP_NFT" + "_" + store.state.chain.chainId]
+        )
         return nftContract
     }
 }

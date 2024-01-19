@@ -1,3 +1,4 @@
+import store from "@/store"
 import bjx from "./abi/bjx"
 import erc1155 from "./abi/erc1155"
 import erc20 from "./abi/erc20"
@@ -113,7 +114,10 @@ export function getErc1155BalanceOf(cAddress, account, tokenId) {
 
 /** 获取BJX合约 */
 const getBjxContract = () => {
-    return new web3.eth.Contract(bjx.abi, process.env.VUE_APP_BJX)
+    return new web3.eth.Contract(
+        bjx.abi,
+        process.env["VUE_APP_BJX" + "_" + store.state.chain.chainId]
+    )
 }
 
 /** 查询BJXStar */
@@ -153,7 +157,10 @@ export const getBjxMbdPrice = () => {
     const contract = getBjxContract()
     return new Promise((resolve, reject) => {
         contract.methods
-            .getTokenPrice(BJX_TOKEN_ID, process.env.VUE_APP_MBD)
+            .getTokenPrice(
+                BJX_TOKEN_ID,
+                process.env["VUE_APP_MBD" + "_" + store.state.chain.chainId]
+            )
             .call()
             .then((r) => {
                 resolve(weiToMbd(r))
@@ -169,7 +176,10 @@ export const getBjxUsdtPrice = () => {
     const contract = getBjxContract()
     return new Promise((resolve, reject) => {
         contract.methods
-            .getTokenPrice(BJX_TOKEN_ID, process.env.VUE_APP_USDT)
+            .getTokenPrice(
+                BJX_TOKEN_ID,
+                process.env["VUE_APP_USDT" + "_" + store.state.chain.chainId]
+            )
             .call()
             .then((r) => {
                 resolve(weiToEth(r))
@@ -200,12 +210,18 @@ export const getBjxBnbPrice = () => {
 
 /** 获取MBD交易对合约 */
 function getPairContract() {
-    return new web3.eth.Contract(pairJson.abi, process.env.VUE_APP_PAIR)
+    return new web3.eth.Contract(
+        pairJson.abi,
+        process.env["VUE_APP_PAIR" + "_" + store.state.chain.chainId]
+    )
 }
 
 /** 获取MBD合约 */
 function getMBDContract() {
-    return new web3.eth.Contract(mbd.abi, process.env.VUE_APP_MBD)
+    return new web3.eth.Contract(
+        mbd.abi,
+        process.env["VUE_APP_MBD" + "_" + store.state.chain.chainId]
+    )
 }
 
 /** 查询MBD余额 */
@@ -263,7 +279,10 @@ export function getAllowance(owner, spender) {
 
 /** 获取市场合约 */
 function getMarketContract() {
-    return new web3.eth.Contract(marketJson.abi, process.env.VUE_APP_MARKET)
+    return new web3.eth.Contract(
+        marketJson.abi,
+        process.env["VUE_APP_MARKET" + "_" + store.state.chain.chainId]
+    )
 }
 
 /** 取合约里DAO 质押奖金池子的额度 */
@@ -288,7 +307,10 @@ export function getSettlePoolBalance(tokenId) {
 ///////////////////运营///////////////////
 /** 获取运营合约 */
 function getOperatorContract() {
-    return new web3.eth.Contract(operator.abi, process.env.VUE_APP_OPERATOR)
+    return new web3.eth.Contract(
+        operator.abi,
+        process.env["VUE_APP_OPERATOR" + "_" + store.state.chain.chainId]
+    )
 }
 
 /** 获取阅读时长阈值 */

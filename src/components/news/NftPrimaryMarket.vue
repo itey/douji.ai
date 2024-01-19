@@ -203,7 +203,8 @@ export default {
   data() {
     return {
       loading: false,
-      nftContract: process.env.VUE_APP_NFT,
+      nftContract:
+        process.env["VUE_APP_NFT" + "_" + this.$store.state.chain.chainId],
       bnbScanUrl: process.env.VUE_APP_BNB_SCAN_URL,
       discountPrice: undefined,
       unusedCount: undefined,

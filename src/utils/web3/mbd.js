@@ -13,7 +13,10 @@ function getMBDContract() {
         Vue.$toast.warning(i18n.t("common.need_reconnect_wallet"))
         return
     }
-    return new web3.eth.Contract(mbd.abi, process.env.VUE_APP_MBD)
+    return new web3.eth.Contract(
+        mbd.abi,
+        process.env["VUE_APP_MBD" + "_" + store.state.chain.chainId]
+    )
 }
 
 /** 授权MBD */

@@ -18,7 +18,7 @@ function getOperatorContract() {
     } else {
         contract = new web3.eth.Contract(
             operator.abi,
-            process.env.VUE_APP_OPERATOR
+            process.env["VUE_APP_OPERATOR" + "_" + store.state.chain.chainId]
         )
         return contract
     }

@@ -51,13 +51,16 @@ function WalletButton() {
           const web3 = new Web3(provider)
           window.web3Particle = web3
         }
+        if (!store.state.chain.chainId) {
+          store.commit('setChain', { chainId: provider.networkVersion })
+        }
       })
       connectKit.on('disconnect', () => {
         console.log('disconnect')
         sessionStorage.removeItem("web3Provider")
       })
       connectKit.on('chainChanged', (chain) => {
-        console.log('chainChanged:', chain)
+        store.commit('setChain', { chainId: chain.id, name: chain.fullname })
       })
       connectKit.on('accountsChanged', (accounts) => {
         if (accounts && accounts[0]) {
@@ -115,7 +118,7 @@ function WalletButton() {
   return (
     <div>
       <ConnectButton.Custom>
-        {({ openConnectModal }) => {
+        {({ openConnectModal, openChainModal }) => {
           const handleOpenConnectModal = () => {
             connectKit.disconnect().then(() => {
               openConnectModal()
@@ -130,16 +133,25 @@ function WalletButton() {
             }
           }, [store.state.common.openConnect])
 
+          useEffect(() => {
+            if (store.state.common.openChainModal) {
+              openChainModal()
+              store.commit('setOpenChain', false)
+            }
+          }, [store.state.common.openChainModal])
+
           return (
             <div>
-              <button
-                className={'connect-button'}
-                onClick={handleOpenConnectModal}
-              >
-                {store.state.common.language == 'en'
-                  ? 'Connect Wallet'
-                  : '連接錢包'}
-              </button>
+              {!store.state.user.token && (
+                  <button
+                    className={'connect-button'}
+                    onClick={handleOpenConnectModal}
+                  >
+                    {store.state.common.language == 'en'
+                      ? 'Connect Wallet'
+                      : '連接錢包'}
+                  </button>
+              )}
             </div>
           )
         }}

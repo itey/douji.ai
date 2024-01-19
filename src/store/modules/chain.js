@@ -1,17 +1,23 @@
 import store from "@/store"
 import { weiToEth, weiToMbd } from "@/utils/common"
 import { balanceOfBnb, balanceOfMbd, getMbdPrice } from "@/utils/web3/open"
-import { BNBChainTestnet } from "@particle-network/chains"
 import Vue from "vue"
 
 const projectId = process.env.VUE_APP_PROJECT_ID
 const clientKey = process.env.VUE_APP_CLIENT_KEY
 const appId = process.env.VUE_APP_APP_ID
 const walletProjectId = process.env.VUE_APP_WALLETCONNECT_PROJECT_ID
+const chainNameOption = {
+    56: "BSC Mainnet",
+    97: "BNB Chain Testnet",
+    204: "opBNB Mainnet",
+    5611: "opBNB Testnet",
+}
 
 const chain = {
     state: {
-        chainId: BNBChainTestnet.id,
+        chainId: "97",
+        chainName: "BNB Chain Testnet",
         projectId: projectId,
         clientKey: clientKey,
         appId: appId,
@@ -42,6 +48,12 @@ const chain = {
         },
         setGasTimeOut(state, gasTimeOut) {
             state.gasTimeOut = gasTimeOut
+        },
+        setChain(state, chain) {
+            state.chainId = chain.chainId
+            state.chainName = chain.name
+                ? chain.name
+                : chainNameOption[chain.chainId]
         },
     },
 

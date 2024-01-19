@@ -46,6 +46,17 @@ export default {
       globalAdvertise: undefined,
     };
   },
+  watch: {
+    "$store.state.chain.chainId": {
+      handler: function (_n, _o) {
+        console.log(_n, _o);
+        if (_n && _n != _o) {
+          this.$store.dispatch("Logout");
+          location.reload();
+        }
+      },
+    },
+  },
   computed: {
     /** 当前主题 */
     currentTheme() {

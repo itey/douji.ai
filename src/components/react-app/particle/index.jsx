@@ -1,6 +1,6 @@
 import store from '@/store/index';
 import { WalletEntryPosition } from '@particle-network/auth';
-import { BNBChainTestnet } from '@particle-network/chains';
+import { BNBChainTestnet, opBNBTestnet } from '@particle-network/chains';
 import { evmWallets } from '@particle-network/connect';
 import { ModalProvider } from '@particle-network/connect-react-ui';
 import '@particle-network/connect-react-ui/dist/index.css';
@@ -20,13 +20,13 @@ const config = {
   chainName: BNBChainTestnet.name,
   chainId: BNBChainTestnet.id,
   chains: [
-    BNBChainTestnet
+    BNBChainTestnet, opBNBTestnet
   ],
   particleWalletEntry: {
     displayWalletEntry: true,
     defaultWalletEntryPosition: WalletEntryPosition.BR,
     supportChains: [
-      BNBChainTestnet
+      BNBChainTestnet, opBNBTestnet
     ],
     customStyle: {},
   },
@@ -40,7 +40,7 @@ const config = {
   })
 }
 
-function ParticleButton({theme, lang}) {
+function ParticleButton({theme, lang, openChain}) {
   return (
     <div>
       <ModalProvider
@@ -49,8 +49,9 @@ function ParticleButton({theme, lang}) {
         language={lang}   //optional：localize, default en
         walletSort={['Particle Auth', 'Wallet']} //optional：walelt order
         particleAuthSort={undefined}
+
       >
-        <ConnectButton/>
+        <ConnectButton openChain={ openChain} />
       </ModalProvider>
     </div>
   )

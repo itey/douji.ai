@@ -128,8 +128,12 @@ export default {
         },
       ],
       userInfo: this.$store.state.user.userInfo,
-      centerAddress: process.env.VUE_APP_RECEIVE_ADDR,
-      operatorAddress: process.env.VUE_APP_OPERATOR,
+      centerAddress:
+        process.env[
+          "VUE_APP_RECEIVE_ADDR" + "_" + this.$store.state.chain.chainId
+        ],
+      operatorAddress:
+        process.env["VUE_APP_OPERATOR" + "_" + this.$store.state.chain.chainId],
       show: false,
       showTimer: false,
       leftTime: undefined,
