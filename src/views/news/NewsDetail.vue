@@ -769,6 +769,10 @@ export default {
         tokenURI(this.tokenId)
           .then((uri) => {
             this.tokenMetaUrl = uri;
+            this.tokenMetaUrl = this.tokenMetaUrl.replace(
+              "cloudflare-ipfs.com",
+              "gateway.pinata.cloud"
+            );
             loadFromUrl(this.tokenMetaUrl).then((r) => {
               if (r.status !== 200) {
                 return reject(r.statusText);
