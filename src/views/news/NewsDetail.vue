@@ -774,7 +774,17 @@ export default {
                 return reject(r.statusText);
               }
               this.metadata = r.data;
+              if (this.metadata.image) {
+                this.metadata.image = this.metadata.image.replace(
+                  "cloudflare-ipfs.com",
+                  "gateway.pinata.cloud"
+                );
+              }
               if (this.metadata.contentUrl) {
+                this.metadata.contentUrl = this.metadata.contentUrl.replace(
+                  "cloudflare-ipfs.com",
+                  "gateway.pinata.cloud"
+                );
                 this.loadOpenContent(this.metadata.contentUrl)
                   .then((openContent) => {
                     this.$set(
